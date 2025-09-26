@@ -5,11 +5,12 @@
 # This module is under the UIUC open-source license. See 
 # github.com/BioSTEAMDevelopmentGroup/biosteam/blob/master/LICENSE.txt
 # for license details.
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='biosteam',
-    packages=['biosteam'],
+    packages=find_packages(where='pkgs/biosteam/src'),
+    package_dir={'': 'pkgs/biosteam/src'},
     license='MIT',
     version='2.52.12',
     description='The Biorefinery Simulation and Techno-Economic Analysis Modules',

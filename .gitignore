@@ -31,6 +31,12 @@ prof
 monkeytype.sqlite3
 *.spyproject*
 
+# Local tooling and environments #
+#################################
+.claude/
+.vscode/
+venv311/
+
 # Docs #
 ########
 # No need to save these files

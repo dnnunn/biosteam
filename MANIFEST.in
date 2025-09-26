@@ -1,5 +1,5 @@
 include LICENSE.txt AUTHORS README.rst pytest.ini 
-recursive-include biosteam *
+recursive-include pkgs/biosteam/src/biosteam *
 recursive-include tests *
 global-exclude .spyproject
 global-exclude tests/.spyproject/*
@@ -15,5 +15,5 @@ global-exclude ipynb_checkpoints
 global-exclude *-checkpoint.ipynb
 global-exclude *checkpoint*
 global-exclude .*ipynb_checkpoints*
-prune thermosteam/__pycache__
+prune pkgs/thermosteam/src/thermosteam/__pycache__
 recursive-exclude docs *ipynb_checkpoints

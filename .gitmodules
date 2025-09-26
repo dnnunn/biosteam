@@ -1,5 +1,5 @@
 [submodule "thermosteam"]
-	path = thermosteam
+	path = pkgs/thermosteam/src/thermosteam
 	url = https://github.com/BioSTEAMDevelopmentGroup/thermosteam
 [submodule "Bioindustrial-Park"]
 	path = Bioindustrial-Park
