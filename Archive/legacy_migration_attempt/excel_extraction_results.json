@@ -1,0 +1,1825 @@
+{
+  "extraction_results": {
+    "parameters": {
+      "Inputs and Assumptions": {
+        "Cost_Per_Kg_Product ($)": 1210.0914811770488,
+        "Strain_Titer": 10,
+        "Product_Concentration": 8.571428571428577,
+        "Product_Recovery_Rate": 0.636804,
+        "Working_Volume": 105000,
+        "Fermentation_Time": 48,
+        "Turnaround_Time": 24,
+        "Seed_Train_Duration": 10,
+        "Biomass_Volume_Fraction": 0.19047619047619047,
+        "Initial_Glycerol_Concentration": 20,
+        "Feed_Glycerol_Concentration": 600,
+        "Initial_Glucose_Concentration": 20,
+        "Feed_Glucose_Concentration": 500,
+        "Initial_Lactose_Concentration": 20,
+        "Feed_Lactose_Concentration": 500,
+        "Initial_Molasses_Concentration": 40,
+        "Feed_Molasses_Concentration": 1000,
+        "Glucose_Feed_Rate": 1,
+        "Yeast_Extract_Concentration": 10,
+        "Peptone_Concentration": 20,
+        "Biomass_Yield_on_Glucose": 0.48,
+        "Biomass_Yield_on_Glycerol": 0.58,
+        "Biomass_Yield_on_Lactose": 0.45,
+        "Biomass_Yield_on_Molasses ": 0.25,
+        "Product_Yield_on_Biomass": 0.14285714285714293,
+        "Oxygen_Transfer_Rate": 100,
+        "Aeration_Rate": 1,
+        "MF_Efficiency": 0.9,
+        "Microfiltration_Flux": 45,
+        "Dilution volume": 15000.00000000004,
+        "UF_DF_Efficiency": 0.95,
+        "UF_Concentration_Factor": 20,
+        "Diafiltration_Volumes": 5,
+        "Chromatography_Dynamic_Capacity": 60,
+        "Chromatography_Yield": 0.8,
+        "Pre_Drying_TFF_Efficiency": 0.95,
+        "Pre_Drying_Concentration_Factor": 5,
+        "Spray_Dryer_Efficiency": 0.98,
+        "Spray_Dryer_Capacity": 150,
+        "Target_Recovery_Rate": 0.8,
+        "Glucose_Cost": 0.75,
+        "Glycerol_Cost": 1.2,
+        "Lactose_Cost": 0.95,
+        "Molasses_Cost": 0.25,
+        "Carbon_Cost": 0.75,
+        "Yeast_Extract_Cost": 12,
+        "Peptone_Cost": 15,
+        "Minor_Nutrients_Cost": 500,
+        "Buffer_Component_Cost": 8,
+        "Chromatography_Buffer_Premium": 2,
+        "Resin_Cost": 1000,
+        "Resin_Lifetime": 30,
+        "MF_Membrane_Cost": 1000,
+        "MF_Membrane_Lifetime": 50,
+        "UF_Membrane_Cost": 1500,
+        "UF_Membrane_Lifetime": 100,
+        "Pre_Drying_TFF_Membrane_Cost": 1800,
+        "Pre_Drying_TFF_Membrane_Lifetime": 100,
+        "Antifoam_Cost": 10,
+        "Membrane_Cleaning_Cost": 200,
+        "CIP_Chemicals_Cost": 3,
+        "QC_Testing_Cost_Per_Batch": 15000,
+        "Electricity_Cost": 0.15,
+        "Steam_Cost": 25,
+        "Chilled_Water_Cost": 0.05,
+        "Water_Cost": 2,
+        "Wastewater_Treatment_Cost": 3,
+        "Compressed_Air_Cost": 0.02,
+        "WFI_Cost": 5,
+        "Campaign_Changeover_Time": 7,
+        "Annual_Price_Escalation": 0.03,
+        "Fermenter_Daily_Rate": 75000,
+        "DSP_Daily_Rate": 75000,
+        "Spray_Dryer_Hourly_Rate": 1000,
+        "Labor_Cost_Per_Batch": 20000
+      },
+      "Calculations": {
+        "Cost_Per_Kg_Product ($)": 1210.0914811770488,
+        "Total_Fermentation_Volume_Needed": 1832065.5439769,
+        "Capacity sufficient": 573.1236000000004,
+        "Annual_Production_Capacity": 17193.70800000001,
+        "Seed_Train_Time": 10,
+        "Main_Fermentation_Time": 48,
+        "MF_Time": 33.33333333333334,
+        "UF_Time": 30.00000000000001,
+        "DF_Time": 7.500000000000003,
+        "Chromatography_Time": 10,
+        "Pre_Drying_TFF_Time": 0.8571428571428571,
+        "Spray_Drying_Time": 5.508000000000002,
+        "Turnaround_CIP_Time": 24,
+        "Total_Batch_Time_Days": 5,
+        "Scheduled_Batch_Time": 120,
+        "Feed_Solution_Volume": 22050,
+        "Antifoam_Volume": 105,
+        "Aeration_Power": 189,
+        "Electricity_Cost_Per_Batch": 2434.3199999999997,
+        "Cooling_Cost_Per_Batch": 2142,
+        "Harvest_Volume": 90000.00000000004,
+        "Actual_Supernatant_Concentration": 10,
+        "Post_UF_Volume": 4500.000000000002,
+        "Pre_Drying_Volume": 900.0000000000003,
+        "Product_After_Chromatography": 615.6000000000004,
+        "Overall_Process_Yield": 0.636804,
+        "Maximum_Theoretical_Recovery": 0.636804,
+        "Practical_Recovery_Rate": 0.636804,
+        "MF_Buffer_Volume": 15000.00000000004,
+        "DF_Buffer_Volume": 22500.000000000007,
+        "Chromatography_Buffer_Volume": 750.0000000000002,
+        "Pre_Drying_TFF_Buffer_Volume": 9000.000000000004,
+        "Total_Buffer_Volume": 47250.000000000044,
+        "Buffer_Component_Cost_Basic": 1800.000000000005,
+        "Buffer_Component_Cost_Premium": 5580.000000000002,
+        "Resin_Volume_Needed": 12825.000000000005,
+        "Resin_Cost_Per_Batch": 427500.0000000002,
+        "Chromatography_Energy": 0.15000000000000005,
+        "DSP_Electricity_Cost": 225.58635000000015,
+        "Water_For_Buffer_Preparation": 51.97500000000005,
+        "CIP_Water_Volume": 315,
+        "Total_Water_Cost": 733.95,
+        "Wastewater_Treatment_Cost_Total": 911.9250000000001,
+        "Steam_Cost_Total": 250,
+        "Total_Utilities_Cost": 6697.78135,
+        "Carbon_source_Cost_Total": 9843.75,
+        "Yeast_Extract_Cost_Total": 9954,
+        "Peptone_Cost_Total": 24885,
+        "Minor_Nutrients_Cost_Total": 500,
+        "Antifoam_Cost_Total": 1050,
+        "Buffer_Components_Cost_Total": 7380.000000000007,
+        "Resin_Cost_Total": 427500.0000000002,
+        "MF_Membrane_Cost_Total": 200,
+        "UF_Membrane_Cost_Total": 120,
+        "Pre_Drying_TFF_Membrane_Cost_Total": 630,
+        "CIP_Chemicals_Cost_Total": 18.900000000000002,
+        "Total_Raw_Materials_Cost": 482281.6500000002,
+        "Annual_Campaign_Setup_Cost": 1250000,
+        "Campaign_Setup_Cost_Per_Batch": 41666.666666666664,
+        "Annual_Facility_Reservation_Cost": 500000,
+        "Reservation_Cost_Per_Batch": 16666.666666666668,
+        "Long_Term_Contract_Factor": 0.9,
+        "Validation_Batch_Cost_Annual": 37913.30645161719,
+        "Validation_Cost_Per_Batch": 1263.7768817205729,
+        "Fermenter_Campaign_Factor": 0.875,
+        "DSP_Campaign_Factor": 0.9166666666666666,
+        "Spray_Dryer_Campaign_Factor": 0.9583333333333334,
+        "Labor_Base_Cost": 20000,
+        "Labor_Campaign_Factor": 0.8333333333333333,
+        "Labor_Cost_Total": 5154.499999999999,
+        "QC_Testing_Base_Cost": 15000,
+        "QA_QC_Campaign_Factor": 0.875,
+        "QC_Testing_Cost_Total": 4059.1687499999994,
+        "Consumables_Campaign_Factor": 0.9166666666666666,
+        "Total_Standard_Batch_Cost": 151653.22580646875,
+        "Total cost": 837827.7391129377,
+        "Total_Campaign_Related_Costs": 59597.1102150539,
+        "First_Batch_In_Campaign_Cost": 423317.97235025,
+        "Last_Batch_In_Campaign_Cost": 128905.24193549843,
+        "Campaign_Cost_Savings": 294412.73041475157,
+        "Campaign_Cost_Savings_Percentage": 0.6954883790550636,
+        "Single_Batch_Cost": 428415.5597723162
+      },
+      "Final Costs": {
+        "Cost_Per_Kg_Product ($)": 1210.0914811770488,
+        "Total_Utilities_Cost": 6697.78135,
+        "Total_Raw_Materials_Cost_Final": 482281.6500000002,
+        "Total_Cost_Per_Batch": 693531.9860215229,
+        "Cost_Per_Kg_Product": 1210.0914811770488,
+        "Annual_Production_Cost": 20805959.580645688,
+        "Carbon_source_cost": 0.014193649605794117,
+        "Chromatography_Resin_Percent": 0.6164099257373448,
+        "CMO Fee Allocation \u2014 USP time-based": 126.8928175699292,
+        "CMO Fee Allocation \u2014 DSP time-based": 137.71542017576593,
+        "Reconciliation: Cost_per_kg_base \u2212 Subtotal": -8.545768050731112
+      },
+      "Sensitivity analysis": {
+        "Supernatant Product Concentration": 10,
+        "Biomass Dry Cell Weight": 60,
+        "Chromatography resin cost": 1000,
+        "Chromatography resin lifetime": 30,
+        "Chromatography_Resin_Percent": 0.6164099257373448,
+        "DSP Yield": 0.636804,
+        "Batch time (USP + DSP)": 5,
+        "Cost_Per_Kg_Product ": 1210.0914811770488,
+        "Total DSP efficiency": 0.636804,
+        "Resin cost": 1000,
+        "Resin lifetime": 30,
+        "Resin cost ($/L)": 1000,
+        "DSP Efficiency": 0.4,
+        "Batch time (days)": 2
+      },
+      "Dewatering efficiency calulator": {
+        "Cost_Per_Kg_Product ($)": 1210.0914811770488,
+        "Supernatant Product Concentration": 10,
+        "OD to Biomass Conversion": 0.4,
+        "Biomass Dry Cell Weight": 60,
+        "Biomass Volume ": 190.47619047619045,
+        "Sludge Volume": 285.7142857142857,
+        "Supernant Volume": 809.5238095238095,
+        "Entrained supernatant volume in sludge": 95.23809523809527,
+        "Biomass Volume Fraction": 0.19047619047619047,
+        "Sludge Volume Fraction": 0.2857142857142857,
+        "Target dewatering efficiency": 0.9,
+        "Dilution required (additional volumes)": 0.14285714285714324,
+        "Post-dilution broth volume": 120000.00000000004,
+        "Harvested supernatant volume": 90000.00000000004,
+        "Harvested product concentration": 9.000000000000002,
+        "Product concentration per total volume": 8.571428571428577
+      },
+      "DSP_Yield_Analysis": {
+        "Theoretical Yield (%)": 1,
+        "Actual Yield (%)": 1,
+        "Cumulative Yield (%)": 1,
+        "Product Mass (kg)": 900.0000000000005,
+        "Microfiltration": 0.95,
+        "Chromatography": 0.8
+      },
+      "Unit-Module List": {
+        "Seed train + main fermentation (vessel size, time, turnaround, aeration, agitation)": true,
+        "Harvest & Clarification \u2013 Filtration": true,
+        "Depth/microfiltration train for cell removal and clarification": true,
+        "DSP Global Assumptions & Yields": true,
+        "Overall DSP yields, recycle factors, hold losses; applies across DSP": true,
+        "Pre-treatment \u2013 pH/salt/agents": true,
+        "pH adjust, salt adjust, flocculants (e.g., chitosan) to prep feed": true,
+        "UF \u2013 Concentration": true,
+        "Ultrafiltration concentration (TFF) before chromatography": true,
+        "DF \u2013 Diafiltration": true,
+        "Diafiltration for buffer exchange and impurity wash": true,
+        "Single-pass TFF or alternative membrane configuration": false,
+        "Chromatography \u2013 CEX": true,
+        "Chromatography \u2013 AEX": false,
+        "Chromatography \u2013 Mixed-mode (MMC)": false,
+        "Chromatography \u2013 Affinity": false,
+        "Polishing & Sterile Filtration": true,
+        "0.2 \u03bcm final filtration or polishing step": true,
+        "Drying \u2013 Lyophilization": false,
+        "Capex, depreciation, maintenance factors": true,
+        "CDMO rate cards, campaign setup, per-batch fees": true,
+        "Product_Concentration": 1.619047619047619,
+        "Product_Recovery_Rate": 0.636804,
+        "Working_Volume": 126000,
+        "Fermentation_Time": 48,
+        "Turnaround_Time": 24,
+        "Seed_Train_Duration": 10,
+        "Biomass_Volume_Fraction": 0.36,
+        "Initial_Glycerol_Concentration": 20,
+        "Feed_Glycerol_Concentration": 600,
+        "Initial_Glucose_Concentration": 20,
+        "Feed_Glucose_Concentration": 500,
+        "Initial_Lactose_Concentration": 20,
+        "Feed_Lactose_Concentration": 500,
+        "Initial_Molasses_Concentration": 40,
+        "Feed_Molasses_Concentration": 1000,
+        "Glucose_Feed_Rate": 1,
+        "Yeast_Extract_Concentration": 10,
+        "Peptone_Concentration": 20,
+        "Biomass_Yield_on_Glucose": 0.48,
+        "Biomass_Yield_on_Glycerol": 0.58,
+        "Biomass_Yield_on_Lactose": 0.45,
+        "Biomass_Yield_on_Molasses": 0.25,
+        "Product_Yield_on_Biomass": 0.02698412698412699,
+        "Oxygen_Transfer_Rate": 100,
+        "Aeration_Rate": 1,
+        "Raw Material Costs": 15000,
+        "Glucose_Cost": 0.75,
+        "Glycerol_Cost": 1.2,
+        "Lactose_Cost": 0.95,
+        "Molasses_Cost": 0.25,
+        "Carbon_Cost": 1.2,
+        "Yeast_Extract_Cost": 12,
+        "Peptone_Cost": 15,
+        "Minor_Nutrients_Cost": 500,
+        "Buffer_Component_Cost": 8,
+        "Chromatography_Buffer_Premium": 2,
+        "Resin_Cost": 2000,
+        "Resin_Lifetime": 30,
+        "MF_Membrane_Cost": 1000,
+        "MF_Membrane_Lifetime": 50,
+        "UF_Membrane_Cost": 1500,
+        "UF_Membrane_Lifetime": 100,
+        "Pre_Drying_TFF_Membrane_Cost": 1800,
+        "Pre_Drying_TFF_Membrane_Lifetime": 100,
+        "Antifoam_Cost": 10,
+        "Membrane_Cleaning_Cost": 200,
+        "CIP_Chemicals_Cost": 3,
+        "QC_Testing_Cost_Per_Batch": 15000,
+        "Utility Costs": 5,
+        "Electricity_Cost": 0.15,
+        "Steam_Cost": 25,
+        "Chilled_Water_Cost": 0.05,
+        "Water_Cost": 2,
+        "Wastewater_Treatment_Cost": 3,
+        "Compressed_Air_Cost": 0.02,
+        "WFI_Cost": 5,
+        "Campaign_Changeover_Time": 7,
+        "Annual_Price_Escalation": 0.03,
+        "Fermenter_Daily_Rate": 75000,
+        "DSP_Daily_Rate": 75000,
+        "Spray_Dryer_Hourly_Rate": 1000,
+        "Labor_Cost_Per_Batch": 20000
+      },
+      "Production Costs": {
+        "PRODUCTION PRICE $/kg": 810.4819682609542,
+        "Resin Cost Scenarios": 500
+      }
+    },
+    "process_flows": {
+      "fermentation": {
+        "Strain_Titer": {
+          "value": 10,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Working_Volume": {
+          "value": 126000,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Volume_Fraction": {
+          "value": 0.36,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Glucose": {
+          "value": 0.48,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Glycerol": {
+          "value": 0.58,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Lactose": {
+          "value": 0.45,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Molasses ": {
+          "value": 0.25,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Product_Yield_on_Biomass": {
+          "value": 0.02698412698412699,
+          "source_sheet": "Unit-Module List"
+        },
+        "Dilution volume": {
+          "value": 15000.00000000004,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Diafiltration_Volumes": {
+          "value": 5,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Chromatography_Yield": {
+          "value": 0.8,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Total_Fermentation_Volume_Needed": {
+          "value": 1832065.5439769,
+          "source_sheet": "Calculations"
+        },
+        "Feed_Solution_Volume": {
+          "value": 22050,
+          "source_sheet": "Calculations"
+        },
+        "Antifoam_Volume": {
+          "value": 105,
+          "source_sheet": "Calculations"
+        },
+        "Harvest_Volume": {
+          "value": 90000.00000000004,
+          "source_sheet": "Calculations"
+        },
+        "Post_UF_Volume": {
+          "value": 4500.000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_Volume": {
+          "value": 900.0000000000003,
+          "source_sheet": "Calculations"
+        },
+        "Overall_Process_Yield": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        },
+        "MF_Buffer_Volume": {
+          "value": 15000.00000000004,
+          "source_sheet": "Calculations"
+        },
+        "DF_Buffer_Volume": {
+          "value": 22500.000000000007,
+          "source_sheet": "Calculations"
+        },
+        "Chromatography_Buffer_Volume": {
+          "value": 750.0000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_TFF_Buffer_Volume": {
+          "value": 9000.000000000004,
+          "source_sheet": "Calculations"
+        },
+        "Total_Buffer_Volume": {
+          "value": 47250.000000000044,
+          "source_sheet": "Calculations"
+        },
+        "Resin_Volume_Needed": {
+          "value": 12825.000000000005,
+          "source_sheet": "Calculations"
+        },
+        "CIP_Water_Volume": {
+          "value": 315,
+          "source_sheet": "Calculations"
+        },
+        "DSP Yield": {
+          "value": 0.636804,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Biomass Volume ": {
+          "value": 190.47619047619045,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Sludge Volume": {
+          "value": 285.7142857142857,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Supernant Volume": {
+          "value": 809.5238095238095,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Entrained supernatant volume in sludge": {
+          "value": 95.23809523809527,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Biomass Volume Fraction": {
+          "value": 0.19047619047619047,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Sludge Volume Fraction": {
+          "value": 0.2857142857142857,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Dilution required (additional volumes)": {
+          "value": 0.14285714285714324,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Post-dilution broth volume": {
+          "value": 120000.00000000004,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Harvested supernatant volume": {
+          "value": 90000.00000000004,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Product concentration per total volume": {
+          "value": 8.571428571428577,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Theoretical Yield (%)": {
+          "value": 1,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "Actual Yield (%)": {
+          "value": 1,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "Cumulative Yield (%)": {
+          "value": 1,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "DSP Global Assumptions & Yields": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Overall DSP yields, recycle factors, hold losses; applies across DSP": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Molasses": {
+          "value": 0.25,
+          "source_sheet": "Unit-Module List"
+        }
+      },
+      "separation": {
+        "Product_Recovery_Rate": {
+          "value": 0.636804,
+          "source_sheet": "Unit-Module List"
+        },
+        "MF_Efficiency": {
+          "value": 0.9,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Microfiltration_Flux": {
+          "value": 45,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "UF_DF_Efficiency": {
+          "value": 0.95,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Diafiltration_Volumes": {
+          "value": 5,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Pre_Drying_TFF_Efficiency": {
+          "value": 0.95,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Spray_Dryer_Efficiency": {
+          "value": 0.98,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Target_Recovery_Rate": {
+          "value": 0.8,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Maximum_Theoretical_Recovery": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        },
+        "Practical_Recovery_Rate": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        },
+        "Total DSP efficiency": {
+          "value": 0.636804,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "DSP Efficiency": {
+          "value": 0.4,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Target dewatering efficiency": {
+          "value": 0.9,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Microfiltration": {
+          "value": 0.95,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "Harvest & Clarification \u2013 Filtration": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Depth/microfiltration train for cell removal and clarification": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Ultrafiltration concentration (TFF) before chromatography": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "DF \u2013 Diafiltration": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Diafiltration for buffer exchange and impurity wash": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Polishing & Sterile Filtration": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "0.2 \u03bcm final filtration or polishing step": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        }
+      },
+      "purification": {
+        "Chromatography_Dynamic_Capacity": {
+          "value": 60,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Chromatography_Yield": {
+          "value": 0.8,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Buffer_Component_Cost": {
+          "value": 8,
+          "source_sheet": "Unit-Module List"
+        },
+        "Chromatography_Buffer_Premium": {
+          "value": 2,
+          "source_sheet": "Unit-Module List"
+        },
+        "Resin_Cost": {
+          "value": 2000,
+          "source_sheet": "Unit-Module List"
+        },
+        "Resin_Lifetime": {
+          "value": 30,
+          "source_sheet": "Unit-Module List"
+        },
+        "Chromatography_Time": {
+          "value": 10,
+          "source_sheet": "Calculations"
+        },
+        "Product_After_Chromatography": {
+          "value": 615.6000000000004,
+          "source_sheet": "Calculations"
+        },
+        "MF_Buffer_Volume": {
+          "value": 15000.00000000004,
+          "source_sheet": "Calculations"
+        },
+        "DF_Buffer_Volume": {
+          "value": 22500.000000000007,
+          "source_sheet": "Calculations"
+        },
+        "Chromatography_Buffer_Volume": {
+          "value": 750.0000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_TFF_Buffer_Volume": {
+          "value": 9000.000000000004,
+          "source_sheet": "Calculations"
+        },
+        "Total_Buffer_Volume": {
+          "value": 47250.000000000044,
+          "source_sheet": "Calculations"
+        },
+        "Buffer_Component_Cost_Basic": {
+          "value": 1800.000000000005,
+          "source_sheet": "Calculations"
+        },
+        "Buffer_Component_Cost_Premium": {
+          "value": 5580.000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Resin_Volume_Needed": {
+          "value": 12825.000000000005,
+          "source_sheet": "Calculations"
+        },
+        "Resin_Cost_Per_Batch": {
+          "value": 427500.0000000002,
+          "source_sheet": "Calculations"
+        },
+        "Chromatography_Energy": {
+          "value": 0.15000000000000005,
+          "source_sheet": "Calculations"
+        },
+        "Water_For_Buffer_Preparation": {
+          "value": 51.97500000000005,
+          "source_sheet": "Calculations"
+        },
+        "Buffer_Components_Cost_Total": {
+          "value": 7380.000000000007,
+          "source_sheet": "Calculations"
+        },
+        "Resin_Cost_Total": {
+          "value": 427500.0000000002,
+          "source_sheet": "Calculations"
+        },
+        "Chromatography_Resin_Percent": {
+          "value": 0.6164099257373448,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Chromatography resin cost": {
+          "value": 1000,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Chromatography resin lifetime": {
+          "value": 30,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Resin cost": {
+          "value": 1000,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Resin lifetime": {
+          "value": 30,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Resin cost ($/L)": {
+          "value": 1000,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Chromatography": {
+          "value": 0.8,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "Ultrafiltration concentration (TFF) before chromatography": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Diafiltration for buffer exchange and impurity wash": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Chromatography \u2013 CEX": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Chromatography \u2013 AEX": {
+          "value": false,
+          "source_sheet": "Unit-Module List"
+        },
+        "Chromatography \u2013 Mixed-mode (MMC)": {
+          "value": false,
+          "source_sheet": "Unit-Module List"
+        },
+        "Chromatography \u2013 Affinity": {
+          "value": false,
+          "source_sheet": "Unit-Module List"
+        },
+        "Resin Cost Scenarios": {
+          "value": 500,
+          "source_sheet": "Production Costs"
+        }
+      },
+      "concentration": {
+        "Product_Concentration": {
+          "value": 1.619047619047619,
+          "source_sheet": "Unit-Module List"
+        },
+        "Initial_Glycerol_Concentration": {
+          "value": 20,
+          "source_sheet": "Unit-Module List"
+        },
+        "Feed_Glycerol_Concentration": {
+          "value": 600,
+          "source_sheet": "Unit-Module List"
+        },
+        "Initial_Glucose_Concentration": {
+          "value": 20,
+          "source_sheet": "Unit-Module List"
+        },
+        "Feed_Glucose_Concentration": {
+          "value": 500,
+          "source_sheet": "Unit-Module List"
+        },
+        "Initial_Lactose_Concentration": {
+          "value": 20,
+          "source_sheet": "Unit-Module List"
+        },
+        "Feed_Lactose_Concentration": {
+          "value": 500,
+          "source_sheet": "Unit-Module List"
+        },
+        "Initial_Molasses_Concentration": {
+          "value": 40,
+          "source_sheet": "Unit-Module List"
+        },
+        "Feed_Molasses_Concentration": {
+          "value": 1000,
+          "source_sheet": "Unit-Module List"
+        },
+        "Yeast_Extract_Concentration": {
+          "value": 10,
+          "source_sheet": "Unit-Module List"
+        },
+        "Peptone_Concentration": {
+          "value": 20,
+          "source_sheet": "Unit-Module List"
+        },
+        "UF_Concentration_Factor": {
+          "value": 20,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Pre_Drying_Concentration_Factor": {
+          "value": 5,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "MF_Membrane_Cost": {
+          "value": 1000,
+          "source_sheet": "Unit-Module List"
+        },
+        "MF_Membrane_Lifetime": {
+          "value": 50,
+          "source_sheet": "Unit-Module List"
+        },
+        "UF_Membrane_Cost": {
+          "value": 1500,
+          "source_sheet": "Unit-Module List"
+        },
+        "UF_Membrane_Lifetime": {
+          "value": 100,
+          "source_sheet": "Unit-Module List"
+        },
+        "Pre_Drying_TFF_Membrane_Cost": {
+          "value": 1800,
+          "source_sheet": "Unit-Module List"
+        },
+        "Pre_Drying_TFF_Membrane_Lifetime": {
+          "value": 100,
+          "source_sheet": "Unit-Module List"
+        },
+        "Membrane_Cleaning_Cost": {
+          "value": 200,
+          "source_sheet": "Unit-Module List"
+        },
+        "Actual_Supernatant_Concentration": {
+          "value": 10,
+          "source_sheet": "Calculations"
+        },
+        "MF_Membrane_Cost_Total": {
+          "value": 200,
+          "source_sheet": "Calculations"
+        },
+        "UF_Membrane_Cost_Total": {
+          "value": 120,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_TFF_Membrane_Cost_Total": {
+          "value": 630,
+          "source_sheet": "Calculations"
+        },
+        "Supernatant Product Concentration": {
+          "value": 10,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Harvested product concentration": {
+          "value": 9.000000000000002,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Product concentration per total volume": {
+          "value": 8.571428571428577,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "UF \u2013 Concentration": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Ultrafiltration concentration (TFF) before chromatography": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Single-pass TFF or alternative membrane configuration": {
+          "value": false,
+          "source_sheet": "Unit-Module List"
+        }
+      },
+      "formulation": {
+        "Pre_Drying_TFF_Efficiency": {
+          "value": 0.95,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Pre_Drying_Concentration_Factor": {
+          "value": 5,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Pre_Drying_TFF_Membrane_Cost": {
+          "value": 1800,
+          "source_sheet": "Unit-Module List"
+        },
+        "Pre_Drying_TFF_Membrane_Lifetime": {
+          "value": 100,
+          "source_sheet": "Unit-Module List"
+        },
+        "Pre_Drying_TFF_Time": {
+          "value": 0.8571428571428571,
+          "source_sheet": "Calculations"
+        },
+        "Spray_Drying_Time": {
+          "value": 5.508000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_Volume": {
+          "value": 900.0000000000003,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_TFF_Buffer_Volume": {
+          "value": 9000.000000000004,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_TFF_Membrane_Cost_Total": {
+          "value": 630,
+          "source_sheet": "Calculations"
+        },
+        "Drying \u2013 Lyophilization": {
+          "value": false,
+          "source_sheet": "Unit-Module List"
+        }
+      }
+    },
+    "economics": {
+      "Cost_Per_Kg_Product ($)": {
+        "value": 1210.0914811770488,
+        "source_sheet": "Dewatering efficiency calulator"
+      },
+      "Glucose_Cost": {
+        "value": 0.75,
+        "source_sheet": "Unit-Module List"
+      },
+      "Glycerol_Cost": {
+        "value": 1.2,
+        "source_sheet": "Unit-Module List"
+      },
+      "Lactose_Cost": {
+        "value": 0.95,
+        "source_sheet": "Unit-Module List"
+      },
+      "Molasses_Cost": {
+        "value": 0.25,
+        "source_sheet": "Unit-Module List"
+      },
+      "Carbon_Cost": {
+        "value": 1.2,
+        "source_sheet": "Unit-Module List"
+      },
+      "Yeast_Extract_Cost": {
+        "value": 12,
+        "source_sheet": "Unit-Module List"
+      },
+      "Peptone_Cost": {
+        "value": 15,
+        "source_sheet": "Unit-Module List"
+      },
+      "Minor_Nutrients_Cost": {
+        "value": 500,
+        "source_sheet": "Unit-Module List"
+      },
+      "Buffer_Component_Cost": {
+        "value": 8,
+        "source_sheet": "Unit-Module List"
+      },
+      "Resin_Cost": {
+        "value": 2000,
+        "source_sheet": "Unit-Module List"
+      },
+      "MF_Membrane_Cost": {
+        "value": 1000,
+        "source_sheet": "Unit-Module List"
+      },
+      "UF_Membrane_Cost": {
+        "value": 1500,
+        "source_sheet": "Unit-Module List"
+      },
+      "Pre_Drying_TFF_Membrane_Cost": {
+        "value": 1800,
+        "source_sheet": "Unit-Module List"
+      },
+      "Antifoam_Cost": {
+        "value": 10,
+        "source_sheet": "Unit-Module List"
+      },
+      "Membrane_Cleaning_Cost": {
+        "value": 200,
+        "source_sheet": "Unit-Module List"
+      },
+      "CIP_Chemicals_Cost": {
+        "value": 3,
+        "source_sheet": "Unit-Module List"
+      },
+      "QC_Testing_Cost_Per_Batch": {
+        "value": 15000,
+        "source_sheet": "Unit-Module List"
+      },
+      "Electricity_Cost": {
+        "value": 0.15,
+        "source_sheet": "Unit-Module List"
+      },
+      "Steam_Cost": {
+        "value": 25,
+        "source_sheet": "Unit-Module List"
+      },
+      "Chilled_Water_Cost": {
+        "value": 0.05,
+        "source_sheet": "Unit-Module List"
+      },
+      "Water_Cost": {
+        "value": 2,
+        "source_sheet": "Unit-Module List"
+      },
+      "Wastewater_Treatment_Cost": {
+        "value": 3,
+        "source_sheet": "Unit-Module List"
+      },
+      "Compressed_Air_Cost": {
+        "value": 0.02,
+        "source_sheet": "Unit-Module List"
+      },
+      "WFI_Cost": {
+        "value": 5,
+        "source_sheet": "Unit-Module List"
+      },
+      "Annual_Price_Escalation": {
+        "value": 0.03,
+        "source_sheet": "Unit-Module List"
+      },
+      "Labor_Cost_Per_Batch": {
+        "value": 20000,
+        "source_sheet": "Unit-Module List"
+      },
+      "Electricity_Cost_Per_Batch": {
+        "value": 2434.3199999999997,
+        "source_sheet": "Calculations"
+      },
+      "Cooling_Cost_Per_Batch": {
+        "value": 2142,
+        "source_sheet": "Calculations"
+      },
+      "Buffer_Component_Cost_Basic": {
+        "value": 1800.000000000005,
+        "source_sheet": "Calculations"
+      },
+      "Buffer_Component_Cost_Premium": {
+        "value": 5580.000000000002,
+        "source_sheet": "Calculations"
+      },
+      "Resin_Cost_Per_Batch": {
+        "value": 427500.0000000002,
+        "source_sheet": "Calculations"
+      },
+      "DSP_Electricity_Cost": {
+        "value": 225.58635000000015,
+        "source_sheet": "Calculations"
+      },
+      "Total_Water_Cost": {
+        "value": 733.95,
+        "source_sheet": "Calculations"
+      },
+      "Wastewater_Treatment_Cost_Total": {
+        "value": 911.9250000000001,
+        "source_sheet": "Calculations"
+      },
+      "Steam_Cost_Total": {
+        "value": 250,
+        "source_sheet": "Calculations"
+      },
+      "Total_Utilities_Cost": {
+        "value": 6697.78135,
+        "source_sheet": "Final Costs"
+      },
+      "Carbon_source_Cost_Total": {
+        "value": 9843.75,
+        "source_sheet": "Calculations"
+      },
+      "Yeast_Extract_Cost_Total": {
+        "value": 9954,
+        "source_sheet": "Calculations"
+      },
+      "Peptone_Cost_Total": {
+        "value": 24885,
+        "source_sheet": "Calculations"
+      },
+      "Minor_Nutrients_Cost_Total": {
+        "value": 500,
+        "source_sheet": "Calculations"
+      },
+      "Antifoam_Cost_Total": {
+        "value": 1050,
+        "source_sheet": "Calculations"
+      },
+      "Buffer_Components_Cost_Total": {
+        "value": 7380.000000000007,
+        "source_sheet": "Calculations"
+      },
+      "Resin_Cost_Total": {
+        "value": 427500.0000000002,
+        "source_sheet": "Calculations"
+      },
+      "MF_Membrane_Cost_Total": {
+        "value": 200,
+        "source_sheet": "Calculations"
+      },
+      "UF_Membrane_Cost_Total": {
+        "value": 120,
+        "source_sheet": "Calculations"
+      },
+      "Pre_Drying_TFF_Membrane_Cost_Total": {
+        "value": 630,
+        "source_sheet": "Calculations"
+      },
+      "CIP_Chemicals_Cost_Total": {
+        "value": 18.900000000000002,
+        "source_sheet": "Calculations"
+      },
+      "Total_Raw_Materials_Cost": {
+        "value": 482281.6500000002,
+        "source_sheet": "Calculations"
+      },
+      "Annual_Campaign_Setup_Cost": {
+        "value": 1250000,
+        "source_sheet": "Calculations"
+      },
+      "Campaign_Setup_Cost_Per_Batch": {
+        "value": 41666.666666666664,
+        "source_sheet": "Calculations"
+      },
+      "Annual_Facility_Reservation_Cost": {
+        "value": 500000,
+        "source_sheet": "Calculations"
+      },
+      "Reservation_Cost_Per_Batch": {
+        "value": 16666.666666666668,
+        "source_sheet": "Calculations"
+      },
+      "Validation_Batch_Cost_Annual": {
+        "value": 37913.30645161719,
+        "source_sheet": "Calculations"
+      },
+      "Validation_Cost_Per_Batch": {
+        "value": 1263.7768817205729,
+        "source_sheet": "Calculations"
+      },
+      "Labor_Base_Cost": {
+        "value": 20000,
+        "source_sheet": "Calculations"
+      },
+      "Labor_Cost_Total": {
+        "value": 5154.499999999999,
+        "source_sheet": "Calculations"
+      },
+      "QC_Testing_Base_Cost": {
+        "value": 15000,
+        "source_sheet": "Calculations"
+      },
+      "QC_Testing_Cost_Total": {
+        "value": 4059.1687499999994,
+        "source_sheet": "Calculations"
+      },
+      "Total_Standard_Batch_Cost": {
+        "value": 151653.22580646875,
+        "source_sheet": "Calculations"
+      },
+      "Total cost": {
+        "value": 837827.7391129377,
+        "source_sheet": "Calculations"
+      },
+      "Total_Campaign_Related_Costs": {
+        "value": 59597.1102150539,
+        "source_sheet": "Calculations"
+      },
+      "First_Batch_In_Campaign_Cost": {
+        "value": 423317.97235025,
+        "source_sheet": "Calculations"
+      },
+      "Last_Batch_In_Campaign_Cost": {
+        "value": 128905.24193549843,
+        "source_sheet": "Calculations"
+      },
+      "Campaign_Cost_Savings": {
+        "value": 294412.73041475157,
+        "source_sheet": "Calculations"
+      },
+      "Campaign_Cost_Savings_Percentage": {
+        "value": 0.6954883790550636,
+        "source_sheet": "Calculations"
+      },
+      "Single_Batch_Cost": {
+        "value": 428415.5597723162,
+        "source_sheet": "Calculations"
+      },
+      "Total_Raw_Materials_Cost_Final": {
+        "value": 482281.6500000002,
+        "source_sheet": "Final Costs"
+      },
+      "Total_Cost_Per_Batch": {
+        "value": 693531.9860215229,
+        "source_sheet": "Final Costs"
+      },
+      "Cost_Per_Kg_Product": {
+        "value": 1210.0914811770488,
+        "source_sheet": "Final Costs"
+      },
+      "Annual_Production_Cost": {
+        "value": 20805959.580645688,
+        "source_sheet": "Final Costs"
+      },
+      "Carbon_source_cost": {
+        "value": 0.014193649605794117,
+        "source_sheet": "Final Costs"
+      },
+      "Reconciliation: Cost_per_kg_base \u2212 Subtotal": {
+        "value": -8.545768050731112,
+        "source_sheet": "Final Costs"
+      },
+      "Chromatography resin cost": {
+        "value": 1000,
+        "source_sheet": "Sensitivity analysis"
+      },
+      "Cost_Per_Kg_Product ": {
+        "value": 1210.0914811770488,
+        "source_sheet": "Sensitivity analysis"
+      },
+      "Resin cost": {
+        "value": 1000,
+        "source_sheet": "Sensitivity analysis"
+      },
+      "Resin cost ($/L)": {
+        "value": 1000,
+        "source_sheet": "Sensitivity analysis"
+      },
+      "Capex, depreciation, maintenance factors": {
+        "value": true,
+        "source_sheet": "Unit-Module List"
+      },
+      "Raw Material Costs": {
+        "value": 15000,
+        "source_sheet": "Unit-Module List"
+      },
+      "Utility Costs": {
+        "value": 5,
+        "source_sheet": "Unit-Module List"
+      },
+      "PRODUCTION PRICE $/kg": {
+        "value": 810.4819682609542,
+        "source_sheet": "Production Costs"
+      },
+      "Resin Cost Scenarios": {
+        "value": 500,
+        "source_sheet": "Production Costs"
+      }
+    },
+    "unit_operations": {
+      "fermentor": {
+        "Strain_Titer": {
+          "value": 10,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Working_Volume": {
+          "value": 126000,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Volume_Fraction": {
+          "value": 0.36,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Glucose": {
+          "value": 0.48,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Glycerol": {
+          "value": 0.58,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Lactose": {
+          "value": 0.45,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Molasses ": {
+          "value": 0.25,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Product_Yield_on_Biomass": {
+          "value": 0.02698412698412699,
+          "source_sheet": "Unit-Module List"
+        },
+        "Dilution volume": {
+          "value": 15000.00000000004,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Diafiltration_Volumes": {
+          "value": 5,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Chromatography_Yield": {
+          "value": 0.8,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Total_Fermentation_Volume_Needed": {
+          "value": 1832065.5439769,
+          "source_sheet": "Calculations"
+        },
+        "Feed_Solution_Volume": {
+          "value": 22050,
+          "source_sheet": "Calculations"
+        },
+        "Antifoam_Volume": {
+          "value": 105,
+          "source_sheet": "Calculations"
+        },
+        "Harvest_Volume": {
+          "value": 90000.00000000004,
+          "source_sheet": "Calculations"
+        },
+        "Post_UF_Volume": {
+          "value": 4500.000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_Volume": {
+          "value": 900.0000000000003,
+          "source_sheet": "Calculations"
+        },
+        "Overall_Process_Yield": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        },
+        "MF_Buffer_Volume": {
+          "value": 15000.00000000004,
+          "source_sheet": "Calculations"
+        },
+        "DF_Buffer_Volume": {
+          "value": 22500.000000000007,
+          "source_sheet": "Calculations"
+        },
+        "Chromatography_Buffer_Volume": {
+          "value": 750.0000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_TFF_Buffer_Volume": {
+          "value": 9000.000000000004,
+          "source_sheet": "Calculations"
+        },
+        "Total_Buffer_Volume": {
+          "value": 47250.000000000044,
+          "source_sheet": "Calculations"
+        },
+        "Resin_Volume_Needed": {
+          "value": 12825.000000000005,
+          "source_sheet": "Calculations"
+        },
+        "CIP_Water_Volume": {
+          "value": 315,
+          "source_sheet": "Calculations"
+        },
+        "DSP Yield": {
+          "value": 0.636804,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Biomass Volume ": {
+          "value": 190.47619047619045,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Sludge Volume": {
+          "value": 285.7142857142857,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Supernant Volume": {
+          "value": 809.5238095238095,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Entrained supernatant volume in sludge": {
+          "value": 95.23809523809527,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Biomass Volume Fraction": {
+          "value": 0.19047619047619047,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Sludge Volume Fraction": {
+          "value": 0.2857142857142857,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Dilution required (additional volumes)": {
+          "value": 0.14285714285714324,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Post-dilution broth volume": {
+          "value": 120000.00000000004,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Harvested supernatant volume": {
+          "value": 90000.00000000004,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Product concentration per total volume": {
+          "value": 8.571428571428577,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Theoretical Yield (%)": {
+          "value": 1,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "Actual Yield (%)": {
+          "value": 1,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "Cumulative Yield (%)": {
+          "value": 1,
+          "source_sheet": "DSP_Yield_Analysis"
+        },
+        "DSP Global Assumptions & Yields": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Overall DSP yields, recycle factors, hold losses; applies across DSP": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        },
+        "Biomass_Yield_on_Molasses": {
+          "value": 0.25,
+          "source_sheet": "Unit-Module List"
+        }
+      },
+      "centrifuge": {
+        "Product_Recovery_Rate": {
+          "value": 0.636804,
+          "source_sheet": "Unit-Module List"
+        },
+        "MF_Efficiency": {
+          "value": 0.9,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "UF_DF_Efficiency": {
+          "value": 0.95,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Chromatography_Dynamic_Capacity": {
+          "value": 60,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Pre_Drying_TFF_Efficiency": {
+          "value": 0.95,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Spray_Dryer_Efficiency": {
+          "value": 0.98,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Spray_Dryer_Capacity": {
+          "value": 150,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Target_Recovery_Rate": {
+          "value": 0.8,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Capacity sufficient": {
+          "value": 573.1236000000004,
+          "source_sheet": "Calculations"
+        },
+        "Annual_Production_Capacity": {
+          "value": 17193.70800000001,
+          "source_sheet": "Calculations"
+        },
+        "Maximum_Theoretical_Recovery": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        },
+        "Practical_Recovery_Rate": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        },
+        "Total DSP efficiency": {
+          "value": 0.636804,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "DSP Efficiency": {
+          "value": 0.4,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Target dewatering efficiency": {
+          "value": 0.9,
+          "source_sheet": "Dewatering efficiency calulator"
+        }
+      },
+      "chromatography": {
+        "Product_Recovery_Rate": {
+          "value": 0.636804,
+          "source_sheet": "Unit-Module List"
+        },
+        "Target_Recovery_Rate": {
+          "value": 0.8,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Maximum_Theoretical_Recovery": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        },
+        "Practical_Recovery_Rate": {
+          "value": 0.636804,
+          "source_sheet": "Calculations"
+        }
+      },
+      "ultrafiltration": {
+        "Microfiltration_Flux": {
+          "value": 45,
+          "source_sheet": "Inputs and Assumptions"
+        }
+      },
+      "dryer": {
+        "Fermentation_Time": {
+          "value": 48,
+          "source_sheet": "Unit-Module List"
+        },
+        "Turnaround_Time": {
+          "value": 24,
+          "source_sheet": "Unit-Module List"
+        },
+        "MF_Efficiency": {
+          "value": 0.9,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "UF_DF_Efficiency": {
+          "value": 0.95,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Chromatography_Dynamic_Capacity": {
+          "value": 60,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Pre_Drying_TFF_Efficiency": {
+          "value": 0.95,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Spray_Dryer_Efficiency": {
+          "value": 0.98,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Spray_Dryer_Capacity": {
+          "value": 150,
+          "source_sheet": "Inputs and Assumptions"
+        },
+        "Resin_Lifetime": {
+          "value": 30,
+          "source_sheet": "Unit-Module List"
+        },
+        "MF_Membrane_Lifetime": {
+          "value": 50,
+          "source_sheet": "Unit-Module List"
+        },
+        "UF_Membrane_Lifetime": {
+          "value": 100,
+          "source_sheet": "Unit-Module List"
+        },
+        "Pre_Drying_TFF_Membrane_Lifetime": {
+          "value": 100,
+          "source_sheet": "Unit-Module List"
+        },
+        "Campaign_Changeover_Time": {
+          "value": 7,
+          "source_sheet": "Unit-Module List"
+        },
+        "Capacity sufficient": {
+          "value": 573.1236000000004,
+          "source_sheet": "Calculations"
+        },
+        "Annual_Production_Capacity": {
+          "value": 17193.70800000001,
+          "source_sheet": "Calculations"
+        },
+        "Seed_Train_Time": {
+          "value": 10,
+          "source_sheet": "Calculations"
+        },
+        "Main_Fermentation_Time": {
+          "value": 48,
+          "source_sheet": "Calculations"
+        },
+        "MF_Time": {
+          "value": 33.33333333333334,
+          "source_sheet": "Calculations"
+        },
+        "UF_Time": {
+          "value": 30.00000000000001,
+          "source_sheet": "Calculations"
+        },
+        "DF_Time": {
+          "value": 7.500000000000003,
+          "source_sheet": "Calculations"
+        },
+        "Chromatography_Time": {
+          "value": 10,
+          "source_sheet": "Calculations"
+        },
+        "Pre_Drying_TFF_Time": {
+          "value": 0.8571428571428571,
+          "source_sheet": "Calculations"
+        },
+        "Spray_Drying_Time": {
+          "value": 5.508000000000002,
+          "source_sheet": "Calculations"
+        },
+        "Turnaround_CIP_Time": {
+          "value": 24,
+          "source_sheet": "Calculations"
+        },
+        "Total_Batch_Time_Days": {
+          "value": 5,
+          "source_sheet": "Calculations"
+        },
+        "Scheduled_Batch_Time": {
+          "value": 120,
+          "source_sheet": "Calculations"
+        },
+        "Chromatography_Energy": {
+          "value": 0.15000000000000005,
+          "source_sheet": "Calculations"
+        },
+        "CMO Fee Allocation \u2014 USP time-based": {
+          "value": 126.8928175699292,
+          "source_sheet": "Final Costs"
+        },
+        "CMO Fee Allocation \u2014 DSP time-based": {
+          "value": 137.71542017576593,
+          "source_sheet": "Final Costs"
+        },
+        "Chromatography resin lifetime": {
+          "value": 30,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Batch time (USP + DSP)": {
+          "value": 5,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Total DSP efficiency": {
+          "value": 0.636804,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Resin lifetime": {
+          "value": 30,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "DSP Efficiency": {
+          "value": 0.4,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Batch time (days)": {
+          "value": 2,
+          "source_sheet": "Sensitivity analysis"
+        },
+        "Target dewatering efficiency": {
+          "value": 0.9,
+          "source_sheet": "Dewatering efficiency calulator"
+        },
+        "Seed train + main fermentation (vessel size, time, turnaround, aeration, agitation)": {
+          "value": true,
+          "source_sheet": "Unit-Module List"
+        }
+      }
+    },
+    "gaps_identified": [
+      {
+        "category": "IEX Chromatography Buffers",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Underestimated buffer costs and preparation requirements"
+      },
+      {
+        "category": "Alternative Cell Separation",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Limited separation technology options"
+      },
+      {
+        "category": "Adsorption Operations",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Missing alternative purification methods"
+      },
+      {
+        "category": "Scale-Dependent Parameters",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Inaccurate scaling predictions"
+      },
+      {
+        "category": "Process Intensification",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Missing advanced process options"
+      },
+      {
+        "category": "Quality and Regulatory",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Underestimated compliance costs"
+      }
+    ]
+  },
+  "summary_report": {
+    "extraction_summary": {
+      "total_sheets": 8,
+      "total_parameters": 289,
+      "process_categories": 5,
+      "economic_parameters": 82,
+      "unit_operations": 5,
+      "identified_gaps": 6
+    },
+    "key_process_parameters": {
+      "fermentation_titer": {
+        "param": "Strain_Titer",
+        "value": 10,
+        "sheet": "Inputs and Assumptions"
+      },
+      "fermentation_yield": {
+        "param": "Biomass_Yield_on_Glucose",
+        "value": 0.48,
+        "sheet": "Inputs and Assumptions"
+      },
+      "separation_recovery": {
+        "param": "Product_Recovery_Rate",
+        "value": 0.636804,
+        "sheet": "Inputs and Assumptions"
+      },
+      "separation_efficiency": {
+        "param": "MF_Efficiency",
+        "value": 0.9,
+        "sheet": "Inputs and Assumptions"
+      }
+    },
+    "economic_structure": {
+      "cost_categories": [
+        "Cost_Per_Kg_Product ($)",
+        "Glucose_Cost",
+        "Glycerol_Cost",
+        "Lactose_Cost",
+        "Molasses_Cost",
+        "Carbon_Cost",
+        "Yeast_Extract_Cost",
+        "Peptone_Cost",
+        "Minor_Nutrients_Cost",
+        "Buffer_Component_Cost",
+        "Resin_Cost",
+        "MF_Membrane_Cost",
+        "UF_Membrane_Cost",
+        "Pre_Drying_TFF_Membrane_Cost",
+        "Antifoam_Cost",
+        "Membrane_Cleaning_Cost",
+        "CIP_Chemicals_Cost",
+        "QC_Testing_Cost_Per_Batch",
+        "Electricity_Cost",
+        "Steam_Cost",
+        "Chilled_Water_Cost",
+        "Water_Cost",
+        "Wastewater_Treatment_Cost",
+        "Compressed_Air_Cost",
+        "WFI_Cost",
+        "Annual_Price_Escalation",
+        "Labor_Cost_Per_Batch",
+        "Electricity_Cost_Per_Batch",
+        "Cooling_Cost_Per_Batch",
+        "Buffer_Component_Cost_Basic",
+        "Buffer_Component_Cost_Premium",
+        "Resin_Cost_Per_Batch",
+        "DSP_Electricity_Cost",
+        "Total_Water_Cost",
+        "Wastewater_Treatment_Cost_Total",
+        "Steam_Cost_Total",
+        "Total_Utilities_Cost",
+        "Carbon_source_Cost_Total",
+        "Yeast_Extract_Cost_Total",
+        "Peptone_Cost_Total",
+        "Minor_Nutrients_Cost_Total",
+        "Antifoam_Cost_Total",
+        "Buffer_Components_Cost_Total",
+        "Resin_Cost_Total",
+        "MF_Membrane_Cost_Total",
+        "UF_Membrane_Cost_Total",
+        "Pre_Drying_TFF_Membrane_Cost_Total",
+        "CIP_Chemicals_Cost_Total",
+        "Total_Raw_Materials_Cost",
+        "Annual_Campaign_Setup_Cost",
+        "Campaign_Setup_Cost_Per_Batch",
+        "Annual_Facility_Reservation_Cost",
+        "Reservation_Cost_Per_Batch",
+        "Validation_Batch_Cost_Annual",
+        "Validation_Cost_Per_Batch",
+        "Labor_Base_Cost",
+        "Labor_Cost_Total",
+        "QC_Testing_Base_Cost",
+        "QC_Testing_Cost_Total",
+        "Total_Standard_Batch_Cost",
+        "Total cost",
+        "Total_Campaign_Related_Costs",
+        "First_Batch_In_Campaign_Cost",
+        "Last_Batch_In_Campaign_Cost",
+        "Campaign_Cost_Savings",
+        "Campaign_Cost_Savings_Percentage",
+        "Single_Batch_Cost",
+        "Total_Raw_Materials_Cost_Final",
+        "Total_Cost_Per_Batch",
+        "Cost_Per_Kg_Product",
+        "Annual_Production_Cost",
+        "Carbon_source_cost",
+        "Reconciliation: Cost_per_kg_base \u2212 Subtotal",
+        "Chromatography resin cost",
+        "Cost_Per_Kg_Product ",
+        "Resin cost",
+        "Resin cost ($/L)",
+        "Capex, depreciation, maintenance factors",
+        "Raw Material Costs",
+        "Utility Costs",
+        "PRODUCTION PRICE $/kg",
+        "Resin Cost Scenarios"
+      ],
+      "total_parameters": 82
+    },
+    "scale_parameters": {
+      "capacity": {
+        "param": "Chromatography_Dynamic_Capacity",
+        "value": 60,
+        "sheet": "Inputs and Assumptions"
+      },
+      "volume": {
+        "param": "Working_Volume",
+        "value": 105000,
+        "sheet": "Inputs and Assumptions"
+      },
+      "factor": {
+        "param": "UF_Concentration_Factor",
+        "value": 20,
+        "sheet": "Inputs and Assumptions"
+      }
+    },
+    "gaps_analysis": [
+      {
+        "category": "IEX Chromatography Buffers",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Underestimated buffer costs and preparation requirements"
+      },
+      {
+        "category": "Alternative Cell Separation",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Limited separation technology options"
+      },
+      {
+        "category": "Adsorption Operations",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Missing alternative purification methods"
+      },
+      {
+        "category": "Scale-Dependent Parameters",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Inaccurate scaling predictions"
+      },
+      {
+        "category": "Process Intensification",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Missing advanced process options"
+      },
+      {
+        "category": "Quality and Regulatory",
+        "missing_count": 3,
+        "found_params": [],
+        "impact": "Underestimated compliance costs"
+      }
+    ]
+  }
+}

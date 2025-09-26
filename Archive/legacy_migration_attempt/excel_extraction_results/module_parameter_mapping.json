@@ -1,0 +1,1756 @@
+{
+  "USP01": [
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E39",
+      "context": "Left: Initial yeast extract in media | Above: USP00 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G39",
+      "context": "Left: Seed & Fermentation | Above: USP00c | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E40",
+      "context": "Left: Initial peptone in media | Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G40",
+      "context": "Left: Seed & Fermentation | Above: USP01a | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E46",
+      "context": "Left: OTR capability of fermenter | Above: USP00 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E47",
+      "context": "Left: Power input for mixing | Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E48",
+      "context": "Left: Volume of air per volume of media per minute | Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E120",
+      "context": "Left: YE powder cost | Above: USP00 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G120",
+      "context": "Left: Seed & Fermentation | Above: USP00a | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E121",
+      "context": "Left: Peptone powder cost | Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G121",
+      "context": "Left: Seed & Fermentation | Above: USP01a | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E38",
+      "context": "Left: Seed train time | Above: Module | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G38",
+      "context": "Left: Seed & Fermentation | Above: Module_Option | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E39",
+      "context": "Left: Main fermentation time | Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G39",
+      "context": "Left: Seed & Fermentation | Above: USP01a | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E69",
+      "context": "Left: Yeast extract per batch (kg) | Above: USP00 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G69",
+      "context": "Left: Seed & Fermentation | Above: USP00b | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E70",
+      "context": "Left: Peptone per batch (kg) | Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G70",
+      "context": "Left: Seed & Fermentation | Above: USP01a | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E149",
+      "context": "Left: Yeast extract cost ($) | Above: USP00 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G149",
+      "context": "Left: Seed & Fermentation | Above: USP00b | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E150",
+      "context": "Left: Peptone cost ($) | Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G150",
+      "context": "Left: Seed & Fermentation | Above: USP01a | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A5",
+      "context": "Above: USP00 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C5",
+      "context": "Left: Seed & Fermentation | Above: USP00c | Right: Fed-Batch Rich Media",
+      "full_content": "USP01a"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A6",
+      "context": "Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C6",
+      "context": "Left: Seed & Fermentation | Above: USP01a | Right: Fed-Batch Defined Media",
+      "full_content": "USP01b"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A7",
+      "context": "Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C7",
+      "context": "Left: Seed & Fermentation | Above: USP01b | Right: Continuous",
+      "full_content": "USP01c"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A8",
+      "context": "Above: USP01 | Right: Seed & Fermentation",
+      "full_content": "USP01"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C8",
+      "context": "Left: Seed & Fermentation | Above: USP01c | Right: Perfusion",
+      "full_content": "USP01d"
+    }
+  ],
+  "DSP02": [
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E74",
+      "context": "Left: Protein binding capacity of resin | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G74",
+      "context": "Left: Capture/Chromatography | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E75",
+      "context": "Left: Product recovery in chromatography | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G75",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E76",
+      "context": "Left: Per-cycle bed volumes | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G76",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E77",
+      "context": "Left: Per-cycle bed volumes | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G77",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E78",
+      "context": "Left: Per-cycle bed volumes | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G78",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E79",
+      "context": "Left: Optional | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G79",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E80",
+      "context": "Left: Packed bed volume per column | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G80",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E81",
+      "context": "Left: PCC 3\u20134; SMB 6\u20138 | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G81",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E82",
+      "context": "Left: Dynamic binding capacity | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G82",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E83",
+      "context": "Left: Fraction of DBC used | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G83",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E84",
+      "context": "Left: Peak fraction to UF/TFF | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G84",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E86",
+      "context": "Left: Polymer mass per kg OPN feed (stoichiometric or empirical) | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G86",
+      "context": "Left: Capture/Chromatography | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E87",
+      "context": "Left: Target pH for coacervation window | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G87",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E88",
+      "context": "Left: Ionic strength target at adsorption | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G88",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E89",
+      "context": "Left: Centrifuge | Screen | Microfiltration | Settling | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G89",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E90",
+      "context": "Left: Total wash volume in column volumes (or L/L feed) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G90",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E91",
+      "context": "Left: Elution volume relative to feed or absolute L | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G91",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E92",
+      "context": "Left: Fraction of OPN captured onto polymer | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G92",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E93",
+      "context": "Left: Fraction of bound OPN eluted | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G93",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E95",
+      "context": "Left: Post-elution removal of polymer (screen/centrifuge/filtration) | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G95",
+      "context": "Left: Capture/Chromatography | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E96",
+      "context": "Left: Calculated = Binding_Efficiency \u00d7 Elution_Efficiency \u00d7 losses | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G96",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E131",
+      "context": "Left: Chromatography resin cost | Above: DSP01 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G131",
+      "context": "Left: Capture/Chromatography | Above: DSP01a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E132",
+      "context": "Left: Number of uses before replacement | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G132",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E133",
+      "context": "Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G133",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E134",
+      "context": "Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G134",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E135",
+      "context": "Left: Total phosphate concentration | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G135",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E136",
+      "context": "Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G136",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E137",
+      "context": "Left: Sodium chloride MW | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G137",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E138",
+      "context": "Left: NaCl for Wash 1 | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G138",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E139",
+      "context": "Left: NaCl for Wash 2 | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G139",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E140",
+      "context": "Left: NaCl for Elution | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G140",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E141",
+      "context": "Left: NaCl for Strip | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G141",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E142",
+      "context": "Left: Base $/kg for commodity salts | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G142",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E143",
+      "context": "Left: Premium-grade buffer chemical cost (2X basic grade) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G143",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E144",
+      "context": "Left: Bulk food/Pharma-grade chitosan price | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G144",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E145",
+      "context": "Left: Name/ID of buffer used to form coacervate | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G145",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E146",
+      "context": "Left: Text recipe (e.g., 10 mM citrate, 150 mM NaCl, pH 4.5) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G146",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E147",
+      "context": "Left: Text recipe for impurity wash | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G147",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E148",
+      "context": "Left: Text recipe for dissociation (e.g., 50\u2013200 mM citrate/phosphate) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G148",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E43",
+      "context": "Left: Chromatography time | Above: DSP01 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G43",
+      "context": "Left: Capture/Chromatography | Above: DSP01a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E94",
+      "context": "Left: Product after chromatography (kg) | Above: DSP01 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G94",
+      "context": "Left: Capture/Chromatography | Above: DSP01a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E95",
+      "context": "Left: Volume presented to separator (centrifuge/filter) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G95",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E96",
+      "context": "Left: Product after polymer capture & elution | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G96",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E97",
+      "context": "Left: Volume prior to UF/DF | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G97",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E98",
+      "context": "Left: Volume after UF/TFF concentration | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G98",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E99",
+      "context": "Left: Branch: if buffer exchange needed use existing pre-drying path else direct | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G99",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E113",
+      "context": "Above: DSP01 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G113",
+      "context": "Left: Capture/Chromatography | Above: DSP01a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E114",
+      "context": "Left: Resin volume needed (L) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G114",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E115",
+      "context": "Left: Number of chromatographic cycles per batch | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G115",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E116",
+      "context": "Left: Wash1 buffer volume per batch | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G116",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E117",
+      "context": "Left: Wash2 buffer volume per batch | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G117",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E118",
+      "context": "Left: Elution buffer volume per batch | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G118",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E119",
+      "context": "Left: Strip buffer volume per batch | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G119",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E120",
+      "context": "Left: Product peak volume sent to UF | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G120",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E121",
+      "context": "Left: Chromatography buffer volume (L) (estimate) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G121",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E122",
+      "context": "Left: Assume coacervation in feed volume (adjust if dilution required) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G122",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E123",
+      "context": "Left: Total wash volume (CV \u00d7 feed volume assumption) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G123",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E124",
+      "context": "Left: Elution volume relative to feed volume | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G124",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E133",
+      "context": "Left: Chromatography energy (kWh) | Above: DSP01 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G133",
+      "context": "Left: Capture/Chromatography | Above: DSP01a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E134",
+      "context": "Left: Energy for centrifuge or filtration | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G134",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E159",
+      "context": "Left: Resin cost per batch ($) | Above: DSP01 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G159",
+      "context": "Left: Capture/Chromatography | Above: DSP01a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E160",
+      "context": "Left: Wash1 buffer unit cost | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G160",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E161",
+      "context": "Left: Wash2 buffer unit cost | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G161",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E162",
+      "context": "Left: Elution buffer unit cost | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G162",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E163",
+      "context": "Left: Strip buffer unit cost | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G163",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E164",
+      "context": "Left: Cost of Wash1 buffer | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G164",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E165",
+      "context": "Left: Cost of Wash2 buffer | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G165",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E166",
+      "context": "Left: Cost of elution buffer | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G166",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E167",
+      "context": "Left: Cost of strip buffer | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G167",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E168",
+      "context": "Left: Polymer mass needed per batch | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G168",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E169",
+      "context": "Left: Polymer cost per batch | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G169",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E170",
+      "context": "Left: Sum of buffer costs (bind assumed native feed) | Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G170",
+      "context": "Left: Capture/Chromatography | Above: DSP02e | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A21",
+      "context": "Above: DSP01 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C21",
+      "context": "Left: Capture/Chromatography | Above: DSP01e | Right: AEX",
+      "full_content": "DSP02a"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A22",
+      "context": "Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C22",
+      "context": "Left: Capture/Chromatography | Above: DSP02a | Right: CEX",
+      "full_content": "DSP02b"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A23",
+      "context": "Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C23",
+      "context": "Left: Capture/Chromatography | Above: DSP02b | Right: MMC",
+      "full_content": "DSP02c"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A24",
+      "context": "Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C24",
+      "context": "Left: Capture/Chromatography | Above: DSP02c | Right: Expanded Bed Adsorption",
+      "full_content": "DSP02d"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A25",
+      "context": "Above: DSP02 | Right: Capture/Chromatography",
+      "full_content": "DSP02"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C25",
+      "context": "Left: Capture/Chromatography | Above: DSP02d | Right: Polymer capture / Coacervation",
+      "full_content": "DSP02e"
+    }
+  ],
+  "AEX": [
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H74",
+      "context": "Left: DSP02a | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H75",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H76",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H77",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H78",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H79",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H80",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H81",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H82",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H83",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H84",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H131",
+      "context": "Left: DSP02a | Above: UF Concentration | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H132",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H133",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H134",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H135",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H136",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H137",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H138",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H139",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H140",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H141",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H142",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "H143",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H43",
+      "context": "Left: DSP02a | Above: UF Concentration | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H94",
+      "context": "Left: DSP02a | Above: UF Concentration | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H113",
+      "context": "Left: DSP02a | Above: UF Concentration | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H114",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H115",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H116",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H117",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H118",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H119",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H120",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H121",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H133",
+      "context": "Left: DSP02a | Above: UF Concentration | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H159",
+      "context": "Left: DSP02a | Above: UF Concentration | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H160",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H161",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H162",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H163",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H164",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H165",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H166",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "H167",
+      "context": "Left: DSP02a | Above: AEX | Right: True",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "D21",
+      "context": "Left: DSP02a | Above: Evaporation",
+      "full_content": "AEX"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "D31",
+      "context": "Left: DSP04a | Above: Evaporation",
+      "full_content": "AEX"
+    }
+  ],
+  "DSP03": [
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E98",
+      "context": "Left: Efficiency of pre-drying TFF | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G98",
+      "context": "Left: Concentration/Buffer Exchange | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E99",
+      "context": "Left: TFF flux before spray drying | Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G99",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03a | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E100",
+      "context": "Left: Membrane area for pre-drying TFF | Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G100",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03a | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E101",
+      "context": "Left: Concentration factor before drying | Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G101",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03a | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E149",
+      "context": "Left: Pre-drying TFF membrane cost | Above: DSP02 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G149",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP02e | Right: Diafiltration",
+      "full_content": "DSP03b"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E150",
+      "context": "Left: Cycles before replacement | Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G150",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03b | Right: Diafiltration",
+      "full_content": "DSP03b"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E151",
+      "context": "Left: Ceramic membrane cleaning chemicals | Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G151",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03b | Right: Diafiltration",
+      "full_content": "DSP03b"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E44",
+      "context": "Left: Pre-drying TFF time | Above: DSP02 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G44",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP02a | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E101",
+      "context": "Left: Product after pre-drying TFF (kg) | Above: DSP00 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G101",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP00b | Right: Diafiltration",
+      "full_content": "DSP03b"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G102",
+      "context": "Left: Drying | Above: DSP03b | Right: Diafiltration",
+      "full_content": "DSP03b"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E125",
+      "context": "Left: Pre-drying TFF buffer volume (L) | Above: DSP02 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G125",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP02e | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E135",
+      "context": "Left: Pre-drying TFF energy (kWh) | Above: DSP02 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G135",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP02e | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E171",
+      "context": "Left: Pre-drying TFF membrane cost ($) | Above: DSP02 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G171",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP02e | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E172",
+      "context": "Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G172",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03a | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "E173",
+      "context": "Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Calculations",
+      "location": "G173",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03a | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A26",
+      "context": "Above: DSP02 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C26",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP02e | Right: UF Concentration",
+      "full_content": "DSP03a"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A27",
+      "context": "Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C27",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03a | Right: Diafiltration",
+      "full_content": "DSP03b"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A28",
+      "context": "Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C28",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03b | Right: Single-pass TFF",
+      "full_content": "DSP03c"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A29",
+      "context": "Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C29",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03c | Right: Continuous TFF",
+      "full_content": "DSP03d"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A30",
+      "context": "Above: DSP03 | Right: Concentration/Buffer Exchange",
+      "full_content": "DSP03"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C30",
+      "context": "Left: Concentration/Buffer Exchange | Above: DSP03d | Right: Evaporation",
+      "full_content": "DSP03e"
+    }
+  ],
+  "DSP04": [
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E103",
+      "context": "Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G103",
+      "context": "Left: Polishing & Sterile Filtration | Right: Sterile Filtration",
+      "full_content": "DSP04d"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E104",
+      "context": "Above: DSP04 | Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G104",
+      "context": "Left: Polishing & Sterile Filtration | Above: DSP04d | Right: Sterile Filtration",
+      "full_content": "DSP04d"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E105",
+      "context": "Above: DSP04 | Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G105",
+      "context": "Left: Polishing & Sterile Filtration | Above: DSP04d | Right: Sterile Filtration",
+      "full_content": "DSP04d"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "E106",
+      "context": "Above: DSP04 | Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Inputs and Assumptions",
+      "location": "G106",
+      "context": "Left: Polishing & Sterile Filtration | Above: DSP04d | Right: Sterile Filtration",
+      "full_content": "DSP04d"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A31",
+      "context": "Above: DSP03 | Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C31",
+      "context": "Left: Polishing & Sterile Filtration | Above: DSP03e | Right: AEX",
+      "full_content": "DSP04a"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A32",
+      "context": "Above: DSP04 | Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C32",
+      "context": "Left: Polishing & Sterile Filtration | Above: DSP04a | Right: CEX",
+      "full_content": "DSP04b"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A33",
+      "context": "Above: DSP04 | Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C33",
+      "context": "Left: Polishing & Sterile Filtration | Above: DSP04b | Right: HIC",
+      "full_content": "DSP04c"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "A34",
+      "context": "Above: DSP04 | Right: Polishing & Sterile Filtration",
+      "full_content": "DSP04"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "C34",
+      "context": "Left: Polishing & Sterile Filtration | Above: DSP04c | Right: Sterile Filtration",
+      "full_content": "DSP04d"
+    }
+  ],
+  "CEX": [
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "D22",
+      "context": "Left: DSP02b | Above: AEX",
+      "full_content": "CEX"
+    },
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "D32",
+      "context": "Left: DSP04b | Above: AEX",
+      "full_content": "CEX"
+    }
+  ],
+  "HIC": [
+    {
+      "worksheet": "Dropdown_Lookup",
+      "location": "D33",
+      "context": "Left: DSP04c | Above: CEX",
+      "full_content": "HIC"
+    }
+  ]
+}

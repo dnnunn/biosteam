@@ -1,0 +1,772 @@
+{
+  "modular_structure": {
+    "Module": [
+      "USP00",
+      "USP01",
+      "USP02",
+      "DSP00",
+      "DSP01",
+      "DSP02",
+      "DSP03",
+      "DSP04",
+      "DSP05",
+      "DSP06",
+      "QC01",
+      "PROJ00",
+      "PROJ01",
+      "PROJ02",
+      "PROJ03"
+    ],
+    "Module_Description": [
+      "USP Global Parameter",
+      "Seed & Fermentation",
+      "Harvest & Clarification",
+      "DSP Global Parameter",
+      "Concentration/Buffer Exchange",
+      "Capture/Chromatography",
+      "Polishing & Sterile Filtration",
+      "Drying",
+      "Formulation & Blending",
+      "Quality Control",
+      "Project Global Parameter",
+      "Utilities",
+      "CMO Fees & Campaigns",
+      "Self-Manufacturing"
+    ],
+    "Module_Option": [
+      "USP00a",
+      "USP00b",
+      "USP00c",
+      "USP01a",
+      "USP01b",
+      "USP01c",
+      "USP01d",
+      "USP02a",
+      "USP02b",
+      "USP02c",
+      "USP02d",
+      "DSP00a",
+      "DSP00b",
+      "DSP00c",
+      "DSP01a",
+      "DSP01b",
+      "DSP01c",
+      "DSP01d",
+      "DSP01e",
+      "DSP02a",
+      "DSP02b",
+      "DSP02c",
+      "DSP02d",
+      "DSP02e",
+      "DSP03a",
+      "DSP03b",
+      "DSP03c",
+      "DSP03d",
+      "DSP03e",
+      "DSP04a",
+      "DSP04b",
+      "DSP04c",
+      "DSP04d",
+      "DSP05a",
+      "DSP05b",
+      "DSP05c",
+      "DSP05d",
+      "DSP06a",
+      "DSP06b",
+      "DSP06c",
+      "DSP06d",
+      "QC01a",
+      "QC01b",
+      "QC01c",
+      "PROJ00a",
+      "PROJ00b",
+      "PROJ00c",
+      "PROJ01a",
+      "PROJ01b",
+      "PROJ01c",
+      "PROJ02a",
+      "PROJ02b",
+      "PROJ02c",
+      "PROJ03a",
+      "PROJ03b"
+    ],
+    "Module_Option_Description": [
+      "Assumptions",
+      "Calculations",
+      "SetPoint",
+      "Fed-Batch Rich Media",
+      "Fed-Batch Defined Media",
+      "Continuous",
+      "Perfusion",
+      "Depth Filtration",
+      "Tangential Flow Microfiltration",
+      "Disc-stack Centrifugation",
+      "Continuous Centrifugation",
+      "Setpoint",
+      "UF Concentration",
+      "Diafiltration",
+      "Single-pass TFF",
+      "Continuous TFF",
+      "Evaporation",
+      "AEX",
+      "CEX",
+      "MMC",
+      "Expanded Bed Adsorption",
+      "Polymer capture / Coacervation",
+      "HIC",
+      "Sterile Filtration",
+      "Spray drying",
+      "Lyophilization",
+      "Vacuum Belt Drying",
+      "Fluid Bed Drying",
+      "Simple Buffer Formulation",
+      "Excipients Added",
+      "Spray-agglomeration / Granulation",
+      "Liquid Formulation",
+      "In-house",
+      "Out-sources",
+      "Hybrid",
+      "Steam/Power/Air",
+      "Water",
+      "Wastewater Treatment",
+      "Generic-Low-Mid",
+      "Premium CDMO (e.g., Lonza, WuXi)",
+      "Arxeda",
+      "Greenfield In-house Facility",
+      "Brownfield Conversion Facility"
+    ],
+    "USP00": [
+      "USP Global Parameter"
+    ],
+    "USP01": [
+      "Seed & Fermentation"
+    ],
+    "USP02": [
+      "Harvest & Clarification"
+    ],
+    "DSP00": [
+      "DSP Global Parameter"
+    ],
+    "DSP01": [
+      "Concentration/Buffer Exchange"
+    ],
+    "DSP02": [
+      "Capture/Chromatography"
+    ],
+    "DSP03": [
+      "Concentration/Buffer Exchange"
+    ],
+    "DSP04": [
+      "Polishing & Sterile Filtration"
+    ],
+    "DSP05": [
+      "Drying"
+    ],
+    "DSP06": [
+      "Formulation & Blending"
+    ],
+    "QC01": [
+      "Quality Control"
+    ],
+    "PROJ00": [
+      "Project Global Parameter"
+    ],
+    "PROJ01": [
+      "Utilities"
+    ],
+    "PROJ02": [
+      "CMO Fees & Campaigns"
+    ],
+    "PROJ03": [
+      "Self-Manufacturing"
+    ]
+  },
+  "module_to_biosteam_mapping": {
+    "USP01_Fermentation": {
+      "modules": {
+        "USP01a": "Fed-batch fermentation",
+        "USP01b": "Batch fermentation",
+        "USP01c": "Continuous fermentation",
+        "USP01d": "Perfusion fermentation"
+      },
+      "biosteam_units": {
+        "USP01a": "biosteam.units.BatchReactor (fed-batch mode)",
+        "USP01b": "biosteam.units.BatchReactor (batch mode)",
+        "USP01c": "biosteam.units.CSTR",
+        "USP01d": "biosteam.units.BatchReactor + MembraneBioreactor"
+      },
+      "key_parameters": [
+        "titer",
+        "yield",
+        "tau",
+        "volume",
+        "feeding_strategy"
+      ],
+      "cost_drivers": [
+        "carbon_source",
+        "nitrogen_source",
+        "utilities",
+        "labor"
+      ]
+    },
+    "USP02_Harvest": {
+      "modules": {
+        "USP02a": "Centrifugation",
+        "USP02b": "Microfiltration",
+        "USP02c": "Depth filtration",
+        "USP02d": "Flocculation + settling"
+      },
+      "biosteam_units": {
+        "USP02a": "biosteam.units.SolidsCentrifuge",
+        "USP02b": "biosteam.units.MembraneBioreactor",
+        "USP02c": "biosteam.units.ClarifierThickener",
+        "USP02d": "biosteam.units.MixTank + ClarifierThickener"
+      },
+      "key_parameters": [
+        "efficiency",
+        "flux",
+        "recovery",
+        "solids_content"
+      ],
+      "cost_drivers": [
+        "membrane_cost",
+        "energy",
+        "replacement_frequency"
+      ]
+    },
+    "DSP01_Clarification": {
+      "modules": {
+        "DSP01a": "Depth filtration",
+        "DSP01b": "Microfiltration",
+        "DSP01c": "Ultrafiltration",
+        "DSP01d": "Combined MF/UF"
+      },
+      "biosteam_units": {
+        "DSP01a": "biosteam.units.ClarifierThickener",
+        "DSP01b": "biosteam.units.MembraneBioreactor",
+        "DSP01c": "biosteam.units.UltrafiltrationUnit",
+        "DSP01d": "biosteam.units.MembraneBioreactor + UltrafiltrationUnit"
+      },
+      "key_parameters": [
+        "flux",
+        "TMP",
+        "recovery",
+        "pore_size"
+      ],
+      "cost_drivers": [
+        "membrane_cost",
+        "cleaning_chemicals",
+        "energy"
+      ]
+    },
+    "DSP02_Capture": {
+      "modules": {
+        "DSP02a": "Cation exchange chromatography",
+        "DSP02b": "Anion exchange chromatography",
+        "DSP02c": "Mixed-mode chromatography",
+        "DSP02d": "Affinity chromatography",
+        "DSP02e": "Polymer capture / Coacervation (chitosan)"
+      },
+      "biosteam_units": {
+        "DSP02a": "biosteam.units.IonExchangeColumn",
+        "DSP02b": "biosteam.units.IonExchangeColumn",
+        "DSP02c": "biosteam.units.MultiStageEquilibrium",
+        "DSP02d": "biosteam.units.AffinityColumn",
+        "DSP02e": "biosteam.units.MixTank + SolidsCentrifuge"
+      },
+      "key_parameters": [
+        "capacity",
+        "yield",
+        "selectivity",
+        "buffer_consumption"
+      ],
+      "cost_drivers": [
+        "resin_cost",
+        "buffer_cost",
+        "polymer_cost",
+        "regeneration"
+      ]
+    },
+    "DSP03_Purification": {
+      "modules": {
+        "DSP03a": "Size exclusion chromatography",
+        "DSP03b": "Hydrophobic interaction chromatography",
+        "DSP03c": "Reverse phase chromatography",
+        "DSP03d": "Hydroxyapatite chromatography"
+      },
+      "biosteam_units": {
+        "DSP03a": "biosteam.units.SizeExclusionColumn",
+        "DSP03b": "biosteam.units.HICColumn",
+        "DSP03c": "biosteam.units.RPLCColumn",
+        "DSP03d": "biosteam.units.MultiStageEquilibrium"
+      },
+      "key_parameters": [
+        "resolution",
+        "yield",
+        "purity",
+        "loading"
+      ],
+      "cost_drivers": [
+        "resin_cost",
+        "buffer_cost",
+        "column_lifetime"
+      ]
+    },
+    "DSP04_Concentration": {
+      "modules": {
+        "DSP04a": "Ultrafiltration/Diafiltration",
+        "DSP04b": "Tangential flow filtration",
+        "DSP04c": "Precipitation",
+        "DSP04d": "Evaporation"
+      },
+      "biosteam_units": {
+        "DSP04a": "biosteam.units.UltrafiltrationUnit",
+        "DSP04b": "biosteam.units.TangentialFlowFiltration",
+        "DSP04c": "biosteam.units.MixTank + SolidsCentrifuge",
+        "DSP04d": "biosteam.units.Evaporator"
+      },
+      "key_parameters": [
+        "concentration_factor",
+        "recovery",
+        "flux"
+      ],
+      "cost_drivers": [
+        "membrane_cost",
+        "energy",
+        "chemicals"
+      ]
+    },
+    "DSP05_Formulation": {
+      "modules": {
+        "DSP05a": "Spray drying",
+        "DSP05b": "Freeze drying",
+        "DSP05c": "Crystallization",
+        "DSP05d": "Liquid formulation"
+      },
+      "biosteam_units": {
+        "DSP05a": "biosteam.units.SprayDryer",
+        "DSP05b": "biosteam.units.FreezeDryer",
+        "DSP05c": "biosteam.units.Crystallizer",
+        "DSP05d": "biosteam.units.MixTank"
+      },
+      "key_parameters": [
+        "moisture_content",
+        "yield",
+        "particle_size"
+      ],
+      "cost_drivers": [
+        "energy",
+        "excipients",
+        "packaging"
+      ]
+    }
+  },
+  "chitosan_analysis": {
+    "chitosan_capture": {
+      "mechanism": "Electrostatic attraction between negatively charged proteins and positively charged chitosan",
+      "process_steps": [
+        "1. pH adjustment to protein pI",
+        "2. Chitosan addition and mixing",
+        "3. Coacervation formation",
+        "4. Solid-liquid separation",
+        "5. Coacervate dissolution",
+        "6. Protein recovery"
+      ],
+      "advantages": [
+        "Low capital cost (no columns required)",
+        "High capacity (no resin volume limitation)",
+        "Simple operation",
+        "Biodegradable polymer",
+        "Minimal buffer requirements",
+        "Scalable process"
+      ],
+      "disadvantages": [
+        "Limited selectivity",
+        "pH sensitivity",
+        "Polymer residue concerns",
+        "Less established regulatory path",
+        "Variable performance with different proteins"
+      ],
+      "cost_analysis": {
+        "capex_reduction": "60-80% vs chromatography",
+        "opex_components": {
+          "chitosan_cost": "0.1-0.5 $/kg protein",
+          "pH_adjustment": "0.05-0.1 $/kg protein",
+          "utilities": "0.2-0.3 $/kg protein"
+        },
+        "buffer_savings": "90% reduction vs chromatography"
+      }
+    },
+    "conventional_chromatography": {
+      "mechanism": "Selective binding/elution based on charge, size, or hydrophobicity",
+      "process_steps": [
+        "1. Column equilibration",
+        "2. Sample loading",
+        "3. Wash steps",
+        "4. Gradient elution",
+        "5. Regeneration"
+      ],
+      "advantages": [
+        "High selectivity and purity",
+        "Established technology",
+        "Regulatory acceptance",
+        "Predictable performance",
+        "Multiple separation modes"
+      ],
+      "disadvantages": [
+        "High capital cost",
+        "Resin volume limitations",
+        "Complex operation",
+        "High buffer consumption",
+        "Column lifetime issues"
+      ],
+      "cost_analysis": {
+        "capex_baseline": "100%",
+        "opex_components": {
+          "resin_cost": "50-200 $/L resin",
+          "buffer_cost": "5-15 $/kg protein",
+          "utilities": "0.5-1.0 $/kg protein"
+        }
+      }
+    },
+    "comparison_matrix": {
+      "cost_effectiveness": "Chitosan: 8/10, Chromatography: 6/10",
+      "selectivity": "Chitosan: 5/10, Chromatography: 9/10",
+      "scalability": "Chitosan: 9/10, Chromatography: 7/10",
+      "complexity": "Chitosan: 3/10, Chromatography: 8/10",
+      "regulatory_risk": "Chitosan: 7/10, Chromatography: 3/10"
+    },
+    "process_impact": {
+      "downstream_simplification": "Chitosan enables single-step capture vs multi-step chromatography",
+      "buffer_inventory": "90% reduction in buffer storage requirements",
+      "facility_footprint": "50% reduction in capture area",
+      "labor_requirements": "40% reduction in technical labor"
+    }
+  },
+  "process_alternatives": {},
+  "implementation_priority": {
+    "tier_1_high_impact": {
+      "modules": [
+        "USP01_Fermentation",
+        "DSP02_Capture"
+      ],
+      "rationale": "Highest cost impact and technology differentiation",
+      "effort": "Medium",
+      "timeline": "3-4 months",
+      "cost_impact": "60-70% of total production cost",
+      "complexity": "Medium-High"
+    },
+    "tier_2_medium_impact": {
+      "modules": [
+        "USP02_Harvest",
+        "DSP04_Concentration"
+      ],
+      "rationale": "Significant cost drivers with established BioSTEAM units",
+      "effort": "Low-Medium",
+      "timeline": "2-3 months",
+      "cost_impact": "15-20% of total production cost",
+      "complexity": "Low-Medium"
+    },
+    "tier_3_optimization": {
+      "modules": [
+        "DSP01_Clarification",
+        "DSP03_Purification",
+        "DSP05_Formulation"
+      ],
+      "rationale": "Process optimization and completeness",
+      "effort": "Low",
+      "timeline": "1-2 months",
+      "cost_impact": "10-15% of total production cost",
+      "complexity": "Low"
+    },
+    "implementation_sequence": [
+      {
+        "phase": "1. Foundation",
+        "duration": "4 weeks",
+        "deliverables": [
+          "Core SystemFactory framework",
+          "Basic fermentation module (USP01)",
+          "Standard chromatography capture (DSP02a-d)"
+        ]
+      },
+      {
+        "phase": "2. Innovation",
+        "duration": "6 weeks",
+        "deliverables": [
+          "Chitosan capture module (DSP02e)",
+          "Harvest alternatives (USP02)",
+          "Cost comparison framework"
+        ]
+      },
+      {
+        "phase": "3. Completion",
+        "duration": "4 weeks",
+        "deliverables": [
+          "Remaining DSP modules",
+          "Sensitivity analysis tools",
+          "Scenario optimization"
+        ]
+      }
+    ]
+  },
+  "parameter_organization": {
+    "Inputs and Assumptions": {
+      "shape": [
+        187,
+        9
+      ],
+      "columns": [
+        "Cost_Per_Kg_Product ($)",
+        1264.3427860323095,
+        "Unnamed: 2",
+        "Unnamed: 3",
+        "Unnamed: 4",
+        "Unnamed: 5",
+        "Unnamed: 6",
+        "Unnamed: 7",
+        "Unnamed: 8"
+      ],
+      "sample_data": [
+        {
+          "Cost_Per_Kg_Product ($)": "Product_Per_Batch (kg)",
+          "1264.3427860323095": 491.24880000000053,
+          "Unnamed: 2": "",
+          "Unnamed: 3": "",
+          "Unnamed: 4": "",
+          "Unnamed: 5": "",
+          "Unnamed: 6": "",
+          "Unnamed: 7": "",
+          "Unnamed: 8": ""
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Annual Production per year (kg)",
+          "1264.3427860323095": 14737.464000000016,
+          "Unnamed: 2": "",
+          "Unnamed: 3": "",
+          "Unnamed: 4": "",
+          "Unnamed: 5": "",
+          "Unnamed: 6": "",
+          "Unnamed: 7": "",
+          "Unnamed: 8": ""
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Project Parameters",
+          "1264.3427860323095": "",
+          "Unnamed: 2": "",
+          "Unnamed: 3": "",
+          "Unnamed: 4": "",
+          "Unnamed: 5": "",
+          "Unnamed: 6": "",
+          "Unnamed: 7": "",
+          "Unnamed: 8": ""
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Parameter Name",
+          "1264.3427860323095": "Value",
+          "Unnamed: 2": "Unit",
+          "Unnamed: 3": "Notes",
+          "Unnamed: 4": "Module",
+          "Unnamed: 5": "Module_Description",
+          "Unnamed: 6": "Module_Option",
+          "Unnamed: 7": "Module_Option_Description",
+          "Unnamed: 8": "Default"
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Annual_Production_Target_Year",
+          "1264.3427860323095": 10000,
+          "Unnamed: 2": "kg",
+          "Unnamed: 3": "Target production of purified product",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00c",
+          "Unnamed: 7": "Setpoint",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Strain_Titer",
+          "1264.3427860323095": 10,
+          "Unnamed: 2": "g/L",
+          "Unnamed: 3": "Concentration measured in clarified supernatant",
+          "Unnamed: 4": "USP00",
+          "Unnamed: 5": "USP Global Parameter",
+          "Unnamed: 6": "USP00b",
+          "Unnamed: 7": "Calculations",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Product_Recovery_Rate",
+          "1264.3427860323095": 0.636804,
+          "Unnamed: 2": "%",
+          "Unnamed: 3": "This value is calculated from the DSP step efficiencies",
+          "Unnamed: 4": "DSP00",
+          "Unnamed: 5": "DSP Global Parameter",
+          "Unnamed: 6": "DSP00b",
+          "Unnamed: 7": "Calculations",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Batches_Per_Campaign",
+          "1264.3427860323095": 6,
+          "Unnamed: 2": "number",
+          "Unnamed: 3": "Number of consecutive batches in a campaign",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00c",
+          "Unnamed: 7": "Setpoint",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Annual_Campaigns",
+          "1264.3427860323095": 5,
+          "Unnamed: 2": "number",
+          "Unnamed: 3": "Production campaigns per year",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00c",
+          "Unnamed: 7": "Setpoint",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Batches_Per_Year",
+          "1264.3427860323095": 30,
+          "Unnamed: 2": "number",
+          "Unnamed: 3": "Number of production runs",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00c",
+          "Unnamed: 7": "Setpoint",
+          "Unnamed: 8": true
+        }
+      ]
+    },
+    "Calculations": {
+      "shape": [
+        238,
+        9
+      ],
+      "columns": [
+        "Cost_Per_Kg_Product ($)",
+        1264.3427860323095,
+        "Unnamed: 2",
+        "Unnamed: 3",
+        "Unnamed: 4",
+        "Unnamed: 5",
+        "Unnamed: 6",
+        "Unnamed: 7",
+        "Unnamed: 8"
+      ],
+      "sample_data": [
+        {
+          "Cost_Per_Kg_Product ($)": "Product_Per_Batch (kg)",
+          "1264.3427860323095": 491.24880000000053,
+          "Unnamed: 2": "",
+          "Unnamed: 3": "",
+          "Unnamed: 4": "",
+          "Unnamed: 5": "",
+          "Unnamed: 6": "",
+          "Unnamed: 7": "",
+          "Unnamed: 8": ""
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Annual Production per year (kg)",
+          "1264.3427860323095": 14737.464000000016,
+          "Unnamed: 2": "",
+          "Unnamed: 3": "",
+          "Unnamed: 4": "",
+          "Unnamed: 5": "",
+          "Unnamed: 6": "",
+          "Unnamed: 7": "",
+          "Unnamed: 8": ""
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Production Requirements (Capacity Planning)",
+          "1264.3427860323095": "",
+          "Unnamed: 2": "",
+          "Unnamed: 3": "",
+          "Unnamed: 4": "",
+          "Unnamed: 5": "",
+          "Unnamed: 6": "",
+          "Unnamed: 7": "",
+          "Unnamed: 8": ""
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Parameter Name",
+          "1264.3427860323095": "Formula",
+          "Unnamed: 2": "Unit",
+          "Unnamed: 3": "Description",
+          "Unnamed: 4": "Module",
+          "Unnamed: 5": "Module_Description",
+          "Unnamed: 6": "Module_Option",
+          "Unnamed: 7": "Module_Option_Description",
+          "Unnamed: 8": "Default"
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Required_Product_Before_DSP",
+          "1264.3427860323095": 15703.418948373439,
+          "Unnamed: 2": "kg",
+          "Unnamed: 3": "Required kg before DSP losses based on annual target",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00c",
+          "Unnamed: 7": "Setpoint",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Total_Fermentation_Volume_Needed",
+          "1264.3427860323095": 1832065.5439769,
+          "Unnamed: 2": "L",
+          "Unnamed: 3": "Total fermentation volume needed",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00b",
+          "Unnamed: 7": "Calculations",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Theoretical_Batch_Count",
+          "1264.3427860323095": 17.448243275970476,
+          "Unnamed: 2": "number",
+          "Unnamed: 3": "Theoretical number of batches",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00b",
+          "Unnamed: 7": "Calculations",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Actual_Batches_Needed",
+          "1264.3427860323095": 18,
+          "Unnamed: 2": "number",
+          "Unnamed: 3": "Actual batches needed (rounded up)",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00b",
+          "Unnamed: 7": "Calculations",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Capacity_Check",
+          "1264.3427860323095": "Capacity sufficient",
+          "Unnamed: 2": "yes/no",
+          "Unnamed: 3": "Capacity check",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00b",
+          "Unnamed: 7": "Calculations",
+          "Unnamed: 8": true
+        },
+        {
+          "Cost_Per_Kg_Product ($)": "Product_Per_Batch",
+          "1264.3427860323095": 491.24880000000053,
+          "Unnamed: 2": "kg",
+          "Unnamed: 3": "Product per batch with current parameters",
+          "Unnamed: 4": "PROJ00",
+          "Unnamed: 5": "Project Global Parameter",
+          "Unnamed: 6": "PROJ00b",
+          "Unnamed: 7": "Calculations",
+          "Unnamed: 8": true
+        }
+      ]
+    }
+  }
+}

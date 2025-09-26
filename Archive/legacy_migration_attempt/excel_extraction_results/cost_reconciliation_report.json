@@ -1,0 +1,3841 @@
+{
+  "target_matches": [
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 1,
+        "column": "B",
+        "cell_reference": "B1",
+        "parameter_name": "Left",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Left: Cost_Per_Kg_Product ($)",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Calculations",
+        "row": 1,
+        "column": "B",
+        "cell_reference": "B1",
+        "parameter_name": "Left",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Left: Cost_Per_Kg_Product ($)",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Final Costs",
+        "row": 1,
+        "column": "B",
+        "cell_reference": "B1",
+        "parameter_name": "Left",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Left: Cost_Per_Kg_Product ($)",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "DSP04",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Final Costs",
+        "row": 9,
+        "column": "B",
+        "cell_reference": "B9",
+        "parameter_name": "Left",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Cost_Per_Kg_Product",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Final Costs",
+        "row": 56,
+        "column": "B",
+        "cell_reference": "B56",
+        "parameter_name": "Numeric_Value_1264.3427860323095",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Left: Total | Above: 420.1937948722874",
+        "units": "",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 14,
+        "column": "B",
+        "cell_reference": "B14",
+        "parameter_name": "Left",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Left: Cost_Per_Kg_Product | Right: $/kg",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Cost_Per_Kg_Product",
+          "column_header": "60"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 22,
+        "column": "A",
+        "cell_reference": "A22",
+        "parameter_name": "Numeric_Value_1264.3427860323095",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Right: 10",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "column_header": "Major  Fixed Inputs"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1261.26,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 25,
+        "column": "L",
+        "cell_reference": "L25",
+        "parameter_name": "Numeric_Value_1261.26",
+        "value": 1261.26,
+        "raw_value": "1261.26",
+        "description": "Left: 1352.988 | Above: 840.84 | Right: 1169.532",
+        "units": "",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "0.6",
+          "column_header": "40"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 50,
+        "column": "A",
+        "cell_reference": "A50",
+        "parameter_name": "Numeric_Value_1264.3427860323095",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Right: Low",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "column_header": "Major  Fixed Inputs"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 79,
+        "column": "A",
+        "cell_reference": "A79",
+        "parameter_name": "Numeric_Value_1264.3427860323095",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Right: Molasses",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "column_header": "Major  Fixed Inputs"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 107,
+        "column": "A",
+        "cell_reference": "A107",
+        "parameter_name": "Numeric_Value_1264.3427860323095",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Right: 1000",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "column_header": "Major  Fixed Inputs"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 135,
+        "column": "A",
+        "cell_reference": "A135",
+        "parameter_name": "Numeric_Value_1264.3427860323095",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Right: 0.4",
+        "units": "",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "column_header": "Major  Fixed Inputs"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.3427860323095,
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 163,
+        "column": "A",
+        "cell_reference": "A163",
+        "parameter_name": "Numeric_Value_1264.3427860323095",
+        "value": 1264.3427860323095,
+        "raw_value": "1264.3427860323095",
+        "description": "Right: 2",
+        "units": "days",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "column_header": "Major  Fixed Inputs"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    [
+      1264.9336024550373,
+      {
+        "worksheet": "Production Costs",
+        "row": 18,
+        "column": "G",
+        "cell_reference": "G18",
+        "parameter_name": "Numeric_Value_1264.9336024550373",
+        "value": 1264.9336024550373,
+        "raw_value": "1264.9336024550373",
+        "description": "Left: 1637.8898024789064 | Above: 2602.89970610179 | Right: 966.568642435942",
+        "units": "",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "5",
+          "column_header": "PRODUCTION PRICE $/kg"
+        },
+        "module": "UNKNOWN",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ]
+  ],
+  "resin_components": {
+    "Inputs and Assumptions!B131": {
+      "value": 1000.0,
+      "description": "Left: Resin_Cost | Above: 100 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Calculations!B159": {
+      "value": 366428.5714285718,
+      "description": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!B7": {
+      "value": 1000.0,
+      "description": "Left: Chromatography resin cost | Above: Glycerol | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!C40": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!K40": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!C68": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!K68": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!C97": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!K97": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!B107": {
+      "value": 1000.0,
+      "description": "Left: 1264.3427860323095 | Above: Resin cost ($/L) | Right: 2000",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!J107": {
+      "value": 1000.0,
+      "description": "Left: 14737.464000000016 | Above: Resin cost ($/L) | Right: 2000",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!C152": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!K152": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!C181": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Sensitivity analysis!K181": {
+      "value": 1000.0,
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "parameter_name": "Left"
+    },
+    "Production Costs!G3": {
+      "value": 500.0,
+      "description": "Left: 1000.0 | Above: Resin Cost Scenarios | Right: 100.0",
+      "parameter_name": "Left"
+    },
+    "Production Costs!G28": {
+      "value": 500.0,
+      "description": "Left: 1000.0 | Above: Resin Cost Scenarios | Right: 100.0",
+      "parameter_name": "Left"
+    }
+  },
+  "resin_params": {
+    "resin_cost_per_liter": {
+      "worksheet": "Sensitivity analysis",
+      "row": 181,
+      "column": "K",
+      "cell_reference": "K181",
+      "parameter_name": "Left",
+      "value": 1000,
+      "raw_value": "1000",
+      "description": "Left: Resin cost | Above: 0.636804 | Right: $/L",
+      "units": "L",
+      "data_type": "numeric",
+      "is_formula": false,
+      "context": {
+        "row_header": "Resin cost",
+        "column_header": "20"
+      },
+      "module": "DSP02",
+      "cost_category": "CONSUMABLES"
+    },
+    "resin_lifetime_cycles": {
+      "worksheet": "Sensitivity analysis",
+      "row": 182,
+      "column": "K",
+      "cell_reference": "K182",
+      "parameter_name": "Numeric_Value_30",
+      "value": 30,
+      "raw_value": "30",
+      "description": "Left: Resin lifetime | Above: 1000 | Right: cycles",
+      "units": "L",
+      "data_type": "numeric",
+      "is_formula": false,
+      "context": {
+        "row_header": "Resin lifetime",
+        "column_header": "20"
+      },
+      "module": "DSP02",
+      "cost_category": "CONSUMABLES"
+    },
+    "resin_volume": null,
+    "protein_binding_capacity": {
+      "worksheet": "Inputs and Assumptions",
+      "row": 75,
+      "column": "D",
+      "cell_reference": "D75",
+      "parameter_name": "Product recovery in chromatography",
+      "value": "Product recovery in chromatography",
+      "raw_value": "Product recovery in chromatography",
+      "description": "Left: % | Above: Protein binding capacity of resin | Right: DSP02",
+      "units": "g",
+      "data_type": "text",
+      "is_formula": false,
+      "context": {
+        "row_header": "Chromatography_Yield",
+        "column_header": "Notes"
+      },
+      "module": "DSP02",
+      "cost_category": "CONSUMABLES"
+    },
+    "recovery_efficiency": {
+      "worksheet": "Inputs and Assumptions",
+      "row": 96,
+      "column": "E",
+      "cell_reference": "E96",
+      "parameter_name": "Left",
+      "value": "DSP02",
+      "raw_value": "DSP02",
+      "description": "Left: Calculated = Binding_Efficiency \u00d7 Elution_Efficiency \u00d7 losses | Above: DSP02 | Right: Capture/Chromatography",
+      "units": "g",
+      "data_type": "text",
+      "is_formula": false,
+      "context": {
+        "row_header": "Overall_Recovery",
+        "column_header": "Module"
+      },
+      "module": "DSP02",
+      "cost_category": "UNCLASSIFIED"
+    }
+  },
+  "cmo_costs": {
+    "campaign_setup": [
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 166,
+        "column": "B",
+        "cell_reference": "B166",
+        "parameter_name": "Numeric_Value_250000",
+        "value": 250000,
+        "raw_value": "250000",
+        "description": "Left: Campaign_Setup_Fee | Above: Value | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Fee",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 167,
+        "column": "B",
+        "cell_reference": "B167",
+        "parameter_name": "Numeric_Value_41666.666666666664",
+        "value": 41666.666666666664,
+        "raw_value": "41666.666666666664",
+        "description": "Left: Campaign_Setup_Fee_Per_Batch | Above: 250000 | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Fee_Per_Batch",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 168,
+        "column": "A",
+        "cell_reference": "A168",
+        "parameter_name": "Campaign_Changeover_Time",
+        "value": "Campaign_Changeover_Time",
+        "raw_value": "Campaign_Changeover_Time",
+        "description": "Above: Campaign_Setup_Fee_Per_Batch | Right: 7",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 181,
+        "column": "B",
+        "cell_reference": "B181",
+        "parameter_name": "Left",
+        "value": 1250000,
+        "raw_value": "1250000",
+        "description": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Annual_Campaign_Setup_Cost",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 182,
+        "column": "A",
+        "cell_reference": "A182",
+        "parameter_name": "Above",
+        "value": "Campaign_Setup_Cost_Per_Batch",
+        "raw_value": "Campaign_Setup_Cost_Per_Batch",
+        "description": "Above: Annual_Campaign_Setup_Cost | Right: 41666.666666666664",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 182,
+        "column": "B",
+        "cell_reference": "B182",
+        "parameter_name": "Left",
+        "value": 41666.666666666664,
+        "raw_value": "41666.666666666664",
+        "description": "Left: Campaign_Setup_Cost_Per_Batch | Above: 1250000 | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Cost_Per_Batch",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 182,
+        "column": "C",
+        "cell_reference": "C182",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 41666.666666666664 | Above: $ | Right: Campaign setup cost amortized per batch",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Cost_Per_Batch",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 182,
+        "column": "D",
+        "cell_reference": "D182",
+        "parameter_name": "Campaign setup cost amortized per batch",
+        "value": "Campaign setup cost amortized per batch",
+        "raw_value": "Campaign setup cost amortized per batch",
+        "description": "Left: $ | Above: Total annual campaign setup fees | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Cost_Per_Batch",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 182,
+        "column": "E",
+        "cell_reference": "E182",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Campaign setup cost amortized per batch | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Cost_Per_Batch",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 183,
+        "column": "A",
+        "cell_reference": "A183",
+        "parameter_name": "Above",
+        "value": "Annual_Changeover_Days",
+        "raw_value": "Annual_Changeover_Days",
+        "description": "Above: Campaign_Setup_Cost_Per_Batch | Right: 35",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 183,
+        "column": "D",
+        "cell_reference": "D183",
+        "parameter_name": "Left",
+        "value": "Total days spent on changeovers",
+        "raw_value": "Total days spent on changeovers",
+        "description": "Left: integer | Above: Campaign setup cost amortized per batch | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Annual_Changeover_Days",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      }
+    ],
+    "reservation": [
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 169,
+        "column": "B",
+        "cell_reference": "B169",
+        "parameter_name": "Numeric_Value_50000",
+        "value": 50000,
+        "raw_value": "50000",
+        "description": "Left: Facility_Reservation_Fee | Above: 7 | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Facility_Reservation_Fee",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 170,
+        "column": "B",
+        "cell_reference": "B170",
+        "parameter_name": "Numeric_Value_2",
+        "value": 2,
+        "raw_value": "2",
+        "description": "Left: Campaign_Reservation_Months | Above: 50000 | Right: months",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Reservation_Months",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 170,
+        "column": "C",
+        "cell_reference": "C170",
+        "parameter_name": "months",
+        "value": "months",
+        "raw_value": "months",
+        "description": "Left: 2 | Above: $ | Right: Facility reservation time before campaign starts",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Reservation_Months",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 170,
+        "column": "D",
+        "cell_reference": "D170",
+        "parameter_name": "Facility reservation time before campaign starts",
+        "value": "Facility reservation time before campaign starts",
+        "raw_value": "Facility reservation time before campaign starts",
+        "description": "Left: months | Above: Monthly facility reservation fee | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Reservation_Months",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 170,
+        "column": "E",
+        "cell_reference": "E170",
+        "parameter_name": "PROJ02",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Facility reservation time before campaign starts | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Reservation_Months",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 171,
+        "column": "D",
+        "cell_reference": "D171",
+        "parameter_name": "Discount for multi-year contract commitment",
+        "value": "Discount for multi-year contract commitment",
+        "raw_value": "Discount for multi-year contract commitment",
+        "description": "Left: % | Above: Facility reservation time before campaign starts | Right: PROJ02",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Long_Term_Contract_Discount",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 184,
+        "column": "B",
+        "cell_reference": "B184",
+        "parameter_name": "Left",
+        "value": 500000,
+        "raw_value": "500000",
+        "description": "Left: Annual_Facility_Reservation_Cost | Above: 35 | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Annual_Facility_Reservation_Cost",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 185,
+        "column": "A",
+        "cell_reference": "A185",
+        "parameter_name": "Above",
+        "value": "Reservation_Cost_Per_Batch",
+        "raw_value": "Reservation_Cost_Per_Batch",
+        "description": "Above: Annual_Facility_Reservation_Cost | Right: 16666.666666666668",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 185,
+        "column": "B",
+        "cell_reference": "B185",
+        "parameter_name": "Left",
+        "value": 16666.666666666668,
+        "raw_value": "16666.666666666668",
+        "description": "Left: Reservation_Cost_Per_Batch | Above: 500000 | Right: $",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Reservation_Cost_Per_Batch",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 185,
+        "column": "C",
+        "cell_reference": "C185",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 16666.666666666668 | Above: $ | Right: Reservation cost amortized per batch",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Reservation_Cost_Per_Batch",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 185,
+        "column": "D",
+        "cell_reference": "D185",
+        "parameter_name": "Reservation cost amortized per batch",
+        "value": "Reservation cost amortized per batch",
+        "raw_value": "Reservation cost amortized per batch",
+        "description": "Left: $ | Above: Annual reservation fees | Right: PROJ02",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Reservation_Cost_Per_Batch",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 185,
+        "column": "E",
+        "cell_reference": "E185",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Reservation cost amortized per batch | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Reservation_Cost_Per_Batch",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 186,
+        "column": "A",
+        "cell_reference": "A186",
+        "parameter_name": "Above",
+        "value": "Contract_Year_Multiplier",
+        "raw_value": "Contract_Year_Multiplier",
+        "description": "Above: Reservation_Cost_Per_Batch | Right: 0.3436333333333333",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 186,
+        "column": "D",
+        "cell_reference": "D186",
+        "parameter_name": "Left",
+        "value": "Average price multiplier over contract years",
+        "raw_value": "Average price multiplier over contract years",
+        "description": "Left: integer | Above: Reservation cost amortized per batch | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Contract_Year_Multiplier",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      }
+    ],
+    "validation": [
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 174,
+        "column": "B",
+        "cell_reference": "B174",
+        "parameter_name": "Numeric_Value_0.25",
+        "value": 0.25,
+        "raw_value": "0.25",
+        "description": "Left: Validation_Batch_Surcharge | Above: 0.03 | Right: %",
+        "units": "%",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Surcharge",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 174,
+        "column": "C",
+        "cell_reference": "C174",
+        "parameter_name": "Left",
+        "value": "%",
+        "raw_value": "%",
+        "description": "Left: 0.25 | Above: % | Right: Additional cost for validation batches",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Surcharge",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 174,
+        "column": "E",
+        "cell_reference": "E174",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Additional cost for validation batches | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Surcharge",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 175,
+        "column": "B",
+        "cell_reference": "B175",
+        "parameter_name": "Numeric_Value_3",
+        "value": 3,
+        "raw_value": "3",
+        "description": "Left: Validation_Batches_Required | Above: 0.25 | Right: count",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batches_Required",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 175,
+        "column": "D",
+        "cell_reference": "D175",
+        "parameter_name": "Left",
+        "value": "Number of validation batches required (initial)",
+        "raw_value": "Number of validation batches required (initial)",
+        "description": "Left: count | Above: Additional cost for validation batches | Right: PROJ02",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batches_Required",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 176,
+        "column": "A",
+        "cell_reference": "A176",
+        "parameter_name": "Fermenter_Daily_Rate",
+        "value": "Fermenter_Daily_Rate",
+        "raw_value": "Fermenter_Daily_Rate",
+        "description": "Above: Validation_Batches_Required | Right: 75000",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 188,
+        "column": "B",
+        "cell_reference": "B188",
+        "parameter_name": "Left",
+        "value": 36715.62747895642,
+        "raw_value": "36715.62747895642",
+        "description": "Left: Validation_Batch_Cost_Annual | Above: 0.9 | Right: $",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Cost_Annual",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 188,
+        "column": "C",
+        "cell_reference": "C188",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 36715.62747895642 | Above: % | Right: Validation cost amortized annually",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Cost_Annual",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 188,
+        "column": "E",
+        "cell_reference": "E188",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Validation cost amortized annually | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Cost_Annual",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 189,
+        "column": "A",
+        "cell_reference": "A189",
+        "parameter_name": "Above",
+        "value": "Validation_Cost_Per_Batch",
+        "raw_value": "Validation_Cost_Per_Batch",
+        "description": "Above: Validation_Batch_Cost_Annual | Right: 1223.8542492985473",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 189,
+        "column": "B",
+        "cell_reference": "B189",
+        "parameter_name": "Left",
+        "value": 1223.8542492985473,
+        "raw_value": "1223.8542492985473",
+        "description": "Left: Validation_Cost_Per_Batch | Above: 36715.62747895642 | Right: $",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Cost_Per_Batch",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 189,
+        "column": "C",
+        "cell_reference": "C189",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 1223.8542492985473 | Above: $ | Right: Validation cost amortized per batch",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Cost_Per_Batch",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 189,
+        "column": "D",
+        "cell_reference": "D189",
+        "parameter_name": "Left",
+        "value": "Validation cost amortized per batch",
+        "raw_value": "Validation cost amortized per batch",
+        "description": "Left: $ | Above: Validation cost amortized annually | Right: PROJ02",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Cost_Per_Batch",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 189,
+        "column": "E",
+        "cell_reference": "E189",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Validation cost amortized per batch | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Cost_Per_Batch",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 219,
+        "column": "C",
+        "cell_reference": "C219",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total_Standard_Batch_Cost",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 219,
+        "column": "E",
+        "cell_reference": "E219",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Total standard batch cost before campaign/validation fees | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total_Standard_Batch_Cost",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      }
+    ],
+    "facility_rental": [
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 168,
+        "column": "C",
+        "cell_reference": "C168",
+        "parameter_name": "days",
+        "value": "days",
+        "raw_value": "days",
+        "description": "Left: 7 | Above: $ | Right: Time between campaigns for facility changeover",
+        "units": "days",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Changeover_Time",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 168,
+        "column": "E",
+        "cell_reference": "E168",
+        "parameter_name": "PROJ02",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Time between campaigns for facility changeover | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Changeover_Time",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 169,
+        "column": "D",
+        "cell_reference": "D169",
+        "parameter_name": "Monthly facility reservation fee",
+        "value": "Monthly facility reservation fee",
+        "raw_value": "Monthly facility reservation fee",
+        "description": "Left: $ | Above: Time between campaigns for facility changeover | Right: PROJ02",
+        "units": "days",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Facility_Reservation_Fee",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 9,
+        "column": "H",
+        "cell_reference": "H9",
+        "parameter_name": "Numeric_Value_0.33234167151055316",
+        "value": 0.33234167151055316,
+        "raw_value": "0.33234167151055316",
+        "description": "Left: Facility_Overhead_Percent | Above: 0.589960577375159 | Right: Facility & overhead (% of total)",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "DSP Yield",
+          "column_header": "Formula"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      }
+    ],
+    "other": [
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 9,
+        "column": "A",
+        "cell_reference": "A9",
+        "parameter_name": "Above",
+        "value": "Batches_Per_Campaign",
+        "raw_value": "Batches_Per_Campaign",
+        "description": "Above: Product_Recovery_Rate | Right: 6",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 9,
+        "column": "B",
+        "cell_reference": "B9",
+        "parameter_name": "Numeric_Value_6",
+        "value": 6,
+        "raw_value": "6",
+        "description": "Left: Batches_Per_Campaign | Above: 0.636804 | Right: number",
+        "units": "%",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Batches_Per_Campaign",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 10,
+        "column": "B",
+        "cell_reference": "B10",
+        "parameter_name": "Numeric_Value_5",
+        "value": 5,
+        "raw_value": "5",
+        "description": "Left: Annual_Campaigns | Above: 6 | Right: number",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Annual_Campaigns",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 166,
+        "column": "C",
+        "cell_reference": "C166",
+        "parameter_name": "$",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 250000 | Above: Unit | Right: One-time fee charged at the start of each campaign",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Fee",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 166,
+        "column": "D",
+        "cell_reference": "D166",
+        "parameter_name": "One-time fee charged at the start of each campaign",
+        "value": "One-time fee charged at the start of each campaign",
+        "raw_value": "One-time fee charged at the start of each campaign",
+        "description": "Left: $ | Above: Notes | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Fee",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 166,
+        "column": "E",
+        "cell_reference": "E166",
+        "parameter_name": "PROJ02",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: One-time fee charged at the start of each campaign | Above: Module | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Setup_Fee",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 168,
+        "column": "B",
+        "cell_reference": "B168",
+        "parameter_name": "Numeric_Value_7",
+        "value": 7,
+        "raw_value": "7",
+        "description": "Left: Campaign_Changeover_Time | Above: 41666.666666666664 | Right: days",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Changeover_Time",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 168,
+        "column": "D",
+        "cell_reference": "D168",
+        "parameter_name": "Time between campaigns for facility changeover",
+        "value": "Time between campaigns for facility changeover",
+        "raw_value": "Time between campaigns for facility changeover",
+        "description": "Left: days | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Changeover_Time",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 169,
+        "column": "A",
+        "cell_reference": "A169",
+        "parameter_name": "Facility_Reservation_Fee",
+        "value": "Facility_Reservation_Fee",
+        "raw_value": "Facility_Reservation_Fee",
+        "description": "Above: Campaign_Changeover_Time | Right: 50000",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 173,
+        "column": "D",
+        "cell_reference": "D173",
+        "parameter_name": "Annual price increase for multi-year contracts",
+        "value": "Annual price increase for multi-year contracts",
+        "raw_value": "Annual price increase for multi-year contracts",
+        "description": "Left: % | Above: Length of CMO contract | Right: PROJ02",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Annual_Price_Escalation",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 173,
+        "column": "E",
+        "cell_reference": "E173",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Annual price increase for multi-year contracts | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Annual_Price_Escalation",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 174,
+        "column": "A",
+        "cell_reference": "A174",
+        "parameter_name": "Above",
+        "value": "Validation_Batch_Surcharge",
+        "raw_value": "Validation_Batch_Surcharge",
+        "description": "Above: Annual_Price_Escalation | Right: 0.25",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 174,
+        "column": "D",
+        "cell_reference": "D174",
+        "parameter_name": "Left",
+        "value": "Additional cost for validation batches",
+        "raw_value": "Additional cost for validation batches",
+        "description": "Left: % | Above: Annual price increase for multi-year contracts | Right: PROJ02",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Surcharge",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 177,
+        "column": "A",
+        "cell_reference": "A177",
+        "parameter_name": "Above",
+        "value": "Fermenter_Campaign_Discount",
+        "raw_value": "Fermenter_Campaign_Discount",
+        "description": "Above: Fermenter_Daily_Rate | Right: 0.15",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 177,
+        "column": "B",
+        "cell_reference": "B177",
+        "parameter_name": "Numeric_Value_0.15",
+        "value": 0.15,
+        "raw_value": "0.15",
+        "description": "Left: Fermenter_Campaign_Discount | Above: 75000 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Fermenter_Campaign_Discount",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 177,
+        "column": "C",
+        "cell_reference": "C177",
+        "parameter_name": "Left",
+        "value": "%",
+        "raw_value": "%",
+        "description": "Left: 0.15 | Above: $/day | Right: Discount on daily rate for campaign batches",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Fermenter_Campaign_Discount",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 177,
+        "column": "D",
+        "cell_reference": "D177",
+        "parameter_name": "Discount on daily rate for campaign batches",
+        "value": "Discount on daily rate for campaign batches",
+        "raw_value": "Discount on daily rate for campaign batches",
+        "description": "Left: % | Above: Daily charge for fermenter | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Fermenter_Campaign_Discount",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 177,
+        "column": "E",
+        "cell_reference": "E177",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Discount on daily rate for campaign batches | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Fermenter_Campaign_Discount",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 178,
+        "column": "A",
+        "cell_reference": "A178",
+        "parameter_name": "DSP_Daily_Rate",
+        "value": "DSP_Daily_Rate",
+        "raw_value": "DSP_Daily_Rate",
+        "description": "Above: Fermenter_Campaign_Discount | Right: 75000",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 178,
+        "column": "D",
+        "cell_reference": "D178",
+        "parameter_name": "Left",
+        "value": "Daily charge for DSP suite",
+        "raw_value": "Daily charge for DSP suite",
+        "description": "Left: $/day | Above: Discount on daily rate for campaign batches | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "DSP_Daily_Rate",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 179,
+        "column": "A",
+        "cell_reference": "A179",
+        "parameter_name": "Above",
+        "value": "DSP_Campaign_Discount",
+        "raw_value": "DSP_Campaign_Discount",
+        "description": "Above: DSP_Daily_Rate | Right: 0.1",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 179,
+        "column": "B",
+        "cell_reference": "B179",
+        "parameter_name": "Numeric_Value_0.1",
+        "value": 0.1,
+        "raw_value": "0.1",
+        "description": "Left: DSP_Campaign_Discount | Above: 75000 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "DSP_Campaign_Discount",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 180,
+        "column": "A",
+        "cell_reference": "A180",
+        "parameter_name": "Spray_Dryer_Hourly_Rate",
+        "value": "Spray_Dryer_Hourly_Rate",
+        "raw_value": "Spray_Dryer_Hourly_Rate",
+        "description": "Above: DSP_Campaign_Discount | Right: 1000",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 181,
+        "column": "A",
+        "cell_reference": "A181",
+        "parameter_name": "Above",
+        "value": "Spray_Dryer_Campaign_Discount",
+        "raw_value": "Spray_Dryer_Campaign_Discount",
+        "description": "Above: Spray_Dryer_Hourly_Rate | Right: 0.05",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 181,
+        "column": "B",
+        "cell_reference": "B181",
+        "parameter_name": "Numeric_Value_0.05",
+        "value": 0.05,
+        "raw_value": "0.05",
+        "description": "Left: Spray_Dryer_Campaign_Discount | Above: 1000 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Spray_Dryer_Campaign_Discount",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 182,
+        "column": "A",
+        "cell_reference": "A182",
+        "parameter_name": "Labor_Cost_Per_Batch",
+        "value": "Labor_Cost_Per_Batch",
+        "raw_value": "Labor_Cost_Per_Batch",
+        "description": "Above: Spray_Dryer_Campaign_Discount | Right: 20000",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 182,
+        "column": "D",
+        "cell_reference": "D182",
+        "parameter_name": "Labor cost per batch",
+        "value": "Labor cost per batch",
+        "raw_value": "Labor cost per batch",
+        "description": "Left: $/batch | Above: Discount on spray dryer for campaign batches | Right: PROJ02",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Cost_Per_Batch",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 182,
+        "column": "E",
+        "cell_reference": "E182",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Labor cost per batch | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Cost_Per_Batch",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 183,
+        "column": "A",
+        "cell_reference": "A183",
+        "parameter_name": "Above",
+        "value": "Labor_Campaign_Discount",
+        "raw_value": "Labor_Campaign_Discount",
+        "description": "Above: Labor_Cost_Per_Batch | Right: 0.2",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 183,
+        "column": "B",
+        "cell_reference": "B183",
+        "parameter_name": "Numeric_Value_0.2",
+        "value": 0.2,
+        "raw_value": "0.2",
+        "description": "Left: Labor_Campaign_Discount | Above: 20000 | Right: %",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Discount",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 183,
+        "column": "C",
+        "cell_reference": "C183",
+        "parameter_name": "Left",
+        "value": "%",
+        "raw_value": "%",
+        "description": "Left: 0.2 | Above: $/batch | Right: Labor efficiency discount for campaign batches",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Discount",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 183,
+        "column": "D",
+        "cell_reference": "D183",
+        "parameter_name": "Left",
+        "value": "Labor efficiency discount for campaign batches",
+        "raw_value": "Labor efficiency discount for campaign batches",
+        "description": "Left: % | Above: Labor cost per batch | Right: PROJ02",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Discount",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 183,
+        "column": "E",
+        "cell_reference": "E183",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Labor efficiency discount for campaign batches | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Discount",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 184,
+        "column": "B",
+        "cell_reference": "B184",
+        "parameter_name": "Numeric_Value_0.25",
+        "value": 0.25,
+        "raw_value": "0.25",
+        "description": "Left: CMO_Overhead_Markup | Above: 0.2 | Right: %",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO_Overhead_Markup",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 184,
+        "column": "D",
+        "cell_reference": "D184",
+        "parameter_name": "Left",
+        "value": "CMO markup on consumables",
+        "raw_value": "CMO markup on consumables",
+        "description": "Left: % | Above: Labor efficiency discount for campaign batches | Right: PROJ02",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO_Overhead_Markup",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "CONSUMABLES"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 185,
+        "column": "B",
+        "cell_reference": "B185",
+        "parameter_name": "Numeric_Value_0.1",
+        "value": 0.1,
+        "raw_value": "0.1",
+        "description": "Left: CMO_Consumables_Campaign_Discount | Above: 0.25 | Right: %",
+        "units": "%",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO_Consumables_Campaign_Discount",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "CONSUMABLES"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 187,
+        "column": "E",
+        "cell_reference": "E187",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Quality assurance review cost | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "QA_Review_Base_Fee",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 188,
+        "column": "B",
+        "cell_reference": "B188",
+        "parameter_name": "Numeric_Value_0.15",
+        "value": 0.15,
+        "raw_value": "0.15",
+        "description": "Left: QA_Campaign_Discount | Above: 10000 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "QA_Campaign_Discount",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Inputs and Assumptions",
+        "row": 188,
+        "column": "D",
+        "cell_reference": "D188",
+        "parameter_name": "Left",
+        "value": "Discount on QA/QC for campaign batches",
+        "raw_value": "Discount on QA/QC for campaign batches",
+        "description": "Left: % | Above: Quality assurance review cost | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "QA_Campaign_Discount",
+          "column_header": "Notes"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 178,
+        "column": "A",
+        "cell_reference": "A178",
+        "parameter_name": "Campaign Costs & Amortization",
+        "value": "Campaign Costs & Amortization",
+        "raw_value": "Campaign Costs & Amortization",
+        "description": "",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "EQUIPMENT"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 179,
+        "column": "A",
+        "cell_reference": "A179",
+        "parameter_name": "Above",
+        "value": "Parameter Name",
+        "raw_value": "Parameter Name",
+        "description": "Above: Campaign Costs & Amortization | Right: Formula",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "EQUIPMENT"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 180,
+        "column": "B",
+        "cell_reference": "B180",
+        "parameter_name": "Numeric_Value_5",
+        "value": 5,
+        "raw_value": "5",
+        "description": "Left: Campaigns_Per_Year | Above: Formula | Right: integer",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns_Per_Year",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 181,
+        "column": "A",
+        "cell_reference": "A181",
+        "parameter_name": "Annual_Campaign_Setup_Cost",
+        "value": "Annual_Campaign_Setup_Cost",
+        "raw_value": "Annual_Campaign_Setup_Cost",
+        "description": "Above: Campaigns_Per_Year | Right: 1250000",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 184,
+        "column": "A",
+        "cell_reference": "A184",
+        "parameter_name": "Annual_Facility_Reservation_Cost",
+        "value": "Annual_Facility_Reservation_Cost",
+        "raw_value": "Annual_Facility_Reservation_Cost",
+        "description": "Above: Annual_Changeover_Days | Right: 500000",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 186,
+        "column": "E",
+        "cell_reference": "E186",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Average price multiplier over contract years | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Contract_Year_Multiplier",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 188,
+        "column": "A",
+        "cell_reference": "A188",
+        "parameter_name": "Validation_Batch_Cost_Annual",
+        "value": "Validation_Batch_Cost_Annual",
+        "raw_value": "Validation_Batch_Cost_Annual",
+        "description": "Above: Long_Term_Contract_Factor | Right: 36715.62747895642",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 188,
+        "column": "D",
+        "cell_reference": "D188",
+        "parameter_name": "Validation cost amortized annually",
+        "value": "Validation cost amortized annually",
+        "raw_value": "Validation cost amortized annually",
+        "description": "Left: $ | Above: Discount factor for contract length | Right: PROJ02",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Validation_Batch_Cost_Annual",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 200,
+        "column": "B",
+        "cell_reference": "B200",
+        "parameter_name": "Numeric_Value_0.875",
+        "value": 0.875,
+        "raw_value": "0.875",
+        "description": "Left: Fermenter_Campaign_Factor | Above: 256250 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Fermenter_Campaign_Factor",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 203,
+        "column": "B",
+        "cell_reference": "B203",
+        "parameter_name": "Numeric_Value_0.9166666666666666",
+        "value": 0.9166666666666666,
+        "raw_value": "0.9166666666666666",
+        "description": "Left: DSP_Campaign_Factor | Above: 117187.50000000004 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "DSP_Campaign_Factor",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 206,
+        "column": "B",
+        "cell_reference": "B206",
+        "parameter_name": "Numeric_Value_0.9583333333333334",
+        "value": 0.9583333333333334,
+        "raw_value": "0.9583333333333334",
+        "description": "Left: Spray_Dryer_Campaign_Factor | Above: 5508.000000000002 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Spray_Dryer_Campaign_Factor",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 208,
+        "column": "E",
+        "cell_reference": "E208",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Base labor cost | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Base_Cost",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 209,
+        "column": "A",
+        "cell_reference": "A209",
+        "parameter_name": "Above",
+        "value": "Labor_Campaign_Factor",
+        "raw_value": "Labor_Campaign_Factor",
+        "description": "Above: Labor_Base_Cost | Right: 0.8333333333333333",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 209,
+        "column": "B",
+        "cell_reference": "B209",
+        "parameter_name": "Numeric_Value_0.8333333333333333",
+        "value": 0.8333333333333333,
+        "raw_value": "0.8333333333333333",
+        "description": "Left: Labor_Campaign_Factor | Above: 20000 | Right: %",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Factor",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 209,
+        "column": "C",
+        "cell_reference": "C209",
+        "parameter_name": "Left",
+        "value": "%",
+        "raw_value": "%",
+        "description": "Left: 0.8333333333333333 | Above: $ | Right: Campaign efficiency factor for labor",
+        "units": "%",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Factor",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 209,
+        "column": "D",
+        "cell_reference": "D209",
+        "parameter_name": "Left",
+        "value": "Campaign efficiency factor for labor",
+        "raw_value": "Campaign efficiency factor for labor",
+        "description": "Left: % | Above: Base labor cost | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Factor",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 209,
+        "column": "E",
+        "cell_reference": "E209",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Campaign efficiency factor for labor | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Campaign_Factor",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 210,
+        "column": "A",
+        "cell_reference": "A210",
+        "parameter_name": "Labor_Cost_Total",
+        "value": "Labor_Cost_Total",
+        "raw_value": "Labor_Cost_Total",
+        "description": "Above: Labor_Campaign_Factor | Right: 5154.499999999999",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 210,
+        "column": "E",
+        "cell_reference": "E210",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Final labor cost with discounts | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Labor_Cost_Total",
+          "column_header": "Module"
+        },
+        "module": "DSP04",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 211,
+        "column": "E",
+        "cell_reference": "E211",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Base QC testing cost | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "QC_Testing_Base_Cost",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 212,
+        "column": "A",
+        "cell_reference": "A212",
+        "parameter_name": "Above",
+        "value": "QA_QC_Campaign_Factor",
+        "raw_value": "QA_QC_Campaign_Factor",
+        "description": "Above: QC_Testing_Base_Cost | Right: 0.875",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 212,
+        "column": "B",
+        "cell_reference": "B212",
+        "parameter_name": "Numeric_Value_0.875",
+        "value": 0.875,
+        "raw_value": "0.875",
+        "description": "Left: QA_QC_Campaign_Factor | Above: 15000 | Right: %",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "QA_QC_Campaign_Factor",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 212,
+        "column": "D",
+        "cell_reference": "D212",
+        "parameter_name": "Left",
+        "value": "Campaign discount factor for QA/QC",
+        "raw_value": "Campaign discount factor for QA/QC",
+        "description": "Left: % | Above: Base QC testing cost | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "QA_QC_Campaign_Factor",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 213,
+        "column": "A",
+        "cell_reference": "A213",
+        "parameter_name": "QC_Testing_Cost_Total",
+        "value": "QC_Testing_Cost_Total",
+        "raw_value": "QC_Testing_Cost_Total",
+        "description": "Above: QA_QC_Campaign_Factor | Right: 4059.1687499999994",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 213,
+        "column": "E",
+        "cell_reference": "E213",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Final QC cost with discounts | Above: PROJ02 | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "QC_Testing_Cost_Total",
+          "column_header": "Module"
+        },
+        "module": "DSP04",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 217,
+        "column": "B",
+        "cell_reference": "B217",
+        "parameter_name": "Numeric_Value_0.9166666666666666",
+        "value": 0.9166666666666666,
+        "raw_value": "0.9166666666666666",
+        "description": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %",
+        "units": "$",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Consumables_Campaign_Factor",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "CONSUMABLES"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 218,
+        "column": "B",
+        "cell_reference": "B218",
+        "parameter_name": "Numeric_Value_29390.694627075696",
+        "value": 29390.694627075696,
+        "raw_value": "29390.694627075696",
+        "description": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO_Markup_On_Consumables",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "CONSUMABLES"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 219,
+        "column": "A",
+        "cell_reference": "A219",
+        "parameter_name": "Total_Standard_Batch_Cost",
+        "value": "Total_Standard_Batch_Cost",
+        "raw_value": "Total_Standard_Batch_Cost",
+        "description": "Above: CMO_Markup_On_Consumables | Right: 146862.50991582568",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "CONSUMABLES"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 223,
+        "column": "A",
+        "cell_reference": "A223",
+        "parameter_name": "Total_Campaign_Related_Costs",
+        "value": "Total_Campaign_Related_Costs",
+        "raw_value": "Total_Campaign_Related_Costs",
+        "description": "Right: 59557.18758263188",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 223,
+        "column": "B",
+        "cell_reference": "B223",
+        "parameter_name": "Left",
+        "value": 59557.18758263188,
+        "raw_value": "59557.18758263188",
+        "description": "Left: Total_Campaign_Related_Costs | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total_Campaign_Related_Costs",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 223,
+        "column": "C",
+        "cell_reference": "C223",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 59557.18758263188 | Right: Total amortized campaign-related costs",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total_Campaign_Related_Costs",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 223,
+        "column": "D",
+        "cell_reference": "D223",
+        "parameter_name": "Total amortized campaign-related costs",
+        "value": "Total amortized campaign-related costs",
+        "raw_value": "Total amortized campaign-related costs",
+        "description": "Left: $ | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total_Campaign_Related_Costs",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 223,
+        "column": "E",
+        "cell_reference": "E223",
+        "parameter_name": "Left",
+        "value": "PROJ02",
+        "raw_value": "PROJ02",
+        "description": "Left: Total amortized campaign-related costs | Right: CMO Fees & Campaigns",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total_Campaign_Related_Costs",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 224,
+        "column": "A",
+        "cell_reference": "A224",
+        "parameter_name": "Above",
+        "value": "Laurus quote",
+        "raw_value": "Laurus quote",
+        "description": "Above: Total_Campaign_Related_Costs | Right: 800000",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 224,
+        "column": "D",
+        "cell_reference": "D224",
+        "parameter_name": "Left",
+        "value": "@180m3 USP+DSP - 30 day campaign *not reasonable for 4x45m3 to run concurrently",
+        "raw_value": "@180m3 USP+DSP - 30 day campaign *not reasonable for 4x45m3 to run concurrently",
+        "description": "Left: $ | Above: Total amortized campaign-related costs | Right: PROJ02",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Laurus quote",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 229,
+        "column": "B",
+        "cell_reference": "B229",
+        "parameter_name": "Numeric_Value_206419.69749845756",
+        "value": 206419.69749845756,
+        "raw_value": "206419.69749845756",
+        "description": "Left: Total_CMO_Fees_Final",
+        "units": "",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Total_CMO_Fees_Final",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 231,
+        "column": "A",
+        "cell_reference": "A231",
+        "parameter_name": "Cost Analysis with Campaign Structure",
+        "value": "Cost Analysis with Campaign Structure",
+        "raw_value": "Cost Analysis with Campaign Structure",
+        "description": "",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 234,
+        "column": "A",
+        "cell_reference": "A234",
+        "parameter_name": "First_Batch_In_Campaign_Cost",
+        "value": "First_Batch_In_Campaign_Cost",
+        "raw_value": "First_Batch_In_Campaign_Cost",
+        "description": "Above: Parameter Name | Right: 417842.86847522936",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 234,
+        "column": "B",
+        "cell_reference": "B234",
+        "parameter_name": "Left",
+        "value": 417842.86847522936,
+        "raw_value": "417842.86847522936",
+        "description": "Left: First_Batch_In_Campaign_Cost | Above: Formula | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "First_Batch_In_Campaign_Cost",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 234,
+        "column": "C",
+        "cell_reference": "C234",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 417842.86847522936 | Right: Cost of first batch in campaign",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "First_Batch_In_Campaign_Cost",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 234,
+        "column": "D",
+        "cell_reference": "D234",
+        "parameter_name": "Cost of first batch in campaign",
+        "value": "Cost of first batch in campaign",
+        "raw_value": "Cost of first batch in campaign",
+        "description": "Left: $ | Above: Description | Right: PROJ00",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "First_Batch_In_Campaign_Cost",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 234,
+        "column": "E",
+        "cell_reference": "E234",
+        "parameter_name": "Left",
+        "value": "PROJ00",
+        "raw_value": "PROJ00",
+        "description": "Left: Cost of first batch in campaign | Above: Module | Right: Project Global Parameter",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "First_Batch_In_Campaign_Cost",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 235,
+        "column": "A",
+        "cell_reference": "A235",
+        "parameter_name": "Above",
+        "value": "Last_Batch_In_Campaign_Cost",
+        "raw_value": "Last_Batch_In_Campaign_Cost",
+        "description": "Above: First_Batch_In_Campaign_Cost | Right: 124833.13342845182",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 235,
+        "column": "B",
+        "cell_reference": "B235",
+        "parameter_name": "Left",
+        "value": 124833.13342845182,
+        "raw_value": "124833.13342845182",
+        "description": "Left: Last_Batch_In_Campaign_Cost | Above: 417842.86847522936 | Right: $",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Last_Batch_In_Campaign_Cost",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 235,
+        "column": "C",
+        "cell_reference": "C235",
+        "parameter_name": "Left",
+        "value": "$",
+        "raw_value": "$",
+        "description": "Left: 124833.13342845182 | Above: $ | Right: Cost of last batch in campaign",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Last_Batch_In_Campaign_Cost",
+          "column_header": "Unit"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 235,
+        "column": "D",
+        "cell_reference": "D235",
+        "parameter_name": "Left",
+        "value": "Cost of last batch in campaign",
+        "raw_value": "Cost of last batch in campaign",
+        "description": "Left: $ | Above: Cost of first batch in campaign | Right: PROJ00",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Last_Batch_In_Campaign_Cost",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 235,
+        "column": "E",
+        "cell_reference": "E235",
+        "parameter_name": "Left",
+        "value": "PROJ00",
+        "raw_value": "PROJ00",
+        "description": "Left: Cost of last batch in campaign | Above: PROJ00 | Right: Project Global Parameter",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Last_Batch_In_Campaign_Cost",
+          "column_header": "Module"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 236,
+        "column": "A",
+        "cell_reference": "A236",
+        "parameter_name": "Above",
+        "value": "Campaign_Cost_Savings",
+        "raw_value": "Campaign_Cost_Savings",
+        "description": "Above: Last_Batch_In_Campaign_Cost | Right: 293009.7350467775",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 236,
+        "column": "B",
+        "cell_reference": "B236",
+        "parameter_name": "Left",
+        "value": 293009.7350467775,
+        "raw_value": "293009.7350467775",
+        "description": "Left: Campaign_Cost_Savings | Above: 124833.13342845182 | Right: $",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Cost_Savings",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 236,
+        "column": "D",
+        "cell_reference": "D236",
+        "parameter_name": "Left",
+        "value": "Cost difference between first and last batches",
+        "raw_value": "Cost difference between first and last batches",
+        "description": "Left: $ | Above: Cost of last batch in campaign | Right: PROJ00",
+        "units": "$",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Cost_Savings",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 237,
+        "column": "A",
+        "cell_reference": "A237",
+        "parameter_name": "Above",
+        "value": "Campaign_Cost_Savings_Percentage",
+        "raw_value": "Campaign_Cost_Savings_Percentage",
+        "description": "Above: Campaign_Cost_Savings | Right: 0.7012438338747136",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 237,
+        "column": "B",
+        "cell_reference": "B237",
+        "parameter_name": "Left",
+        "value": 0.7012438338747136,
+        "raw_value": "0.7012438338747136",
+        "description": "Left: Campaign_Cost_Savings_Percentage | Above: 293009.7350467775 | Right: %",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Cost_Savings_Percentage",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 237,
+        "column": "D",
+        "cell_reference": "D237",
+        "parameter_name": "Left",
+        "value": "Percentage savings within a campaign",
+        "raw_value": "Percentage savings within a campaign",
+        "description": "Left: % | Above: Cost difference between first and last batches | Right: PROJ00",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_Cost_Savings_Percentage",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 238,
+        "column": "A",
+        "cell_reference": "A238",
+        "parameter_name": "Above",
+        "value": "Single_Batch_Cost",
+        "raw_value": "Single_Batch_Cost",
+        "description": "Above: Campaign_Cost_Savings_Percentage | Right: 422779.42343038315",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 238,
+        "column": "D",
+        "cell_reference": "D238",
+        "parameter_name": "Cost if ordering a single batch",
+        "value": "Cost if ordering a single batch",
+        "raw_value": "Cost if ordering a single batch",
+        "description": "Left: $ | Above: Percentage savings within a campaign | Right: PROJ00",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Single_Batch_Cost",
+          "column_header": "Description"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 239,
+        "column": "A",
+        "cell_reference": "A239",
+        "parameter_name": "Above",
+        "value": "Campaign_vs_Single_Savings",
+        "raw_value": "Campaign_vs_Single_Savings",
+        "description": "Above: Single_Batch_Cost | Right: 0.5117555726255736",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Calculations",
+        "row": 239,
+        "column": "B",
+        "cell_reference": "B239",
+        "parameter_name": "Numeric_Value_0.5117555726255736",
+        "value": 0.5117555726255736,
+        "raw_value": "0.5117555726255736",
+        "description": "Left: Campaign_vs_Single_Savings | Above: 422779.42343038315 | Right: %",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaign_vs_Single_Savings",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 27,
+        "column": "B",
+        "cell_reference": "B27",
+        "parameter_name": "Numeric_Value_148.04162049825067",
+        "value": 148.04162049825067,
+        "raw_value": "148.04162049825067",
+        "description": "Left: CMO Fee Allocation \u2014 USP time-based | Above: 90.95747409459311 | Right: Suite/day fees, labor, QA, utilities \u2014 diagnostic use only",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Fee Allocation \u2014 USP time-based",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 28,
+        "column": "A",
+        "cell_reference": "A28",
+        "parameter_name": "CMO Fee Allocation \u2014 USP utilities (already in suite fee)",
+        "value": "CMO Fee Allocation \u2014 USP utilities (already in suite fee)",
+        "raw_value": "CMO Fee Allocation \u2014 USP utilities (already in suite fee)",
+        "description": "Above: CMO Fee Allocation \u2014 USP time-based | Right: 9.315686878013738",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "DSP04",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 28,
+        "column": "B",
+        "cell_reference": "B28",
+        "parameter_name": "Numeric_Value_9.315686878013738",
+        "value": 9.315686878013738,
+        "raw_value": "9.315686878013738",
+        "description": "Left: CMO Fee Allocation \u2014 USP utilities (already in suite fee) | Above: 148.04162049825067 | Right: Suite/day fees, labor, QA, utilities \u2014 diagnostic use only",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Fee Allocation \u2014 USP utilities (already in suite fee)",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 29,
+        "column": "B",
+        "cell_reference": "B29",
+        "parameter_name": "Numeric_Value_79.52592406385826",
+        "value": 79.52592406385826,
+        "raw_value": "79.52592406385826",
+        "description": "Left: CMO Overhead & Campaign | Above: 9.315686878013738",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Overhead & Campaign",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 35,
+        "column": "B",
+        "cell_reference": "B35",
+        "parameter_name": "Numeric_Value_150.91587296702707",
+        "value": 150.91587296702707,
+        "raw_value": "150.91587296702707",
+        "description": "Left: CMO Fee Allocation \u2014 DSP time-based | Above: 750.0362930730242 | Right: Suite/day fees, labor, QA, utilities \u2014diagnostic use only",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Fee Allocation \u2014 DSP time-based",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 36,
+        "column": "A",
+        "cell_reference": "A36",
+        "parameter_name": "CMO Fee Allocation \u2014 DSP utilities (already in suite fee)",
+        "value": "CMO Fee Allocation \u2014 DSP utilities (already in suite fee)",
+        "raw_value": "CMO Fee Allocation \u2014 DSP utilities (already in suite fee)",
+        "description": "Above: CMO Fee Allocation \u2014 DSP time-based | Right: 5.764921563167173",
+        "units": "",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Cost_Per_Kg_Product ($)"
+        },
+        "module": "DSP04",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 36,
+        "column": "B",
+        "cell_reference": "B36",
+        "parameter_name": "Numeric_Value_5.764921563167173",
+        "value": 5.764921563167173,
+        "raw_value": "5.764921563167173",
+        "description": "Left: CMO Fee Allocation \u2014 DSP utilities (already in suite fee) | Above: 150.91587296702707 | Right: Suite/day fees, labor, QA, utilities \u2014 diagnostic use only",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Fee Allocation \u2014 DSP utilities (already in suite fee)",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 37,
+        "column": "B",
+        "cell_reference": "B37",
+        "parameter_name": "Numeric_Value_41.71037734315143",
+        "value": 41.71037734315143,
+        "raw_value": "41.71037734315143",
+        "description": "Left: CMO Overhead & Campaign | Above: 5.764921563167173",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Overhead & Campaign",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 40,
+        "column": "B",
+        "cell_reference": "B40",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: CMO Fees (per kg) \u2014 only for LOW/HIGH",
+        "units": "kg",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Fees (per kg) \u2014 only for LOW/HIGH",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Final Costs",
+        "row": 55,
+        "column": "B",
+        "cell_reference": "B55",
+        "parameter_name": "Numeric_Value_420.1937948722874",
+        "value": 420.1937948722874,
+        "raw_value": "420.1937948722874",
+        "description": "Left: CMO Services | Above: 750.0362930730242 | Right: Suite/day fees, labor, QA, utilities \u2014 already bundled",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "CMO Services",
+          "column_header": "1264.3427860323095"
+        },
+        "module": "DSP04",
+        "cost_category": "LABOR"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 11,
+        "column": "A",
+        "cell_reference": "A11",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP)",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Major  Fixed Inputs"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 45,
+        "column": "B",
+        "cell_reference": "B45",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "60"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 45,
+        "column": "C",
+        "cell_reference": "C45",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "g/L"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 45,
+        "column": "J",
+        "cell_reference": "J45",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "DCW (g/L)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 45,
+        "column": "K",
+        "cell_reference": "K45",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "20"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 73,
+        "column": "B",
+        "cell_reference": "B73",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "60"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 73,
+        "column": "C",
+        "cell_reference": "C73",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "g/L"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 73,
+        "column": "J",
+        "cell_reference": "J73",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "DCW (g/L)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 73,
+        "column": "K",
+        "cell_reference": "K73",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "20"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 102,
+        "column": "B",
+        "cell_reference": "B102",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "60"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 102,
+        "column": "C",
+        "cell_reference": "C102",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "g/L"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 102,
+        "column": "J",
+        "cell_reference": "J102",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "DCW (g/L)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 102,
+        "column": "K",
+        "cell_reference": "K102",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "20"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 130,
+        "column": "B",
+        "cell_reference": "B130",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "60"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 130,
+        "column": "C",
+        "cell_reference": "C130",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "g/L"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 130,
+        "column": "J",
+        "cell_reference": "J130",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "DCW (g/L)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 130,
+        "column": "K",
+        "cell_reference": "K130",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "20"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 158,
+        "column": "B",
+        "cell_reference": "B158",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "60"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 158,
+        "column": "C",
+        "cell_reference": "C158",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "g/L"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 158,
+        "column": "J",
+        "cell_reference": "J158",
+        "parameter_name": "Campaigns per year (max 10)",
+        "value": "Campaigns per year (max 10)",
+        "raw_value": "Campaigns per year (max 10)",
+        "description": "Above: Batch time (USP + DSP) | Right: 0",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "DCW (g/L)"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 158,
+        "column": "K",
+        "cell_reference": "K158",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 5",
+        "units": "g",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "20"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 186,
+        "column": "C",
+        "cell_reference": "C186",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 60",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "g/L"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Sensitivity analysis",
+        "row": 186,
+        "column": "K",
+        "cell_reference": "K186",
+        "parameter_name": "Numeric_Value_0",
+        "value": 0,
+        "raw_value": "0",
+        "description": "Left: Campaigns per year (max 10) | Above: 60",
+        "units": "L",
+        "data_type": "numeric",
+        "is_formula": false,
+        "context": {
+          "row_header": "Campaigns per year (max 10)",
+          "column_header": "20"
+        },
+        "module": "CMO",
+        "cost_category": "UNCLASSIFIED"
+      },
+      {
+        "worksheet": "Production Costs",
+        "row": 3,
+        "column": "A",
+        "cell_reference": "A3",
+        "parameter_name": "Low CMO Cost",
+        "value": "Low CMO Cost",
+        "raw_value": "Low CMO Cost",
+        "description": "",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "KEY LEVERS OF COST REDUCTION"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Production Costs",
+        "row": 4,
+        "column": "A",
+        "cell_reference": "A4",
+        "parameter_name": "Above",
+        "value": "Scale of fermenter",
+        "raw_value": "Scale of fermenter",
+        "description": "Above: Low CMO Cost | Right: Size of fermenter used (L)",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "KEY LEVERS OF COST REDUCTION"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Production Costs",
+        "row": 28,
+        "column": "A",
+        "cell_reference": "A28",
+        "parameter_name": "Mid CMO Cost",
+        "value": "Mid CMO Cost",
+        "raw_value": "Mid CMO Cost",
+        "description": "",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "KEY LEVERS OF COST REDUCTION"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Production Costs",
+        "row": 29,
+        "column": "A",
+        "cell_reference": "A29",
+        "parameter_name": "Above",
+        "value": "Scale of fermenter",
+        "raw_value": "Scale of fermenter",
+        "description": "Above: Mid CMO Cost | Right: Size of fermenter used (L)",
+        "units": "L",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "KEY LEVERS OF COST REDUCTION"
+        },
+        "module": "CMO",
+        "cost_category": "FACILITY"
+      },
+      {
+        "worksheet": "Dropdown_Lookup",
+        "row": 132,
+        "column": "E",
+        "cell_reference": "E132",
+        "parameter_name": "CDMO rate cards, campaign setUSP, per-batch fees",
+        "value": "CDMO rate cards, campaign setUSP, per-batch fees",
+        "raw_value": "CDMO rate cards, campaign setUSP, per-batch fees",
+        "description": "Above: Capex, depreciation, maintenance factors",
+        "units": "g",
+        "data_type": "text",
+        "is_formula": false,
+        "context": {
+          "column_header": "Default"
+        },
+        "module": "CMO",
+        "cost_category": "EQUIPMENT"
+      }
+    ]
+  },
+  "module_totals": {
+    "CMO": 2741516.440838513,
+    "DSP02": 382369.25248607184,
+    "DSP03": 5450.0,
+    "DSP04": 19680121.9518219,
+    "OPEX": 45154.5,
+    "UTILITIES": 7688.5308
+  }
+}

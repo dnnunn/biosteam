@@ -1,0 +1,39 @@
+
+================================================================================
+COMPREHENSIVE PARAMETER EXTRACTION REPORT
+================================================================================
+
+SUMMARY STATISTICS:
+Total parameters extracted: 2880
+Worksheets processed: 7
+Cost breakdown sections found: 33
+Module mappings identified: 7
+Questions/issues raised: 0
+
+PARAMETERS BY WORKSHEET:
+  Calculations: 734 parameters
+  DSP_Yield_Analysis: 25 parameters
+  Dropdown_Lookup: 54 parameters
+  Final Costs: 65 parameters
+  Inputs and Assumptions: 555 parameters
+  Production Costs: 274 parameters
+  Sensitivity analysis: 1173 parameters
+
+PARAMETERS BY MODULE:
+  CMO: 166 parameters
+  DSP02: 454 parameters
+  DSP03: 207 parameters
+  DSP04: 68 parameters
+  OPEX: 8 parameters
+  UNKNOWN: 1857 parameters
+  USP01: 39 parameters
+  UTILITIES: 81 parameters
+
+PARAMETERS BY COST CATEGORY:
+  CONSUMABLES: 160 parameters
+  EQUIPMENT: 3 parameters
+  FACILITY: 48 parameters
+  LABOR: 33 parameters
+  RAW_MATERIALS: 371 parameters
+  UNCLASSIFIED: 2179 parameters
+  UTILITIES: 86 parameters

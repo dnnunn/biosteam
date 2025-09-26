@@ -1,0 +1,128 @@
+{
+  "qff_validation": {
+    "calculated_costs": {
+      "product_per_batch_kg": 491.25,
+      "fermentation_cost_per_batch": 55963.57,
+      "fermentation_cost_per_kg": 113.92075318066158,
+      "resin_cost_per_batch": 366433.3333333333,
+      "buffer_cost_per_batch": 1800000,
+      "chromatography_cost_per_batch": 2167627.8233333337,
+      "chromatography_cost_per_kg": 4412.473940627651,
+      "cmo_cost_per_batch": 458656.29,
+      "cmo_cost_per_kg": 933.6514809160304,
+      "total_cost_per_batch": 2682247.6833333336,
+      "cost_per_kg": 5460.0461747243435,
+      "fermentation_percentage": 2.086443036105148,
+      "chromatography_percentage": 80.81385760167899,
+      "cmo_percentage": 17.09969936221587
+    },
+    "excel_targets": {
+      "total_cost_per_kg": 1264.34,
+      "chromatography_cost_per_kg": 747.49,
+      "cmo_cost_per_kg": 410.55,
+      "fermentation_cost_per_kg": 70.8,
+      "product_per_batch_kg": 491.25,
+      "annual_batches": 30,
+      "resin_cost_per_batch": 366429,
+      "resin_volume_L": 10993,
+      "buffer_volume_total_L": 180000
+    },
+    "validation_results": {
+      "total_cost_per_kg": {
+        "target": 1264.34,
+        "calculated": 5460.0461747243435,
+        "difference": 4195.706174724343,
+        "percentage_diff": 331.84951632664814,
+        "passed": false,
+        "tolerance": 5.0
+      },
+      "chromatography_cost_per_kg": {
+        "target": 747.49,
+        "calculated": 4412.473940627651,
+        "difference": 3664.9839406276515,
+        "percentage_diff": 490.30541420322027,
+        "passed": false,
+        "tolerance": 5.0
+      },
+      "cmo_cost_per_kg": {
+        "target": 410.55,
+        "calculated": 933.6514809160304,
+        "difference": 523.1014809160304,
+        "percentage_diff": 127.41480475363059,
+        "passed": false,
+        "tolerance": 5.0
+      },
+      "fermentation_cost_per_kg": {
+        "target": 70.8,
+        "calculated": 113.92075318066158,
+        "difference": 43.12075318066158,
+        "percentage_diff": 60.90501861675365,
+        "passed": false,
+        "tolerance": 5.0
+      },
+      "product_per_batch_kg": {
+        "target": 491.25,
+        "calculated": 491.25,
+        "difference": 0.0,
+        "percentage_diff": 0.0,
+        "passed": true,
+        "tolerance": 5.0
+      },
+      "resin_cost_per_batch": {
+        "target": 366429,
+        "calculated": 366433.3333333333,
+        "difference": 4.333333333313931,
+        "percentage_diff": 0.001182584711721488,
+        "passed": true,
+        "tolerance": 5.0
+      }
+    },
+    "overall_validation": false
+  },
+  "chitosan_validation": {
+    "qff_system": {
+      "product_per_batch_kg": 491.25,
+      "fermentation_cost_per_batch": 55963.57,
+      "fermentation_cost_per_kg": 113.92075318066158,
+      "resin_cost_per_batch": 366433.3333333333,
+      "buffer_cost_per_batch": 1800000,
+      "chromatography_cost_per_batch": 2167627.8233333337,
+      "chromatography_cost_per_kg": 4412.473940627651,
+      "cmo_cost_per_batch": 458656.29,
+      "cmo_cost_per_kg": 933.6514809160304,
+      "total_cost_per_batch": 2682247.6833333336,
+      "cost_per_kg": 5460.0461747243435,
+      "fermentation_percentage": 2.086443036105148,
+      "chromatography_percentage": 80.81385760167899,
+      "cmo_percentage": 17.09969936221587
+    },
+    "chitosan_system": {
+      "product_per_batch_kg": 521.953125,
+      "fermentation_cost_per_batch": 55963.57,
+      "capture_cost_per_batch": 143600.0,
+      "cmo_cost_per_batch": 366925.032,
+      "total_cost_per_batch": 566488.602,
+      "cost_per_kg": 1085.3246678042208
+    },
+    "savings_analysis": {
+      "cost_savings_per_kg": 4374.721506920123,
+      "percentage_savings": 80.12242693425547,
+      "annual_cost_savings": 68501986.84625001,
+      "target_savings_per_kg": 586.27,
+      "target_annual_savings": 8640000
+    },
+    "validation_status": {
+      "savings_within_tolerance": false,
+      "calculated_savings": 4374.721506920123,
+      "target_savings": 586.27,
+      "difference": 3788.451506920123,
+      "percentage_diff": 646.195695996746
+    }
+  },
+  "validation_summary": {
+    "qff_system_validated": false,
+    "chitosan_savings_validated": false,
+    "excel_baseline_reproduced": false,
+    "savings_target_achieved": false
+  }
+}

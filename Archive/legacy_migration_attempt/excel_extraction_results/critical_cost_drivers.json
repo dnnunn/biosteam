@@ -1,0 +1,382 @@
+[
+  {
+    "worksheet": "Final Costs",
+    "row": 10,
+    "column": "B",
+    "cell_reference": "B10",
+    "parameter_name": "Left",
+    "value": 18633206.292810883,
+    "raw_value": "18633206.292810883",
+    "description": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Annual_Production_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "DSP04",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 181,
+    "column": "B",
+    "cell_reference": "B181",
+    "parameter_name": "Left",
+    "value": 1250000,
+    "raw_value": "1250000",
+    "description": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Annual_Campaign_Setup_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 220,
+    "column": "B",
+    "cell_reference": "B220",
+    "parameter_name": "Left",
+    "value": 811347.6895637944,
+    "raw_value": "811347.6895637944",
+    "description": "Left: Total cost | Above: 146862.50991582568 | Right: $",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Total cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "UNKNOWN",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Final Costs",
+    "row": 8,
+    "column": "B",
+    "cell_reference": "B8",
+    "parameter_name": "Left",
+    "value": 621106.8764270295,
+    "raw_value": "621106.8764270295",
+    "description": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Total_Cost_Per_Batch",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "DSP04",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 184,
+    "column": "B",
+    "cell_reference": "B184",
+    "parameter_name": "Left",
+    "value": 500000,
+    "raw_value": "500000",
+    "description": "Left: Annual_Facility_Reservation_Cost | Above: 35 | Right: $",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Annual_Facility_Reservation_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "FACILITY"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 238,
+    "column": "B",
+    "cell_reference": "B238",
+    "parameter_name": "Left",
+    "value": 422779.42343038315,
+    "raw_value": "422779.42343038315",
+    "description": "Left: Single_Batch_Cost | Above: 0.7012438338747136 | Right: $",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Single_Batch_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "UNKNOWN",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 234,
+    "column": "B",
+    "cell_reference": "B234",
+    "parameter_name": "Left",
+    "value": 417842.86847522936,
+    "raw_value": "417842.86847522936",
+    "description": "Left: First_Batch_In_Campaign_Cost | Above: Formula | Right: $",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "First_Batch_In_Campaign_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 176,
+    "column": "B",
+    "cell_reference": "B176",
+    "parameter_name": "Left",
+    "value": 414687.17892857187,
+    "raw_value": "414687.17892857187",
+    "description": "Left: Total_Raw_Materials_Cost | Above: 856.9575000000001 | Right: $",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Total_Raw_Materials_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "UNKNOWN",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Final Costs",
+    "row": 7,
+    "column": "B",
+    "cell_reference": "B7",
+    "parameter_name": "Left",
+    "value": 414687.17892857187,
+    "raw_value": "414687.17892857187",
+    "description": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Total_Raw_Materials_Cost_Final",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "DSP04",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 159,
+    "column": "B",
+    "cell_reference": "B159",
+    "parameter_name": "Left",
+    "value": 366428.5714285718,
+    "raw_value": "366428.5714285718",
+    "description": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Resin_Cost_Per_Batch",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "DSP02",
+    "cost_category": "CONSUMABLES"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 236,
+    "column": "B",
+    "cell_reference": "B236",
+    "parameter_name": "Left",
+    "value": 293009.7350467775,
+    "raw_value": "293009.7350467775",
+    "description": "Left: Campaign_Cost_Savings | Above: 124833.13342845182 | Right: $",
+    "units": "L",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Campaign_Cost_Savings",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 219,
+    "column": "B",
+    "cell_reference": "B219",
+    "parameter_name": "Left",
+    "value": 146862.50991582568,
+    "raw_value": "146862.50991582568",
+    "description": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Total_Standard_Batch_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "UNKNOWN",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 235,
+    "column": "B",
+    "cell_reference": "B235",
+    "parameter_name": "Left",
+    "value": 124833.13342845182,
+    "raw_value": "124833.13342845182",
+    "description": "Left: Last_Batch_In_Campaign_Cost | Above: 417842.86847522936 | Right: $",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Last_Batch_In_Campaign_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 169,
+    "column": "B",
+    "cell_reference": "B169",
+    "parameter_name": "Left",
+    "value": 79148.57142857151,
+    "raw_value": "79148.57142857151",
+    "description": "Left: Chitosan_Raw_Material_Cost | Above: 1978.7142857142876 | Right: $",
+    "units": "kg",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Chitosan_Raw_Material_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "UNKNOWN",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 223,
+    "column": "B",
+    "cell_reference": "B223",
+    "parameter_name": "Left",
+    "value": 59557.18758263188,
+    "raw_value": "59557.18758263188",
+    "description": "Left: Total_Campaign_Related_Costs | Right: $",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Total_Campaign_Related_Costs",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 182,
+    "column": "B",
+    "cell_reference": "B182",
+    "parameter_name": "Left",
+    "value": 41666.666666666664,
+    "raw_value": "41666.666666666664",
+    "description": "Left: Campaign_Setup_Cost_Per_Batch | Above: 1250000 | Right: $",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Campaign_Setup_Cost_Per_Batch",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 188,
+    "column": "B",
+    "cell_reference": "B188",
+    "parameter_name": "Left",
+    "value": 36715.62747895642,
+    "raw_value": "36715.62747895642",
+    "description": "Left: Validation_Batch_Cost_Annual | Above: 0.9 | Right: $",
+    "units": "L",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Validation_Batch_Cost_Annual",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "CMO",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 150,
+    "column": "B",
+    "cell_reference": "B150",
+    "parameter_name": "Left",
+    "value": 24885,
+    "raw_value": "24885",
+    "description": "Left: Peptone_Cost_Total | Above: 9954 | Right: $",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Peptone_Cost_Total",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "UNKNOWN",
+    "cost_category": "UNCLASSIFIED"
+  },
+  {
+    "worksheet": "Inputs and Assumptions",
+    "row": 182,
+    "column": "B",
+    "cell_reference": "B182",
+    "parameter_name": "Left",
+    "value": 20000,
+    "raw_value": "20000",
+    "description": "Left: Labor_Cost_Per_Batch | Above: 0.05 | Right: $/batch",
+    "units": "g",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Labor_Cost_Per_Batch",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "OPEX",
+    "cost_category": "LABOR"
+  },
+  {
+    "worksheet": "Calculations",
+    "row": 208,
+    "column": "B",
+    "cell_reference": "B208",
+    "parameter_name": "Left",
+    "value": 20000,
+    "raw_value": "20000",
+    "description": "Left: Labor_Base_Cost | Above: 1632.4816950000004 | Right: $",
+    "units": "$",
+    "data_type": "numeric",
+    "is_formula": false,
+    "context": {
+      "row_header": "Labor_Base_Cost",
+      "column_header": "1264.3427860323095"
+    },
+    "module": "OPEX",
+    "cost_category": "LABOR"
+  }
+]

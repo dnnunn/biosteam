@@ -1,0 +1,5565 @@
+{
+  "Calculations_140_0": {
+    "worksheet": "Calculations",
+    "location": "Row 141, Col A",
+    "components": [
+      {
+        "value": 16.200000000000003,
+        "location": "B132",
+        "context": "Left: UF_DF_Energy | Right: kWh"
+      },
+      {
+        "value": 36,
+        "location": "B133",
+        "context": "Left: Chromatography_Energy | Above: 16.200000000000003 | Right: kWh"
+      },
+      {
+        "value": 6.750000000000003,
+        "location": "B135",
+        "context": "Left: Pre_Drying_TFF_Energy | Right: kWh"
+      },
+      {
+        "value": 1228.1220000000012,
+        "location": "B136",
+        "context": "Left: Spray_Dryer_Energy | Above: 6.750000000000003 | Right: kWh/kg"
+      },
+      {
+        "value": 1335.0720000000013,
+        "location": "B137",
+        "context": "Left: Total_DSP_Energy | Above: 1228.1220000000012 | Right: kWh"
+      },
+      {
+        "value": 200.2608000000002,
+        "location": "B138",
+        "context": "Left: DSP_Electricity_Cost | Above: 1335.0720000000013 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C138",
+        "context": "Left: 200.2608000000002 | Above: kWh | Right: DSP electricity cost ($)"
+      },
+      {
+        "value": "DSP electricity cost ($)",
+        "location": "D138",
+        "context": "Left: $ | Above: Total DSP energy (kWh) | Right: PROJ01"
+      },
+      {
+        "value": 249.1500000000001,
+        "location": "B139",
+        "context": "Left: Water_For_Buffer_Preparation | Above: 200.2608000000002 | Right: m\u00b3"
+      },
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      }
+    ]
+  },
+  "Calculations_141_0": {
+    "worksheet": "Calculations",
+    "location": "Row 142, Col A",
+    "components": [
+      {
+        "value": 16.200000000000003,
+        "location": "B132",
+        "context": "Left: UF_DF_Energy | Right: kWh"
+      },
+      {
+        "value": 36,
+        "location": "B133",
+        "context": "Left: Chromatography_Energy | Above: 16.200000000000003 | Right: kWh"
+      },
+      {
+        "value": 6.750000000000003,
+        "location": "B135",
+        "context": "Left: Pre_Drying_TFF_Energy | Right: kWh"
+      },
+      {
+        "value": 1228.1220000000012,
+        "location": "B136",
+        "context": "Left: Spray_Dryer_Energy | Above: 6.750000000000003 | Right: kWh/kg"
+      },
+      {
+        "value": 1335.0720000000013,
+        "location": "B137",
+        "context": "Left: Total_DSP_Energy | Above: 1228.1220000000012 | Right: kWh"
+      },
+      {
+        "value": 200.2608000000002,
+        "location": "B138",
+        "context": "Left: DSP_Electricity_Cost | Above: 1335.0720000000013 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C138",
+        "context": "Left: 200.2608000000002 | Above: kWh | Right: DSP electricity cost ($)"
+      },
+      {
+        "value": "DSP electricity cost ($)",
+        "location": "D138",
+        "context": "Left: $ | Above: Total DSP energy (kWh) | Right: PROJ01"
+      },
+      {
+        "value": 249.1500000000001,
+        "location": "B139",
+        "context": "Left: Water_For_Buffer_Preparation | Above: 200.2608000000002 | Right: m\u00b3"
+      },
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      }
+    ]
+  },
+  "Calculations_142_0": {
+    "worksheet": "Calculations",
+    "location": "Row 143, Col A",
+    "components": [
+      {
+        "value": 36,
+        "location": "B133",
+        "context": "Left: Chromatography_Energy | Above: 16.200000000000003 | Right: kWh"
+      },
+      {
+        "value": 6.750000000000003,
+        "location": "B135",
+        "context": "Left: Pre_Drying_TFF_Energy | Right: kWh"
+      },
+      {
+        "value": 1228.1220000000012,
+        "location": "B136",
+        "context": "Left: Spray_Dryer_Energy | Above: 6.750000000000003 | Right: kWh/kg"
+      },
+      {
+        "value": 1335.0720000000013,
+        "location": "B137",
+        "context": "Left: Total_DSP_Energy | Above: 1228.1220000000012 | Right: kWh"
+      },
+      {
+        "value": 200.2608000000002,
+        "location": "B138",
+        "context": "Left: DSP_Electricity_Cost | Above: 1335.0720000000013 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C138",
+        "context": "Left: 200.2608000000002 | Above: kWh | Right: DSP electricity cost ($)"
+      },
+      {
+        "value": "DSP electricity cost ($)",
+        "location": "D138",
+        "context": "Left: $ | Above: Total DSP energy (kWh) | Right: PROJ01"
+      },
+      {
+        "value": 249.1500000000001,
+        "location": "B139",
+        "context": "Left: Water_For_Buffer_Preparation | Above: 200.2608000000002 | Right: m\u00b3"
+      },
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      }
+    ]
+  },
+  "Calculations_143_0": {
+    "worksheet": "Calculations",
+    "location": "Row 144, Col A",
+    "components": [
+      {
+        "value": 6.750000000000003,
+        "location": "B135",
+        "context": "Left: Pre_Drying_TFF_Energy | Right: kWh"
+      },
+      {
+        "value": 1228.1220000000012,
+        "location": "B136",
+        "context": "Left: Spray_Dryer_Energy | Above: 6.750000000000003 | Right: kWh/kg"
+      },
+      {
+        "value": 1335.0720000000013,
+        "location": "B137",
+        "context": "Left: Total_DSP_Energy | Above: 1228.1220000000012 | Right: kWh"
+      },
+      {
+        "value": 200.2608000000002,
+        "location": "B138",
+        "context": "Left: DSP_Electricity_Cost | Above: 1335.0720000000013 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C138",
+        "context": "Left: 200.2608000000002 | Above: kWh | Right: DSP electricity cost ($)"
+      },
+      {
+        "value": "DSP electricity cost ($)",
+        "location": "D138",
+        "context": "Left: $ | Above: Total DSP energy (kWh) | Right: PROJ01"
+      },
+      {
+        "value": 249.1500000000001,
+        "location": "B139",
+        "context": "Left: Water_For_Buffer_Preparation | Above: 200.2608000000002 | Right: m\u00b3"
+      },
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      }
+    ]
+  },
+  "Calculations_143_3": {
+    "worksheet": "Calculations",
+    "location": "Row 144, Col D",
+    "components": [
+      {
+        "value": 6.750000000000003,
+        "location": "B135",
+        "context": "Left: Pre_Drying_TFF_Energy | Right: kWh"
+      },
+      {
+        "value": 1228.1220000000012,
+        "location": "B136",
+        "context": "Left: Spray_Dryer_Energy | Above: 6.750000000000003 | Right: kWh/kg"
+      },
+      {
+        "value": 1335.0720000000013,
+        "location": "B137",
+        "context": "Left: Total_DSP_Energy | Above: 1228.1220000000012 | Right: kWh"
+      },
+      {
+        "value": 200.2608000000002,
+        "location": "B138",
+        "context": "Left: DSP_Electricity_Cost | Above: 1335.0720000000013 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C138",
+        "context": "Left: 200.2608000000002 | Above: kWh | Right: DSP electricity cost ($)"
+      },
+      {
+        "value": "DSP electricity cost ($)",
+        "location": "D138",
+        "context": "Left: $ | Above: Total DSP energy (kWh) | Right: PROJ01"
+      },
+      {
+        "value": 249.1500000000001,
+        "location": "B139",
+        "context": "Left: Water_For_Buffer_Preparation | Above: 200.2608000000002 | Right: m\u00b3"
+      },
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      }
+    ]
+  },
+  "Calculations_147_0": {
+    "worksheet": "Calculations",
+    "location": "Row 148, Col A",
+    "components": [
+      {
+        "value": 200.2608000000002,
+        "location": "B138",
+        "context": "Left: DSP_Electricity_Cost | Above: 1335.0720000000013 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C138",
+        "context": "Left: 200.2608000000002 | Above: kWh | Right: DSP electricity cost ($)"
+      },
+      {
+        "value": "DSP electricity cost ($)",
+        "location": "D138",
+        "context": "Left: $ | Above: Total DSP energy (kWh) | Right: PROJ01"
+      },
+      {
+        "value": 249.1500000000001,
+        "location": "B139",
+        "context": "Left: Water_For_Buffer_Preparation | Above: 200.2608000000002 | Right: m\u00b3"
+      },
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 27.000000000000068,
+        "location": "B155",
+        "context": "Left: MF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C155",
+        "context": "Left: 27.000000000000068 | Above: $"
+      },
+      {
+        "value": 120,
+        "location": "B156",
+        "context": "Left: UF_Membrane_Cost_Total | Above: 27.000000000000068 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C156",
+        "context": "Left: 120 | Above: $ | Right: UF membrane cost ($)"
+      },
+      {
+        "value": "UF membrane cost ($)",
+        "location": "D156",
+        "context": "Left: $ | Right: DSP01"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B157",
+        "context": "Left: Buffer_cost_per_L_UF | Above: 120 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C157",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 40.50000000000001,
+        "location": "B158",
+        "context": "Left: UF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C158",
+        "context": "Left: 40.50000000000001 | Above: $"
+      }
+    ]
+  },
+  "Calculations_148_0": {
+    "worksheet": "Calculations",
+    "location": "Row 149, Col A",
+    "components": [
+      {
+        "value": 249.1500000000001,
+        "location": "B139",
+        "context": "Left: Water_For_Buffer_Preparation | Above: 200.2608000000002 | Right: m\u00b3"
+      },
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 27.000000000000068,
+        "location": "B155",
+        "context": "Left: MF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C155",
+        "context": "Left: 27.000000000000068 | Above: $"
+      },
+      {
+        "value": 120,
+        "location": "B156",
+        "context": "Left: UF_Membrane_Cost_Total | Above: 27.000000000000068 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C156",
+        "context": "Left: 120 | Above: $ | Right: UF membrane cost ($)"
+      },
+      {
+        "value": "UF membrane cost ($)",
+        "location": "D156",
+        "context": "Left: $ | Right: DSP01"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B157",
+        "context": "Left: Buffer_cost_per_L_UF | Above: 120 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C157",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 40.50000000000001,
+        "location": "B158",
+        "context": "Left: UF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C158",
+        "context": "Left: 40.50000000000001 | Above: $"
+      },
+      {
+        "value": 366428.5714285718,
+        "location": "B159",
+        "context": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C159",
+        "context": "Left: 366428.5714285718 | Above: $ | Right: Resin cost per batch ($)"
+      },
+      {
+        "value": "Resin cost per batch ($)",
+        "location": "D159",
+        "context": "Left: $ | Right: DSP02"
+      }
+    ]
+  },
+  "Calculations_149_0": {
+    "worksheet": "Calculations",
+    "location": "Row 150, Col A",
+    "components": [
+      {
+        "value": 315,
+        "location": "B140",
+        "context": "Left: CIP_Water_Volume | Above: 249.1500000000001 | Right: m\u00b3"
+      },
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 27.000000000000068,
+        "location": "B155",
+        "context": "Left: MF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C155",
+        "context": "Left: 27.000000000000068 | Above: $"
+      },
+      {
+        "value": 120,
+        "location": "B156",
+        "context": "Left: UF_Membrane_Cost_Total | Above: 27.000000000000068 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C156",
+        "context": "Left: 120 | Above: $ | Right: UF membrane cost ($)"
+      },
+      {
+        "value": "UF membrane cost ($)",
+        "location": "D156",
+        "context": "Left: $ | Right: DSP01"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B157",
+        "context": "Left: Buffer_cost_per_L_UF | Above: 120 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C157",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 40.50000000000001,
+        "location": "B158",
+        "context": "Left: UF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C158",
+        "context": "Left: 40.50000000000001 | Above: $"
+      },
+      {
+        "value": 366428.5714285718,
+        "location": "B159",
+        "context": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C159",
+        "context": "Left: 366428.5714285718 | Above: $ | Right: Resin cost per batch ($)"
+      },
+      {
+        "value": "Resin cost per batch ($)",
+        "location": "D159",
+        "context": "Left: $ | Right: DSP02"
+      },
+      {
+        "value": 0.003261,
+        "location": "B160",
+        "context": "Left: Buffer_cost_per_L_Wash1 | Above: 366428.5714285718 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C160",
+        "context": "Left: 0.003261 | Above: $ | Right: Wash1 buffer unit cost"
+      }
+    ]
+  },
+  "Calculations_150_0": {
+    "worksheet": "Calculations",
+    "location": "Row 151, Col A",
+    "components": [
+      {
+        "value": 1128.3000000000002,
+        "location": "B141",
+        "context": "Left: Total_Water_Cost | Above: 315 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C141",
+        "context": "Left: 1128.3000000000002 | Above: m\u00b3 | Right: Water cost ($)"
+      },
+      {
+        "value": "Water cost ($)",
+        "location": "D141",
+        "context": "Left: $ | Above: CIP water volume (m\u00b3) | Right: PROJ01"
+      },
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 27.000000000000068,
+        "location": "B155",
+        "context": "Left: MF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C155",
+        "context": "Left: 27.000000000000068 | Above: $"
+      },
+      {
+        "value": 120,
+        "location": "B156",
+        "context": "Left: UF_Membrane_Cost_Total | Above: 27.000000000000068 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C156",
+        "context": "Left: 120 | Above: $ | Right: UF membrane cost ($)"
+      },
+      {
+        "value": "UF membrane cost ($)",
+        "location": "D156",
+        "context": "Left: $ | Right: DSP01"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B157",
+        "context": "Left: Buffer_cost_per_L_UF | Above: 120 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C157",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 40.50000000000001,
+        "location": "B158",
+        "context": "Left: UF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C158",
+        "context": "Left: 40.50000000000001 | Above: $"
+      },
+      {
+        "value": 366428.5714285718,
+        "location": "B159",
+        "context": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C159",
+        "context": "Left: 366428.5714285718 | Above: $ | Right: Resin cost per batch ($)"
+      },
+      {
+        "value": "Resin cost per batch ($)",
+        "location": "D159",
+        "context": "Left: $ | Right: DSP02"
+      },
+      {
+        "value": 0.003261,
+        "location": "B160",
+        "context": "Left: Buffer_cost_per_L_Wash1 | Above: 366428.5714285718 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C160",
+        "context": "Left: 0.003261 | Above: $ | Right: Wash1 buffer unit cost"
+      },
+      {
+        "value": 0.003261,
+        "location": "B161",
+        "context": "Left: Buffer_cost_per_L_Wash2 | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C161",
+        "context": "Left: 0.003261 | Above: $/L | Right: Wash2 buffer unit cost"
+      }
+    ]
+  },
+  "Calculations_151_0": {
+    "worksheet": "Calculations",
+    "location": "Row 152, Col A",
+    "components": [
+      {
+        "value": 1503.4500000000003,
+        "location": "B142",
+        "context": "Left: Wastewater_Treatment_Cost_Total | Above: 1128.3000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C142",
+        "context": "Left: 1503.4500000000003 | Above: $ | Right: Wastewater treatment cost ($)"
+      },
+      {
+        "value": "Wastewater treatment cost ($)",
+        "location": "D142",
+        "context": "Left: $ | Above: Water cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 27.000000000000068,
+        "location": "B155",
+        "context": "Left: MF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C155",
+        "context": "Left: 27.000000000000068 | Above: $"
+      },
+      {
+        "value": 120,
+        "location": "B156",
+        "context": "Left: UF_Membrane_Cost_Total | Above: 27.000000000000068 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C156",
+        "context": "Left: 120 | Above: $ | Right: UF membrane cost ($)"
+      },
+      {
+        "value": "UF membrane cost ($)",
+        "location": "D156",
+        "context": "Left: $ | Right: DSP01"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B157",
+        "context": "Left: Buffer_cost_per_L_UF | Above: 120 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C157",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 40.50000000000001,
+        "location": "B158",
+        "context": "Left: UF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C158",
+        "context": "Left: 40.50000000000001 | Above: $"
+      },
+      {
+        "value": 366428.5714285718,
+        "location": "B159",
+        "context": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C159",
+        "context": "Left: 366428.5714285718 | Above: $ | Right: Resin cost per batch ($)"
+      },
+      {
+        "value": "Resin cost per batch ($)",
+        "location": "D159",
+        "context": "Left: $ | Right: DSP02"
+      },
+      {
+        "value": 0.003261,
+        "location": "B160",
+        "context": "Left: Buffer_cost_per_L_Wash1 | Above: 366428.5714285718 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C160",
+        "context": "Left: 0.003261 | Above: $ | Right: Wash1 buffer unit cost"
+      },
+      {
+        "value": 0.003261,
+        "location": "B161",
+        "context": "Left: Buffer_cost_per_L_Wash2 | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C161",
+        "context": "Left: 0.003261 | Above: $/L | Right: Wash2 buffer unit cost"
+      },
+      {
+        "value": 0.003991499999999999,
+        "location": "B162",
+        "context": "Left: Buffer_cost_per_L_Elution | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C162",
+        "context": "Left: 0.003991499999999999 | Above: $/L | Right: Elution buffer unit cost"
+      }
+    ]
+  },
+  "Calculations_152_0": {
+    "worksheet": "Calculations",
+    "location": "Row 153, Col A",
+    "components": [
+      {
+        "value": 250,
+        "location": "B143",
+        "context": "Left: Steam_Cost_Total | Above: 1503.4500000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C143",
+        "context": "Left: 250 | Above: $ | Right: Steam cost ($)"
+      },
+      {
+        "value": "Steam cost ($)",
+        "location": "D143",
+        "context": "Left: $ | Above: Wastewater treatment cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B144",
+        "context": "Left: Total_Utilities_Cost | Above: 250 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C144",
+        "context": "Left: 7658.3308 | Above: $ | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "D144",
+        "context": "Left: $ | Above: Steam cost ($) | Right: PROJ01"
+      },
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 27.000000000000068,
+        "location": "B155",
+        "context": "Left: MF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C155",
+        "context": "Left: 27.000000000000068 | Above: $"
+      },
+      {
+        "value": 120,
+        "location": "B156",
+        "context": "Left: UF_Membrane_Cost_Total | Above: 27.000000000000068 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C156",
+        "context": "Left: 120 | Above: $ | Right: UF membrane cost ($)"
+      },
+      {
+        "value": "UF membrane cost ($)",
+        "location": "D156",
+        "context": "Left: $ | Right: DSP01"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B157",
+        "context": "Left: Buffer_cost_per_L_UF | Above: 120 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C157",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 40.50000000000001,
+        "location": "B158",
+        "context": "Left: UF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C158",
+        "context": "Left: 40.50000000000001 | Above: $"
+      },
+      {
+        "value": 366428.5714285718,
+        "location": "B159",
+        "context": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C159",
+        "context": "Left: 366428.5714285718 | Above: $ | Right: Resin cost per batch ($)"
+      },
+      {
+        "value": "Resin cost per batch ($)",
+        "location": "D159",
+        "context": "Left: $ | Right: DSP02"
+      },
+      {
+        "value": 0.003261,
+        "location": "B160",
+        "context": "Left: Buffer_cost_per_L_Wash1 | Above: 366428.5714285718 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C160",
+        "context": "Left: 0.003261 | Above: $ | Right: Wash1 buffer unit cost"
+      },
+      {
+        "value": 0.003261,
+        "location": "B161",
+        "context": "Left: Buffer_cost_per_L_Wash2 | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C161",
+        "context": "Left: 0.003261 | Above: $/L | Right: Wash2 buffer unit cost"
+      },
+      {
+        "value": 0.003991499999999999,
+        "location": "B162",
+        "context": "Left: Buffer_cost_per_L_Elution | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C162",
+        "context": "Left: 0.003991499999999999 | Above: $/L | Right: Elution buffer unit cost"
+      },
+      {
+        "value": 0.007644,
+        "location": "B163",
+        "context": "Left: Buffer_cost_per_L_Strip | Above: 0.003991499999999999 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C163",
+        "context": "Left: 0.007644 | Above: $/L | Right: Strip buffer unit cost"
+      }
+    ]
+  },
+  "Calculations_155_0": {
+    "worksheet": "Calculations",
+    "location": "Row 156, Col A",
+    "components": [
+      {
+        "value": 9843.75,
+        "location": "B148",
+        "context": "Left: Carbon_source_Cost_Total | Above: Formula | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C148",
+        "context": "Left: 9843.75 | Right: Glucose, glycerol, molasses or lactose cost ($)"
+      },
+      {
+        "value": "Glucose, glycerol, molasses or lactose cost ($)",
+        "location": "D148",
+        "context": "Left: $ | Above: Description | Right: USP00"
+      },
+      {
+        "value": 9954,
+        "location": "B149",
+        "context": "Left: Yeast_Extract_Cost_Total | Above: 9843.75 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C149",
+        "context": "Left: 9954 | Above: $ | Right: Yeast extract cost ($)"
+      },
+      {
+        "value": "Yeast extract cost ($)",
+        "location": "D149",
+        "context": "Left: $ | Above: Glucose, glycerol, molasses or lactose cost ($) | Right: USP01"
+      },
+      {
+        "value": 24885,
+        "location": "B150",
+        "context": "Left: Peptone_Cost_Total | Above: 9954 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C150",
+        "context": "Left: 24885 | Above: $ | Right: Peptone cost ($)"
+      },
+      {
+        "value": "Peptone cost ($)",
+        "location": "D150",
+        "context": "Left: $ | Above: Yeast extract cost ($) | Right: USP01"
+      },
+      {
+        "value": 500,
+        "location": "B151",
+        "context": "Left: Minor_Nutrients_Cost_Total | Above: 24885 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C151",
+        "context": "Left: 500 | Above: $ | Right: Minor nutrients cost ($)"
+      },
+      {
+        "value": "Minor nutrients cost ($)",
+        "location": "D151",
+        "context": "Left: $ | Above: Peptone cost ($) | Right: USP00"
+      },
+      {
+        "value": 1050,
+        "location": "B152",
+        "context": "Left: Antifoam_Cost_Total | Above: 500 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C152",
+        "context": "Left: 1050 | Above: $ | Right: Antifoam cost ($)"
+      },
+      {
+        "value": "Antifoam cost ($)",
+        "location": "D152",
+        "context": "Left: $ | Above: Minor nutrients cost ($) | Right: USP00"
+      },
+      {
+        "value": 200,
+        "location": "B153",
+        "context": "Left: MF_Membrane_Cost_Total | Above: 1050 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C153",
+        "context": "Left: 200 | Above: $ | Right: MF membrane cost ($)"
+      },
+      {
+        "value": "MF membrane cost ($)",
+        "location": "D153",
+        "context": "Left: $ | Above: Antifoam cost ($) | Right: USP02"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B154",
+        "context": "Left: Buffer_cost_per_L_MF | Above: 200 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C154",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 27.000000000000068,
+        "location": "B155",
+        "context": "Left: MF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C155",
+        "context": "Left: 27.000000000000068 | Above: $"
+      },
+      {
+        "value": 120,
+        "location": "B156",
+        "context": "Left: UF_Membrane_Cost_Total | Above: 27.000000000000068 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C156",
+        "context": "Left: 120 | Above: $ | Right: UF membrane cost ($)"
+      },
+      {
+        "value": "UF membrane cost ($)",
+        "location": "D156",
+        "context": "Left: $ | Right: DSP01"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B157",
+        "context": "Left: Buffer_cost_per_L_UF | Above: 120 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C157",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 40.50000000000001,
+        "location": "B158",
+        "context": "Left: UF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C158",
+        "context": "Left: 40.50000000000001 | Above: $"
+      },
+      {
+        "value": 366428.5714285718,
+        "location": "B159",
+        "context": "Left: Resin_Cost_Per_Batch | Above: 40.50000000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C159",
+        "context": "Left: 366428.5714285718 | Above: $ | Right: Resin cost per batch ($)"
+      },
+      {
+        "value": "Resin cost per batch ($)",
+        "location": "D159",
+        "context": "Left: $ | Right: DSP02"
+      },
+      {
+        "value": 0.003261,
+        "location": "B160",
+        "context": "Left: Buffer_cost_per_L_Wash1 | Above: 366428.5714285718 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C160",
+        "context": "Left: 0.003261 | Above: $ | Right: Wash1 buffer unit cost"
+      },
+      {
+        "value": 0.003261,
+        "location": "B161",
+        "context": "Left: Buffer_cost_per_L_Wash2 | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C161",
+        "context": "Left: 0.003261 | Above: $/L | Right: Wash2 buffer unit cost"
+      },
+      {
+        "value": 0.003991499999999999,
+        "location": "B162",
+        "context": "Left: Buffer_cost_per_L_Elution | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C162",
+        "context": "Left: 0.003991499999999999 | Above: $/L | Right: Elution buffer unit cost"
+      },
+      {
+        "value": 0.007644,
+        "location": "B163",
+        "context": "Left: Buffer_cost_per_L_Strip | Above: 0.003991499999999999 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C163",
+        "context": "Left: 0.007644 | Above: $/L | Right: Strip buffer unit cost"
+      },
+      {
+        "value": 146.745,
+        "location": "B164",
+        "context": "Left: Wash1_Cost | Above: 0.007644 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C164",
+        "context": "Left: 146.745 | Above: $/L | Right: Cost of Wash1 buffer"
+      },
+      {
+        "value": 97.83,
+        "location": "B165",
+        "context": "Left: Wash2_Cost | Above: 146.745 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C165",
+        "context": "Left: 97.83 | Above: $ | Right: Cost of Wash2 buffer"
+      },
+      {
+        "value": 299.36249999999995,
+        "location": "B166",
+        "context": "Left: Elution_Cost | Above: 97.83 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C166",
+        "context": "Left: 299.36249999999995 | Above: $ | Right: Cost of elution buffer"
+      }
+    ]
+  },
+  "Calculations_170_0": {
+    "worksheet": "Calculations",
+    "location": "Row 171, Col A",
+    "components": [
+      {
+        "value": 0.003261,
+        "location": "B161",
+        "context": "Left: Buffer_cost_per_L_Wash2 | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C161",
+        "context": "Left: 0.003261 | Above: $/L | Right: Wash2 buffer unit cost"
+      },
+      {
+        "value": 0.003991499999999999,
+        "location": "B162",
+        "context": "Left: Buffer_cost_per_L_Elution | Above: 0.003261 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C162",
+        "context": "Left: 0.003991499999999999 | Above: $/L | Right: Elution buffer unit cost"
+      },
+      {
+        "value": 0.007644,
+        "location": "B163",
+        "context": "Left: Buffer_cost_per_L_Strip | Above: 0.003991499999999999 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C163",
+        "context": "Left: 0.007644 | Above: $/L | Right: Strip buffer unit cost"
+      },
+      {
+        "value": 146.745,
+        "location": "B164",
+        "context": "Left: Wash1_Cost | Above: 0.007644 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C164",
+        "context": "Left: 146.745 | Above: $/L | Right: Cost of Wash1 buffer"
+      },
+      {
+        "value": 97.83,
+        "location": "B165",
+        "context": "Left: Wash2_Cost | Above: 146.745 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C165",
+        "context": "Left: 97.83 | Above: $ | Right: Cost of Wash2 buffer"
+      },
+      {
+        "value": 299.36249999999995,
+        "location": "B166",
+        "context": "Left: Elution_Cost | Above: 97.83 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C166",
+        "context": "Left: 299.36249999999995 | Above: $ | Right: Cost of elution buffer"
+      },
+      {
+        "value": 229.32,
+        "location": "B167",
+        "context": "Left: Strip_Cost | Above: 299.36249999999995 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C167",
+        "context": "Left: 229.32 | Above: $ | Right: Cost of strip buffer"
+      },
+      {
+        "value": 1978.7142857142876,
+        "location": "B168",
+        "context": "Left: Chitosan_Mass_Required | Above: 229.32 | Right: kg"
+      },
+      {
+        "value": 79148.57142857151,
+        "location": "B169",
+        "context": "Left: Chitosan_Raw_Material_Cost | Above: 1978.7142857142876 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C169",
+        "context": "Left: 79148.57142857151 | Above: kg | Right: Polymer cost per batch"
+      },
+      {
+        "value": "$",
+        "location": "C170",
+        "context": "Above: $ | Right: Sum of buffer costs (bind assumed native feed)"
+      },
+      {
+        "value": 630,
+        "location": "B171",
+        "context": "Left: Pre_Drying_TFF_Membrane_Cost_Total | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C171",
+        "context": "Left: 630 | Above: $ | Right: Pre-drying TFF membrane cost ($)"
+      },
+      {
+        "value": "Pre-drying TFF membrane cost ($)",
+        "location": "D171",
+        "context": "Left: $ | Above: Sum of buffer costs (bind assumed native feed) | Right: DSP03"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B172",
+        "context": "Left: Buffer_cost_per_L_TFF | Above: 630 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C172",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 16.200000000000003,
+        "location": "B173",
+        "context": "Left: Predrying_TFF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C173",
+        "context": "Left: 16.200000000000003 | Above: $/L"
+      },
+      {
+        "value": 18.900000000000002,
+        "location": "B174",
+        "context": "Left: CIP_Chemicals_Cost_Total | Above: 16.200000000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C174",
+        "context": "Left: 18.900000000000002 | Above: $ | Right: CIP chemicals cost ($) (2% solution)"
+      },
+      {
+        "value": "CIP chemicals cost ($) (2% solution)",
+        "location": "D174",
+        "context": "Left: $ | Right: DSP00"
+      },
+      {
+        "value": 856.9575000000001,
+        "location": "B175",
+        "context": "Left: Total_Buffer_Cost | Above: 18.900000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C175",
+        "context": "Left: 856.9575000000001 | Above: $ | Right: Total buffer cost per batch"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B176",
+        "context": "Left: Total_Raw_Materials_Cost | Above: 856.9575000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C176",
+        "context": "Left: 414687.17892857187 | Above: $ | Right: Total raw materials cost ($)"
+      },
+      {
+        "value": "Total raw materials cost ($)",
+        "location": "D176",
+        "context": "Left: $ | Above: Total buffer cost per batch | Right: DSP00"
+      },
+      {
+        "value": 5,
+        "location": "B180",
+        "context": "Left: Campaigns_Per_Year | Above: Formula | Right: integer"
+      },
+      {
+        "value": 1250000,
+        "location": "B181",
+        "context": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C181",
+        "context": "Left: 1250000 | Above: integer | Right: Total annual campaign setup fees"
+      }
+    ]
+  },
+  "Calculations_173_0": {
+    "worksheet": "Calculations",
+    "location": "Row 174, Col A",
+    "components": [
+      {
+        "value": 146.745,
+        "location": "B164",
+        "context": "Left: Wash1_Cost | Above: 0.007644 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C164",
+        "context": "Left: 146.745 | Above: $/L | Right: Cost of Wash1 buffer"
+      },
+      {
+        "value": 97.83,
+        "location": "B165",
+        "context": "Left: Wash2_Cost | Above: 146.745 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C165",
+        "context": "Left: 97.83 | Above: $ | Right: Cost of Wash2 buffer"
+      },
+      {
+        "value": 299.36249999999995,
+        "location": "B166",
+        "context": "Left: Elution_Cost | Above: 97.83 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C166",
+        "context": "Left: 299.36249999999995 | Above: $ | Right: Cost of elution buffer"
+      },
+      {
+        "value": 229.32,
+        "location": "B167",
+        "context": "Left: Strip_Cost | Above: 299.36249999999995 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C167",
+        "context": "Left: 229.32 | Above: $ | Right: Cost of strip buffer"
+      },
+      {
+        "value": 1978.7142857142876,
+        "location": "B168",
+        "context": "Left: Chitosan_Mass_Required | Above: 229.32 | Right: kg"
+      },
+      {
+        "value": 79148.57142857151,
+        "location": "B169",
+        "context": "Left: Chitosan_Raw_Material_Cost | Above: 1978.7142857142876 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C169",
+        "context": "Left: 79148.57142857151 | Above: kg | Right: Polymer cost per batch"
+      },
+      {
+        "value": "$",
+        "location": "C170",
+        "context": "Above: $ | Right: Sum of buffer costs (bind assumed native feed)"
+      },
+      {
+        "value": 630,
+        "location": "B171",
+        "context": "Left: Pre_Drying_TFF_Membrane_Cost_Total | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C171",
+        "context": "Left: 630 | Above: $ | Right: Pre-drying TFF membrane cost ($)"
+      },
+      {
+        "value": "Pre-drying TFF membrane cost ($)",
+        "location": "D171",
+        "context": "Left: $ | Above: Sum of buffer costs (bind assumed native feed) | Right: DSP03"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B172",
+        "context": "Left: Buffer_cost_per_L_TFF | Above: 630 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C172",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 16.200000000000003,
+        "location": "B173",
+        "context": "Left: Predrying_TFF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C173",
+        "context": "Left: 16.200000000000003 | Above: $/L"
+      },
+      {
+        "value": 18.900000000000002,
+        "location": "B174",
+        "context": "Left: CIP_Chemicals_Cost_Total | Above: 16.200000000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C174",
+        "context": "Left: 18.900000000000002 | Above: $ | Right: CIP chemicals cost ($) (2% solution)"
+      },
+      {
+        "value": "CIP chemicals cost ($) (2% solution)",
+        "location": "D174",
+        "context": "Left: $ | Right: DSP00"
+      },
+      {
+        "value": 856.9575000000001,
+        "location": "B175",
+        "context": "Left: Total_Buffer_Cost | Above: 18.900000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C175",
+        "context": "Left: 856.9575000000001 | Above: $ | Right: Total buffer cost per batch"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B176",
+        "context": "Left: Total_Raw_Materials_Cost | Above: 856.9575000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C176",
+        "context": "Left: 414687.17892857187 | Above: $ | Right: Total raw materials cost ($)"
+      },
+      {
+        "value": "Total raw materials cost ($)",
+        "location": "D176",
+        "context": "Left: $ | Above: Total buffer cost per batch | Right: DSP00"
+      },
+      {
+        "value": 5,
+        "location": "B180",
+        "context": "Left: Campaigns_Per_Year | Above: Formula | Right: integer"
+      },
+      {
+        "value": 1250000,
+        "location": "B181",
+        "context": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C181",
+        "context": "Left: 1250000 | Above: integer | Right: Total annual campaign setup fees"
+      },
+      {
+        "value": 41666.666666666664,
+        "location": "B182",
+        "context": "Left: Campaign_Setup_Cost_Per_Batch | Above: 1250000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C182",
+        "context": "Left: 41666.666666666664 | Above: $ | Right: Campaign setup cost amortized per batch"
+      },
+      {
+        "value": 35,
+        "location": "B183",
+        "context": "Left: Annual_Changeover_Days | Above: 41666.666666666664 | Right: integer"
+      },
+      {
+        "value": 500000,
+        "location": "B184",
+        "context": "Left: Annual_Facility_Reservation_Cost | Above: 35 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C184",
+        "context": "Left: 500000 | Above: integer | Right: Annual reservation fees"
+      }
+    ]
+  },
+  "Calculations_174_0": {
+    "worksheet": "Calculations",
+    "location": "Row 175, Col A",
+    "components": [
+      {
+        "value": 97.83,
+        "location": "B165",
+        "context": "Left: Wash2_Cost | Above: 146.745 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C165",
+        "context": "Left: 97.83 | Above: $ | Right: Cost of Wash2 buffer"
+      },
+      {
+        "value": 299.36249999999995,
+        "location": "B166",
+        "context": "Left: Elution_Cost | Above: 97.83 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C166",
+        "context": "Left: 299.36249999999995 | Above: $ | Right: Cost of elution buffer"
+      },
+      {
+        "value": 229.32,
+        "location": "B167",
+        "context": "Left: Strip_Cost | Above: 299.36249999999995 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C167",
+        "context": "Left: 229.32 | Above: $ | Right: Cost of strip buffer"
+      },
+      {
+        "value": 1978.7142857142876,
+        "location": "B168",
+        "context": "Left: Chitosan_Mass_Required | Above: 229.32 | Right: kg"
+      },
+      {
+        "value": 79148.57142857151,
+        "location": "B169",
+        "context": "Left: Chitosan_Raw_Material_Cost | Above: 1978.7142857142876 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C169",
+        "context": "Left: 79148.57142857151 | Above: kg | Right: Polymer cost per batch"
+      },
+      {
+        "value": "$",
+        "location": "C170",
+        "context": "Above: $ | Right: Sum of buffer costs (bind assumed native feed)"
+      },
+      {
+        "value": 630,
+        "location": "B171",
+        "context": "Left: Pre_Drying_TFF_Membrane_Cost_Total | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C171",
+        "context": "Left: 630 | Above: $ | Right: Pre-drying TFF membrane cost ($)"
+      },
+      {
+        "value": "Pre-drying TFF membrane cost ($)",
+        "location": "D171",
+        "context": "Left: $ | Above: Sum of buffer costs (bind assumed native feed) | Right: DSP03"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B172",
+        "context": "Left: Buffer_cost_per_L_TFF | Above: 630 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C172",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 16.200000000000003,
+        "location": "B173",
+        "context": "Left: Predrying_TFF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C173",
+        "context": "Left: 16.200000000000003 | Above: $/L"
+      },
+      {
+        "value": 18.900000000000002,
+        "location": "B174",
+        "context": "Left: CIP_Chemicals_Cost_Total | Above: 16.200000000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C174",
+        "context": "Left: 18.900000000000002 | Above: $ | Right: CIP chemicals cost ($) (2% solution)"
+      },
+      {
+        "value": "CIP chemicals cost ($) (2% solution)",
+        "location": "D174",
+        "context": "Left: $ | Right: DSP00"
+      },
+      {
+        "value": 856.9575000000001,
+        "location": "B175",
+        "context": "Left: Total_Buffer_Cost | Above: 18.900000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C175",
+        "context": "Left: 856.9575000000001 | Above: $ | Right: Total buffer cost per batch"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B176",
+        "context": "Left: Total_Raw_Materials_Cost | Above: 856.9575000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C176",
+        "context": "Left: 414687.17892857187 | Above: $ | Right: Total raw materials cost ($)"
+      },
+      {
+        "value": "Total raw materials cost ($)",
+        "location": "D176",
+        "context": "Left: $ | Above: Total buffer cost per batch | Right: DSP00"
+      },
+      {
+        "value": 5,
+        "location": "B180",
+        "context": "Left: Campaigns_Per_Year | Above: Formula | Right: integer"
+      },
+      {
+        "value": 1250000,
+        "location": "B181",
+        "context": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C181",
+        "context": "Left: 1250000 | Above: integer | Right: Total annual campaign setup fees"
+      },
+      {
+        "value": 41666.666666666664,
+        "location": "B182",
+        "context": "Left: Campaign_Setup_Cost_Per_Batch | Above: 1250000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C182",
+        "context": "Left: 41666.666666666664 | Above: $ | Right: Campaign setup cost amortized per batch"
+      },
+      {
+        "value": 35,
+        "location": "B183",
+        "context": "Left: Annual_Changeover_Days | Above: 41666.666666666664 | Right: integer"
+      },
+      {
+        "value": 500000,
+        "location": "B184",
+        "context": "Left: Annual_Facility_Reservation_Cost | Above: 35 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C184",
+        "context": "Left: 500000 | Above: integer | Right: Annual reservation fees"
+      },
+      {
+        "value": 16666.666666666668,
+        "location": "B185",
+        "context": "Left: Reservation_Cost_Per_Batch | Above: 500000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C185",
+        "context": "Left: 16666.666666666668 | Above: $ | Right: Reservation cost amortized per batch"
+      }
+    ]
+  },
+  "Calculations_174_3": {
+    "worksheet": "Calculations",
+    "location": "Row 175, Col D",
+    "components": [
+      {
+        "value": 97.83,
+        "location": "B165",
+        "context": "Left: Wash2_Cost | Above: 146.745 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C165",
+        "context": "Left: 97.83 | Above: $ | Right: Cost of Wash2 buffer"
+      },
+      {
+        "value": 299.36249999999995,
+        "location": "B166",
+        "context": "Left: Elution_Cost | Above: 97.83 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C166",
+        "context": "Left: 299.36249999999995 | Above: $ | Right: Cost of elution buffer"
+      },
+      {
+        "value": 229.32,
+        "location": "B167",
+        "context": "Left: Strip_Cost | Above: 299.36249999999995 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C167",
+        "context": "Left: 229.32 | Above: $ | Right: Cost of strip buffer"
+      },
+      {
+        "value": 1978.7142857142876,
+        "location": "B168",
+        "context": "Left: Chitosan_Mass_Required | Above: 229.32 | Right: kg"
+      },
+      {
+        "value": 79148.57142857151,
+        "location": "B169",
+        "context": "Left: Chitosan_Raw_Material_Cost | Above: 1978.7142857142876 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C169",
+        "context": "Left: 79148.57142857151 | Above: kg | Right: Polymer cost per batch"
+      },
+      {
+        "value": "$",
+        "location": "C170",
+        "context": "Above: $ | Right: Sum of buffer costs (bind assumed native feed)"
+      },
+      {
+        "value": 630,
+        "location": "B171",
+        "context": "Left: Pre_Drying_TFF_Membrane_Cost_Total | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C171",
+        "context": "Left: 630 | Above: $ | Right: Pre-drying TFF membrane cost ($)"
+      },
+      {
+        "value": "Pre-drying TFF membrane cost ($)",
+        "location": "D171",
+        "context": "Left: $ | Above: Sum of buffer costs (bind assumed native feed) | Right: DSP03"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B172",
+        "context": "Left: Buffer_cost_per_L_TFF | Above: 630 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C172",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 16.200000000000003,
+        "location": "B173",
+        "context": "Left: Predrying_TFF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C173",
+        "context": "Left: 16.200000000000003 | Above: $/L"
+      },
+      {
+        "value": 18.900000000000002,
+        "location": "B174",
+        "context": "Left: CIP_Chemicals_Cost_Total | Above: 16.200000000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C174",
+        "context": "Left: 18.900000000000002 | Above: $ | Right: CIP chemicals cost ($) (2% solution)"
+      },
+      {
+        "value": "CIP chemicals cost ($) (2% solution)",
+        "location": "D174",
+        "context": "Left: $ | Right: DSP00"
+      },
+      {
+        "value": 856.9575000000001,
+        "location": "B175",
+        "context": "Left: Total_Buffer_Cost | Above: 18.900000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C175",
+        "context": "Left: 856.9575000000001 | Above: $ | Right: Total buffer cost per batch"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B176",
+        "context": "Left: Total_Raw_Materials_Cost | Above: 856.9575000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C176",
+        "context": "Left: 414687.17892857187 | Above: $ | Right: Total raw materials cost ($)"
+      },
+      {
+        "value": "Total raw materials cost ($)",
+        "location": "D176",
+        "context": "Left: $ | Above: Total buffer cost per batch | Right: DSP00"
+      },
+      {
+        "value": 5,
+        "location": "B180",
+        "context": "Left: Campaigns_Per_Year | Above: Formula | Right: integer"
+      },
+      {
+        "value": 1250000,
+        "location": "B181",
+        "context": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C181",
+        "context": "Left: 1250000 | Above: integer | Right: Total annual campaign setup fees"
+      },
+      {
+        "value": 41666.666666666664,
+        "location": "B182",
+        "context": "Left: Campaign_Setup_Cost_Per_Batch | Above: 1250000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C182",
+        "context": "Left: 41666.666666666664 | Above: $ | Right: Campaign setup cost amortized per batch"
+      },
+      {
+        "value": 35,
+        "location": "B183",
+        "context": "Left: Annual_Changeover_Days | Above: 41666.666666666664 | Right: integer"
+      },
+      {
+        "value": 500000,
+        "location": "B184",
+        "context": "Left: Annual_Facility_Reservation_Cost | Above: 35 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C184",
+        "context": "Left: 500000 | Above: integer | Right: Annual reservation fees"
+      },
+      {
+        "value": 16666.666666666668,
+        "location": "B185",
+        "context": "Left: Reservation_Cost_Per_Batch | Above: 500000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C185",
+        "context": "Left: 16666.666666666668 | Above: $ | Right: Reservation cost amortized per batch"
+      }
+    ]
+  },
+  "Calculations_175_0": {
+    "worksheet": "Calculations",
+    "location": "Row 176, Col A",
+    "components": [
+      {
+        "value": 299.36249999999995,
+        "location": "B166",
+        "context": "Left: Elution_Cost | Above: 97.83 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C166",
+        "context": "Left: 299.36249999999995 | Above: $ | Right: Cost of elution buffer"
+      },
+      {
+        "value": 229.32,
+        "location": "B167",
+        "context": "Left: Strip_Cost | Above: 299.36249999999995 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C167",
+        "context": "Left: 229.32 | Above: $ | Right: Cost of strip buffer"
+      },
+      {
+        "value": 1978.7142857142876,
+        "location": "B168",
+        "context": "Left: Chitosan_Mass_Required | Above: 229.32 | Right: kg"
+      },
+      {
+        "value": 79148.57142857151,
+        "location": "B169",
+        "context": "Left: Chitosan_Raw_Material_Cost | Above: 1978.7142857142876 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C169",
+        "context": "Left: 79148.57142857151 | Above: kg | Right: Polymer cost per batch"
+      },
+      {
+        "value": "$",
+        "location": "C170",
+        "context": "Above: $ | Right: Sum of buffer costs (bind assumed native feed)"
+      },
+      {
+        "value": 630,
+        "location": "B171",
+        "context": "Left: Pre_Drying_TFF_Membrane_Cost_Total | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C171",
+        "context": "Left: 630 | Above: $ | Right: Pre-drying TFF membrane cost ($)"
+      },
+      {
+        "value": "Pre-drying TFF membrane cost ($)",
+        "location": "D171",
+        "context": "Left: $ | Above: Sum of buffer costs (bind assumed native feed) | Right: DSP03"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B172",
+        "context": "Left: Buffer_cost_per_L_TFF | Above: 630 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C172",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 16.200000000000003,
+        "location": "B173",
+        "context": "Left: Predrying_TFF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C173",
+        "context": "Left: 16.200000000000003 | Above: $/L"
+      },
+      {
+        "value": 18.900000000000002,
+        "location": "B174",
+        "context": "Left: CIP_Chemicals_Cost_Total | Above: 16.200000000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C174",
+        "context": "Left: 18.900000000000002 | Above: $ | Right: CIP chemicals cost ($) (2% solution)"
+      },
+      {
+        "value": "CIP chemicals cost ($) (2% solution)",
+        "location": "D174",
+        "context": "Left: $ | Right: DSP00"
+      },
+      {
+        "value": 856.9575000000001,
+        "location": "B175",
+        "context": "Left: Total_Buffer_Cost | Above: 18.900000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C175",
+        "context": "Left: 856.9575000000001 | Above: $ | Right: Total buffer cost per batch"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B176",
+        "context": "Left: Total_Raw_Materials_Cost | Above: 856.9575000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C176",
+        "context": "Left: 414687.17892857187 | Above: $ | Right: Total raw materials cost ($)"
+      },
+      {
+        "value": "Total raw materials cost ($)",
+        "location": "D176",
+        "context": "Left: $ | Above: Total buffer cost per batch | Right: DSP00"
+      },
+      {
+        "value": 5,
+        "location": "B180",
+        "context": "Left: Campaigns_Per_Year | Above: Formula | Right: integer"
+      },
+      {
+        "value": 1250000,
+        "location": "B181",
+        "context": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C181",
+        "context": "Left: 1250000 | Above: integer | Right: Total annual campaign setup fees"
+      },
+      {
+        "value": 41666.666666666664,
+        "location": "B182",
+        "context": "Left: Campaign_Setup_Cost_Per_Batch | Above: 1250000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C182",
+        "context": "Left: 41666.666666666664 | Above: $ | Right: Campaign setup cost amortized per batch"
+      },
+      {
+        "value": 35,
+        "location": "B183",
+        "context": "Left: Annual_Changeover_Days | Above: 41666.666666666664 | Right: integer"
+      },
+      {
+        "value": 500000,
+        "location": "B184",
+        "context": "Left: Annual_Facility_Reservation_Cost | Above: 35 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C184",
+        "context": "Left: 500000 | Above: integer | Right: Annual reservation fees"
+      },
+      {
+        "value": 16666.666666666668,
+        "location": "B185",
+        "context": "Left: Reservation_Cost_Per_Batch | Above: 500000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C185",
+        "context": "Left: 16666.666666666668 | Above: $ | Right: Reservation cost amortized per batch"
+      },
+      {
+        "value": 0.3436333333333333,
+        "location": "B186",
+        "context": "Left: Contract_Year_Multiplier | Above: 16666.666666666668 | Right: integer"
+      }
+    ]
+  },
+  "Calculations_175_3": {
+    "worksheet": "Calculations",
+    "location": "Row 176, Col D",
+    "components": [
+      {
+        "value": 299.36249999999995,
+        "location": "B166",
+        "context": "Left: Elution_Cost | Above: 97.83 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C166",
+        "context": "Left: 299.36249999999995 | Above: $ | Right: Cost of elution buffer"
+      },
+      {
+        "value": 229.32,
+        "location": "B167",
+        "context": "Left: Strip_Cost | Above: 299.36249999999995 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C167",
+        "context": "Left: 229.32 | Above: $ | Right: Cost of strip buffer"
+      },
+      {
+        "value": 1978.7142857142876,
+        "location": "B168",
+        "context": "Left: Chitosan_Mass_Required | Above: 229.32 | Right: kg"
+      },
+      {
+        "value": 79148.57142857151,
+        "location": "B169",
+        "context": "Left: Chitosan_Raw_Material_Cost | Above: 1978.7142857142876 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C169",
+        "context": "Left: 79148.57142857151 | Above: kg | Right: Polymer cost per batch"
+      },
+      {
+        "value": "$",
+        "location": "C170",
+        "context": "Above: $ | Right: Sum of buffer costs (bind assumed native feed)"
+      },
+      {
+        "value": 630,
+        "location": "B171",
+        "context": "Left: Pre_Drying_TFF_Membrane_Cost_Total | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C171",
+        "context": "Left: 630 | Above: $ | Right: Pre-drying TFF membrane cost ($)"
+      },
+      {
+        "value": "Pre-drying TFF membrane cost ($)",
+        "location": "D171",
+        "context": "Left: $ | Above: Sum of buffer costs (bind assumed native feed) | Right: DSP03"
+      },
+      {
+        "value": 0.0017999999999999997,
+        "location": "B172",
+        "context": "Left: Buffer_cost_per_L_TFF | Above: 630 | Right: $/L"
+      },
+      {
+        "value": "$/L",
+        "location": "C172",
+        "context": "Left: 0.0017999999999999997 | Above: $"
+      },
+      {
+        "value": 16.200000000000003,
+        "location": "B173",
+        "context": "Left: Predrying_TFF_Buffer_Cost | Above: 0.0017999999999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C173",
+        "context": "Left: 16.200000000000003 | Above: $/L"
+      },
+      {
+        "value": 18.900000000000002,
+        "location": "B174",
+        "context": "Left: CIP_Chemicals_Cost_Total | Above: 16.200000000000003 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C174",
+        "context": "Left: 18.900000000000002 | Above: $ | Right: CIP chemicals cost ($) (2% solution)"
+      },
+      {
+        "value": "CIP chemicals cost ($) (2% solution)",
+        "location": "D174",
+        "context": "Left: $ | Right: DSP00"
+      },
+      {
+        "value": 856.9575000000001,
+        "location": "B175",
+        "context": "Left: Total_Buffer_Cost | Above: 18.900000000000002 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C175",
+        "context": "Left: 856.9575000000001 | Above: $ | Right: Total buffer cost per batch"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B176",
+        "context": "Left: Total_Raw_Materials_Cost | Above: 856.9575000000001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C176",
+        "context": "Left: 414687.17892857187 | Above: $ | Right: Total raw materials cost ($)"
+      },
+      {
+        "value": "Total raw materials cost ($)",
+        "location": "D176",
+        "context": "Left: $ | Above: Total buffer cost per batch | Right: DSP00"
+      },
+      {
+        "value": 5,
+        "location": "B180",
+        "context": "Left: Campaigns_Per_Year | Above: Formula | Right: integer"
+      },
+      {
+        "value": 1250000,
+        "location": "B181",
+        "context": "Left: Annual_Campaign_Setup_Cost | Above: 5 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C181",
+        "context": "Left: 1250000 | Above: integer | Right: Total annual campaign setup fees"
+      },
+      {
+        "value": 41666.666666666664,
+        "location": "B182",
+        "context": "Left: Campaign_Setup_Cost_Per_Batch | Above: 1250000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C182",
+        "context": "Left: 41666.666666666664 | Above: $ | Right: Campaign setup cost amortized per batch"
+      },
+      {
+        "value": 35,
+        "location": "B183",
+        "context": "Left: Annual_Changeover_Days | Above: 41666.666666666664 | Right: integer"
+      },
+      {
+        "value": 500000,
+        "location": "B184",
+        "context": "Left: Annual_Facility_Reservation_Cost | Above: 35 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C184",
+        "context": "Left: 500000 | Above: integer | Right: Annual reservation fees"
+      },
+      {
+        "value": 16666.666666666668,
+        "location": "B185",
+        "context": "Left: Reservation_Cost_Per_Batch | Above: 500000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C185",
+        "context": "Left: 16666.666666666668 | Above: $ | Right: Reservation cost amortized per batch"
+      },
+      {
+        "value": 0.3436333333333333,
+        "location": "B186",
+        "context": "Left: Contract_Year_Multiplier | Above: 16666.666666666668 | Right: integer"
+      }
+    ]
+  },
+  "Calculations_209_0": {
+    "worksheet": "Calculations",
+    "location": "Row 210, Col A",
+    "components": [
+      {
+        "value": 0.875,
+        "location": "B200",
+        "context": "Left: Fermenter_Campaign_Factor | Above: 256250 | Right: %"
+      },
+      {
+        "value": 69344.13281249999,
+        "location": "B201",
+        "context": "Left: Fermenter_Suite_Fee | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C201",
+        "context": "Left: 69344.13281249999 | Above: % | Right: Final fermenter fee with discounts"
+      },
+      {
+        "value": 117187.50000000004,
+        "location": "B202",
+        "context": "Left: DSP_Suite_Base_Fee | Above: 69344.13281249999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C202",
+        "context": "Left: 117187.50000000004 | Above: $ | Right: Base DSP suite fee"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B203",
+        "context": "Left: DSP_Campaign_Factor | Above: 117187.50000000004 | Right: %"
+      },
+      {
+        "value": 33222.36328125001,
+        "location": "B204",
+        "context": "Left: DSP_Suite_Fee | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C204",
+        "context": "Left: 33222.36328125001 | Above: % | Right: Final DSP fee with discounts"
+      },
+      {
+        "value": 5508.000000000002,
+        "location": "B205",
+        "context": "Left: Spray_Dryer_Base_Fee | Above: 33222.36328125001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C205",
+        "context": "Left: 5508.000000000002 | Above: $ | Right: Base spray dryer fee"
+      },
+      {
+        "value": 0.9583333333333334,
+        "location": "B206",
+        "context": "Left: Spray_Dryer_Campaign_Factor | Above: 5508.000000000002 | Right: %"
+      },
+      {
+        "value": 1632.4816950000004,
+        "location": "B207",
+        "context": "Left: Spray_Dryer_Fee | Above: 0.9583333333333334 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C207",
+        "context": "Left: 1632.4816950000004 | Above: % | Right: Final spray dryer fee with discounts"
+      },
+      {
+        "value": 20000,
+        "location": "B208",
+        "context": "Left: Labor_Base_Cost | Above: 1632.4816950000004 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C208",
+        "context": "Left: 20000 | Above: $ | Right: Base labor cost"
+      },
+      {
+        "value": 0.8333333333333333,
+        "location": "B209",
+        "context": "Left: Labor_Campaign_Factor | Above: 20000 | Right: %"
+      },
+      {
+        "value": 5154.499999999999,
+        "location": "B210",
+        "context": "Left: Labor_Cost_Total | Above: 0.8333333333333333 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C210",
+        "context": "Left: 5154.499999999999 | Above: % | Right: Final labor cost with discounts"
+      },
+      {
+        "value": 15000,
+        "location": "B211",
+        "context": "Left: QC_Testing_Base_Cost | Above: 5154.499999999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C211",
+        "context": "Left: 15000 | Above: $ | Right: Base QC testing cost"
+      },
+      {
+        "value": 0.875,
+        "location": "B212",
+        "context": "Left: QA_QC_Campaign_Factor | Above: 15000 | Right: %"
+      },
+      {
+        "value": 4059.1687499999994,
+        "location": "B213",
+        "context": "Left: QC_Testing_Cost_Total | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C213",
+        "context": "Left: 4059.1687499999994 | Above: % | Right: Final QC cost with discounts"
+      },
+      {
+        "value": 1353.0562499999999,
+        "location": "B214",
+        "context": "Left: Documentation_Fee_Total | Above: 4059.1687499999994 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C214",
+        "context": "Left: 1353.0562499999999 | Above: $ | Right: Final documentation fee with discounts"
+      },
+      {
+        "value": 2706.1124999999997,
+        "location": "B215",
+        "context": "Left: QA_Review_Fee_Total | Above: 1353.0562499999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C215",
+        "context": "Left: 2706.1124999999997 | Above: $ | Right: Final QA review fee with discounts"
+      },
+      {
+        "value": 103671.79473214297,
+        "location": "B216",
+        "context": "Left: Consumables_Base_Markup | Above: 2706.1124999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C216",
+        "context": "Left: 103671.79473214297 | Above: $ | Right: Base markup on consumables"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B217",
+        "context": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %"
+      },
+      {
+        "value": 29390.694627075696,
+        "location": "B218",
+        "context": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C218",
+        "context": "Left: 29390.694627075696 | Above: % | Right: Final consumables markup with discounts"
+      },
+      {
+        "value": 146862.50991582568,
+        "location": "B219",
+        "context": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C219",
+        "context": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees"
+      },
+      {
+        "value": 811347.6895637944,
+        "location": "B220",
+        "context": "Left: Total cost | Above: 146862.50991582568 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C220",
+        "context": "Left: 811347.6895637944 | Above: $"
+      }
+    ]
+  },
+  "Calculations_212_0": {
+    "worksheet": "Calculations",
+    "location": "Row 213, Col A",
+    "components": [
+      {
+        "value": 0.9166666666666666,
+        "location": "B203",
+        "context": "Left: DSP_Campaign_Factor | Above: 117187.50000000004 | Right: %"
+      },
+      {
+        "value": 33222.36328125001,
+        "location": "B204",
+        "context": "Left: DSP_Suite_Fee | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C204",
+        "context": "Left: 33222.36328125001 | Above: % | Right: Final DSP fee with discounts"
+      },
+      {
+        "value": 5508.000000000002,
+        "location": "B205",
+        "context": "Left: Spray_Dryer_Base_Fee | Above: 33222.36328125001 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C205",
+        "context": "Left: 5508.000000000002 | Above: $ | Right: Base spray dryer fee"
+      },
+      {
+        "value": 0.9583333333333334,
+        "location": "B206",
+        "context": "Left: Spray_Dryer_Campaign_Factor | Above: 5508.000000000002 | Right: %"
+      },
+      {
+        "value": 1632.4816950000004,
+        "location": "B207",
+        "context": "Left: Spray_Dryer_Fee | Above: 0.9583333333333334 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C207",
+        "context": "Left: 1632.4816950000004 | Above: % | Right: Final spray dryer fee with discounts"
+      },
+      {
+        "value": 20000,
+        "location": "B208",
+        "context": "Left: Labor_Base_Cost | Above: 1632.4816950000004 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C208",
+        "context": "Left: 20000 | Above: $ | Right: Base labor cost"
+      },
+      {
+        "value": 0.8333333333333333,
+        "location": "B209",
+        "context": "Left: Labor_Campaign_Factor | Above: 20000 | Right: %"
+      },
+      {
+        "value": 5154.499999999999,
+        "location": "B210",
+        "context": "Left: Labor_Cost_Total | Above: 0.8333333333333333 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C210",
+        "context": "Left: 5154.499999999999 | Above: % | Right: Final labor cost with discounts"
+      },
+      {
+        "value": 15000,
+        "location": "B211",
+        "context": "Left: QC_Testing_Base_Cost | Above: 5154.499999999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C211",
+        "context": "Left: 15000 | Above: $ | Right: Base QC testing cost"
+      },
+      {
+        "value": 0.875,
+        "location": "B212",
+        "context": "Left: QA_QC_Campaign_Factor | Above: 15000 | Right: %"
+      },
+      {
+        "value": 4059.1687499999994,
+        "location": "B213",
+        "context": "Left: QC_Testing_Cost_Total | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C213",
+        "context": "Left: 4059.1687499999994 | Above: % | Right: Final QC cost with discounts"
+      },
+      {
+        "value": 1353.0562499999999,
+        "location": "B214",
+        "context": "Left: Documentation_Fee_Total | Above: 4059.1687499999994 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C214",
+        "context": "Left: 1353.0562499999999 | Above: $ | Right: Final documentation fee with discounts"
+      },
+      {
+        "value": 2706.1124999999997,
+        "location": "B215",
+        "context": "Left: QA_Review_Fee_Total | Above: 1353.0562499999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C215",
+        "context": "Left: 2706.1124999999997 | Above: $ | Right: Final QA review fee with discounts"
+      },
+      {
+        "value": 103671.79473214297,
+        "location": "B216",
+        "context": "Left: Consumables_Base_Markup | Above: 2706.1124999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C216",
+        "context": "Left: 103671.79473214297 | Above: $ | Right: Base markup on consumables"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B217",
+        "context": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %"
+      },
+      {
+        "value": 29390.694627075696,
+        "location": "B218",
+        "context": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C218",
+        "context": "Left: 29390.694627075696 | Above: % | Right: Final consumables markup with discounts"
+      },
+      {
+        "value": 146862.50991582568,
+        "location": "B219",
+        "context": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C219",
+        "context": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees"
+      },
+      {
+        "value": 811347.6895637944,
+        "location": "B220",
+        "context": "Left: Total cost | Above: 146862.50991582568 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C220",
+        "context": "Left: 811347.6895637944 | Above: $"
+      },
+      {
+        "value": "$",
+        "location": "C221",
+        "context": "Above: $"
+      },
+      {
+        "value": 59557.18758263188,
+        "location": "B223",
+        "context": "Left: Total_Campaign_Related_Costs | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C223",
+        "context": "Left: 59557.18758263188 | Right: Total amortized campaign-related costs"
+      }
+    ]
+  },
+  "Calculations_218_0": {
+    "worksheet": "Calculations",
+    "location": "Row 219, Col A",
+    "components": [
+      {
+        "value": 0.8333333333333333,
+        "location": "B209",
+        "context": "Left: Labor_Campaign_Factor | Above: 20000 | Right: %"
+      },
+      {
+        "value": 5154.499999999999,
+        "location": "B210",
+        "context": "Left: Labor_Cost_Total | Above: 0.8333333333333333 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C210",
+        "context": "Left: 5154.499999999999 | Above: % | Right: Final labor cost with discounts"
+      },
+      {
+        "value": 15000,
+        "location": "B211",
+        "context": "Left: QC_Testing_Base_Cost | Above: 5154.499999999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C211",
+        "context": "Left: 15000 | Above: $ | Right: Base QC testing cost"
+      },
+      {
+        "value": 0.875,
+        "location": "B212",
+        "context": "Left: QA_QC_Campaign_Factor | Above: 15000 | Right: %"
+      },
+      {
+        "value": 4059.1687499999994,
+        "location": "B213",
+        "context": "Left: QC_Testing_Cost_Total | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C213",
+        "context": "Left: 4059.1687499999994 | Above: % | Right: Final QC cost with discounts"
+      },
+      {
+        "value": 1353.0562499999999,
+        "location": "B214",
+        "context": "Left: Documentation_Fee_Total | Above: 4059.1687499999994 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C214",
+        "context": "Left: 1353.0562499999999 | Above: $ | Right: Final documentation fee with discounts"
+      },
+      {
+        "value": 2706.1124999999997,
+        "location": "B215",
+        "context": "Left: QA_Review_Fee_Total | Above: 1353.0562499999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C215",
+        "context": "Left: 2706.1124999999997 | Above: $ | Right: Final QA review fee with discounts"
+      },
+      {
+        "value": 103671.79473214297,
+        "location": "B216",
+        "context": "Left: Consumables_Base_Markup | Above: 2706.1124999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C216",
+        "context": "Left: 103671.79473214297 | Above: $ | Right: Base markup on consumables"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B217",
+        "context": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %"
+      },
+      {
+        "value": 29390.694627075696,
+        "location": "B218",
+        "context": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C218",
+        "context": "Left: 29390.694627075696 | Above: % | Right: Final consumables markup with discounts"
+      },
+      {
+        "value": 146862.50991582568,
+        "location": "B219",
+        "context": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C219",
+        "context": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees"
+      },
+      {
+        "value": 811347.6895637944,
+        "location": "B220",
+        "context": "Left: Total cost | Above: 146862.50991582568 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C220",
+        "context": "Left: 811347.6895637944 | Above: $"
+      },
+      {
+        "value": "$",
+        "location": "C221",
+        "context": "Above: $"
+      },
+      {
+        "value": 59557.18758263188,
+        "location": "B223",
+        "context": "Left: Total_Campaign_Related_Costs | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C223",
+        "context": "Left: 59557.18758263188 | Right: Total amortized campaign-related costs"
+      },
+      {
+        "value": 800000,
+        "location": "B224",
+        "context": "Left: Laurus quote | Above: 59557.18758263188 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C224",
+        "context": "Left: 800000 | Above: $ | Right: @180m3 USP+DSP - 30 day campaign *not reasonable for 4x45m3 to run concurrently"
+      },
+      {
+        "value": 133333.33333333334,
+        "location": "B225",
+        "context": "Left: Laurus fees per batch | Above: 800000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C225",
+        "context": "Left: 133333.33333333334 | Above: $"
+      },
+      {
+        "value": 3139600.0000000005,
+        "location": "B226",
+        "context": "Left: Arxada  quote | Above: 133333.33333333334 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C226",
+        "context": "Left: 3139600.0000000005 | Above: $ | Right: 172K per batch for 15 batches 2.4 days with 250K campaign set up in 150m3, 1.12 EUR to USD"
+      },
+      {
+        "value": 436055.5555555556,
+        "location": "B227",
+        "context": "Left: Arxada  fees per batch | Above: 3139600.0000000005 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C227",
+        "context": "Left: 436055.5555555556 | Above: $"
+      },
+      {
+        "value": 206419.69749845756,
+        "location": "B229",
+        "context": "Left: Total_CMO_Fees_Final"
+      }
+    ]
+  },
+  "Calculations_218_3": {
+    "worksheet": "Calculations",
+    "location": "Row 219, Col D",
+    "components": [
+      {
+        "value": 0.8333333333333333,
+        "location": "B209",
+        "context": "Left: Labor_Campaign_Factor | Above: 20000 | Right: %"
+      },
+      {
+        "value": 5154.499999999999,
+        "location": "B210",
+        "context": "Left: Labor_Cost_Total | Above: 0.8333333333333333 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C210",
+        "context": "Left: 5154.499999999999 | Above: % | Right: Final labor cost with discounts"
+      },
+      {
+        "value": 15000,
+        "location": "B211",
+        "context": "Left: QC_Testing_Base_Cost | Above: 5154.499999999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C211",
+        "context": "Left: 15000 | Above: $ | Right: Base QC testing cost"
+      },
+      {
+        "value": 0.875,
+        "location": "B212",
+        "context": "Left: QA_QC_Campaign_Factor | Above: 15000 | Right: %"
+      },
+      {
+        "value": 4059.1687499999994,
+        "location": "B213",
+        "context": "Left: QC_Testing_Cost_Total | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C213",
+        "context": "Left: 4059.1687499999994 | Above: % | Right: Final QC cost with discounts"
+      },
+      {
+        "value": 1353.0562499999999,
+        "location": "B214",
+        "context": "Left: Documentation_Fee_Total | Above: 4059.1687499999994 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C214",
+        "context": "Left: 1353.0562499999999 | Above: $ | Right: Final documentation fee with discounts"
+      },
+      {
+        "value": 2706.1124999999997,
+        "location": "B215",
+        "context": "Left: QA_Review_Fee_Total | Above: 1353.0562499999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C215",
+        "context": "Left: 2706.1124999999997 | Above: $ | Right: Final QA review fee with discounts"
+      },
+      {
+        "value": 103671.79473214297,
+        "location": "B216",
+        "context": "Left: Consumables_Base_Markup | Above: 2706.1124999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C216",
+        "context": "Left: 103671.79473214297 | Above: $ | Right: Base markup on consumables"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B217",
+        "context": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %"
+      },
+      {
+        "value": 29390.694627075696,
+        "location": "B218",
+        "context": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C218",
+        "context": "Left: 29390.694627075696 | Above: % | Right: Final consumables markup with discounts"
+      },
+      {
+        "value": 146862.50991582568,
+        "location": "B219",
+        "context": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C219",
+        "context": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees"
+      },
+      {
+        "value": 811347.6895637944,
+        "location": "B220",
+        "context": "Left: Total cost | Above: 146862.50991582568 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C220",
+        "context": "Left: 811347.6895637944 | Above: $"
+      },
+      {
+        "value": "$",
+        "location": "C221",
+        "context": "Above: $"
+      },
+      {
+        "value": 59557.18758263188,
+        "location": "B223",
+        "context": "Left: Total_Campaign_Related_Costs | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C223",
+        "context": "Left: 59557.18758263188 | Right: Total amortized campaign-related costs"
+      },
+      {
+        "value": 800000,
+        "location": "B224",
+        "context": "Left: Laurus quote | Above: 59557.18758263188 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C224",
+        "context": "Left: 800000 | Above: $ | Right: @180m3 USP+DSP - 30 day campaign *not reasonable for 4x45m3 to run concurrently"
+      },
+      {
+        "value": 133333.33333333334,
+        "location": "B225",
+        "context": "Left: Laurus fees per batch | Above: 800000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C225",
+        "context": "Left: 133333.33333333334 | Above: $"
+      },
+      {
+        "value": 3139600.0000000005,
+        "location": "B226",
+        "context": "Left: Arxada  quote | Above: 133333.33333333334 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C226",
+        "context": "Left: 3139600.0000000005 | Above: $ | Right: 172K per batch for 15 batches 2.4 days with 250K campaign set up in 150m3, 1.12 EUR to USD"
+      },
+      {
+        "value": 436055.5555555556,
+        "location": "B227",
+        "context": "Left: Arxada  fees per batch | Above: 3139600.0000000005 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C227",
+        "context": "Left: 436055.5555555556 | Above: $"
+      },
+      {
+        "value": 206419.69749845756,
+        "location": "B229",
+        "context": "Left: Total_CMO_Fees_Final"
+      }
+    ]
+  },
+  "Calculations_219_0": {
+    "worksheet": "Calculations",
+    "location": "Row 220, Col A",
+    "components": [
+      {
+        "value": 5154.499999999999,
+        "location": "B210",
+        "context": "Left: Labor_Cost_Total | Above: 0.8333333333333333 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C210",
+        "context": "Left: 5154.499999999999 | Above: % | Right: Final labor cost with discounts"
+      },
+      {
+        "value": 15000,
+        "location": "B211",
+        "context": "Left: QC_Testing_Base_Cost | Above: 5154.499999999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C211",
+        "context": "Left: 15000 | Above: $ | Right: Base QC testing cost"
+      },
+      {
+        "value": 0.875,
+        "location": "B212",
+        "context": "Left: QA_QC_Campaign_Factor | Above: 15000 | Right: %"
+      },
+      {
+        "value": 4059.1687499999994,
+        "location": "B213",
+        "context": "Left: QC_Testing_Cost_Total | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C213",
+        "context": "Left: 4059.1687499999994 | Above: % | Right: Final QC cost with discounts"
+      },
+      {
+        "value": 1353.0562499999999,
+        "location": "B214",
+        "context": "Left: Documentation_Fee_Total | Above: 4059.1687499999994 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C214",
+        "context": "Left: 1353.0562499999999 | Above: $ | Right: Final documentation fee with discounts"
+      },
+      {
+        "value": 2706.1124999999997,
+        "location": "B215",
+        "context": "Left: QA_Review_Fee_Total | Above: 1353.0562499999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C215",
+        "context": "Left: 2706.1124999999997 | Above: $ | Right: Final QA review fee with discounts"
+      },
+      {
+        "value": 103671.79473214297,
+        "location": "B216",
+        "context": "Left: Consumables_Base_Markup | Above: 2706.1124999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C216",
+        "context": "Left: 103671.79473214297 | Above: $ | Right: Base markup on consumables"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B217",
+        "context": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %"
+      },
+      {
+        "value": 29390.694627075696,
+        "location": "B218",
+        "context": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C218",
+        "context": "Left: 29390.694627075696 | Above: % | Right: Final consumables markup with discounts"
+      },
+      {
+        "value": 146862.50991582568,
+        "location": "B219",
+        "context": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C219",
+        "context": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees"
+      },
+      {
+        "value": 811347.6895637944,
+        "location": "B220",
+        "context": "Left: Total cost | Above: 146862.50991582568 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C220",
+        "context": "Left: 811347.6895637944 | Above: $"
+      },
+      {
+        "value": "$",
+        "location": "C221",
+        "context": "Above: $"
+      },
+      {
+        "value": 59557.18758263188,
+        "location": "B223",
+        "context": "Left: Total_Campaign_Related_Costs | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C223",
+        "context": "Left: 59557.18758263188 | Right: Total amortized campaign-related costs"
+      },
+      {
+        "value": 800000,
+        "location": "B224",
+        "context": "Left: Laurus quote | Above: 59557.18758263188 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C224",
+        "context": "Left: 800000 | Above: $ | Right: @180m3 USP+DSP - 30 day campaign *not reasonable for 4x45m3 to run concurrently"
+      },
+      {
+        "value": 133333.33333333334,
+        "location": "B225",
+        "context": "Left: Laurus fees per batch | Above: 800000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C225",
+        "context": "Left: 133333.33333333334 | Above: $"
+      },
+      {
+        "value": 3139600.0000000005,
+        "location": "B226",
+        "context": "Left: Arxada  quote | Above: 133333.33333333334 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C226",
+        "context": "Left: 3139600.0000000005 | Above: $ | Right: 172K per batch for 15 batches 2.4 days with 250K campaign set up in 150m3, 1.12 EUR to USD"
+      },
+      {
+        "value": 436055.5555555556,
+        "location": "B227",
+        "context": "Left: Arxada  fees per batch | Above: 3139600.0000000005 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C227",
+        "context": "Left: 436055.5555555556 | Above: $"
+      },
+      {
+        "value": 206419.69749845756,
+        "location": "B229",
+        "context": "Left: Total_CMO_Fees_Final"
+      }
+    ]
+  },
+  "Calculations_222_0": {
+    "worksheet": "Calculations",
+    "location": "Row 223, Col A",
+    "components": [
+      {
+        "value": 4059.1687499999994,
+        "location": "B213",
+        "context": "Left: QC_Testing_Cost_Total | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C213",
+        "context": "Left: 4059.1687499999994 | Above: % | Right: Final QC cost with discounts"
+      },
+      {
+        "value": 1353.0562499999999,
+        "location": "B214",
+        "context": "Left: Documentation_Fee_Total | Above: 4059.1687499999994 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C214",
+        "context": "Left: 1353.0562499999999 | Above: $ | Right: Final documentation fee with discounts"
+      },
+      {
+        "value": 2706.1124999999997,
+        "location": "B215",
+        "context": "Left: QA_Review_Fee_Total | Above: 1353.0562499999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C215",
+        "context": "Left: 2706.1124999999997 | Above: $ | Right: Final QA review fee with discounts"
+      },
+      {
+        "value": 103671.79473214297,
+        "location": "B216",
+        "context": "Left: Consumables_Base_Markup | Above: 2706.1124999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C216",
+        "context": "Left: 103671.79473214297 | Above: $ | Right: Base markup on consumables"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B217",
+        "context": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %"
+      },
+      {
+        "value": 29390.694627075696,
+        "location": "B218",
+        "context": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C218",
+        "context": "Left: 29390.694627075696 | Above: % | Right: Final consumables markup with discounts"
+      },
+      {
+        "value": 146862.50991582568,
+        "location": "B219",
+        "context": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C219",
+        "context": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees"
+      },
+      {
+        "value": 811347.6895637944,
+        "location": "B220",
+        "context": "Left: Total cost | Above: 146862.50991582568 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C220",
+        "context": "Left: 811347.6895637944 | Above: $"
+      },
+      {
+        "value": "$",
+        "location": "C221",
+        "context": "Above: $"
+      },
+      {
+        "value": 59557.18758263188,
+        "location": "B223",
+        "context": "Left: Total_Campaign_Related_Costs | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C223",
+        "context": "Left: 59557.18758263188 | Right: Total amortized campaign-related costs"
+      },
+      {
+        "value": 800000,
+        "location": "B224",
+        "context": "Left: Laurus quote | Above: 59557.18758263188 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C224",
+        "context": "Left: 800000 | Above: $ | Right: @180m3 USP+DSP - 30 day campaign *not reasonable for 4x45m3 to run concurrently"
+      },
+      {
+        "value": 133333.33333333334,
+        "location": "B225",
+        "context": "Left: Laurus fees per batch | Above: 800000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C225",
+        "context": "Left: 133333.33333333334 | Above: $"
+      },
+      {
+        "value": 3139600.0000000005,
+        "location": "B226",
+        "context": "Left: Arxada  quote | Above: 133333.33333333334 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C226",
+        "context": "Left: 3139600.0000000005 | Above: $ | Right: 172K per batch for 15 batches 2.4 days with 250K campaign set up in 150m3, 1.12 EUR to USD"
+      },
+      {
+        "value": 436055.5555555556,
+        "location": "B227",
+        "context": "Left: Arxada  fees per batch | Above: 3139600.0000000005 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C227",
+        "context": "Left: 436055.5555555556 | Above: $"
+      },
+      {
+        "value": 206419.69749845756,
+        "location": "B229",
+        "context": "Left: Total_CMO_Fees_Final"
+      }
+    ]
+  },
+  "Calculations_222_3": {
+    "worksheet": "Calculations",
+    "location": "Row 223, Col D",
+    "components": [
+      {
+        "value": 4059.1687499999994,
+        "location": "B213",
+        "context": "Left: QC_Testing_Cost_Total | Above: 0.875 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C213",
+        "context": "Left: 4059.1687499999994 | Above: % | Right: Final QC cost with discounts"
+      },
+      {
+        "value": 1353.0562499999999,
+        "location": "B214",
+        "context": "Left: Documentation_Fee_Total | Above: 4059.1687499999994 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C214",
+        "context": "Left: 1353.0562499999999 | Above: $ | Right: Final documentation fee with discounts"
+      },
+      {
+        "value": 2706.1124999999997,
+        "location": "B215",
+        "context": "Left: QA_Review_Fee_Total | Above: 1353.0562499999999 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C215",
+        "context": "Left: 2706.1124999999997 | Above: $ | Right: Final QA review fee with discounts"
+      },
+      {
+        "value": 103671.79473214297,
+        "location": "B216",
+        "context": "Left: Consumables_Base_Markup | Above: 2706.1124999999997 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C216",
+        "context": "Left: 103671.79473214297 | Above: $ | Right: Base markup on consumables"
+      },
+      {
+        "value": 0.9166666666666666,
+        "location": "B217",
+        "context": "Left: Consumables_Campaign_Factor | Above: 103671.79473214297 | Right: %"
+      },
+      {
+        "value": 29390.694627075696,
+        "location": "B218",
+        "context": "Left: CMO_Markup_On_Consumables | Above: 0.9166666666666666 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C218",
+        "context": "Left: 29390.694627075696 | Above: % | Right: Final consumables markup with discounts"
+      },
+      {
+        "value": 146862.50991582568,
+        "location": "B219",
+        "context": "Left: Total_Standard_Batch_Cost | Above: 29390.694627075696 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C219",
+        "context": "Left: 146862.50991582568 | Above: $ | Right: Total standard batch cost before campaign/validation fees"
+      },
+      {
+        "value": 811347.6895637944,
+        "location": "B220",
+        "context": "Left: Total cost | Above: 146862.50991582568 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C220",
+        "context": "Left: 811347.6895637944 | Above: $"
+      },
+      {
+        "value": "$",
+        "location": "C221",
+        "context": "Above: $"
+      },
+      {
+        "value": 59557.18758263188,
+        "location": "B223",
+        "context": "Left: Total_Campaign_Related_Costs | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C223",
+        "context": "Left: 59557.18758263188 | Right: Total amortized campaign-related costs"
+      },
+      {
+        "value": 800000,
+        "location": "B224",
+        "context": "Left: Laurus quote | Above: 59557.18758263188 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C224",
+        "context": "Left: 800000 | Above: $ | Right: @180m3 USP+DSP - 30 day campaign *not reasonable for 4x45m3 to run concurrently"
+      },
+      {
+        "value": 133333.33333333334,
+        "location": "B225",
+        "context": "Left: Laurus fees per batch | Above: 800000 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C225",
+        "context": "Left: 133333.33333333334 | Above: $"
+      },
+      {
+        "value": 3139600.0000000005,
+        "location": "B226",
+        "context": "Left: Arxada  quote | Above: 133333.33333333334 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C226",
+        "context": "Left: 3139600.0000000005 | Above: $ | Right: 172K per batch for 15 batches 2.4 days with 250K campaign set up in 150m3, 1.12 EUR to USD"
+      },
+      {
+        "value": 436055.5555555556,
+        "location": "B227",
+        "context": "Left: Arxada  fees per batch | Above: 3139600.0000000005 | Right: $"
+      },
+      {
+        "value": "$",
+        "location": "C227",
+        "context": "Left: 436055.5555555556 | Above: $"
+      },
+      {
+        "value": 206419.69749845756,
+        "location": "B229",
+        "context": "Left: Total_CMO_Fees_Final"
+      }
+    ]
+  },
+  "Final Costs_3_0": {
+    "worksheet": "Final Costs",
+    "location": "Row 4, Col A",
+    "components": [
+      {
+        "value": "Cost_Per_Kg_Product ($)",
+        "location": "A1",
+        "context": "Right: 1264.3427860323095"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B1",
+        "context": "Left: Cost_Per_Kg_Product ($)"
+      },
+      {
+        "value": 491.24880000000053,
+        "location": "B2",
+        "context": "Left: Product_Per_Batch (kg) | Above: 1264.3427860323095"
+      },
+      {
+        "value": 14737.464000000016,
+        "location": "B3",
+        "context": "Left: Annual Production per year (kg) | Above: 491.24880000000053"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B6",
+        "context": "Left: Total_Utilities_Cost | Above: Formula | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "C6",
+        "context": "Left: 7658.3308 | Above: Description"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B7",
+        "context": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": "Total raw materials cost per batch ($)",
+        "location": "C7",
+        "context": "Left: 414687.17892857187 | Above: Total utilities cost per batch ($)"
+      },
+      {
+        "value": 621106.8764270295,
+        "location": "B8",
+        "context": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)"
+      },
+      {
+        "value": "Total cost per batch ($)",
+        "location": "C8",
+        "context": "Left: 621106.8764270295 | Above: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B9",
+        "context": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)"
+      },
+      {
+        "value": "Cost per kg of product ($)",
+        "location": "C9",
+        "context": "Left: 1264.3427860323095 | Above: Total cost per batch ($)"
+      },
+      {
+        "value": 18633206.292810883,
+        "location": "B10",
+        "context": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)"
+      },
+      {
+        "value": "Annual production cost ($)",
+        "location": "C10",
+        "context": "Left: 18633206.292810883 | Above: Cost per kg of product ($)"
+      }
+    ]
+  },
+  "Final Costs_5_0": {
+    "worksheet": "Final Costs",
+    "location": "Row 6, Col A",
+    "components": [
+      {
+        "value": "Cost_Per_Kg_Product ($)",
+        "location": "A1",
+        "context": "Right: 1264.3427860323095"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B1",
+        "context": "Left: Cost_Per_Kg_Product ($)"
+      },
+      {
+        "value": 491.24880000000053,
+        "location": "B2",
+        "context": "Left: Product_Per_Batch (kg) | Above: 1264.3427860323095"
+      },
+      {
+        "value": 14737.464000000016,
+        "location": "B3",
+        "context": "Left: Annual Production per year (kg) | Above: 491.24880000000053"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B6",
+        "context": "Left: Total_Utilities_Cost | Above: Formula | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "C6",
+        "context": "Left: 7658.3308 | Above: Description"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B7",
+        "context": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": "Total raw materials cost per batch ($)",
+        "location": "C7",
+        "context": "Left: 414687.17892857187 | Above: Total utilities cost per batch ($)"
+      },
+      {
+        "value": 621106.8764270295,
+        "location": "B8",
+        "context": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)"
+      },
+      {
+        "value": "Total cost per batch ($)",
+        "location": "C8",
+        "context": "Left: 621106.8764270295 | Above: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B9",
+        "context": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)"
+      },
+      {
+        "value": "Cost per kg of product ($)",
+        "location": "C9",
+        "context": "Left: 1264.3427860323095 | Above: Total cost per batch ($)"
+      },
+      {
+        "value": 18633206.292810883,
+        "location": "B10",
+        "context": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)"
+      },
+      {
+        "value": "Annual production cost ($)",
+        "location": "C10",
+        "context": "Left: 18633206.292810883 | Above: Cost per kg of product ($)"
+      },
+      {
+        "value": 0.01584872165097739,
+        "location": "B15",
+        "context": "Left: Carbon_source_cost | Above: Formula | Right: Glucose, lactose, molasses or glycerol (% of total)"
+      },
+      {
+        "value": 0.05609179566713918,
+        "location": "B16",
+        "context": "Left: YE_Peptone_Percent | Above: 0.01584872165097739 | Right: Yeast extract & peptone (% of total)"
+      }
+    ]
+  },
+  "Final Costs_5_2": {
+    "worksheet": "Final Costs",
+    "location": "Row 6, Col C",
+    "components": [
+      {
+        "value": "Cost_Per_Kg_Product ($)",
+        "location": "A1",
+        "context": "Right: 1264.3427860323095"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B1",
+        "context": "Left: Cost_Per_Kg_Product ($)"
+      },
+      {
+        "value": 491.24880000000053,
+        "location": "B2",
+        "context": "Left: Product_Per_Batch (kg) | Above: 1264.3427860323095"
+      },
+      {
+        "value": 14737.464000000016,
+        "location": "B3",
+        "context": "Left: Annual Production per year (kg) | Above: 491.24880000000053"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B6",
+        "context": "Left: Total_Utilities_Cost | Above: Formula | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "C6",
+        "context": "Left: 7658.3308 | Above: Description"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B7",
+        "context": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": "Total raw materials cost per batch ($)",
+        "location": "C7",
+        "context": "Left: 414687.17892857187 | Above: Total utilities cost per batch ($)"
+      },
+      {
+        "value": 621106.8764270295,
+        "location": "B8",
+        "context": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)"
+      },
+      {
+        "value": "Total cost per batch ($)",
+        "location": "C8",
+        "context": "Left: 621106.8764270295 | Above: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B9",
+        "context": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)"
+      },
+      {
+        "value": "Cost per kg of product ($)",
+        "location": "C9",
+        "context": "Left: 1264.3427860323095 | Above: Total cost per batch ($)"
+      },
+      {
+        "value": 18633206.292810883,
+        "location": "B10",
+        "context": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)"
+      },
+      {
+        "value": "Annual production cost ($)",
+        "location": "C10",
+        "context": "Left: 18633206.292810883 | Above: Cost per kg of product ($)"
+      },
+      {
+        "value": 0.01584872165097739,
+        "location": "B15",
+        "context": "Left: Carbon_source_cost | Above: Formula | Right: Glucose, lactose, molasses or glycerol (% of total)"
+      },
+      {
+        "value": 0.05609179566713918,
+        "location": "B16",
+        "context": "Left: YE_Peptone_Percent | Above: 0.01584872165097739 | Right: Yeast extract & peptone (% of total)"
+      }
+    ]
+  },
+  "Final Costs_6_0": {
+    "worksheet": "Final Costs",
+    "location": "Row 7, Col A",
+    "components": [
+      {
+        "value": "Cost_Per_Kg_Product ($)",
+        "location": "A1",
+        "context": "Right: 1264.3427860323095"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B1",
+        "context": "Left: Cost_Per_Kg_Product ($)"
+      },
+      {
+        "value": 491.24880000000053,
+        "location": "B2",
+        "context": "Left: Product_Per_Batch (kg) | Above: 1264.3427860323095"
+      },
+      {
+        "value": 14737.464000000016,
+        "location": "B3",
+        "context": "Left: Annual Production per year (kg) | Above: 491.24880000000053"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B6",
+        "context": "Left: Total_Utilities_Cost | Above: Formula | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "C6",
+        "context": "Left: 7658.3308 | Above: Description"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B7",
+        "context": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": "Total raw materials cost per batch ($)",
+        "location": "C7",
+        "context": "Left: 414687.17892857187 | Above: Total utilities cost per batch ($)"
+      },
+      {
+        "value": 621106.8764270295,
+        "location": "B8",
+        "context": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)"
+      },
+      {
+        "value": "Total cost per batch ($)",
+        "location": "C8",
+        "context": "Left: 621106.8764270295 | Above: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B9",
+        "context": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)"
+      },
+      {
+        "value": "Cost per kg of product ($)",
+        "location": "C9",
+        "context": "Left: 1264.3427860323095 | Above: Total cost per batch ($)"
+      },
+      {
+        "value": 18633206.292810883,
+        "location": "B10",
+        "context": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)"
+      },
+      {
+        "value": "Annual production cost ($)",
+        "location": "C10",
+        "context": "Left: 18633206.292810883 | Above: Cost per kg of product ($)"
+      },
+      {
+        "value": 0.01584872165097739,
+        "location": "B15",
+        "context": "Left: Carbon_source_cost | Above: Formula | Right: Glucose, lactose, molasses or glycerol (% of total)"
+      },
+      {
+        "value": 0.05609179566713918,
+        "location": "B16",
+        "context": "Left: YE_Peptone_Percent | Above: 0.01584872165097739 | Right: Yeast extract & peptone (% of total)"
+      },
+      {
+        "value": 0.0013797263120474876,
+        "location": "B17",
+        "context": "Left: Buffers_Percent | Above: 0.05609179566713918 | Right: Buffers (% of total)"
+      }
+    ]
+  },
+  "Final Costs_6_2": {
+    "worksheet": "Final Costs",
+    "location": "Row 7, Col C",
+    "components": [
+      {
+        "value": "Cost_Per_Kg_Product ($)",
+        "location": "A1",
+        "context": "Right: 1264.3427860323095"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B1",
+        "context": "Left: Cost_Per_Kg_Product ($)"
+      },
+      {
+        "value": 491.24880000000053,
+        "location": "B2",
+        "context": "Left: Product_Per_Batch (kg) | Above: 1264.3427860323095"
+      },
+      {
+        "value": 14737.464000000016,
+        "location": "B3",
+        "context": "Left: Annual Production per year (kg) | Above: 491.24880000000053"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B6",
+        "context": "Left: Total_Utilities_Cost | Above: Formula | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "C6",
+        "context": "Left: 7658.3308 | Above: Description"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B7",
+        "context": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": "Total raw materials cost per batch ($)",
+        "location": "C7",
+        "context": "Left: 414687.17892857187 | Above: Total utilities cost per batch ($)"
+      },
+      {
+        "value": 621106.8764270295,
+        "location": "B8",
+        "context": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)"
+      },
+      {
+        "value": "Total cost per batch ($)",
+        "location": "C8",
+        "context": "Left: 621106.8764270295 | Above: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B9",
+        "context": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)"
+      },
+      {
+        "value": "Cost per kg of product ($)",
+        "location": "C9",
+        "context": "Left: 1264.3427860323095 | Above: Total cost per batch ($)"
+      },
+      {
+        "value": 18633206.292810883,
+        "location": "B10",
+        "context": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)"
+      },
+      {
+        "value": "Annual production cost ($)",
+        "location": "C10",
+        "context": "Left: 18633206.292810883 | Above: Cost per kg of product ($)"
+      },
+      {
+        "value": 0.01584872165097739,
+        "location": "B15",
+        "context": "Left: Carbon_source_cost | Above: Formula | Right: Glucose, lactose, molasses or glycerol (% of total)"
+      },
+      {
+        "value": 0.05609179566713918,
+        "location": "B16",
+        "context": "Left: YE_Peptone_Percent | Above: 0.01584872165097739 | Right: Yeast extract & peptone (% of total)"
+      },
+      {
+        "value": 0.0013797263120474876,
+        "location": "B17",
+        "context": "Left: Buffers_Percent | Above: 0.05609179566713918 | Right: Buffers (% of total)"
+      }
+    ]
+  },
+  "Final Costs_7_0": {
+    "worksheet": "Final Costs",
+    "location": "Row 8, Col A",
+    "components": [
+      {
+        "value": "Cost_Per_Kg_Product ($)",
+        "location": "A1",
+        "context": "Right: 1264.3427860323095"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B1",
+        "context": "Left: Cost_Per_Kg_Product ($)"
+      },
+      {
+        "value": 491.24880000000053,
+        "location": "B2",
+        "context": "Left: Product_Per_Batch (kg) | Above: 1264.3427860323095"
+      },
+      {
+        "value": 14737.464000000016,
+        "location": "B3",
+        "context": "Left: Annual Production per year (kg) | Above: 491.24880000000053"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B6",
+        "context": "Left: Total_Utilities_Cost | Above: Formula | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "C6",
+        "context": "Left: 7658.3308 | Above: Description"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B7",
+        "context": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": "Total raw materials cost per batch ($)",
+        "location": "C7",
+        "context": "Left: 414687.17892857187 | Above: Total utilities cost per batch ($)"
+      },
+      {
+        "value": 621106.8764270295,
+        "location": "B8",
+        "context": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)"
+      },
+      {
+        "value": "Total cost per batch ($)",
+        "location": "C8",
+        "context": "Left: 621106.8764270295 | Above: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B9",
+        "context": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)"
+      },
+      {
+        "value": "Cost per kg of product ($)",
+        "location": "C9",
+        "context": "Left: 1264.3427860323095 | Above: Total cost per batch ($)"
+      },
+      {
+        "value": 18633206.292810883,
+        "location": "B10",
+        "context": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)"
+      },
+      {
+        "value": "Annual production cost ($)",
+        "location": "C10",
+        "context": "Left: 18633206.292810883 | Above: Cost per kg of product ($)"
+      },
+      {
+        "value": 0.01584872165097739,
+        "location": "B15",
+        "context": "Left: Carbon_source_cost | Above: Formula | Right: Glucose, lactose, molasses or glycerol (% of total)"
+      },
+      {
+        "value": 0.05609179566713918,
+        "location": "B16",
+        "context": "Left: YE_Peptone_Percent | Above: 0.01584872165097739 | Right: Yeast extract & peptone (% of total)"
+      },
+      {
+        "value": 0.0013797263120474876,
+        "location": "B17",
+        "context": "Left: Buffers_Percent | Above: 0.05609179566713918 | Right: Buffers (% of total)"
+      },
+      {
+        "value": 0.589960577375159,
+        "location": "B18",
+        "context": "Left: Chromatography_Resin_Percent | Above: 0.0013797263120474876 | Right: Chromatography resin (% of total)"
+      }
+    ]
+  },
+  "Final Costs_7_2": {
+    "worksheet": "Final Costs",
+    "location": "Row 8, Col C",
+    "components": [
+      {
+        "value": "Cost_Per_Kg_Product ($)",
+        "location": "A1",
+        "context": "Right: 1264.3427860323095"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B1",
+        "context": "Left: Cost_Per_Kg_Product ($)"
+      },
+      {
+        "value": 491.24880000000053,
+        "location": "B2",
+        "context": "Left: Product_Per_Batch (kg) | Above: 1264.3427860323095"
+      },
+      {
+        "value": 14737.464000000016,
+        "location": "B3",
+        "context": "Left: Annual Production per year (kg) | Above: 491.24880000000053"
+      },
+      {
+        "value": 7658.3308,
+        "location": "B6",
+        "context": "Left: Total_Utilities_Cost | Above: Formula | Right: Total utilities cost per batch ($)"
+      },
+      {
+        "value": "Total utilities cost per batch ($)",
+        "location": "C6",
+        "context": "Left: 7658.3308 | Above: Description"
+      },
+      {
+        "value": 414687.17892857187,
+        "location": "B7",
+        "context": "Left: Total_Raw_Materials_Cost_Final | Above: 7658.3308 | Right: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": "Total raw materials cost per batch ($)",
+        "location": "C7",
+        "context": "Left: 414687.17892857187 | Above: Total utilities cost per batch ($)"
+      },
+      {
+        "value": 621106.8764270295,
+        "location": "B8",
+        "context": "Left: Total_Cost_Per_Batch | Above: 414687.17892857187 | Right: Total cost per batch ($)"
+      },
+      {
+        "value": "Total cost per batch ($)",
+        "location": "C8",
+        "context": "Left: 621106.8764270295 | Above: Total raw materials cost per batch ($)"
+      },
+      {
+        "value": 1264.3427860323095,
+        "location": "B9",
+        "context": "Left: Cost_Per_Kg_Product | Above: 621106.8764270295 | Right: Cost per kg of product ($)"
+      },
+      {
+        "value": "Cost per kg of product ($)",
+        "location": "C9",
+        "context": "Left: 1264.3427860323095 | Above: Total cost per batch ($)"
+      },
+      {
+        "value": 18633206.292810883,
+        "location": "B10",
+        "context": "Left: Annual_Production_Cost | Above: 1264.3427860323095 | Right: Annual production cost ($)"
+      },
+      {
+        "value": "Annual production cost ($)",
+        "location": "C10",
+        "context": "Left: 18633206.292810883 | Above: Cost per kg of product ($)"
+      },
+      {
+        "value": 0.01584872165097739,
+        "location": "B15",
+        "context": "Left: Carbon_source_cost | Above: Formula | Right: Glucose, lactose, molasses or glycerol (% of total)"
+      },
+      {
+        "value": 0.05609179566713918,
+        "location": "B16",
+        "context": "Left: YE_Peptone_Percent | Above: 0.01584872165097739 | Right: Yeast extract & peptone (% of total)"
+      },
+      {
+        "value": 0.0013797263120474876,
+        "location": "B17",
+        "context": "Left: Buffers_Percent | Above: 0.05609179566713918 | Right: Buffers (% of total)"
+      },
+      {
+        "value": 0.589960577375159,
+        "location": "B18",
+        "context": "Left: Chromatography_Resin_Percent | Above: 0.0013797263120474876 | Right: Chromatography resin (% of total)"
+      }
+    ]
+  },
+  "Final Costs_44_0": {
+    "worksheet": "Final Costs",
+    "location": "Row 45, Col A",
+    "components": [
+      {
+        "value": 150.91587296702707,
+        "location": "B35",
+        "context": "Left: CMO Fee Allocation \u2014 DSP time-based | Above: 750.0362930730242 | Right: Suite/day fees, labor, QA, utilities \u2014diagnostic use only"
+      },
+      {
+        "value": 5.764921563167173,
+        "location": "B36",
+        "context": "Left: CMO Fee Allocation \u2014 DSP utilities (already in suite fee) | Above: 150.91587296702707 | Right: Suite/day fees, labor, QA, utilities \u2014 diagnostic use only"
+      },
+      {
+        "value": 41.71037734315143,
+        "location": "B37",
+        "context": "Left: CMO Overhead & Campaign | Above: 5.764921563167173"
+      },
+      {
+        "value": 948.4274649463699,
+        "location": "B38",
+        "context": "Left: Total | Above: 41.71037734315143"
+      },
+      {
+        "value": 0,
+        "location": "B40",
+        "context": "Left: CMO Fees (per kg) \u2014 only for LOW/HIGH"
+      },
+      {
+        "value": 329.7713514008153,
+        "location": "B44",
+        "context": "Left: Total (per kg) | Above: Formula"
+      },
+      {
+        "value": 934.5714346314942,
+        "location": "B45",
+        "context": "Left: Reconciliation: Cost_per_kg_base \u2212 Subtotal | Above: 329.7713514008153 | Right: Sanity check-difference between Cost per kg cost and breakdown costs"
+      },
+      {
+        "value": 90.95747409459311,
+        "location": "B53",
+        "context": "Left: USP Consumables | Above: Formula | Right: Media + nutrients"
+      },
+      {
+        "value": 750.0362930730242,
+        "location": "B54",
+        "context": "Left: DSP Consumables | Above: 90.95747409459311 | Right: Buffers, resins, filters, membranes, reagents"
+      },
+      {
+        "value": 420.1937948722874,
+        "location": "B55",
+        "context": "Left: CMO Services | Above: 750.0362930730242 | Right: Suite/day fees, labor, QA, utilities \u2014 already bundled"
+      }
+    ]
+  }
+}

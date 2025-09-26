@@ -1,0 +1,314 @@
+{
+  "unit_operation_mapping": {
+    "USP01_fermentor": {
+      "biosteam_class": "biosteam.units.Fermentation",
+      "parameters": {
+        "V": 150000,
+        "tau": 48,
+        "X": 10.0,
+        "yield": 0.143
+      },
+      "excel_source": "Inputs and Assumptions"
+    },
+    "USP02_centrifuge": {
+      "biosteam_class": "biosteam.units.SolidsCentrifuge",
+      "parameters": {
+        "efficiency": 0.9,
+        "split_basis": "solid_fraction"
+      },
+      "excel_source": "Calculations"
+    },
+    "DSP01_ultrafiltration": {
+      "biosteam_class": "biosteam.units.MembraneBioreactor",
+      "parameters": {
+        "concentration_factor": 20,
+        "efficiency": 0.95,
+        "diafiltration_volumes": 5
+      },
+      "excel_source": "Inputs and Assumptions"
+    },
+    "DSP02_chromatography": {
+      "biosteam_class": "biosteam.units.MultiStageEquilibrium",
+      "parameters": {
+        "binding_capacity": 60,
+        "yield": 0.8,
+        "resin_cost": 1000,
+        "resin_lifetime": 30
+      },
+      "excel_source": "Calculations"
+    },
+    "DSP05_spray_dryer": {
+      "biosteam_class": "biosteam.units.DrumDryer",
+      "parameters": {
+        "efficiency": 0.98,
+        "moisture_content": 0.05
+      },
+      "excel_source": "Inputs and Assumptions"
+    }
+  },
+  "economic_mapping": {
+    "TEA_parameters": {
+      "operating_days": 300,
+      "CAPEX": 0,
+      "annual_escalation": 0.03,
+      "labor_cost": 600000,
+      "utility_costs": {
+        "electricity": 0.15,
+        "steam": 25,
+        "water": 2
+      }
+    },
+    "CMO_fee_structure": {
+      "fermenter_daily_rate": 75000,
+      "dsp_daily_rate": 75000,
+      "campaign_setup": 1250000,
+      "facility_reservation": 500000
+    }
+  },
+  "qff_system_costs": {
+    "fermentation_facility": 256250.0,
+    "glucose": 9843.75,
+    "yeast_extract": 9954,
+    "peptone": 24885,
+    "minor_nutrients": 500,
+    "antifoam": 1050,
+    "capture_technology": 664981.6666666666,
+    "capture_resin": 663541.6666666666,
+    "capture_buffers": 1440.0,
+    "dsp_facility": 31250.0,
+    "utilities": 6697.78,
+    "labor": 20000,
+    "qc_testing": 15000,
+    "cmo_facility_overhead": 820294.4482633333
+  },
+  "chitosan_system_costs": {
+    "fermentation_facility": 256250.0,
+    "glucose": 9843.75,
+    "yeast_extract": 9954,
+    "peptone": 24885,
+    "minor_nutrients": 500,
+    "antifoam": 1050,
+    "capture_technology": 152976.0,
+    "capture_chitosan": 152880.0,
+    "capture_buffers": 96.0,
+    "dsp_facility": 12500.0,
+    "utilities": 6697.78,
+    "labor": 20000,
+    "qc_testing": 15000,
+    "cmo_facility_overhead": 318726.24693
+  },
+  "comparative_analysis": [
+    {
+      "Category": "Fermentation Facility",
+      "Cost_Per_Batch_USD": 256250.0,
+      "Cost_Per_Kg_USD": 268.18419675562535,
+      "Percentage": 10.145749133946232,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Glucose",
+      "Cost_Per_Batch_USD": 9843.75,
+      "Cost_Per_Kg_USD": 10.302197802197803,
+      "Percentage": 0.38974524112110526,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Yeast Extract",
+      "Cost_Per_Batch_USD": 9954.0,
+      "Cost_Per_Kg_USD": 10.417582417582418,
+      "Percentage": 0.39411038782166163,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Peptone",
+      "Cost_Per_Batch_USD": 24885.0,
+      "Cost_Per_Kg_USD": 26.043956043956044,
+      "Percentage": 0.985275969554154,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Minor Nutrients",
+      "Cost_Per_Batch_USD": 500.0,
+      "Cost_Per_Kg_USD": 0.5232862375719518,
+      "Percentage": 0.01979658367599265,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Antifoam",
+      "Cost_Per_Batch_USD": 1050.0,
+      "Cost_Per_Kg_USD": 1.098901098901099,
+      "Percentage": 0.04157282571958456,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Capture Technology",
+      "Cost_Per_Batch_USD": 664981.6666666666,
+      "Cost_Per_Kg_USD": 695.9515088086516,
+      "Percentage": 26.328730414335432,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Capture Resin",
+      "Cost_Per_Batch_USD": 663541.6666666666,
+      "Cost_Per_Kg_USD": 694.4444444444445,
+      "Percentage": 26.271716253348576,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Capture Buffers",
+      "Cost_Per_Batch_USD": 1440.0,
+      "Cost_Per_Kg_USD": 1.5070643642072215,
+      "Percentage": 0.057014160986858825,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Dsp Facility",
+      "Cost_Per_Batch_USD": 31250.0,
+      "Cost_Per_Kg_USD": 32.70538984824699,
+      "Percentage": 1.2372864797495406,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Utilities",
+      "Cost_Per_Batch_USD": 6697.78,
+      "Cost_Per_Kg_USD": 7.009712192569335,
+      "Percentage": 0.2651863244267801,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Labor",
+      "Cost_Per_Batch_USD": 20000.0,
+      "Cost_Per_Kg_USD": 20.931449502878074,
+      "Percentage": 0.791863347039706,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Qc Testing",
+      "Cost_Per_Batch_USD": 15000.0,
+      "Cost_Per_Kg_USD": 15.698587127158556,
+      "Percentage": 0.5938975102797794,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Cmo Facility Overhead",
+      "Cost_Per_Batch_USD": 820294.4482633333,
+      "Cost_Per_Kg_USD": 858.4975910657596,
+      "Percentage": 32.4780553679946,
+      "Capture_Mode": "qff_aex"
+    },
+    {
+      "Category": "Fermentation Facility",
+      "Cost_Per_Batch_USD": 256250.0,
+      "Cost_Per_Kg_USD": 268.18419675562535,
+      "Percentage": 26.111755050648334,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Glucose",
+      "Cost_Per_Batch_USD": 9843.75,
+      "Cost_Per_Kg_USD": 10.302197802197803,
+      "Percentage": 1.0030735171895395,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Yeast Extract",
+      "Cost_Per_Batch_USD": 9954.0,
+      "Cost_Per_Kg_USD": 10.417582417582418,
+      "Percentage": 1.0143079405820625,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Peptone",
+      "Cost_Per_Batch_USD": 24885.0,
+      "Cost_Per_Kg_USD": 26.043956043956044,
+      "Percentage": 2.5357698514551563,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Minor Nutrients",
+      "Cost_Per_Batch_USD": 500.0,
+      "Cost_Per_Kg_USD": 0.5232862375719518,
+      "Percentage": 0.05094976595248456,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Antifoam",
+      "Cost_Per_Batch_USD": 1050.0,
+      "Cost_Per_Kg_USD": 1.098901098901099,
+      "Percentage": 0.10699450850021755,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Capture Technology",
+      "Cost_Per_Batch_USD": 152976.0,
+      "Cost_Per_Kg_USD": 160.10047095761382,
+      "Percentage": 15.588182792694555,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Capture Chitosan",
+      "Cost_Per_Batch_USD": 152880.0,
+      "Cost_Per_Kg_USD": 160.0,
+      "Percentage": 15.578400437631675,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Capture Buffers",
+      "Cost_Per_Batch_USD": 96.0,
+      "Cost_Per_Kg_USD": 0.10047095761381476,
+      "Percentage": 0.009782355062877033,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Dsp Facility",
+      "Cost_Per_Batch_USD": 12500.0,
+      "Cost_Per_Kg_USD": 13.082155939298797,
+      "Percentage": 1.2737441488121137,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Utilities",
+      "Cost_Per_Batch_USD": 6697.78,
+      "Cost_Per_Kg_USD": 7.009712192569335,
+      "Percentage": 0.6825006468024639,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Labor",
+      "Cost_Per_Batch_USD": 20000.0,
+      "Cost_Per_Kg_USD": 20.931449502878074,
+      "Percentage": 2.037990638099382,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Qc Testing",
+      "Cost_Per_Batch_USD": 15000.0,
+      "Cost_Per_Kg_USD": 15.698587127158556,
+      "Percentage": 1.5284929785745365,
+      "Capture_Mode": "chitosan"
+    },
+    {
+      "Category": "Cmo Facility Overhead",
+      "Cost_Per_Batch_USD": 318726.24693,
+      "Cost_Per_Kg_USD": 333.57011714285716,
+      "Percentage": 32.4780553679946,
+      "Capture_Mode": "chitosan"
+    }
+  ],
+  "savings_potential": {
+    "qff_cost_per_kg": 2643.3158677097504,
+    "chitosan_cost_per_kg": 966.6476086360699,
+    "absolute_savings_per_kg": 1676.6682590736805,
+    "percentage_savings": 63.43049196486673,
+    "annual_production_kg": 28665.0,
+    "annual_savings_usd": 48061695.64634705
+  },
+  "excel_validation": {
+    "cost_within_tolerance": false,
+    "qff_calculated_cost": 2643.3158677097504,
+    "excel_target_cost": 1264.34,
+    "absolute_difference": 1378.9758677097504,
+    "percentage_difference": 109.06685446238752
+  },
+  "parameter_source": "Excel extraction from osteopontin_model.xlsx"
+}
