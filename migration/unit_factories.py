@@ -9,7 +9,15 @@ import biosteam as bst
 from .excel_defaults import ModuleKey
 from .module_registry import ModuleRegistry
 from .unit_builders import PLAN_BUILDERS, UnitPlan
-from .simple_units import FermentationUnit, SeedTrainUnit
+from .simple_units import (
+    FermentationUnit,
+    SeedTrainUnit,
+    MicrofiltrationUnit,
+    UFDFUnit,
+    ChromatographyUnit,
+    PreDryingUnit,
+    SprayDryerUnit,
+)
 
 __all__ = [
     "register_plan_backed_unit_factories",
@@ -19,6 +27,11 @@ __all__ = [
 PLAN_UNIT_CLASSES: Dict[str, Tuple[type, str]] = {
     "USP00": (FermentationUnit, "Fermenter"),
     "USP01": (SeedTrainUnit, "SeedTrain"),
+    "USP02": (MicrofiltrationUnit, "USP02"),
+    "DSP01": (UFDFUnit, "DSP01"),
+    "DSP02": (ChromatographyUnit, "DSP02"),
+    "DSP03": (PreDryingUnit, "DSP03"),
+    "DSP05": (SprayDryerUnit, "DSP05"),
 }
 
 
