@@ -1,0 +1,41 @@
+# Default parameter overrides for optional module variants.
+# Values approximate industry-standard assumptions and should be reviewed.
+
+USP00:
+  USP00b:
+    turnaround_time_hours: 36.0
+    biomass_yield_glucose: 0.42
+    product_yield_biomass: 0.18
+    antifoam_dosage: 0.08
+  USP00c:
+    turnaround_time_hours: 30.0
+    biomass_yield_glucose: 0.40
+    product_yield_biomass: 0.20
+
+USP01:
+  USP00c:
+    yeast_extract_concentration_g_per_l: 12.0
+    peptone_concentration_g_per_l: 18.0
+
+USP02:
+  USP02c:
+    microfiltration_efficiency: 0.85
+    microfiltration_flux_l_m2_h: 50.0
+    microfiltration_area_m2: 90.0
+    microfiltration_membrane_lifetime: 180.0
+
+DSP03:
+  DSP03b:
+    pre_drying_efficiency: 0.90
+    pre_drying_flux_l_m2_h: 38.0
+    pre_drying_membrane_area_m2: 40.0
+
+PROJ01:
+  PROJ01b:
+    electricity_cost_per_kwh: 0.12
+    steam_cost_per_mt: 22.0
+    compressed_air_cost: 0.018
+  PROJ01c:
+    electricity_cost_per_kwh: 0.18
+    steam_cost_per_mt: 30.0
+    compressed_air_cost: 0.025
