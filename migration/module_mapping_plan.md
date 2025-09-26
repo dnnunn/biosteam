@@ -21,57 +21,46 @@ The migration scaffolding (`migration.baseline_system.DEFAULT_MODULE_SEQUENCE`) 
 ### USP00 — Fermentation
 - **Excel options:** `USP00a` (baseline), `USP00b`, `USP00c`
 - **Key parameters (baseline):** turnaround time (24 h), yields (OD→biomass 0.4, biomass→product 0.3), wet cell density 105 g/L, antifoam dosage.
-- **Candidate BioSTEAM units:** `biosteam.units.AeratedBioreactor` or `biosteam.units.BatchBioreactor` for the production fermentor; possible use of `biosteam.units.Fermentation` convenience wrappers.
-- **Implementation notes:**
-  1. Define a `build_usp00_fermentor(config)` that instantiates a batch fermentor, sets cycle time via `turnaround_time_hours`, and configures yields and antifoam consumption.
-  2. Support additional Excel variants (`USP00b`, `USP00c`) by branching on `ModuleKey.option` once their parameter differences are analysed.
+- **Status:** UnitPlan covers cycle time, product yield on glucose, and override-driven assumptions for `USP00b/USP00c`.
+- **Next steps:** wire a BioSTEAM fermentor that consumes media streams and honours the derived cycle time.
 
 ### USP01 — Seed Train
 - **Excel options:** `USP01a` (baseline), cross-reference `USP00c` for shared defaults.
 - **Key parameters:** yeast extract/peptone concentrations and unit costs.
-- **Candidate BioSTEAM units:** `biosteam.units.SeedTrain` (if available) or a chain of `MixTank` + `BatchBioreactor` sized via utilities.
-- **Implementation notes:**
-  1. Start with a placeholder returning a data object for mass balance verification.
-  2. Investigate reuse of templates in `Bioindustrial-Park/biorefineries/BDO/` for seed trains.
+- **Status:** UnitPlan provides nutrient concentration totals and flags missing data; overrides fill the shared `USP00c` defaults.
+- **Next steps:** implement a reusable BioSTEAM seed-train block (e.g., cascade of `MixTank`/`BatchBioreactor`).
 
 ### USP02 — Microfiltration Harvest
 - **Excel options:** `USP02a` (baseline), `USP02c` (alternative efficiency set).
 - **Key parameters:** membrane area (80 m²), flux 45 L/m²·h, dilution volume 15 m³, target product loss 10%, membrane life/cost.
-- **Candidate BioSTEAM units:** `biosteam.units.CrossFlowFilter` (or `Microfiltration` helper) with membrane replacement economics.
-- **Implementation notes:**
-  1. Convert flux and area into processing time to size the unit.
-  2. Track membrane replacement via `Unit.add_OPEX` using cost/lifetime.
+- **Status:** UnitPlan now reports throughput (flux × area), membrane replacement cost, and dilution volume (with overrides for `USP02c`).
+- **Next steps:** instantiate a BioSTEAM microfiltration unit and attach membrane replacement economics.
 
 ## Downstream Processing
 
 ### DSP01 — UF/DF
-- **Excel options:** `DSP01a` only.
+- **Excel options:** `DSP01a` baseline; override profile added for `DSP01b` scenario.
 - **Key parameters:** membrane area 150 m², flux 20 L/m²·h, diafiltration volumes (5), efficiency 95%.
-- **BioSTEAM mapping:** use `biosteam.units.MembraneEvaporator` or repurpose `CrossFlowFilter` for UF/DF; ensure diafiltration loop is modelled (could leverage `Recycle` + `MixTank`).
-- **Tasks:**
-  1. Determine whether an existing BioSTEAM membrane unit can handle both UF and DF in one step; otherwise create a custom unit subclass.
-  2. Parameterise permeate removal and diafiltration water usage.
+- **Status:** UnitPlan captures throughput, diafiltration volumes, and membrane replacement OPEX.
+- **Next steps:** wire UF/DF module (or custom membrane unit) and close diafiltration water loops.
 
 ### DSP02 — Chromatography
 - **Excel options:** `DSP02a` (baseline only in defaults).
 - **Key parameters:** dynamic binding capacity 60 g/L, 5 CV elution, wash/strip molarity, resin cost $1000/L, lifetime 30 cycles, buffer recipes.
-- **BioSTEAM mapping:** extend/instantiate `biosteam.units.Chromatography` from `Bioindustrial-Park` modules or build a custom unit capturing cycle scheduling, resin replacement, and buffer prep streams.
-- **Tasks:**
-  1. Create a builder that returns a struct encapsulating resin cycle economics (mass balance, buffer volumes) before wiring a full unit.
-  2. Use `ChromatographySpecs.resin_cost_per_batch()` helper to calculate consumables.
-  3. For future phases, add support for alternative options (e.g., chitosan) as additional ModuleKeys.
+- **Status:** UnitPlan computes resin cost per batch and aggregates total buffer bed volumes for TEA integration.
+- **Next steps:** connect to a chromatography cycle model and buffer preparation units; add alternative technology options in future phases.
 
 ### DSP03 — Pre-Drying TFF/UFF
 - **Excel options:** `DSP03a` (baseline), `DSP03b` (alternate flux/area set).
 - **Key parameters:** efficiency 95%, flux 35 L/m²·h, membrane area 35 m², concentration factor 5.
-- **BioSTEAM mapping:** similar to DSP01; can reuse the same membrane unit builder with different parameters.
-- **Tasks:** implement a shared membrane filtering builder that accepts the `ModuleData` fields and configures a BioSTEAM unit.
+- **Status:** UnitPlan targets throughput and efficiency, applying overrides for the alternate scenario.
+- **Next steps:** reuse UF/DF membrane wiring to finalise the pre-drying stage.
 
 ### DSP05 — Spray Drying
-- **Excel options:** `DSP05a` only.
+- **Excel options:** `DSP05a` only (overrides supply scenario defaults).
 - **Key parameters:** dryer efficiency 98%, capacity 150 kg/h, target recovery 80%, final solids 15%.
-- **BioSTEAM mapping:** `biosteam.units.SprayDryer` exists and can be parameterised with throughput, moisture removal, and energy demand.
-- **Tasks:** map Excel capacity to residence time; integrate with PROJ utilities for steam/electricity pricing.
+- **Status:** UnitPlan exposes dryer capacity and solids concentration with optional override support.
+- **Next steps:** instantiate `biosteam.units.SprayDryer` and link to utility pricing from PROJ01.
 
 ## Project / Financial Modules
 
@@ -107,9 +96,8 @@ The migration scaffolding (`migration.baseline_system.DEFAULT_MODULE_SEQUENCE`) 
 
 ## Immediate Follow-Up Tasks
 
-1. **Diagnostics:** add a CLI helper (e.g., `migration/scripts/dump_defaults.py`) to print module data for any key, smoothing future validation.
-2. **Builder Stubs:** extend the new `migration.unit_builders.register_baseline_unit_builders` to cover the remaining modules. USP00/USP01 now return `UnitPlan` objects with derived metrics; replicate the pattern for USP02, DSP01, etc.
-3. **Unit Wiring:** prioritise USP00, USP02, DSP01, DSP02, DSP05 for real BioSTEAM units since they dominate mass balance and cost. Use `Bioindustrial-Park` examples as references for unit parameters.
-4. **Validation Hooks:** after each builder is implemented, connect it to regression tests comparing BioSTEAM outputs to Excel baselines (cost/kg, resin usage, buffer volumes).
+1. **Diagnostics:** use `python -m migration.scripts.dump_defaults` to inspect module data and UnitPlans (supports inactive options via `--include-inactive`).
+2. **Unit Wiring:** convert the established UnitPlans (USP00–DSP05) into fully fledged BioSTEAM unit factories, starting with fermentation, microfiltration, UF/DF, chromatography, and spray drying.
+3. **Validation Hooks:** after each builder is implemented, connect it to regression tests comparing BioSTEAM outputs to Excel baselines (cost/kg, resin usage, buffer volumes).
 
 This plan will evolve as we implement builders; update this file after each module is wired or when new Excel options are characterised.

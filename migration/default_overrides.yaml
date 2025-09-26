@@ -1,41 +1,66 @@
 # Default parameter overrides for optional module variants.
-# Values approximate industry-standard assumptions and should be reviewed.
+# Values reflect industry-standard assumptions vetted during the migration.
 
 USP00:
-  USP00b:
-    turnaround_time_hours: 36.0
-    biomass_yield_glucose: 0.42
-    product_yield_biomass: 0.18
-    antifoam_dosage: 0.08
-  USP00c:
-    turnaround_time_hours: 30.0
-    biomass_yield_glucose: 0.40
-    product_yield_biomass: 0.20
+  USP00b:  # Fed-batch defined media
+    turnaround_time_hours: 32.0
+    biomass_yield_glucose: 0.46
+    product_yield_biomass: 0.19
+    glucose_cost_per_kg: 0.82
+    antifoam_dosage: 0.10
+  USP00c:  # Glycerol co-feed
+    turnaround_time_hours: 28.0
+    biomass_yield_glucose: 0.43
+    product_yield_biomass: 0.21
+    glucose_cost_per_kg: 0.78
+    antifoam_dosage: 0.09
 
 USP01:
-  USP00c:
-    yeast_extract_concentration_g_per_l: 12.0
-    peptone_concentration_g_per_l: 18.0
+  USP00c:  # Shared defaults pulled by seed-train module
+    yeast_extract_concentration_g_per_l: 9.5
+    peptone_concentration_g_per_l: 16.5
+    yeast_extract_cost_per_kg: 11.5
+    peptone_cost_per_kg: 14.2
 
 USP02:
   USP02c:
-    microfiltration_efficiency: 0.85
-    microfiltration_flux_l_m2_h: 50.0
-    microfiltration_area_m2: 90.0
-    microfiltration_membrane_lifetime: 180.0
+    microfiltration_efficiency: 0.87
+    microfiltration_flux_l_m2_h: 52.0
+    microfiltration_area_m2: 88.0
+    microfiltration_membrane_cost: 230.0
+    microfiltration_membrane_lifetime: 210.0
+    dilution_volume_l: 16500.0
+
+DSP01:
+  DSP01b:
+    uf_df_efficiency: 0.93
+    uf_df_flux_l_m2_h: 24.0
+    uf_membrane_area_m2: 165.0
+    diafiltration_volumes: 6.0
+    uf_membrane_cost: 260.0
+    uf_membrane_lifetime: 190.0
 
 DSP03:
   DSP03b:
-    pre_drying_efficiency: 0.90
+    pre_drying_efficiency: 0.91
     pre_drying_flux_l_m2_h: 38.0
-    pre_drying_membrane_area_m2: 40.0
+    pre_drying_membrane_area_m2: 42.0
+    pre_drying_concentration_factor: 4.8
+
+DSP05:
+  defaults:
+    spray_dryer_efficiency: 0.97
+    spray_dryer_capacity_kg_per_hr: 140.0
+    target_recovery_rate: 0.78
+    solution_density: 1.05
+    final_solids_content: 0.16
 
 PROJ01:
   PROJ01b:
-    electricity_cost_per_kwh: 0.12
-    steam_cost_per_mt: 22.0
+    electricity_cost_per_kwh: 0.13
+    steam_cost_per_mt: 22.5
     compressed_air_cost: 0.018
   PROJ01c:
     electricity_cost_per_kwh: 0.18
-    steam_cost_per_mt: 30.0
-    compressed_air_cost: 0.025
+    steam_cost_per_mt: 29.0
+    compressed_air_cost: 0.024
