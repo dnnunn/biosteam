@@ -54,8 +54,25 @@ class SeedTrainUnit(PlanBackedUnit):
 
     def _run(self) -> None:
         feed = self.ins[0]
-        product = self.outs[0]
-        product.copy_like(feed)
+        broth = self.outs[0]
+        broth.copy_like(feed)
+
+        glucose_mass = feed.imass['Glucose']
+        if glucose_mass <= 0:
+            return
+
+        # Placeholder assumption: 15% of glucose converted in seed stage
+        seed_conversion = 0.15 * glucose_mass
+
+        broth.imass['Glucose'] -= seed_conversion
+        broth.imass['Yeast'] += seed_conversion * 0.5  # placeholder biomass gain
+
+        # Nutrient supplements remain in broth
+        derived = self.plan.derived
+        total_nutrients = derived.get('total_nutrient_concentration_g_per_l') or 0.0
+        if total_nutrients > 0:
+            broth.imass['CornSteepLiquor'] += total_nutrients * 0.01
+            broth.imass['YeastExtract'] += total_nutrients * 0.01
 
     def _design(self) -> None:
         specs = self.plan.specs
@@ -79,7 +96,7 @@ class FermentationUnit(PlanBackedUnit):
     """Minimal fermentation placeholder capturing cycle information."""
 
     _N_ins = 1
-    _N_outs = 1
+    _N_outs = 2
     line = "Fermentor"
 
     _units = {
@@ -89,10 +106,34 @@ class FermentationUnit(PlanBackedUnit):
 
     def _run(self) -> None:
         feed = self.ins[0]
-        product = self.outs[0]
-        product.copy_like(feed)
-        product.T = feed.T
-        product.P = feed.P
+        broth, vent = self.outs
+        broth.copy_like(feed)
+        vent.empty()
+
+        glucose_mass = feed.imass['Glucose']
+        if glucose_mass <= 0:
+            return
+
+        # Assume complete consumption of glucose in production stage
+        consumed = glucose_mass
+        product_yield = self.plan.derived.get('product_yield_glucose', 0.0)
+        biomass_yield = self.plan.specs.biomass_yield_glucose or 0.0
+
+        product_mass = consumed * product_yield
+        biomass_mass = consumed * biomass_yield
+        byproduct_mass = max(consumed - product_mass - biomass_mass, 0.0)
+
+        broth.imass['Glucose'] -= consumed
+        broth.imass['Osteopontin'] += product_mass
+        broth.imass['Yeast'] += biomass_mass
+
+        vent.imass['CO2'] = byproduct_mass * 0.7
+        vent.imass['Water'] = byproduct_mass * 0.3
+        vent.P = feed.P
+        vent.T = feed.T
+
+        broth.T = feed.T
+        broth.P = feed.P
 
     def _design(self) -> None:
         derived = self.plan.derived
