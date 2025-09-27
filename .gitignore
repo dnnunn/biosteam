@@ -36,6 +36,7 @@ monkeytype.sqlite3
 .claude/
 .vscode/
 .venv/
+.venv*/
 venv311/
 
 # Docs #

@@ -8,9 +8,9 @@ the bridge between the Excel defaults and future BioSTEAM unit factories.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 
-from .excel_defaults import ModuleConfig, ModuleKey
+from .excel_defaults import ExcelModuleDefaults, ModuleConfig, ModuleKey
 from .default_overrides import get_overrides_for
 from .module_builders import ModuleData, build_module_data
 from .module_registry import ModuleRegistry
@@ -39,6 +39,15 @@ class UnitPlan:
         self.notes.append(message)
 
 
+_DEFAULTS_LOADER: Optional[ExcelModuleDefaults] = None
+
+
+def set_defaults_loader(loader: ExcelModuleDefaults) -> None:
+    """Store the defaults loader for cross-module lookups."""
+
+    global _DEFAULTS_LOADER
+    _DEFAULTS_LOADER = loader
+
 def _apply_overrides(data: ModuleData, config: ModuleConfig) -> List[str]:
     overrides = get_overrides_for(config.key)
     applied_fields: List[str] = []
@@ -48,36 +57,138 @@ def _apply_overrides(data: ModuleData, config: ModuleConfig) -> List[str]:
     return applied_fields
 
 
+def _get_config(module: str, option: Optional[str]) -> Optional[ModuleConfig]:
+    if _DEFAULTS_LOADER is None:
+        return None
+    return _DEFAULTS_LOADER.get_module_config(ModuleKey(module, option))
+
+
+def _get_active_config(module: str, fallback_option: Optional[str] = None) -> Optional[ModuleConfig]:
+    if _DEFAULTS_LOADER is None:
+        return None
+    defaults = _DEFAULTS_LOADER.load_defaults()
+    for key, cfg in defaults.items():
+        if key.module == module and cfg.active:
+            return cfg
+    if fallback_option is not None:
+        return defaults.get(ModuleKey(module, fallback_option))
+    return None
+
+
+def _get_parameter(config: Optional[ModuleConfig], name: str) -> Optional[float]:
+    if config is None:
+        return None
+    record = config.parameters.get(name)
+    if record is None:
+        return None
+    return record.value
+
+
+CARBON_OPTION_MAP = {
+    "USP00a": {
+        "label": "Glucose",
+        "cost_field": "Glucose_Cost",
+        "initial_field": "Initial_Glucose_Concentration",
+        "feed_field": "Feed_Glucose_Concentration",
+    },
+    "USP00b": {
+        "label": "Glycerol",
+        "cost_field": "Glycerol_Cost",
+        "initial_field": "Initial_Glycerol_Concentration",
+        "feed_field": "Feed_Glycerol_Concentration",
+    },
+    "USP00c": {
+        "label": "Lactose",
+        "cost_field": "Lactose_Cost",
+        "initial_field": "Initial_Lactose_Concentration",
+        "feed_field": "Feed_Lactose_Concentration",
+    },
+    "USP00d": {
+        "label": "Molasses",
+        "cost_field": "Molasses_Cost",
+        "initial_field": "Initial_Molasses_Concentration",
+        "feed_field": "Feed_Molasses_Concentration",
+    },
+}
+
+
+def _compose_fermentation_specs(
+    carbon_config: ModuleConfig,
+    global_config: Optional[ModuleConfig],
+) -> Tuple[FermentationSpecs, Dict[str, Any]]:
+    option = carbon_config.key.option or "USP00a"
+    mapping = CARBON_OPTION_MAP.get(option, CARBON_OPTION_MAP["USP00a"])
+
+    biomass_yield = None
+    name = f"Biomass_Yield_on_{mapping['label']}"
+    record = carbon_config.parameters.get(name)
+    if record and record.value is not None:
+        biomass_yield = record.value
+
+    product_yield = _get_parameter(global_config, "Product_Yield_on_Biomass")
+    turnaround = _get_parameter(global_config, "Turnaround_Time")
+    antifoam = _get_parameter(global_config, "Antifoam_Dosage")
+
+    costs = _get_parameter(global_config, mapping["cost_field"]) or 0.0
+
+    specs = FermentationSpecs(
+        key=carbon_config.key.module,
+        turnaround_time_hours=turnaround,
+        biomass_yield_glucose=biomass_yield,
+        product_yield_biomass=product_yield,
+        glucose_cost_per_kg=costs,
+        antifoam_dosage=antifoam,
+    )
+
+    derived: Dict[str, Any] = {
+        "carbon_source": mapping["label"].lower(),
+    }
+
+    initial = _get_parameter(global_config, mapping["initial_field"])
+    feed = _get_parameter(global_config, mapping["feed_field"])
+    if initial is not None:
+        derived["initial_carbon_concentration_g_per_l"] = initial
+    if feed is not None:
+        derived["feed_carbon_concentration_g_per_l"] = feed
+
+    seed_duration = _get_parameter(global_config, "Seed_Train_Duration")
+    if seed_duration is not None:
+        derived["seed_train_duration_hours"] = seed_duration
+
+    return specs, derived
+
+
 def _build_usp00_plan(config: ModuleConfig) -> UnitPlan:
-    data = build_module_data(config)
-    applied_fields = _apply_overrides(data, config)
-    specs = data.to_spec()
-    assert isinstance(specs, FermentationSpecs)
+    global_config = _get_active_config("GLOBAL00", "GLOBAL00c")
+    specs, derived = _compose_fermentation_specs(config, global_config)
 
-    derived: Dict[str, Any] = {}
     cycle_hours = specs.estimated_batch_cycle_hours()
-    derived["batch_cycle_hours"] = cycle_hours
-
-    product_yield_glucose = None
+    if cycle_hours is not None:
+        derived["batch_cycle_hours"] = cycle_hours
     if (
         specs.biomass_yield_glucose is not None
         and specs.product_yield_biomass is not None
     ):
-        product_yield_glucose = (
+        derived["product_yield_glucose"] = (
             specs.biomass_yield_glucose * specs.product_yield_biomass
         )
-        derived["product_yield_glucose"] = product_yield_glucose
+
+    data = ModuleData(key=config.key, records=config.parameters, values={})
+    applied_fields = _apply_overrides(data, config)
+
+    if specs.turnaround_time_hours is None:
+        plan_note = (
+            "Turnaround time missing; fermentation cycle defaults may need update."
+        )
+    else:
+        plan_note = None
 
     plan = UnitPlan(key=config.key, data=data, specs=specs, derived=derived)
 
-    if cycle_hours is None:
-        plan.add_note(
-            "Turnaround time missing; fermentation cycle defaults to 48 h without adjustment."
-        )
-    if product_yield_glucose is None:
-        plan.add_note(
-            "Unable to compute product yield on glucose from Excel defaults."
-        )
+    if specs.product_yield_biomass is None:
+        plan.add_note("Product yield on biomass missing; verify GLOBAL00 defaults.")
+    if plan_note:
+        plan.add_note(plan_note)
     if applied_fields:
         plan.add_note(
             "Applied default overrides for: " + ", ".join(sorted(applied_fields))
@@ -87,33 +198,47 @@ def _build_usp00_plan(config: ModuleConfig) -> UnitPlan:
 
 
 def _build_usp01_plan(config: ModuleConfig) -> UnitPlan:
-    data = build_module_data(config)
-    applied_fields = _apply_overrides(data, config)
-    specs = data.to_spec()
-    assert isinstance(specs, SeedTrainSpecs)
+    carbon_config = _get_active_config("USP00", "USP00a")
+    global_config = _get_active_config("GLOBAL00", "GLOBAL00c")
+    fermentation_config = _get_active_config("USP02", "USP02a")
 
-    derived: Dict[str, Any] = {}
-    total_nutrient_conc = 0.0
+    if carbon_config is None:
+        carbon_config = config  # fall back to current config if available
+
+    carb_specs, base_derived = _compose_fermentation_specs(carbon_config, global_config)
+
+    yeast_conc = _get_parameter(fermentation_config, "Yeast_Extract_Concentration")
+    peptone_conc = _get_parameter(fermentation_config, "Peptone_Concentration")
+    yeast_cost = _get_parameter(global_config, "Yeast_Extract_Cost")
+    peptone_cost = _get_parameter(global_config, "Peptone_Cost")
+
+    specs = SeedTrainSpecs(
+        key=config.key.module,
+        yeast_extract_concentration_g_per_l=yeast_conc,
+        peptone_concentration_g_per_l=peptone_conc,
+        yeast_extract_cost_per_kg=yeast_cost,
+        peptone_cost_per_kg=peptone_cost,
+    )
+
+    derived: Dict[str, Any] = dict(base_derived)
+    total_nutrient = 0.0
     missing = False
-    for field_name in (
-        "yeast_extract_concentration_g_per_l",
-        "peptone_concentration_g_per_l",
-    ):
-        value = getattr(specs, field_name)
+    for value in (yeast_conc, peptone_conc):
         if value is None:
             missing = True
-            continue
-        total_nutrient_conc += value
+        else:
+            total_nutrient += value
     if not missing:
-        derived["total_nutrient_concentration_g_per_l"] = total_nutrient_conc
-    else:
-        derived["total_nutrient_concentration_g_per_l"] = None
+        derived["total_nutrient_concentration_g_per_l"] = total_nutrient
+
+    data = ModuleData(key=config.key, records=config.parameters, values={})
+    applied_fields = _apply_overrides(data, config)
 
     plan = UnitPlan(key=config.key, data=data, specs=specs, derived=derived)
 
     if missing:
         plan.add_note(
-            "Seed train nutrient concentrations incomplete; verify Excel defaults."
+            "Seed train nutrient concentrations incomplete; verify GLOBAL00/USP02 defaults."
         )
     if applied_fields:
         plan.add_note(

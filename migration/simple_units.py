@@ -32,6 +32,8 @@ class PlanBackedUnit(bst.Unit):
 
     def _summary(self) -> Dict[str, str]:  # pragma: no cover - convenience only
         summary = super()._summary()
+        if summary is None:
+            summary = {}
         summary.update({
             "module": self.plan.key.module,
             "option": self.plan.key.option or "<default>",

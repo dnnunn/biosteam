@@ -122,6 +122,14 @@ USP01_FIELDS = {
 }
 
 USP02_FIELDS = {
+    "Yeast_Extract_Concentration": "yeast_extract_concentration_g_per_l",
+    "Peptone_Concentration": "peptone_concentration_g_per_l",
+    "Oxygen_Transfer_Rate": "oxygen_transfer_rate",
+    "Agitation_Power_Intensity": "agitation_power_intensity",
+    "Aeration_Rate": "aeration_rate",
+}
+
+USP03_FIELDS = {
     "MF_Efficiency": "microfiltration_efficiency",
     "MF_Membrane_Area": "microfiltration_area_m2",
     "Microfiltration_Flux": "microfiltration_flux_l_m2_h",
@@ -227,6 +235,7 @@ FIELD_MAP = {
     "USP00": USP00_FIELDS,
     "USP01": USP01_FIELDS,
     "USP02": USP02_FIELDS,
+    "USP03": USP03_FIELDS,
     "DSP01": DSP01_FIELDS,
     "DSP02": DSP02_FIELDS,
     "DSP03": DSP03_FIELDS,
