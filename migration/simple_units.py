@@ -12,7 +12,7 @@ from biosteam.units.nrel_bioreactor import NRELBatchBioreactor
 __all__ = [
     "PlanBackedUnit",
     "SeedTrainBioreactor",
-    "FermentationUnit",
+    "FermentationBioreactor",
     "MicrofiltrationUnit",
     "UFDFUnit",
     "ChromatographyUnit",
@@ -165,52 +165,75 @@ class SeedTrainBioreactor(NRELBatchBioreactor):
         }
 
 
-class FermentationUnit(PlanBackedUnit):
-    """Minimal fermentation placeholder capturing cycle information."""
+class FermentationBioreactor(NRELBatchBioreactor):
+    """Batch fermentation unit driven by Excel-derived plan targets."""
 
     _N_ins = 1
     _N_outs = 2
-    line = "Fermentor"
+    line = "Fermentation"
 
-    _units = {
-        "Batch cycle": "h",
-        "Product yield on glucose": "kg/kg",
-    }
+    def __init__(self, ID: str, plan: UnitPlan, **kwargs) -> None:
+        self.plan = plan
+        self.notes = list(plan.notes)
+        derived = plan.derived
+        tau = derived.get("batch_cycle_hours") or derived.get("tau_hours") or 72.0
+        working_volume_l = derived.get("working_volume_l") or 70_000.0
+        super().__init__(
+            ID,
+            tau=tau,
+            V=working_volume_l / 1_000.0,
+            outs=(f"{ID}_vent", f"{ID}_broth"),
+            **kwargs,
+        )
+
+    def _setup(self) -> None:
+        super()._setup()
+        vent, broth = self.outs
+        vent.phase = "g"
+        vent.P = broth.P = self.P
+        vent.T = broth.T = self.T
 
     def _run(self) -> None:
         feed = self.ins[0]
-        broth, vent = self.outs
+        vent, broth = self.outs
+        vent.empty()
+        broth.empty()
+
         derived = self.plan.derived
 
-        working_volume_l = derived.get('working_volume_l')
+        working_volume_l = derived.get("working_volume_l")
         if working_volume_l is None:
             working_volume_l = feed.F_vol or feed.F_mass or 1_000.0
 
-        density = derived.get('broth_density_kg_per_l', 1.0)
+        density = derived.get("broth_density_kg_per_l", 1.0)
         total_mass = working_volume_l * density
 
-        target_titer = derived.get('target_titer_g_per_l') or 0.0
-        product_mass = target_titer * working_volume_l / 1e3
+        product_mass = derived.get("product_out_kg")
+        if product_mass is None:
+            target_titer = derived.get("target_titer_g_per_l") or 0.0
+            product_mass = target_titer * working_volume_l / 1_000.0
+        product_mass = max(product_mass or 0.0, 0.0)
 
-        dcw_conc = derived.get('dcw_concentration_g_per_l') or 0.0
-        biomass_mass = dcw_conc * working_volume_l / 1e3
+        dcw_conc = derived.get("dcw_concentration_g_per_l") or 0.0
+        biomass_mass = dcw_conc * working_volume_l / 1_000.0
 
-        residual_glucose = derived.get('residual_glucose_g_per_l') or 0.0
-        residual_glucose_mass = residual_glucose * working_volume_l / 1e3
+        residual_glucose = (
+            derived.get("residual_glucose_g_per_l")
+            or derived.get("residual_glucose_after_fermentation_g_per_l")
+            or 0.0
+        )
+        residual_glucose_mass = residual_glucose * working_volume_l / 1_000.0
 
-        broth.empty()
-        vent.empty()
-
-        if product_mass > 0:
-            broth.imass['Osteopontin'] = product_mass
-        if biomass_mass > 0:
-            broth.imass['Yeast'] = biomass_mass
-        if residual_glucose_mass > 0:
-            broth.imass['Glucose'] = residual_glucose_mass
+        if product_mass > 0.0:
+            broth.imass["Osteopontin"] = product_mass
+        if biomass_mass > 0.0:
+            broth.imass["Yeast"] = biomass_mass
+        if residual_glucose_mass > 0.0:
+            broth.imass["Glucose"] = residual_glucose_mass
 
         known_mass = product_mass + biomass_mass + residual_glucose_mass
         water_mass = max(total_mass - known_mass, 0.0)
-        broth.imass['Water'] = water_mass
+        broth.imass["Water"] = water_mass
 
         broth.T = feed.T
         broth.P = feed.P
@@ -219,22 +242,23 @@ class FermentationUnit(PlanBackedUnit):
 
     def _design(self) -> None:
         derived = self.plan.derived
-        self.design_results["Batch cycle"] = derived.get("batch_cycle_hours", 0.0)
-        self.design_results["Product yield on glucose"] = derived.get(
-            "product_yield_glucose", 0.0
-        )
-        self.design_results["Working volume"] = derived.get("working_volume_l", 0.0)
-        self.design_results["Target titer"] = derived.get("target_titer_g_per_l", 0.0)
-        self.design_results["DCW concentration"] = derived.get(
-            "dcw_concentration_g_per_l", 0.0
-        )
-        self.design_results["Glucose feed per batch"] = derived.get(
-            "total_glucose_feed_kg", 0.0
+        if derived.get("batch_cycle_hours"):
+            self.tau = derived["batch_cycle_hours"]
+        if derived.get("working_volume_l"):
+            self.V = derived["working_volume_l"] / 1_000.0
+        super()._design()
+        self.design_results.update(
+            {
+                "Product yield on glucose": derived.get("product_yield_glucose", 0.0),
+                "Working volume": derived.get("working_volume_l", 0.0),
+                "Target titer": derived.get("target_titer_g_per_l", 0.0),
+                "DCW concentration": derived.get("dcw_concentration_g_per_l", 0.0),
+                "Glucose feed per batch": derived.get("total_glucose_feed_kg", 0.0),
+            }
         )
 
     def _cost(self) -> None:
-        self.baseline_purchase_costs.clear()
-        self.installed_costs.clear()
+        super()._cost()
 
 
 class MicrofiltrationUnit(PlanBackedUnit):

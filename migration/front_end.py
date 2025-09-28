@@ -499,7 +499,8 @@ def build_front_end_section(
     seed_unit.ins[0] = feed
     seed_vent, seed_broth = seed_unit.outs
     fermentation_unit.ins[0] = seed_broth
-    microfiltration_unit.ins[0] = fermentation_unit.outs[0]
+    fermentation_vent, fermentation_broth = fermentation_unit.outs
+    microfiltration_unit.ins[0] = fermentation_broth
     ufdf_unit.ins[0] = microfiltration_unit.outs[0]
     chromatography_unit.ins[0] = ufdf_unit.outs[0]
     predrying_unit.ins[0] = chromatography_unit.outs[0]

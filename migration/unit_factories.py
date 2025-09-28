@@ -10,7 +10,7 @@ from .excel_defaults import ModuleKey
 from .module_registry import ModuleRegistry
 from .unit_builders import PLAN_BUILDERS, UnitPlan
 from .simple_units import (
-    FermentationUnit,
+    FermentationBioreactor,
     SeedTrainBioreactor,
     MicrofiltrationUnit,
     UFDFUnit,
@@ -25,7 +25,7 @@ __all__ = [
 
 
 PLAN_UNIT_CLASSES: Dict[str, Tuple[type, str]] = {
-    "USP00": (FermentationUnit, "Fermenter"),
+    "USP00": (FermentationBioreactor, "Fermenter"),
     "USP01": (SeedTrainBioreactor, "SeedTrain"),
     "USP02": (MicrofiltrationUnit, "USP02"),
     "DSP01": (UFDFUnit, "DSP01"),
