@@ -29,6 +29,17 @@ def parse_args() -> argparse.Namespace:
         help="Cell mapping config (default: %(default)s)",
     )
     parser.add_argument(
+        "--mode",
+        choices=["excel", "baseline"],
+        default="excel",
+        help="Data source mode: Excel parity or BioSTEAM baseline (default: %(default)s)",
+    )
+    parser.add_argument(
+        "--baseline-config",
+        type=Path,
+        help="Path to baseline YAML overrides (defaults to migration/baseline_defaults.yaml)",
+    )
+    parser.add_argument(
         "--detailed",
         action=argparse.BooleanOptionalAction,
         default=True,
@@ -119,7 +130,11 @@ def main() -> None:
     metrics = load_baseline_metrics(workbook_path=args.workbook, config_path=args.config)
 
     bst.main_flowsheet.clear()
-    section = build_front_end_section(str(args.workbook))
+    section = build_front_end_section(
+        str(args.workbook),
+        mode=args.mode,
+        baseline_config=args.baseline_config,
+    )
     section.system.simulate()
 
     checkpoints = [

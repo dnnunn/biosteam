@@ -1,0 +1,83 @@
+seed:
+  derived:
+    working_volume_l: 3500.0
+    dcw_concentration_g_per_l: 60.0
+    seed_glucose_conversion_fraction: 0.0
+    yeast_extract_per_batch_kg: 553.0
+    peptone_per_batch_kg: 1106.0
+  specs:
+    yeast_extract_concentration_g_per_l: 10.0
+    peptone_concentration_g_per_l: 20.0
+    yeast_extract_cost_per_kg: 12.0
+    peptone_cost_per_kg: 15.0
+
+fermentation:
+  derived:
+    working_volume_l: 70000.0
+    batch_cycle_hours: 72.0
+    target_titer_g_per_l: 4.2857142857142865
+    dcw_concentration_g_per_l: 60.0
+    total_glucose_feed_kg: 8750.0
+    total_glycerol_feed_kg: 7241.379310344828
+    total_molasses_feed_kg: 16800.0
+    product_out_kg: 300.0
+    antifoam_volume_l: 70.0
+    antifoam_cost_per_unit: 10.0
+    minor_nutrients_cost_total: 500.0
+  specs:
+    turnaround_time_hours: 24.0
+    biomass_yield_glucose: 0.48
+    product_yield_biomass: 0.0714286
+    glucose_cost_per_kg: 0.75
+    antifoam_dosage: 0.1
+
+microfiltration:
+  derived:
+    input_product_kg: 300.0
+    input_volume_l: 70000.0
+    output_volume_l: 60000.0
+    product_out_kg: 231.42857142857144
+    harvested_product_kg: 270.0
+    broth_density_kg_per_l: 1.0
+
+ufdf:
+  derived:
+    input_product_kg: 231.42857142857144
+    input_volume_l: 60000.0
+    output_volume_l: 3000.0
+    product_out_kg: 219.85714285714286
+    diafiltration_volumes: 5.0
+    throughput_l_per_hr: 3000.0
+    membrane_cost_per_cycle: 15.0
+    broth_density_kg_per_l: 1.0
+
+chromatography:
+  derived:
+    input_product_kg: 219.85714285714286
+    eluate_volume_l: 8000.0
+    output_volume_l: 1600.0
+    product_out_kg: 175.8857142857143
+    buffer_cost_per_batch: 829.0575
+    total_buffer_bv: 12.0
+    broth_density_kg_per_l: 1.0
+
+predrying:
+  derived:
+    input_product_kg: 175.8857142857143
+    input_volume_l: 1600.0
+    output_volume_l: 1600.0
+    product_out_kg: 167.0914285714286
+    throughput_l_per_hr: 1225.0
+    membrane_cost_per_cycle: 630.0
+    broth_density_kg_per_l: 1.0
+
+spray_dryer:
+  derived:
+    input_product_kg: 167.0914285714286
+    product_out_kg: 163.7496
+    capacity_kg_per_hr: 150.0
+    final_solids_percent: 15.0
+    final_solids_content: 0.15
+    solution_density: 1.08
+    spray_dryer_efficiency: 0.98
+    target_recovery_rate: 0.8

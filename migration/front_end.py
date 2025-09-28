@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Iterable, Optional
+from typing import Any, Dict, Iterable, Optional
 
 import biosteam as bst
 
@@ -13,6 +13,7 @@ from .module_registry import ModuleRegistry
 from .unit_builders import register_baseline_unit_builders, set_defaults_loader
 from .unit_factories import register_plan_backed_unit_factories
 from .thermo_setup import set_migration_thermo
+from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
 
 FRONT_END_KEYS = (
     ModuleKey("USP01", "USP01a"),
@@ -156,6 +157,20 @@ def _read_sheet_cell(
         return None
 
 
+def _apply_plan_overrides(plan: Any, overrides: Optional[Dict[str, Any]]) -> None:
+    if not overrides:
+        return
+    derived = overrides.get("derived")
+    if derived:
+        plan.derived.update(derived)
+    specs_overrides = overrides.get("specs")
+    if specs_overrides:
+        specs = getattr(plan, "specs", None)
+        if specs is not None:
+            for key, value in specs_overrides.items():
+                setattr(specs, key, value)
+
+
 def _build_seed_media_stream(
     *,
     fermentation_unit: bst.Unit,
@@ -206,12 +221,23 @@ def build_front_end_section(
     *,
     batch_volume_l: Optional[float] = None,
     flowsheet: Optional[bst.Flowsheet] = None,
+    mode: str = "excel",
+    baseline_config: Optional[Path | str] = None,
 ) -> FrontEndSection:
     """Instantiate the seed train, fermentation, and harvest units for the baseline flow."""
+
+    mode_normalized = (mode or "excel").lower()
+    if mode_normalized not in {"excel", "baseline"}:
+        raise ValueError(f"Unsupported mode {mode!r}; expected 'excel' or 'baseline'")
 
     defaults = ExcelModuleDefaults(workbook_path)
     set_defaults_loader(defaults)
     set_migration_thermo()
+
+    baseline_overrides: Dict[str, Any] = {}
+    if mode_normalized == "baseline":
+        config_path = baseline_config if baseline_config is not None else DEFAULT_BASELINE_CONFIG
+        baseline_overrides = dict(load_baseline_defaults(config_path))
 
     registry = ModuleRegistry()
     _register_front_end_builders(registry)
@@ -297,6 +323,9 @@ def build_front_end_section(
     if peptone_per_batch is not None:
         seed_plan.derived["peptone_per_batch_kg"] = peptone_per_batch
 
+    if baseline_overrides:
+        _apply_plan_overrides(seed_plan, baseline_overrides.get("seed"))
+
     seed_specs = seed_unit.plan.specs
     yeast_cost_per_kg = _read_inputs_cell(defaults, 138)
     if yeast_cost_per_kg is not None and getattr(seed_specs, "yeast_extract_cost_per_kg", None) in (None, 0):
@@ -335,6 +364,10 @@ def build_front_end_section(
         if value is not None:
             fermentation_plan.derived["minor_nutrients_cost_total"] = value
 
+    if baseline_overrides:
+        _apply_plan_overrides(fermentation_plan, baseline_overrides.get("fermentation"))
+        fermentation_product = fermentation_plan.derived.get("product_out_kg", fermentation_product)
+
     micro_plan = microfiltration_unit.plan
     micro_plan.derived.update(
         {
@@ -346,6 +379,12 @@ def build_front_end_section(
         }
     )
 
+    if baseline_overrides:
+        _apply_plan_overrides(micro_plan, baseline_overrides.get("microfiltration"))
+        product_after_mf = micro_plan.derived.get("product_out_kg", product_after_mf)
+        harvest_volume_l = micro_plan.derived.get("output_volume_l", harvest_volume_l)
+        fermentation_product = micro_plan.derived.get("input_product_kg", fermentation_product)
+
     uf_plan = ufdf_unit.plan
     uf_plan.derived.update(
         {
@@ -355,6 +394,11 @@ def build_front_end_section(
             "product_out_kg": product_after_uf,
         }
     )
+
+    if baseline_overrides:
+        _apply_plan_overrides(uf_plan, baseline_overrides.get("ufdf"))
+        product_after_uf = uf_plan.derived.get("product_out_kg", product_after_uf)
+        post_uf_volume_l = uf_plan.derived.get("output_volume_l", post_uf_volume_l)
 
     chrom_plan = chromatography_unit.plan
     chrom_plan.derived.update(
@@ -366,6 +410,11 @@ def build_front_end_section(
         }
     )
 
+    if baseline_overrides:
+        _apply_plan_overrides(chrom_plan, baseline_overrides.get("chromatography"))
+        product_after_chrom = chrom_plan.derived.get("product_out_kg", product_after_chrom)
+        post_elution_conc_volume_l = chrom_plan.derived.get("output_volume_l", post_elution_conc_volume_l)
+
     predry_plan = predrying_unit.plan
     predry_plan.derived.update(
         {
@@ -376,6 +425,11 @@ def build_front_end_section(
         }
     )
 
+    if baseline_overrides:
+        _apply_plan_overrides(predry_plan, baseline_overrides.get("predrying"))
+        product_after_predry = predry_plan.derived.get("product_out_kg", product_after_predry)
+        volume_to_spray_l = predry_plan.derived.get("output_volume_l", volume_to_spray_l)
+
     spray_plan = spray_dryer_unit.plan
     spray_plan.derived.update(
         {
@@ -383,6 +437,10 @@ def build_front_end_section(
             "product_out_kg": final_product_kg,
         }
     )
+
+    if baseline_overrides:
+        _apply_plan_overrides(spray_plan, baseline_overrides.get("spray_dryer"))
+        final_product_kg = spray_plan.derived.get("product_out_kg", final_product_kg)
 
     cost_per_kg_usd = _read_calculation_cell(defaults, 0, 1)
     cmo_fees_usd = _read_calculation_cell(defaults, 247, 1)
