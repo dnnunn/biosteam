@@ -538,22 +538,26 @@ class ChromatographyUnit(PlanBackedUnit):
 
 
 class PreDryingUnit(PlanBackedUnit):
-    """Placeholder pre-drying TFF/UFF step."""
+    """Pre-drying TFF step with concentrate and waste streams."""
 
     _N_ins = 1
-    _N_outs = 1
+    _N_outs = 2
     line = "PreDrying"
 
     _units = {
         "Throughput": "L/hr",
+        "Membrane cost per cycle": "USD",
+        "Input volume": "L",
+        "Output volume": "L",
     }
 
     def _run(self) -> None:
         feed = self.ins[0]
-        concentrated = self.outs[0]
+        product_stream, waste_stream = self.outs
         derived = self.plan.derived
 
-        concentrated.empty()
+        product_stream.empty()
+        waste_stream.empty()
 
         product_mass = derived.get('product_out_kg')
         if product_mass is None:
@@ -567,25 +571,51 @@ class PreDryingUnit(PlanBackedUnit):
         else:
             total_mass = feed.F_mass
 
-        concentrated.imass['Osteopontin'] = product_mass
-        concentrated.imass['Yeast'] = 0.0
-        concentrated.imass['Glucose'] = 0.0
+        product_stream.imass['Osteopontin'] = product_mass
+        product_stream.imass['Water'] = max(total_mass - product_mass, 0.0)
 
-        water_mass = max(total_mass - product_mass, 0.0)
-        concentrated.imass['Water'] = water_mass
+        input_product = derived.get('input_product_kg')
+        if input_product is None:
+            input_product = float(feed.imass.get('Osteopontin', 0.0))
+        waste_product = max((input_product or 0.0) - product_mass, 0.0)
+        if waste_product:
+            waste_stream.imass['Osteopontin'] = waste_product
 
-        concentrated.T = feed.T
-        concentrated.P = feed.P
+        input_volume_l = derived.get('input_volume_l')
+        if input_volume_l is not None:
+            feed_mass = input_volume_l * density
+        else:
+            feed_mass = feed.F_mass or (total_mass + waste_product)
+
+        waste_water = max(feed_mass - product_stream.F_mass - waste_product, 0.0)
+        if waste_water:
+            waste_stream.imass['Water'] = waste_water
+
+        product_stream.T = feed.T
+        product_stream.P = feed.P
+        waste_stream.T = feed.T
+        waste_stream.P = feed.P
 
     def _design(self) -> None:
         derived = self.plan.derived
+        specs = self.plan.specs
         self.design_results["Throughput"] = derived.get("throughput_l_per_hr", 0.0)
         self.design_results["Product out"] = derived.get("product_out_kg", 0.0)
+        self.design_results["Input volume"] = derived.get("input_volume_l", 0.0)
         self.design_results["Output volume"] = derived.get("output_volume_l", 0.0)
+        if getattr(specs, 'concentration_factor', None) is not None:
+            self.design_results['Concentration factor'] = specs.concentration_factor
 
     def _cost(self) -> None:
         self.baseline_purchase_costs.clear()
         self.installed_costs.clear()
+        cost_per_cycle = self.plan.derived.get('membrane_cost_per_cycle')
+        if cost_per_cycle:
+            self.operating_cost = cost_per_cycle
+            self.material_costs = {'PreDry TFF membranes': cost_per_cycle}
+        else:
+            self.operating_cost = 0.0
+            self.material_costs = {}
 
 
 class SprayDryerUnit(PlanBackedUnit):
