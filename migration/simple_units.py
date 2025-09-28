@@ -7,10 +7,11 @@ from typing import Dict
 import biosteam as bst
 
 from .unit_builders import UnitPlan
+from biosteam.units.nrel_bioreactor import NRELBatchBioreactor
 
 __all__ = [
     "PlanBackedUnit",
-    "SeedTrainUnit",
+    "SeedTrainBioreactor",
     "FermentationUnit",
     "MicrofiltrationUnit",
     "UFDFUnit",
@@ -41,41 +42,59 @@ class PlanBackedUnit(bst.Unit):
         return summary
 
 
-class SeedTrainUnit(PlanBackedUnit):
-    """Minimal seed-train placeholder that passes feed through unchanged."""
+class SeedTrainBioreactor(NRELBatchBioreactor):
+    """BioSTEAM batch bioreactor seeded from Excel-derived plan targets."""
 
     _N_ins = 1
-    _N_outs = 1
+    _N_outs = 2  # vent + broth
     line = "SeedTrain"
 
-    _units = {
-        "Yeast extract concentration": "g/L",
-        "Peptone concentration": "g/L",
-        "Total nutrient concentration": "g/L",
-    }
+    def __init__(self, ID: str, plan: UnitPlan, **kwargs) -> None:
+        self.plan = plan
+        self.notes = list(plan.notes)
+        derived = plan.derived
+        tau = derived.get("seed_train_duration_hours") or derived.get("batch_cycle_hours") or 24.0
+        working_volume_l = derived.get("working_volume_l") or 3_500.0
+        super().__init__(
+            ID,
+            tau=tau,
+            V=working_volume_l / 1_000.0,
+            outs=(f"{ID}_vent", f"{ID}_broth"),
+            **kwargs,
+        )
+
+    def _setup(self) -> None:
+        super()._setup()
+        vent, broth = self.outs
+        vent.phase = "g"
+        vent.P = broth.P = self.P
+        vent.T = broth.T = self.T
 
     def _run(self) -> None:
         feed = self.ins[0]
-        broth = self.outs[0]
-        feed_state = feed.copy()
+        vent, broth = self.outs
+        vent.empty()
+        broth.empty()
 
         derived = self.plan.derived
-        conversion_fraction = derived.get("seed_glucose_conversion_fraction", 0.0) or 0.0
+        conversion_fraction = derived.get("seed_glucose_conversion_fraction") or 0.0
         biomass_yield = derived.get("biomass_yield_glucose") or 0.5
 
-        broth.copy_like(feed_state)
+        broth.copy_like(feed)
 
         try:
-            glucose_mass = float(broth.imass['Glucose'])
-        except KeyError:
+            glucose_mass = float(broth.imass["Glucose"])
+        except (KeyError, TypeError):
             glucose_mass = 0.0
         converted = max(min(glucose_mass, glucose_mass * conversion_fraction), 0.0)
-        if converted > 0:
+        if converted > 0.0:
             broth.imass["Glucose"] -= converted
             produced_biomass = converted * biomass_yield
             broth.imass["Yeast"] += produced_biomass
-            # assume remaining carbon exits as water to preserve mass balance
-            broth.imass["Water"] += converted - produced_biomass
+            co2_mass = max(converted - produced_biomass, 0.0)
+            if co2_mass > 0.0:
+                vent.imass["CO2"] += co2_mass
+            broth.imass["Water"] += converted - produced_biomass - co2_mass
 
         # Ensure nutrient additions match plan-derived totals
         yeast_extract_batch = derived.get("yeast_extract_per_batch_kg")
@@ -86,38 +105,38 @@ class SeedTrainUnit(PlanBackedUnit):
         if peptone_batch is not None:
             broth.imass["Peptone"] = peptone_batch
 
-        # Maintain overall volume assumptions by resetting water to close mass balance
         working_volume_l = derived.get("working_volume_l")
         if working_volume_l is not None:
-            target_mass = working_volume_l  # assume 1 kg/L
+            target_mass = working_volume_l
             chemicals = broth.chemicals
             non_water_mass = 0.0
-            # Sum explicit non-water components without triggering lookups for Water
-            for index, value in broth.imass.data.dct.items():
-                if chemicals.IDs[index] == "Water":
-                    continue
-                non_water_mass += float(value)
-            broth.imass["Water"] = max(target_mass - non_water_mass, 0.0)
+        for index, value in broth.imass.data.dct.items():
+            if chemicals.IDs[index] == "Water":
+                continue
+            non_water_mass += float(value)
+        broth.imass["Water"] = max(target_mass - non_water_mass, 0.0)
 
-        feed.copy_like(feed_state)
+        vent.T = broth.T = feed.T
+        vent.P = broth.P = feed.P
 
     def _design(self) -> None:
-        specs = self.plan.specs
         derived = self.plan.derived
-        self.design_results["Yeast extract concentration"] = (
-            specs.yeast_extract_concentration_g_per_l or 0.0
-        )
-        self.design_results["Peptone concentration"] = (
-            specs.peptone_concentration_g_per_l or 0.0
-        )
-        self.design_results["Total nutrient concentration"] = (
-            derived.get("total_nutrient_concentration_g_per_l") or 0.0
+        specs = self.plan.specs
+        if derived.get("seed_train_duration_hours"):
+            self.tau = derived["seed_train_duration_hours"]
+        if derived.get("working_volume_l"):
+            self.V = derived["working_volume_l"] / 1_000.0
+        super()._design()
+        self.design_results.update(
+            {
+                "Yeast extract concentration": specs.yeast_extract_concentration_g_per_l or 0.0,
+                "Peptone concentration": specs.peptone_concentration_g_per_l or 0.0,
+                "Total nutrient concentration": derived.get("total_nutrient_concentration_g_per_l") or 0.0,
+            }
         )
 
     def _cost(self) -> None:
-        self.baseline_purchase_costs.clear()
-        self.installed_costs.clear()
-
+        super()._cost()
         specs = self.plan.specs
         derived = self.plan.derived
 

@@ -11,7 +11,7 @@ from .module_registry import ModuleRegistry
 from .unit_builders import PLAN_BUILDERS, UnitPlan
 from .simple_units import (
     FermentationUnit,
-    SeedTrainUnit,
+    SeedTrainBioreactor,
     MicrofiltrationUnit,
     UFDFUnit,
     ChromatographyUnit,
@@ -26,7 +26,7 @@ __all__ = [
 
 PLAN_UNIT_CLASSES: Dict[str, Tuple[type, str]] = {
     "USP00": (FermentationUnit, "Fermenter"),
-    "USP01": (SeedTrainUnit, "SeedTrain"),
+    "USP01": (SeedTrainBioreactor, "SeedTrain"),
     "USP02": (MicrofiltrationUnit, "USP02"),
     "DSP01": (UFDFUnit, "DSP01"),
     "DSP02": (ChromatographyUnit, "DSP02"),
