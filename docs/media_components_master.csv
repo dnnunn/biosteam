@@ -1,0 +1,17 @@
+Component,Role,Stage(Seed/Batch/Fed/Induction),Typical_Range,Units,Stock_Concentration,Units_Stock,Notes
+Glucose,Carbon,"Seed,Batch,Fed",10–40; 400–800,g/L ; g/L (feed),500–700,g/L,Avoid caramelization; sterile filter feed
+Glycerol,Carbon,"Seed,Batch,Fed",10–40; 500–800,g/L ; g/L (feed),800,g/L,Viscous feed—pump calibration
+Lactose,Carbon/Inducer,"Seed,Batch,Induction",5–30,g/L,300,g/L,Low solubility; may pulse-add
+(NH4)2SO4,Nitrogen,"Seed,Batch,Fed",2–10,g/L,200,g/L,Monitor sulfate load
+Urea,Nitrogen,"Batch,Fed",1–8,g/L,200,g/L,Slow release; pH neutral
+Yeast extract,Complex N/Vitamins,"Seed,Batch",2–20,g/L,n/a,n/a,Lot variation—qualify
+Peptone,Complex N,"Seed,Batch",2–20,g/L,n/a,n/a,Specify animal-free if needed
+KH2PO4,Phosphorus/Buffer,"Seed,Batch",1–5,g/L,200,g/L,Media only; avoid during capture
+K2HPO4,Phosphorus/Buffer,"Seed,Batch",1–5,g/L,200,g/L,Pairs with KH2PO4
+MgSO4·7H2O,Mineral,"Seed,Batch",0.5–2,g/L,200,g/L,Essential for ATP enzymes
+CaCl2·2H2O,Mineral,"Seed,Batch",0.05–0.5,g/L,200,g/L,Add carefully; precipitation risk
+Trace mix (TRACE-01),Trace,"Seed,Batch,Fed",0.5–2,mL/L,1000,x (stock),See trace recipe CSV
+Biotin,Vitamin,"Seed,Batch,Fed",0.001–0.1,mg/L,1,g/L,Critical for K. lactis
+Thiamine HCl,Vitamin,"Seed,Batch,Fed",0.1–1,mg/L,10,g/L,Light sensitive
+Antifoam (PDMS),Process aid,"Seed,Batch,Fed",10–200,mg/L,10,% v/v,Add last; fouling risk
+Ammonia (28%),pH control/N,"Seed,Batch,Fed",PID-controlled,-,28,% w/w,Integrate into TAN/CO2 balance

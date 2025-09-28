@@ -12,19 +12,27 @@ PKGS = ROOT / "pkgs"
 
 
 def _ensure_local_packages() -> None:
-    sys.path.insert(0, str(PKGS / "biosteam" / "src"))
-    sys.path.insert(0, str(PKGS / "thermosteam" / "src"))
+    candidate_paths = (
+        PKGS / "biosteam" / "src",
+        PKGS / "thermosteam" / "src",
+        PKGS / "thermosteam" / "src" / "thermosteam",
+    )
+    for path in candidate_paths:
+        path_str = str(path)
+        if path_str not in sys.path:
+            sys.path.insert(0, path_str)
 
+
+_ensure_local_packages()
 
 try:
     import biosteam  # noqa: F401
-except ImportError:
-    _ensure_local_packages()
-else:
-    try:
-        import thermosteam  # noqa: F401
-    except ImportError:
-        _ensure_local_packages()
+    import thermosteam  # noqa: F401
+except ImportError as exc:  # pragma: no cover - environment safeguard
+    raise SystemExit(
+        "Unable to import local biosteam/thermosteam packages; "
+        "ensure pkgs/biosteam and pkgs/thermosteam are present."
+    ) from exc
 
 
 from migration.front_end import build_front_end_section
@@ -54,8 +62,8 @@ def main() -> None:
     parser.add_argument(
         "--volume",
         type=float,
-        default=1_000.0,
-        help="Assumed batch volume in litres for the placeholder media",
+        default=None,
+        help="Override working volume in litres (defaults to workbook value)",
     )
     args = parser.parse_args()
 
@@ -65,14 +73,21 @@ def main() -> None:
             "  python -m scripts.demo_front_end /path/to/Revised\\ Model.xlsx"
         )
 
-    section = build_front_end_section(args.workbook, batch_volume_l=args.volume)
-    section.system.simulate(design_and_cost=False)
+    kwargs = {}
+    if args.volume is not None:
+        kwargs["batch_volume_l"] = args.volume
+    section = build_front_end_section(args.workbook, **kwargs)
+    section.simulate()
 
     print("\nFront-end simulation complete. Key stream summaries:")
     _summarise(section.feed, "Seed feed")
     _summarise(section.seed_unit.outs[0], "Seed effluent")
     _summarise(section.fermentation_unit.outs[0], "Fermentation broth")
-    _summarise(section.harvest_unit.outs[0], "Harvested stream")
+    _summarise(section.microfiltration_unit.outs[0], "Post-MF supernatant")
+    _summarise(section.ufdf_unit.outs[0], "Post-UF/DF concentrate")
+    _summarise(section.chromatography_unit.outs[0], "Post-chromatography eluate")
+    _summarise(section.predrying_unit.outs[0], "Post pre-drying TFF")
+    _summarise(section.spray_dryer_unit.outs[0], "Final dried product")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,11 @@
+Salt,Formula,g_per_L_stock,Element_Target_mg_per_L,Notes
+FeSO4·7H2O,FeSO4·7H2O,5.56,1112.0,Fe source; make fresh or add as chelate
+ZnSO4·7H2O,ZnSO4·7H2O,0.88,200.0,Zn
+MnSO4·H2O,MnSO4·H2O,0.37,120.0,Mn
+CuSO4·5H2O,CuSO4·5H2O,0.25,63.5,Cu
+CoCl2·6H2O,CoCl2·6H2O,0.16,40.0,Co
+Na2MoO4·2H2O,Na2MoO4·2H2O,0.12,50.0,Mo
+H3BO3,H3BO3,0.05,8.8,B
+KI,KI,0.01,7.6,Iodine
+Na2SeO3,Na2SeO3,0.0025,1.2,Selenium
+EDTA disodium,C10H14N2Na2O8·2H2O,10.0,-,Chelator; optional if phosphate present

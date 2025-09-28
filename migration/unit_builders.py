@@ -84,6 +84,11 @@ def _get_parameter(config: Optional[ModuleConfig], name: str) -> Optional[float]
     return record.value
 
 
+DEFAULT_PRODUCT_YIELD_BIOMASS = 0.2
+CALCULATIONS_SHEET = "Calculations"
+CALCULATIONS_PRODUCT_YIELD_CELL = (31, 1)  # zero-based indices (row 32, col B)
+
+
 CARBON_OPTION_MAP = {
     "USP00a": {
         "label": "Glucose",
@@ -126,6 +131,14 @@ def _compose_fermentation_specs(
         biomass_yield = record.value
 
     product_yield = _get_parameter(global_config, "Product_Yield_on_Biomass")
+    yield_source = None
+    if product_yield is None:
+        product_yield = _load_product_yield_from_calculations()
+        if product_yield is not None:
+            yield_source = "calculations"
+        else:
+            product_yield = DEFAULT_PRODUCT_YIELD_BIOMASS
+            yield_source = "fallback"
     turnaround = _get_parameter(global_config, "Turnaround_Time")
     antifoam = _get_parameter(global_config, "Antifoam_Dosage")
 
@@ -154,6 +167,8 @@ def _compose_fermentation_specs(
     seed_duration = _get_parameter(global_config, "Seed_Train_Duration")
     if seed_duration is not None:
         derived["seed_train_duration_hours"] = seed_duration
+    if yield_source:
+        derived["product_yield_source"] = yield_source
 
     return specs, derived
 
@@ -185,8 +200,15 @@ def _build_usp00_plan(config: ModuleConfig) -> UnitPlan:
 
     plan = UnitPlan(key=config.key, data=data, specs=specs, derived=derived)
 
+    source = plan.derived.get("product_yield_source")
     if specs.product_yield_biomass is None:
         plan.add_note("Product yield on biomass missing; verify GLOBAL00 defaults.")
+    elif source == "fallback":
+        plan.add_note(
+            "Product yield on biomass not provided; using assumed value 0.20 g/g."
+        )
+    elif source == "calculations":
+        plan.add_note("Product yield pulled from Calculations!B32.")
     if plan_note:
         plan.add_note(plan_note)
     if applied_fields:
@@ -221,6 +243,8 @@ def _build_usp01_plan(config: ModuleConfig) -> UnitPlan:
     )
 
     derived: Dict[str, Any] = dict(base_derived)
+    if carb_specs.biomass_yield_glucose is not None:
+        derived["biomass_yield_glucose"] = carb_specs.biomass_yield_glucose
     total_nutrient = 0.0
     missing = False
     for value in (yeast_conc, peptone_conc):
@@ -230,6 +254,8 @@ def _build_usp01_plan(config: ModuleConfig) -> UnitPlan:
             total_nutrient += value
     if not missing:
         derived["total_nutrient_concentration_g_per_l"] = total_nutrient
+
+    derived.setdefault("seed_glucose_conversion_fraction", 0.15)
 
     data = ModuleData(key=config.key, records=config.parameters, values={})
     applied_fields = _apply_overrides(data, config)
@@ -398,3 +424,26 @@ __all__ = [
     "register_baseline_unit_builders",
     "PLAN_BUILDERS",
 ]
+def _load_product_yield_from_calculations() -> Optional[float]:
+    if _DEFAULTS_LOADER is None:
+        return None
+    try:
+        import pandas as pd
+    except ImportError:  # pragma: no cover - pandas should always be present
+        return None
+
+    path = _DEFAULTS_LOADER.workbook_path
+    try:
+        row, col = CALCULATIONS_PRODUCT_YIELD_CELL
+        series = pd.read_excel(
+            path,
+            sheet_name=CALCULATIONS_SHEET,
+            header=None,
+            skiprows=row,
+            nrows=1,
+            usecols=[col],
+        ).iloc[0]
+        value = series.iloc[0]
+    except Exception:
+        return None
+    return float(value) if isinstance(value, (int, float)) else None
