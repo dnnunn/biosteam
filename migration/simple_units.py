@@ -357,62 +357,91 @@ class MicrofiltrationUnit(PlanBackedUnit):
 
 
 class UFDFUnit(PlanBackedUnit):
-    """Placeholder ultrafiltration/diafiltration step."""
+    """Ultrafiltration / diafiltration step with waste and product streams."""
 
     _N_ins = 1
-    _N_outs = 1
+    _N_outs = 2
     line = "UF/DF"
 
     _units = {
         "Throughput": "L/hr",
         "Diafiltration volumes": "vol",
         "Membrane cost per cycle": "USD",
+        "Input volume": "L",
+        "Output volume": "L",
+        "Concentration factor": "-",
     }
 
     def _run(self) -> None:
         feed = self.ins[0]
-        permeate = self.outs[0]
+        product_stream, waste_stream = self.outs
         derived = self.plan.derived
 
-        permeate.empty()
+        product_stream.empty()
+        waste_stream.empty()
+
+        density = derived.get('broth_density_kg_per_l') or 1.0
+
+        input_product = derived.get('input_product_kg')
+        if input_product is None:
+            input_product = float(feed.imass.get('Osteopontin', 0.0))
+        input_product = max(input_product, 0.0)
 
         product_mass = derived.get('product_out_kg')
         if product_mass is None:
-            product_mass = float(feed.imass['Osteopontin'])
+            product_mass = float(feed.imass.get('Osteopontin', 0.0))
         product_mass = max(product_mass, 0.0)
 
-        volume_l = derived.get('output_volume_l')
-        density = derived.get('broth_density_kg_per_l', 1.0)
-        if volume_l is not None:
-            total_mass = volume_l * density
+        input_volume_l = derived.get('input_volume_l')
+        output_volume_l = derived.get('output_volume_l')
+
+        if output_volume_l is not None:
+            product_total_mass = output_volume_l * density
         else:
-            total_mass = feed.F_mass
+            product_total_mass = product_mass
 
-        permeate.imass['Osteopontin'] = product_mass
-        permeate.imass['Yeast'] = 0.0
-        permeate.imass['Glucose'] = 0.0
+        product_stream.imass['Osteopontin'] = product_mass
+        product_stream.imass['Water'] = max(product_total_mass - product_mass, 0.0)
 
-        water_mass = max(total_mass - product_mass, 0.0)
-        permeate.imass['Water'] = water_mass
+        waste_product = max(input_product - product_mass, 0.0)
+        if waste_product:
+            waste_stream.imass['Osteopontin'] = waste_product
 
-        permeate.T = feed.T
-        permeate.P = feed.P
+        if input_volume_l is not None:
+            feed_total_mass = input_volume_l * density
+        else:
+            feed_total_mass = feed.F_mass or (product_total_mass + waste_product)
+
+        waste_total_mass = max(feed_total_mass - product_total_mass, 0.0)
+        waste_stream.imass['Water'] = max(waste_total_mass - waste_product, 0.0)
+
+        product_stream.T = feed.T
+        product_stream.P = feed.P
+        waste_stream.T = feed.T
+        waste_stream.P = feed.P
 
     def _design(self) -> None:
         derived = self.plan.derived
-        self.design_results["Throughput"] = derived.get("throughput_l_per_hr", 0.0)
-        self.design_results["Diafiltration volumes"] = derived.get(
-            "diafiltration_volumes", 0.0
-        )
-        self.design_results["Membrane cost per cycle"] = derived.get(
-            "membrane_cost_per_cycle", 0.0
-        )
-        self.design_results["Product out"] = derived.get("product_out_kg", 0.0)
-        self.design_results["Output volume"] = derived.get("output_volume_l", 0.0)
+        specs = self.plan.specs
+        self.design_results['Throughput'] = derived.get('throughput_l_per_hr', 0.0)
+        self.design_results['Diafiltration volumes'] = derived.get('diafiltration_volumes', 0.0)
+        self.design_results['Membrane cost per cycle'] = derived.get('membrane_cost_per_cycle', 0.0)
+        self.design_results['Input volume'] = derived.get('input_volume_l', 0.0)
+        self.design_results['Output volume'] = derived.get('output_volume_l', 0.0)
+        self.design_results['Product out'] = derived.get('product_out_kg', 0.0)
+        if getattr(specs, 'concentration_factor', None) is not None:
+            self.design_results['Concentration factor'] = specs.concentration_factor
 
     def _cost(self) -> None:
         self.baseline_purchase_costs.clear()
         self.installed_costs.clear()
+        cost_per_cycle = self.plan.derived.get('membrane_cost_per_cycle')
+        if cost_per_cycle:
+            self.operating_cost = cost_per_cycle
+            self.material_costs = {'UF/DF membranes': cost_per_cycle}
+        else:
+            self.operating_cost = 0.0
+            self.material_costs = {}
 
 
 class ChromatographyUnit(PlanBackedUnit):
