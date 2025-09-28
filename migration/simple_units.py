@@ -619,42 +619,62 @@ class PreDryingUnit(PlanBackedUnit):
 
 
 class SprayDryerUnit(PlanBackedUnit):
-    """Placeholder spray dryer capturing key specs."""
+    """Spray dryer with product and exhaust streams."""
 
     _N_ins = 1
-    _N_outs = 1
+    _N_outs = 2
     line = "SprayDryer"
 
     _units = {
         "Capacity": "kg/hr",
         "Final solids": "%",
+        "Final solids mass fraction": "-",
+        "Input density": "kg/L",
     }
 
     def _run(self) -> None:
         feed = self.ins[0]
-        product = self.outs[0]
+        product_stream, exhaust_stream = self.outs
         derived = self.plan.derived
 
-        product.empty()
+        product_stream.empty()
+        exhaust_stream.empty()
 
         product_mass = derived.get('product_out_kg')
         if product_mass is None:
-            product_mass = float(feed.imass['Osteopontin'])
-        product_mass = max(product_mass, 0.0)
+            product_mass = float(feed.imass.get('Osteopontin', 0.0))
+        product_mass = max(product_mass or 0.0, 0.0)
 
-        product.imass['Osteopontin'] = product_mass
-        product.imass['Water'] = 0.0
-        product.imass['Yeast'] = 0.0
-        product.imass['Glucose'] = 0.0
+        solids_fraction = derived.get('final_solids_content')
+        if solids_fraction is None:
+            solids_percent = derived.get('final_solids_percent')
+            if solids_percent is not None:
+                solids_fraction = solids_percent / (100.0 if solids_percent > 1 else 1.0)
+        if solids_fraction is None:
+            solids_fraction = 1.0
 
-        product.T = feed.T
-        product.P = feed.P
+        product_total_mass = product_mass / max(solids_fraction, 1e-6)
+        product_stream.imass['Osteopontin'] = product_mass
+        product_water = max(product_total_mass - product_mass, 0.0)
+        if product_water:
+            product_stream.imass['Water'] = product_water
+
+        exhaust_water = max(feed.F_mass - product_total_mass, 0.0)
+        if exhaust_water:
+            exhaust_stream.imass['Water'] = exhaust_water
+
+        product_stream.T = feed.T
+        product_stream.P = feed.P
+        exhaust_stream.T = feed.T
+        exhaust_stream.P = feed.P
 
     def _design(self) -> None:
         derived = self.plan.derived
         self.design_results["Capacity"] = derived.get("capacity_kg_per_hr", 0.0)
         self.design_results["Final solids"] = derived.get("final_solids_percent", 0.0)
+        self.design_results["Final solids mass fraction"] = derived.get("final_solids_content", 0.0)
         self.design_results["Product out"] = derived.get("product_out_kg", 0.0)
+        self.design_results["Input density"] = derived.get("solution_density", 0.0)
 
     def _cost(self) -> None:
         self.baseline_purchase_costs.clear()
