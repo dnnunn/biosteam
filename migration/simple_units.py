@@ -262,63 +262,98 @@ class FermentationBioreactor(NRELBatchBioreactor):
 
 
 class MicrofiltrationUnit(PlanBackedUnit):
-    """Placeholder microfiltration step using plan-derived throughput data."""
+    """Microfiltration step with permeate and retentate streams."""
 
     _N_ins = 1
-    _N_outs = 1
+    _N_outs = 2
     line = "Microfiltration"
 
     _units = {
         "Throughput": "L/hr",
         "Membrane cost per cycle": "USD",
         "Dilution volume": "m3",
+        "Input volume": "L",
+        "Output volume": "L",
     }
 
     def _run(self) -> None:
         feed = self.ins[0]
-        filtrate = self.outs[0]
+        permeate, retentate = self.outs
         derived = self.plan.derived
 
-        filtrate.empty()
+        permeate.empty()
+        retentate.empty()
+
+        density = derived.get('broth_density_kg_per_l') or 1.0
+
+        input_product = derived.get('input_product_kg')
+        if input_product is None:
+            input_product = float(feed.imass.get('Osteopontin', 0.0))
+        input_product = max(input_product, 0.0)
 
         product_mass = derived.get('product_out_kg')
         if product_mass is None:
-            product_mass = float(feed.imass['Osteopontin'])
+            product_mass = float(feed.imass.get('Osteopontin', 0.0))
         product_mass = max(product_mass, 0.0)
 
-        volume_l = derived.get('output_volume_l') or derived.get('harvest_volume_l')
-        density = derived.get('broth_density_kg_per_l', 1.0)
-        if volume_l is not None:
-            total_mass = volume_l * density
-        else:
-            total_mass = feed.F_mass
-
         residual_glucose = derived.get('residual_glucose_after_mf_kg') or 0.0
+        residual_glucose = max(residual_glucose, 0.0)
 
-        filtrate.imass['Osteopontin'] = product_mass
-        filtrate.imass['Yeast'] = 0.0
-        filtrate.imass['Glucose'] = residual_glucose
+        permeate.imass['Osteopontin'] = product_mass
+        if residual_glucose:
+            permeate.imass['Glucose'] = residual_glucose
 
-        known_mass = product_mass + residual_glucose
-        water_mass = max(total_mass - known_mass, 0.0)
-        filtrate.imass['Water'] = water_mass
+        retentate_product = max(input_product - product_mass, 0.0)
+        if retentate_product:
+            retentate.imass['Osteopontin'] = retentate_product
 
-        filtrate.T = feed.T
-        filtrate.P = feed.P
+        input_volume_l = derived.get('input_volume_l') or derived.get('harvest_volume_l')
+        output_volume_l = derived.get('output_volume_l')
+
+        if output_volume_l is not None:
+            permeate_total_mass = output_volume_l * density
+        else:
+            permeate_total_mass = product_mass + residual_glucose
+        permeate_known = product_mass + residual_glucose
+        permeate_water = max(permeate_total_mass - permeate_known, 0.0)
+        if permeate_water:
+            permeate.imass['Water'] = permeate_water
+
+        if input_volume_l is not None:
+            feed_total_mass = input_volume_l * density
+        else:
+            feed_total_mass = feed.F_mass or (product_mass + residual_glucose)
+        retentate_total_mass = max(feed_total_mass - permeate_total_mass, 0.0)
+        retentate_known = retentate_product
+        retentate_water = max(retentate_total_mass - retentate_known, 0.0)
+        if retentate_water:
+            retentate.imass['Water'] = retentate_water
+
+        permeate.T = feed.T
+        permeate.P = feed.P
+        retentate.T = feed.T
+        retentate.P = feed.P
 
     def _design(self) -> None:
         derived = self.plan.derived
-        self.design_results["Throughput"] = derived.get("throughput_l_per_hr", 0.0)
-        self.design_results["Membrane cost per cycle"] = derived.get(
-            "membrane_cost_per_cycle", 0.0
-        )
-        self.design_results["Dilution volume"] = derived.get("dilution_volume_m3", 0.0)
-        self.design_results["Product out"] = derived.get("product_out_kg", 0.0)
-        self.design_results["Output volume"] = derived.get("output_volume_l", 0.0)
+        self.design_results['Throughput'] = derived.get('throughput_l_per_hr', 0.0)
+        self.design_results['Membrane cost per cycle'] = derived.get('membrane_cost_per_cycle', 0.0)
+        self.design_results['Dilution volume'] = derived.get('dilution_volume_m3', 0.0)
+        self.design_results['Input volume'] = derived.get('input_volume_l', 0.0)
+        self.design_results['Output volume'] = derived.get('output_volume_l', 0.0)
+        self.design_results['Product out'] = derived.get('product_out_kg', 0.0)
+        self.design_results['Harvested product'] = derived.get('harvested_product_kg', 0.0)
 
     def _cost(self) -> None:
         self.baseline_purchase_costs.clear()
         self.installed_costs.clear()
+        cost_per_cycle = self.plan.derived.get('membrane_cost_per_cycle')
+        if cost_per_cycle:
+            self.operating_cost = cost_per_cycle
+            self.material_costs = {'MF membranes': cost_per_cycle}
+        else:
+            self.operating_cost = 0.0
+            self.material_costs = {}
 
 
 class UFDFUnit(PlanBackedUnit):
