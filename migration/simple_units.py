@@ -445,60 +445,96 @@ class UFDFUnit(PlanBackedUnit):
 
 
 class ChromatographyUnit(PlanBackedUnit):
-    """Placeholder chromatography step tracking resin and buffers."""
+    """Chromatography step with product and waste streams, tracking buffer usage."""
 
     _N_ins = 1
-    _N_outs = 1
+    _N_outs = 2
     line = "Chromatography"
 
     _units = {
         "Resin cost per batch": "USD",
         "Total buffer bed volumes": "CV",
+        "Eluate volume": "L",
+        "Output volume": "L",
     }
 
     def _run(self) -> None:
         feed = self.ins[0]
-        eluate = self.outs[0]
+        product_stream, waste_stream = self.outs
         derived = self.plan.derived
+        specs = self.plan.specs
 
-        eluate.empty()
+        product_stream.empty()
+        waste_stream.empty()
+
+        density = derived.get('broth_density_kg_per_l') or 1.0
 
         product_mass = derived.get('product_out_kg')
         if product_mass is None:
-            product_mass = float(feed.imass['Osteopontin'])
-        product_mass = max(product_mass, 0.0)
+            product_mass = float(feed.imass.get('Osteopontin', 0.0))
+        product_mass = max(product_mass or 0.0, 0.0)
 
-        volume_l = derived.get('output_volume_l') or derived.get('eluate_volume_l')
-        density = derived.get('broth_density_kg_per_l', 1.0)
-        if volume_l is not None:
-            total_mass = volume_l * density
+        output_volume_l = derived.get('output_volume_l') or derived.get('post_elution_conc_volume_l')
+        if output_volume_l is not None:
+            product_total_mass = output_volume_l * density
         else:
-            total_mass = feed.F_mass
+            product_total_mass = product_mass
 
-        eluate.imass['Osteopontin'] = product_mass
-        eluate.imass['Yeast'] = 0.0
-        eluate.imass['Glucose'] = 0.0
+        product_stream.imass['Osteopontin'] = product_mass
+        product_water = max(product_total_mass - product_mass, 0.0)
+        if product_water:
+            product_stream.imass['Water'] = product_water
 
-        water_mass = max(total_mass - product_mass, 0.0)
-        eluate.imass['Water'] = water_mass
+        input_product = derived.get('input_product_kg')
+        if input_product is None:
+            input_product = float(feed.imass.get('Osteopontin', 0.0))
+        waste_product = max((input_product or 0.0) - product_mass, 0.0)
+        if waste_product:
+            waste_stream.imass['Osteopontin'] = waste_product
 
-        eluate.T = feed.T
-        eluate.P = feed.P
+        eluate_volume_l = derived.get('eluate_volume_l')
+        if eluate_volume_l is None and getattr(specs, 'resin_column_volume_l', None) is not None:
+            total_buffer_bv = derived.get('total_buffer_bv')
+            if total_buffer_bv is not None:
+                eluate_volume_l = specs.resin_column_volume_l * total_buffer_bv
+        if eluate_volume_l is not None:
+            eluate_total_mass = eluate_volume_l * density
+        else:
+            eluate_total_mass = product_total_mass + waste_product
+
+        waste_water = max(eluate_total_mass - (product_total_mass + waste_product), 0.0)
+        if waste_water:
+            waste_stream.imass['Water'] = waste_water
+
+        product_stream.T = feed.T
+        product_stream.P = feed.P
+        waste_stream.T = feed.T
+        waste_stream.P = feed.P
 
     def _design(self) -> None:
         derived = self.plan.derived
-        self.design_results["Resin cost per batch"] = derived.get(
-            "resin_cost_per_batch", 0.0
-        )
-        self.design_results["Total buffer bed volumes"] = derived.get(
-            "total_buffer_bv", 0.0
-        )
-        self.design_results["Product out"] = derived.get("product_out_kg", 0.0)
-        self.design_results["Output volume"] = derived.get("output_volume_l", 0.0)
+        specs = self.plan.specs
+        self.design_results['Resin cost per batch'] = derived.get('resin_cost_per_batch', 0.0)
+        self.design_results['Total buffer bed volumes'] = derived.get('total_buffer_bv', 0.0)
+        self.design_results['Eluate volume'] = derived.get('eluate_volume_l', 0.0)
+        self.design_results['Output volume'] = derived.get('output_volume_l', 0.0)
+        if getattr(specs, 'resin_column_volume_l', None) is not None:
+            self.design_results['Resin column volume'] = specs.resin_column_volume_l
+        if derived.get('buffer_cost_per_batch') is not None:
+            self.design_results['Buffer cost per batch'] = derived['buffer_cost_per_batch']
 
     def _cost(self) -> None:
         self.baseline_purchase_costs.clear()
         self.installed_costs.clear()
+        resin_cost = self.plan.derived.get('resin_cost_per_batch') or 0.0
+        buffer_cost = self.plan.derived.get('buffer_cost_per_batch') or 0.0
+        total_cost = resin_cost + buffer_cost
+        self.operating_cost = total_cost
+        self.material_costs = {}
+        if resin_cost:
+            self.material_costs['Resin'] = resin_cost
+        if buffer_cost:
+            self.material_costs['Buffers'] = buffer_cost
 
 
 class PreDryingUnit(PlanBackedUnit):
