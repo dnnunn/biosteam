@@ -58,29 +58,46 @@ class SeedTrainUnit(PlanBackedUnit):
         feed = self.ins[0]
         broth = self.outs[0]
         feed_state = feed.copy()
-        broth.copy_like(feed)
-
-        glucose_mass = feed.imass['Glucose']
-        if glucose_mass <= 0:
-            feed.copy_like(feed_state)
-            return
 
         derived = self.plan.derived
-        conversion_fraction = derived.get('seed_glucose_conversion_fraction', 0.15)
-        seed_conversion = glucose_mass * conversion_fraction
+        conversion_fraction = derived.get("seed_glucose_conversion_fraction", 0.0) or 0.0
+        biomass_yield = derived.get("biomass_yield_glucose") or 0.5
 
-        broth.imass['Glucose'] -= seed_conversion
+        broth.copy_like(feed_state)
 
-        biomass_yield = derived.get('biomass_yield_glucose')
-        if biomass_yield is None:
-            biomass_yield = 0.5  # fallback assumption
-        broth.imass['Yeast'] += seed_conversion * biomass_yield
+        try:
+            glucose_mass = float(broth.imass['Glucose'])
+        except KeyError:
+            glucose_mass = 0.0
+        converted = max(min(glucose_mass, glucose_mass * conversion_fraction), 0.0)
+        if converted > 0:
+            broth.imass["Glucose"] -= converted
+            produced_biomass = converted * biomass_yield
+            broth.imass["Yeast"] += produced_biomass
+            # assume remaining carbon exits as water to preserve mass balance
+            broth.imass["Water"] += converted - produced_biomass
 
-        # Nutrient supplements remain in broth
-        total_nutrients = derived.get('total_nutrient_concentration_g_per_l') or 0.0
-        if total_nutrients > 0:
-            broth.imass['CornSteepLiquor'] += total_nutrients * 0.01
-            broth.imass['YeastExtract'] += total_nutrients * 0.01
+        # Ensure nutrient additions match plan-derived totals
+        yeast_extract_batch = derived.get("yeast_extract_per_batch_kg")
+        if yeast_extract_batch is not None:
+            broth.imass["YeastExtract"] = yeast_extract_batch
+
+        peptone_batch = derived.get("peptone_per_batch_kg")
+        if peptone_batch is not None:
+            broth.imass["Peptone"] = peptone_batch
+
+        # Maintain overall volume assumptions by resetting water to close mass balance
+        working_volume_l = derived.get("working_volume_l")
+        if working_volume_l is not None:
+            target_mass = working_volume_l  # assume 1 kg/L
+            chemicals = broth.chemicals
+            non_water_mass = 0.0
+            # Sum explicit non-water components without triggering lookups for Water
+            for index, value in broth.imass.data.dct.items():
+                if chemicals.IDs[index] == "Water":
+                    continue
+                non_water_mass += float(value)
+            broth.imass["Water"] = max(target_mass - non_water_mass, 0.0)
 
         feed.copy_like(feed_state)
 
@@ -100,6 +117,33 @@ class SeedTrainUnit(PlanBackedUnit):
     def _cost(self) -> None:
         self.baseline_purchase_costs.clear()
         self.installed_costs.clear()
+
+        specs = self.plan.specs
+        derived = self.plan.derived
+
+        volume_l = derived.get("working_volume_l")
+        if volume_l is None:
+            feed = self.ins[0]
+            volume_l = feed.F_mass or feed.F_vol or 0.0
+
+        yeast_mass_kg = derived.get("yeast_extract_per_batch_kg")
+        if yeast_mass_kg is None:
+            yeast_c = specs.yeast_extract_concentration_g_per_l or 0.0
+            yeast_mass_kg = yeast_c * volume_l / 1e3
+
+        peptone_mass_kg = derived.get("peptone_per_batch_kg")
+        if peptone_mass_kg is None:
+            peptone_c = specs.peptone_concentration_g_per_l or 0.0
+            peptone_mass_kg = peptone_c * volume_l / 1e3
+
+        yeast_cost_total = (yeast_mass_kg or 0.0) * (specs.yeast_extract_cost_per_kg or 0.0)
+        peptone_cost_total = (peptone_mass_kg or 0.0) * (specs.peptone_cost_per_kg or 0.0)
+
+        self.operating_cost = yeast_cost_total + peptone_cost_total
+        self.material_costs = {
+            "Yeast extract": yeast_cost_total,
+            "Peptone": peptone_cost_total,
+        }
 
 
 class FermentationUnit(PlanBackedUnit):

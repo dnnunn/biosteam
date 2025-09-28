@@ -140,9 +140,26 @@ def _compose_fermentation_specs(
             product_yield = DEFAULT_PRODUCT_YIELD_BIOMASS
             yield_source = "fallback"
     turnaround = _get_parameter(global_config, "Turnaround_Time")
-    antifoam = _get_parameter(global_config, "Antifoam_Dosage")
+    if turnaround is None:
+        turnaround = _get_parameter(carbon_config, "Turnaround_Time")
 
-    costs = _get_parameter(global_config, mapping["cost_field"]) or 0.0
+    antifoam = _get_parameter(global_config, "Antifoam_Dosage")
+    if antifoam is None:
+        antifoam = _get_parameter(carbon_config, "Antifoam_Dosage")
+
+    antifoam_cost = _get_parameter(global_config, "Antifoam_Cost")
+    if antifoam_cost is None:
+        antifoam_cost = _get_parameter(carbon_config, "Antifoam_Cost")
+
+    minor_nutrient_cost = _get_parameter(global_config, "Minor_Nutrients_Cost")
+    if minor_nutrient_cost is None:
+        minor_nutrient_cost = _get_parameter(carbon_config, "Minor_Nutrients_Cost")
+
+    costs = (
+        _get_parameter(global_config, mapping["cost_field"])
+        or _get_parameter(carbon_config, mapping["cost_field"])
+        or 0.0
+    )
 
     specs = FermentationSpecs(
         key=carbon_config.key.module,
@@ -169,6 +186,10 @@ def _compose_fermentation_specs(
         derived["seed_train_duration_hours"] = seed_duration
     if yield_source:
         derived["product_yield_source"] = yield_source
+    if antifoam_cost is not None:
+        derived["antifoam_cost_per_unit"] = antifoam_cost
+    if minor_nutrient_cost is not None:
+        derived["minor_nutrients_cost_total"] = minor_nutrient_cost
 
     return specs, derived
 
@@ -232,7 +253,12 @@ def _build_usp01_plan(config: ModuleConfig) -> UnitPlan:
     yeast_conc = _get_parameter(fermentation_config, "Yeast_Extract_Concentration")
     peptone_conc = _get_parameter(fermentation_config, "Peptone_Concentration")
     yeast_cost = _get_parameter(global_config, "Yeast_Extract_Cost")
+    if yeast_cost is None:
+        yeast_cost = _get_parameter(config, "Yeast_Extract_Cost")
+
     peptone_cost = _get_parameter(global_config, "Peptone_Cost")
+    if peptone_cost is None:
+        peptone_cost = _get_parameter(config, "Peptone_Cost")
 
     specs = SeedTrainSpecs(
         key=config.key.module,

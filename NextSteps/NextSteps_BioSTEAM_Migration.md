@@ -3,6 +3,12 @@
 ## Short-Term Build Targets
 - Implement a module registry that maps Excel module keys to BioSTEAM unit factory callables (start with USP00/01/02, DSP01/02/03/05, PROJ00/01/02).
 - Develop ``build_baseline_system(config)`` by refactoring the minimal subset of ``Archive/legacy_migration_attempt/osteopontin_biosteam_architecture.py`` to use the new registry and the ``ExcelModuleDefaults`` loader.
+- Snapshot baseline KPIs with ``python -m migration.scripts.export_baseline_metrics`` (writes ``tests/opn/baseline_metrics.json``) whenever ``BaselineModel.xlsx`` changes.
+- Stage-by-stage migration plan (seed → fermentation → MF/UFDF → chromatography → spray dryer):
+  1. Extend ``baseline_metrics_map.yaml`` with mass/cost checkpoints for the target stage, regenerate the JSON fixture.
+  2. Update ``tests/opn/test_opn_front_end.py`` and ``compare_front_end.py`` to surface the new checkpoints.
+  3. Swap the placeholder unit logic for BioSTEAM calculations that reproduce the Excel values; keep derived costs in sync.
+  4. Repeat for the next downstream stage once regression passes.
 - Wire per-batch mass balance calculations for the baseline path to produce total product, resin usage, buffer volumes, and primary utilities.
 
 ## Validation Workflow

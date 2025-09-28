@@ -88,8 +88,8 @@ Bioindustrial-Park/                 # Example biorefineries
 
 ### Primary Environment
 - **Location**: `conda activate biosteam` (Python 3.10.18)
-- **BioSTEAM**: Version 2.52.12 (fully functional)
-- **ThermoSTEAM**: Version 0.52.5 (compatible)
+- **BioSTEAM**: Version 2.52.13 (fully functional)
+- **ThermoSTEAM**: Version 0.52.8 (compatible)
 - **Key Dependencies**: scipy 1.15.3, matplotlib 3.10.6, graphviz (system)
 
 ### Development Status
@@ -140,7 +140,7 @@ Bioindustrial-Park/                 # Example biorefineries
 
 ### Required for Implementation
 - **Python 3.10+**: Full BioSTEAM compatibility
-- **BioSTEAM 2.52.12**: Core modeling framework
+- **BioSTEAM 2.52.13**: Core modeling framework
 - **SystemFactory**: Modular process design patterns
 - **biosteam-migrator**: Specialized Excel migration expertise
 

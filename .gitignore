@@ -86,3 +86,5 @@ ehthumbs.db
 Thumbs.db
 surfaces
 CoolPropFluids*.json
+.conda-envs/
+*.code-workspace

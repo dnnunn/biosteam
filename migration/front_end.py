@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Dict, Iterable, Optional
 
 import biosteam as bst
@@ -38,6 +39,12 @@ class FrontEndSection:
     spray_dryer_unit: bst.Unit
     system: bst.System
     defaults: ExcelModuleDefaults
+    total_cost_per_batch_usd: Optional[float] = None
+    cmo_fees_usd: Optional[float] = None
+    cost_per_kg_usd: Optional[float] = None
+    materials_cost_per_batch_usd: Optional[float] = None
+    computed_material_cost_per_batch_usd: Optional[float] = None
+    material_cost_breakdown: Dict[str, float] = field(default_factory=dict)
 
     def units(self) -> tuple[bst.Unit, ...]:
         """Return the ordered unit operations for convenience."""
@@ -120,6 +127,35 @@ def _read_calculation_cell(
         return None
 
 
+def _read_sheet_cell(
+    workbook_path: Path | str,
+    sheet_name: str,
+    row: int,
+    col: int,
+) -> Optional[float]:
+    try:
+        import pandas as pd
+    except ImportError:  # pragma: no cover
+        return None
+
+    try:
+        value = pd.read_excel(
+            workbook_path,
+            sheet_name=sheet_name,
+            header=None,
+            skiprows=row,
+            nrows=1,
+            usecols=[col],
+        ).iloc[0, 0]
+    except Exception:
+        return None
+
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def _build_seed_media_stream(
     *,
     fermentation_unit: bst.Unit,
@@ -159,6 +195,10 @@ def _build_seed_media_stream(
         feed.imass["Yeast"] += dcw_concentration_g_per_l * seed_volume_l / 1e3
 
     return feed
+
+
+def _read_inputs_cell(defaults: ExcelModuleDefaults, row_1_based: int) -> Optional[float]:
+    return _read_sheet_cell(defaults.workbook_path, "Inputs and Assumptions", row_1_based - 1, 1)
 
 
 def build_front_end_section(
@@ -203,6 +243,11 @@ def build_front_end_section(
     working_titer = _read_calculation_cell(defaults, 46, 1)  # Calculations!B47
     dcw_concentration = _read_calculation_cell(defaults, 28, 1)  # Calculations!B29
     total_glucose_feed_kg = _read_calculation_cell(defaults, 81, 1)  # Calculations!B82
+    total_glycerol_feed_kg = _read_calculation_cell(defaults, 82, 1)  # Calculations!B83
+    total_molasses_feed_kg = _read_calculation_cell(defaults, 84, 1)  # Calculations!B85
+    yeast_extract_per_batch = _read_calculation_cell(defaults, 85, 1)  # Calculations!B86
+    peptone_per_batch = _read_calculation_cell(defaults, 86, 1)  # Calculations!B87
+    antifoam_volume_l = _read_calculation_cell(defaults, 87, 1)  # Calculations!B88
 
     product_preharvest = _read_calculation_cell(defaults, 43, 1)  # Calculations!B44
     harvested_product = _read_calculation_cell(defaults, 44, 1)  # Calculations!B45
@@ -227,6 +272,11 @@ def build_front_end_section(
         }
     )
 
+    if total_glycerol_feed_kg is not None:
+        fermentation_plan.derived["total_glycerol_feed_kg"] = total_glycerol_feed_kg
+    if total_molasses_feed_kg is not None:
+        fermentation_plan.derived["total_molasses_feed_kg"] = total_molasses_feed_kg
+
     if working_titer is not None:
         fermentation_plan.derived["product_out_kg"] = (
             working_titer * working_volume_l / 1_000.0
@@ -242,8 +292,48 @@ def build_front_end_section(
             "seed_glucose_conversion_fraction": 0.0,
         }
     )
+    if yeast_extract_per_batch is not None:
+        seed_plan.derived["yeast_extract_per_batch_kg"] = yeast_extract_per_batch
+    if peptone_per_batch is not None:
+        seed_plan.derived["peptone_per_batch_kg"] = peptone_per_batch
+
+    seed_specs = seed_unit.plan.specs
+    yeast_cost_per_kg = _read_inputs_cell(defaults, 138)
+    if yeast_cost_per_kg is not None and getattr(seed_specs, "yeast_extract_cost_per_kg", None) in (None, 0):
+        seed_specs.yeast_extract_cost_per_kg = yeast_cost_per_kg
+
+    peptone_cost_per_kg = _read_inputs_cell(defaults, 139)
+    if peptone_cost_per_kg is not None and getattr(seed_specs, "peptone_cost_per_kg", None) in (None, 0):
+        seed_specs.peptone_cost_per_kg = peptone_cost_per_kg
 
     fermentation_product = fermentation_plan.derived.get("product_out_kg")
+
+    if antifoam_volume_l is not None:
+        fermentation_plan.derived["antifoam_volume_l"] = antifoam_volume_l
+
+    fermentation_specs = fermentation_unit.plan.specs
+    glucose_cost = _read_inputs_cell(defaults, 134)
+    glycerol_cost = _read_inputs_cell(defaults, 135)
+    molasses_cost = _read_inputs_cell(defaults, 137)
+    carbon_cost_lookup = {
+        "glucose": glucose_cost,
+        "glycerol": glycerol_cost,
+        "molasses": molasses_cost,
+    }
+    carbon_source = fermentation_plan.derived.get("carbon_source")
+    carbon_cost = carbon_cost_lookup.get(carbon_source)
+    if carbon_cost is not None and getattr(fermentation_specs, "glucose_cost_per_kg", None) in (None, 0):
+        fermentation_specs.glucose_cost_per_kg = carbon_cost
+
+    antifoam_cost = _read_inputs_cell(defaults, 141)
+    if antifoam_cost is not None:
+        fermentation_plan.derived.setdefault("antifoam_cost_per_unit", antifoam_cost)
+
+    minor_nutrient_total = fermentation_plan.derived.get("minor_nutrients_cost_total")
+    if minor_nutrient_total is None:
+        value = _read_inputs_cell(defaults, 140)
+        if value is not None:
+            fermentation_plan.derived["minor_nutrients_cost_total"] = value
 
     micro_plan = microfiltration_unit.plan
     micro_plan.derived.update(
@@ -294,6 +384,111 @@ def build_front_end_section(
         }
     )
 
+    cost_per_kg_usd = _read_calculation_cell(defaults, 0, 1)
+    cmo_fees_usd = _read_calculation_cell(defaults, 247, 1)
+    total_cost_per_batch_usd = _read_sheet_cell(
+        defaults.workbook_path, "Final Costs", 7, 1
+    )
+    materials_cost_per_batch = None
+    if (
+        total_cost_per_batch_usd is not None
+        and cmo_fees_usd is not None
+    ):
+        materials_cost_per_batch = total_cost_per_batch_usd - cmo_fees_usd
+
+    if (
+        cost_per_kg_usd is None
+        and total_cost_per_batch_usd is not None
+        and final_product_kg is not None
+        and final_product_kg != 0
+    ):
+        cost_per_kg_usd = total_cost_per_batch_usd / final_product_kg
+
+    # Compute material cost breakdown using Excel-derived values (subject to refinement).
+    def _calc_cell(row: int, col: int = 1) -> Optional[float]:
+        return _read_calculation_cell(defaults, row, col)
+
+    breakdown: Dict[str, float] = {}
+
+    def _add_breakdown(key: str, value: Optional[float]) -> float:
+        if value is not None:
+            breakdown[key] = value
+            return value
+        return 0.0
+
+    carbon_cost = _calc_cell(166)  # Calculations!B167
+    yeast_cost = _calc_cell(167)   # Calculations!B168
+    peptone_cost = _calc_cell(168)  # Calculations!B169
+    minor_nutrients_cost = _calc_cell(169)  # Calculations!B170
+    antifoam_cost = _calc_cell(170)  # Calculations!B171
+    buffer_cost = _calc_cell(193)  # Calculations!B194
+    resin_cost = _calc_cell(177)  # Calculations!B178
+    mf_membrane_cost = _calc_cell(171)  # Calculations!B172
+    uf_membrane_cost = _calc_cell(174)  # Calculations!B175
+    tff_membrane_cost = _calc_cell(189)  # Calculations!B190
+    cip_chemicals_cost = _calc_cell(192)  # Calculations!B193
+    membrane_cleaning_cost = _read_sheet_cell(
+        defaults.workbook_path, "Inputs and Assumptions", 168, 1
+    )
+
+    fermentation_specs = fermentation_unit.plan.specs
+    carbon_source = fermentation_plan.derived.get("carbon_source")
+    carbon_mass = 0.0
+    if carbon_source == "glucose":
+        carbon_mass = fermentation_plan.derived.get("total_glucose_feed_kg") or 0.0
+    elif carbon_source == "glycerol":
+        carbon_mass = fermentation_plan.derived.get("total_glycerol_feed_kg") or 0.0
+    elif carbon_source == "molasses":
+        carbon_mass = fermentation_plan.derived.get("total_molasses_feed_kg") or 0.0
+    carbon_cost_calc = None
+    if carbon_mass and fermentation_specs.glucose_cost_per_kg:
+        carbon_cost_calc = carbon_mass * fermentation_specs.glucose_cost_per_kg
+
+    seed_specs = seed_unit.plan.specs
+    yeast_mass = seed_plan.derived.get("yeast_extract_per_batch_kg")
+    yeast_cost_calc = None
+    if yeast_mass is not None and seed_specs.yeast_extract_cost_per_kg is not None:
+        yeast_cost_calc = yeast_mass * seed_specs.yeast_extract_cost_per_kg
+
+    peptone_mass = seed_plan.derived.get("peptone_per_batch_kg")
+    peptone_cost_calc = None
+    if peptone_mass is not None and seed_specs.peptone_cost_per_kg is not None:
+        peptone_cost_calc = peptone_mass * seed_specs.peptone_cost_per_kg
+
+    antifoam_volume = fermentation_plan.derived.get("antifoam_volume_l")
+    antifoam_cost_per_unit = fermentation_plan.derived.get("antifoam_cost_per_unit")
+    antifoam_cost_calc = None
+    if antifoam_volume is not None and antifoam_cost_per_unit is not None:
+        antifoam_cost_calc = antifoam_volume * antifoam_cost_per_unit
+
+    minor_nutrients_cost_calc = fermentation_plan.derived.get("minor_nutrients_cost_total")
+
+    computed_material_cost = 0.0
+
+    def _set_cost(key: str, computed: Optional[float], fallback: Optional[float]) -> None:
+        nonlocal computed_material_cost
+        value = computed if computed is not None else fallback
+        if value is not None:
+            breakdown[key] = value
+            computed_material_cost += value
+
+    _set_cost("carbon_source", carbon_cost_calc, _calc_cell(166))
+    _set_cost("yeast_extract", yeast_cost_calc, _calc_cell(167))
+    _set_cost("peptone", peptone_cost_calc, _calc_cell(168))
+    _set_cost("minor_nutrients", minor_nutrients_cost_calc, _calc_cell(169))
+    _set_cost("antifoam", antifoam_cost_calc, _calc_cell(170))
+    _set_cost("buffers", None, _calc_cell(193))
+    _set_cost("resin", None, _calc_cell(177))
+    _set_cost("mf_membranes", None, _calc_cell(171))
+    _set_cost("uf_df_membranes", None, _calc_cell(174))
+    _set_cost("predry_tff_membranes", None, _calc_cell(189))
+    _set_cost("cip_chemicals", None, _calc_cell(192))
+    _set_cost(
+        "membrane_cleaning",
+        None,
+        _read_sheet_cell(defaults.workbook_path, "Inputs and Assumptions", 168, 1),
+    )
+
     feed = _build_seed_media_stream(
         fermentation_unit=fermentation_unit,
         seed_unit=seed_unit,
@@ -336,6 +531,12 @@ def build_front_end_section(
         spray_dryer_unit=spray_dryer_unit,
         system=system,
         defaults=defaults,
+        total_cost_per_batch_usd=total_cost_per_batch_usd,
+        cmo_fees_usd=cmo_fees_usd,
+        cost_per_kg_usd=cost_per_kg_usd,
+        materials_cost_per_batch_usd=materials_cost_per_batch,
+        computed_material_cost_per_batch_usd=computed_material_cost,
+        material_cost_breakdown=breakdown,
     )
 
 

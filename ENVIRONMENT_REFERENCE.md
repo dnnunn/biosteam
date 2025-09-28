@@ -4,21 +4,23 @@
 ## Environment Status: ✅ FULLY OPERATIONAL
 
 ### Working Environment
-- **Location**: `/opt/anaconda3/envs/biosteam`
-- **Python Version**: 3.10.18
-- **BioSTEAM Version**: 2.52.12
-- **ThermoSTEAM Version**: 0.52.5
+- **Location**: `/Users/davidnunn/Desktop/Apps/Biosteam/.conda-envs/biosteam310`
+- **Python Version**: 3.10.18 (conda)
+- **BioSTEAM Version**: 2.52.13
+- **ThermoSTEAM Version**: 0.52.8
 - **Status**: Complete installation, verified working
 
 ### Activation Command
 ```bash
-source /opt/anaconda3/bin/activate biosteam
+conda activate /Users/davidnunn/Desktop/Apps/Biosteam/.conda-envs/biosteam310
 ```
+
+Activation auto-creates NumPy/Matplotlib cache directories inside the env and exports `NUMBA_CACHE_DIR`, `MPLCONFIGDIR`, and thread-limiting vars (`OPENBLAS_NUM_THREADS`, `OMP_NUM_THREADS`, `VECLIB_MAXIMUM_THREADS`) via `etc/conda/activate.d/biosteam_env.sh`.
 
 ### Key Package Versions
 ```
-biosteam           2.52.12
-thermosteam        0.52.5
+biosteam           2.52.13
+thermosteam        0.52.8
 scipy              1.15.3
 numpy              1.26.4
 pandas             2.3.2
@@ -46,7 +48,7 @@ matplotlib         3.10.6
 
 #### BioSTEAM Framework Structure
 ```
-biosteam/                           # Main BioSTEAM package (v2.52.12)
+biosteam/                           # Main BioSTEAM package (v2.52.13)
 ├── process_tools/                  # Modular process design patterns
 │   ├── system_factory.py          # SystemFactory patterns (KEY for modularity)
 │   ├── process_model.py           # Process modeling framework
@@ -58,7 +60,7 @@ biosteam/                           # Main BioSTEAM package (v2.52.12)
 ├── facilities/                    # Utility facilities
 └── [extensive BioSTEAM codebase]
 
-thermosteam/                       # Thermodynamic engine (v0.52.5)
+thermosteam/                       # Thermodynamic engine (v0.52.8)
 ├── thermosteam/                  # Core thermo calculations
 └── tests/                        # Thermodynamic tests
 

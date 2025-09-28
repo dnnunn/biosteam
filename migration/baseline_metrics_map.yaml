@@ -1,0 +1,50 @@
+# Excel cell references that capture the KPIs we track for regression checks.
+# Update these locations whenever the baseline workbook structure changes.
+
+mass_trail:
+  working_titer_g_per_l: Calculations!B47
+  dcw_concentration_g_per_l: Calculations!B29
+  total_glucose_feed_kg: Calculations!B82
+  total_glycerol_feed_kg: Calculations!B83
+  total_molasses_feed_kg: Calculations!B85
+  yeast_extract_per_batch_kg: Calculations!B86
+  peptone_per_batch_kg: Calculations!B87
+  antifoam_volume_l: Calculations!B88
+  product_preharvest_kg: Calculations!B44
+  harvested_product_kg: Calculations!B45
+  harvest_volume_l: Calculations!B105
+  product_after_microfiltration_kg: Calculations!B108
+  product_after_ufdf_kg: Calculations!B111
+  post_uf_volume_l: Calculations!B112
+  product_after_chromatography_kg: Calculations!B113
+  post_elution_volume_l: Calculations!B116
+  post_elution_concentrate_volume_l: Calculations!B117
+  volume_to_spray_l: Calculations!B118
+  product_after_predry_kg: Calculations!B120
+
+final_product:
+  cell: Calculations!B2
+
+# Fill this in once the financial worksheet cell is confirmed, e.g. Financials!D20
+cost_per_kg:
+  cell: Calculations!B1
+
+total_cost_per_batch:
+  cell: Final Costs!B8
+
+cmo_fees:
+  cell: Calculations!B248
+
+materials_costs:
+  carbon_source: Calculations!B167
+  yeast_extract: Calculations!B168
+  peptone: Calculations!B169
+  minor_nutrients: Calculations!B170
+  antifoam: Calculations!B171
+  buffers: Calculations!B194
+  resin: Calculations!B178
+  mf_membranes: Calculations!B172
+  uf_df_membranes: Calculations!B175
+  predry_tff_membranes: Calculations!B190
+  cip_chemicals: Calculations!B193
+  membrane_cleaning: Inputs and Assumptions!B169

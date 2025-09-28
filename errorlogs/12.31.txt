@@ -1,0 +1,1303 @@
+(/Users/davidnunn/Desktop/Apps/Biosteam/.conda-envs/biosteam310) davidnunn@MacBook-Pro-2 Biosteam % pytest -vv
+======================================================================================== test session starts =========================================================================================
+platform darwin -- Python 3.10.18, pytest-8.4.2, pluggy-1.6.0 -- /Users/davidnunn/Desktop/Apps/Biosteam/.conda-envs/biosteam310/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/davidnunn/Desktop/Apps/Biosteam
+configfile: pytest.ini
+testpaths: tests
+plugins: nbval-0.11.0, cov-7.0.0
+collected 14 items                                                                                                                                                                                   
+
+tests/opn/test_opn_front_end.py::test_front_end_mass_trail ERROR                                                                                                                               [  7%]
+tests/opn/test_opn_front_end.py::test_intermediate_product_matches[fermentation-product_preharvest_kg] ERROR                                                                                   [ 14%]
+tests/opn/test_opn_front_end.py::test_intermediate_product_matches[microfiltration-product_after_microfiltration_kg] ERROR                                                                     [ 21%]
+tests/opn/test_opn_front_end.py::test_intermediate_product_matches[ufdf-product_after_ufdf_kg] ERROR                                                                                           [ 28%]
+tests/opn/test_opn_front_end.py::test_intermediate_product_matches[chromatography-product_after_chromatography_kg] ERROR                                                                       [ 35%]
+tests/opn/test_opn_front_end.py::test_intermediate_product_matches[predrying-product_after_predry_kg] ERROR                                                                                    [ 42%]
+tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-total_glucose_feed_kg-total_glucose_feed_kg] ERROR                                                      [ 50%]
+tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-total_glycerol_feed_kg-total_glycerol_feed_kg] ERROR                                                    [ 57%]
+tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-total_molasses_feed_kg-total_molasses_feed_kg] ERROR                                                    [ 64%]
+tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-antifoam_volume_l-antifoam_volume_l] ERROR                                                              [ 71%]
+tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[seed_unit-yeast_extract_per_batch_kg-yeast_extract_per_batch_kg] ERROR                                                    [ 78%]
+tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[seed_unit-peptone_per_batch_kg-peptone_per_batch_kg] ERROR                                                                [ 85%]
+tests/opn/test_opn_front_end.py::test_cost_metrics ERROR                                                                                                                                       [ 92%]
+tests/opn/test_opn_front_end.py::test_material_cost_breakdown ERROR                                                                                                                            [100%]
+
+=============================================================================================== ERRORS ===============================================================================================
+____________________________________________________________________________ ERROR at setup of test_front_end_mass_trail _____________________________________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+______________________________________________________ ERROR at setup of test_intermediate_product_matches[fermentation-product_preharvest_kg] _______________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+_______________________________________________ ERROR at setup of test_intermediate_product_matches[microfiltration-product_after_microfiltration_kg] ________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+__________________________________________________________ ERROR at setup of test_intermediate_product_matches[ufdf-product_after_ufdf_kg] ___________________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+________________________________________________ ERROR at setup of test_intermediate_product_matches[chromatography-product_after_chromatography_kg] _________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+_______________________________________________________ ERROR at setup of test_intermediate_product_matches[predrying-product_after_predry_kg] _______________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+________________________________________ ERROR at setup of test_feed_and_additive_inputs_match[fermentation_unit-total_glucose_feed_kg-total_glucose_feed_kg] ________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+_______________________________________ ERROR at setup of test_feed_and_additive_inputs_match[fermentation_unit-total_glycerol_feed_kg-total_glycerol_feed_kg] _______________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+_______________________________________ ERROR at setup of test_feed_and_additive_inputs_match[fermentation_unit-total_molasses_feed_kg-total_molasses_feed_kg] _______________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+____________________________________________ ERROR at setup of test_feed_and_additive_inputs_match[fermentation_unit-antifoam_volume_l-antifoam_volume_l] ____________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+_______________________________________ ERROR at setup of test_feed_and_additive_inputs_match[seed_unit-yeast_extract_per_batch_kg-yeast_extract_per_batch_kg] _______________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+_____________________________________________ ERROR at setup of test_feed_and_additive_inputs_match[seed_unit-peptone_per_batch_kg-peptone_per_batch_kg] _____________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+________________________________________________________________________________ ERROR at setup of test_cost_metrics _________________________________________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+___________________________________________________________________________ ERROR at setup of test_material_cost_breakdown ___________________________________________________________________________
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+>           return index_cache[key]
+E           KeyError: 0
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1259: KeyError
+
+During handling of the above exception, another exception occurred:
+
+baseline_metrics = BaselineMetrics(workbook_path=PosixPath('BaselineModel.xlsx'), mass_trail={'antifoam_volume_l': 70.0, 'dcw_concentrati...6590.0, 'predry_tff_membranes': 630.0, 'resin': 122142.85714285719, 'uf_df_membranes': 120.0, 'yeast_extract': 6636.0})
+
+    @pytest.fixture(scope="module")
+    def front_end_section(baseline_metrics: BaselineMetrics):
+        bst.main_flowsheet.clear()
+        section = build_front_end_section(str(WORKBOOK_PATH))
+>       section.system.simulate()
+
+tests/opn/test_opn_front_end.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pkgs/biosteam/src/biosteam/_system.py:3308: in simulate
+    with self.flowsheet:
+pkgs/biosteam/src/biosteam/_flowsheet.py:120: in __exit__
+    if exception: raise exception
+pkgs/biosteam/src/biosteam/_system.py:3369: in simulate
+    raise error
+pkgs/biosteam/src/biosteam/_system.py:3356: in simulate
+    outputs = self.converge(**kwargs)
+pkgs/biosteam/src/biosteam/_system.py:2980: in converge
+    method()
+pkgs/biosteam/src/biosteam/_system.py:2501: in run_sequential_modular
+    else: f(i, i.run)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:94: in try_method_with_object_stamp
+    raise_error_with_object_stamp(object, error)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:84: in raise_error_with_object_stamp
+    raise error
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/exceptions.py:88: in try_method_with_object_stamp
+    return method(*args)
+pkgs/biosteam/src/biosteam/_unit.py:48: in phenomena_based_run
+    Unit.run(self)
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1551: in run
+    self._run_with_specifications()
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/network.py:1567: in _run_with_specifications
+    self._run()
+migration/simple_units.py:93: in _run
+    water_mass = broth.imass["Water"] if "Water" in broth.imass else 0.0
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/indexer.py:541: in __getitem__
+    return get_sparse_chemical_data(self.data, *self._chemicals._get_index_and_kind(key))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = CompiledChemicals([Water, O2, N2, CO2, Glucose, Yeast, YeastExtract, Peptone, Acetic acid, Lactic acid, Citric acid, H...eepLiquor, YeastNitrogenBase, SodiumHexametaphosphate, Antifoam, Ethanol, Peracetic acid, EDTA, Chitosan, Osteopontin])
+key = 0
+
+    def _get_index_and_kind(self, key):
+        index_cache = self._index_cache
+        try:
+            if key.__hash__ is None: key = tuple(key)
+            return index_cache[key]
+        except KeyError:
+            isa = isinstance
+            # [int|None] Kind of index:
+            # None - all
+            # 0 - chemical
+            # 1 - chemical group
+            # 2 - nested chemical group
+            # 3 - array
+            if isa(key, str):
+                index = self.index(key)
+                kind = 0 if isa(index, int) else 1
+            elif isa(key, tuple):
+                index = self.indices(key)
+                for i in index:
+                    if isa(i, list):
+                        kind = 2
+                        break
+                else:
+                    kind = 3
+            elif key is ...:
+                kind = index = None
+            else: # pragma: no cover
+>               raise TypeError("only strings, sequences of strings, and ellipsis are valid index keys")
+E               TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+
+.conda-envs/biosteam310/lib/python3.10/site-packages/thermosteam/_chemicals.py:1282: TypeError
+====================================================================================== short test summary info =======================================================================================
+ERROR tests/opn/test_opn_front_end.py::test_front_end_mass_trail - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_intermediate_product_matches[fermentation-product_preharvest_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_intermediate_product_matches[microfiltration-product_after_microfiltration_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_intermediate_product_matches[ufdf-product_after_ufdf_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_intermediate_product_matches[chromatography-product_after_chromatography_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_intermediate_product_matches[predrying-product_after_predry_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-total_glucose_feed_kg-total_glucose_feed_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-total_glycerol_feed_kg-total_glycerol_feed_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-total_molasses_feed_kg-total_molasses_feed_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[fermentation_unit-antifoam_volume_l-antifoam_volume_l] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[seed_unit-yeast_extract_per_batch_kg-yeast_extract_per_batch_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_feed_and_additive_inputs_match[seed_unit-peptone_per_batch_kg-peptone_per_batch_kg] - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_cost_metrics - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+ERROR tests/opn/test_opn_front_end.py::test_material_cost_breakdown - TypeError: <SeedTrainUnit: SeedTrain_USP01a> only strings, sequences of strings, and ellipsis are valid index keys
+========================================================================================= 14 errors in 6.85s =========================================================================================
+(/Users/davidnunn/Desktop/Apps/Biosteam/.conda-envs/biosteam310) davidnunn@MacBook-Pro-2 Biosteam % ƒ
