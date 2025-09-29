@@ -10,6 +10,7 @@ import biosteam as bst
 
 from .capture import CaptureHandoff
 from .simple_units import PlanBackedUnit
+from .unit_builders import UnitPlan
 
 __all__ = [
     "DSP04Stage",
@@ -201,4 +202,3 @@ def build_dsp04_chain(
     )
 
     return DSP04Chain(stages=stages, sterile_filter=sterile_unit, handoff=dsp04_handoff, notes=notes)
-
