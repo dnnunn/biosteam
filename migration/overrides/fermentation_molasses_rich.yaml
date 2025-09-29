@@ -1,0 +1,22 @@
+fermentation:
+  method: molasses_rich
+  feed:
+    working_volume_l: 70000.0
+    carbon_source: molasses
+    media_type: rich
+    oxygen_enrichment_fraction: 0.06
+    target_titer_g_per_l: 3.2
+    yield_proxy: cmc_molasses
+  derived:
+    total_glucose_feed_kg: 0.0
+    total_glycerol_feed_kg: 0.0
+    total_molasses_feed_kg: 12000.0
+    product_out_kg: 224.0
+    antifoam_volume_l: 50.0
+    nh3_consumption_kg: 280.0
+    pH_base_consumption_kg: 60.0
+  specs:
+    biomass_yield_glucose: 0.42
+    product_yield_biomass: 0.068
+    molasses_cost_per_kg: 0.25
+    media_cost_per_batch_usd: 800.0

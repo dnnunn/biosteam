@@ -24,3 +24,12 @@ python -m migration.scripts.compare_front_end \
 - Extend auto-selection template to fermentation media (rich vs. defined) and carbon source switching.
 - When user forces unsuitable routes, consider automatic fallbacks with explicit confirmation.
 - Mirror this pattern for downstream polishing and chromatography options as the migration continues.
+
+### Fermentation Carbon Source Overrides (2025-09-28)
+- Added override files for fermentation scenarios:
+  - `fermentation_glucose_rich.yaml`
+  - `fermentation_glucose_defined.yaml`
+  - `fermentation_glycerol_defined.yaml`
+  - `fermentation_molasses_rich.yaml`
+- Each override carries explicit feed volumes, carbon totals, and a `media_type` field (rich vs defined) along with a `yield_proxy` flag capturing the current industry proxy assumption.
+- Recovery proxies (product/bio yields, recovery fractions) are placeholders derived from literature/CMO data until lab results arrive.

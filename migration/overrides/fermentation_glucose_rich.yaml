@@ -1,0 +1,22 @@
+fermentation:
+  method: glucose_rich
+  feed:
+    working_volume_l: 70000.0
+    carbon_source: glucose
+    media_type: rich
+    oxygen_enrichment_fraction: 0.05
+    target_titer_g_per_l: 4.0
+    yield_proxy: literature_glucose
+  derived:
+    total_glucose_feed_kg: 7800.0
+    total_glycerol_feed_kg: 0.0
+    total_molasses_feed_kg: 0.0
+    product_out_kg: 280.0
+    antifoam_volume_l: 40.0
+    nh3_consumption_kg: 250.0
+    pH_base_consumption_kg: 50.0
+  specs:
+    biomass_yield_glucose: 0.48
+    product_yield_biomass: 0.0714286
+    glucose_cost_per_kg: 0.75
+    media_cost_per_batch_usd: 0.0

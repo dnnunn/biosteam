@@ -176,6 +176,63 @@ def _apply_plan_overrides(plan: Any, overrides: Optional[Dict[str, Any]]) -> Non
                 setattr(specs, key, value)
 
 
+def _apply_fermentation_override(
+    plan: Any,
+    override: Mapping[str, Any],
+) -> list[str]:
+    """Apply structured fermentation override fields and return advisory notes."""
+
+    notes: list[str] = []
+    feed_cfg = override.get("feed") if isinstance(override, Mapping) else None
+    method = override.get("method") if isinstance(override, Mapping) else None
+    media_type = None
+    yield_proxy = None
+
+    if isinstance(feed_cfg, Mapping):
+        media_type = feed_cfg.get("media_type")
+        yield_proxy = feed_cfg.get("yield_proxy")
+        for key, value in feed_cfg.items():
+            if value is None:
+                continue
+            if key in {
+                "working_volume_l",
+                "target_titer_g_per_l",
+                "oxygen_enrichment_fraction",
+                "carbon_source",
+                "media_type",
+                "yield_proxy",
+            }:
+                plan.derived[key] = value
+            else:
+                plan.derived[key] = value
+
+    derived_cfg = override.get("derived") if isinstance(override, Mapping) else None
+    if isinstance(derived_cfg, Mapping):
+        for key, value in derived_cfg.items():
+            if value is not None:
+                plan.derived[key] = value
+
+    specs_cfg = override.get("specs") if isinstance(override, Mapping) else None
+    if isinstance(specs_cfg, Mapping):
+        specs = getattr(plan, "specs", None)
+        for key, value in specs_cfg.items():
+            if value is None:
+                continue
+            if specs is not None and hasattr(specs, key):
+                setattr(specs, key, value)
+            else:
+                plan.derived[key] = value
+
+    descriptor = method or "custom"
+    if method or media_type or yield_proxy:
+        notes.append(
+            f"Fermentation override '{descriptor}' applied"
+            f" (media={media_type or 'n/a'}, proxy={yield_proxy or 'baseline'})"
+        )
+
+    return notes
+
+
 def _build_seed_media_stream(
     *,
     fermentation_unit: bst.Unit,
@@ -349,6 +406,19 @@ def build_front_end_section(
 
     fermentation_product = fermentation_plan.derived.get("product_out_kg")
 
+    fermentation_notes: list[str] = []
+    if mode_normalized == "baseline":
+        fermentation_override = (
+            baseline_overrides.get("fermentation") if baseline_overrides else None
+        )
+        if fermentation_override:
+            fermentation_notes = _apply_fermentation_override(
+                fermentation_plan,
+                fermentation_override,
+            )
+            for note in fermentation_notes:
+                fermentation_plan.add_note(note)
+
     if antifoam_volume_l is not None:
         fermentation_plan.derived["antifoam_volume_l"] = antifoam_volume_l
 
@@ -379,6 +449,11 @@ def build_front_end_section(
     if baseline_overrides:
         _apply_plan_overrides(fermentation_plan, baseline_overrides.get("fermentation"))
         fermentation_product = fermentation_plan.derived.get("product_out_kg", fermentation_product)
+
+    working_volume_override = fermentation_plan.derived.get("working_volume_l")
+    if working_volume_override is not None:
+        working_volume_l = working_volume_override
+        seed_volume_l = working_volume_l * inoc_ratio
 
     micro_plan = microfiltration_unit.plan
     clarified_volume_l = harvest_volume_l
@@ -626,6 +701,11 @@ def build_front_end_section(
         "membrane_cleaning",
         None,
         _read_sheet_cell(defaults.workbook_path, "Inputs and Assumptions", 168, 1),
+    )
+    _set_cost(
+        "media",
+        fermentation_plan.derived.get("media_cost_per_batch_usd"),
+        None,
     )
 
     feed = _build_seed_media_stream(
