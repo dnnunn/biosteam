@@ -18,6 +18,8 @@ from .concentration import build_concentration_chain
 from .dsp03 import build_dsp03_chain
 from .dsp04 import build_dsp04_chain
 from .dsp05 import build_dsp05_chain, FinalProductHandoff
+from .usp01 import SeedConfig, determine_seed_method
+from .usp02 import ProductionConfig, determine_production_method
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
 
