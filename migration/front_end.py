@@ -17,6 +17,7 @@ from .capture import build_capture_chain, CaptureHandoff
 from .concentration import build_concentration_chain
 from .dsp03 import build_dsp03_chain
 from .dsp04 import build_dsp04_chain
+from .dsp05 import build_dsp05_chain, FinalProductHandoff
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
 
@@ -57,6 +58,7 @@ class FrontEndSection:
     dsp03_units: tuple[bst.Unit, ...] = field(default_factory=tuple)
     dsp04_units: tuple[bst.Unit, ...] = field(default_factory=tuple)
     dsp04_handoff: Optional[CaptureHandoff] = None
+    dsp05_handoff: Optional[FinalProductHandoff] = None
     material_cost_breakdown: Dict[str, float] = field(default_factory=dict)
 
     def units(self) -> tuple[bst.Unit, ...]:
@@ -579,6 +581,7 @@ def build_front_end_section(
     dsp03_handoff: Optional[CaptureHandoff] = None
     dsp03_route_value: Optional[str] = None
     dsp04_handoff: Optional[CaptureHandoff] = None
+    dsp05_handoff = None
     if mode_normalized == "baseline":
         capture_config_raw = baseline_overrides.get("capture") if baseline_overrides else None
         capture_config = (
@@ -646,13 +649,17 @@ def build_front_end_section(
         post_elution_volume_l = chrom_plan.derived.get("eluate_volume_l", post_elution_volume_l)
 
     dsp04_config_raw = baseline_overrides.get("dsp04") if baseline_overrides else None
-    dsp04_chain = build_dsp04_chain(
-        capture_handoff=capture_handoff or dsp03_handoff,
-        dsp03_handoff=dsp03_handoff or capture_handoff,
-        config_mapping=dsp04_config_raw if isinstance(dsp04_config_raw, Mapping) else {},
-    )
-    dsp04_units_tuple = tuple(dsp04_chain.stages + [dsp04_chain.sterile_filter])
-    dsp04_handoff = dsp04_chain.handoff
+    base_handoff_for_dsp04 = dsp03_handoff or capture_handoff
+    if base_handoff_for_dsp04 is not None:
+        dsp04_chain = build_dsp04_chain(
+            capture_handoff=capture_handoff,
+            dsp03_handoff=base_handoff_for_dsp04,
+            config_mapping=dsp04_config_raw if isinstance(dsp04_config_raw, Mapping) else {},
+        )
+        dsp04_units_tuple = tuple(dsp04_chain.stages + [dsp04_chain.sterile_filter])
+        dsp04_handoff = dsp04_chain.handoff
+    else:
+        dsp04_handoff = None
 
     predry_plan = predrying_unit.plan
     predry_input_volume_l = predry_plan.derived.get("input_volume_l", post_elution_conc_volume_l)
@@ -689,18 +696,20 @@ def build_front_end_section(
     spray_plan = spray_dryer_unit.plan
     spray_input_product_kg = product_after_predry
     spray_input_volume_l = predry_plan.derived.get("output_volume_l", volume_to_spray_l)
-    if dsp04_handoff is not None:
-        if dsp04_handoff.pool_volume_l is not None:
-            spray_input_volume_l = dsp04_handoff.pool_volume_l * 1_000.0
+    final_handoff_for_spray = dsp04_handoff or dsp03_handoff or capture_handoff
+    if final_handoff_for_spray is not None:
+        if final_handoff_for_spray.pool_volume_l is not None:
+            spray_input_volume_l = final_handoff_for_spray.pool_volume_l * 1_000.0
         if (
-            dsp04_handoff.pool_volume_l is not None
-            and dsp04_handoff.opn_concentration_g_per_l is not None
+            final_handoff_for_spray.pool_volume_l is not None
+            and final_handoff_for_spray.opn_concentration_g_per_l is not None
         ):
             spray_input_product_kg = (
-                dsp04_handoff.pool_volume_l
-                * dsp04_handoff.opn_concentration_g_per_l
+                final_handoff_for_spray.pool_volume_l
+                * final_handoff_for_spray.opn_concentration_g_per_l
                 / 1_000.0
             )
+    if dsp04_units_tuple:
         spray_plan.derived.setdefault(
             "dsp04_stages",
             [unit.plan.derived.get("route") for unit in dsp04_units_tuple if unit.plan is not None],
@@ -717,6 +726,18 @@ def build_front_end_section(
     if baseline_overrides:
         _apply_plan_overrides(spray_plan, baseline_overrides.get("spray_dryer"))
         final_product_kg = spray_plan.derived.get("product_out_kg", final_product_kg)
+
+    dsp05_config_raw = baseline_overrides.get("dsp05") if baseline_overrides else None
+    dsp05_handoff = build_dsp05_chain(
+        config_mapping=dsp05_config_raw if isinstance(dsp05_config_raw, Mapping) else None,
+        feed_volume_m3=final_handoff_for_spray.pool_volume_l if final_handoff_for_spray else None,
+        feed_opn_conc_gL=final_handoff_for_spray.opn_concentration_g_per_l if final_handoff_for_spray else None,
+        feed_moisture_wt_pct=None,
+        feed_solids_wt_pct=None,
+        plan_product_mass_kg=spray_plan.derived.get("product_out_kg"),
+        plan_product_volume_m3=spray_plan.derived.get("output_volume_l"),
+    )
+    spray_plan.derived.setdefault("dsp05_method", dsp05_handoff.method.value)
 
     cost_per_kg_usd = _read_calculation_cell(defaults, 0, 1)
     cmo_fees_usd = _read_calculation_cell(defaults, 247, 1)
@@ -910,6 +931,7 @@ def build_front_end_section(
         dsp03_units=dsp03_units_tuple,
         dsp04_units=dsp04_units_tuple,
         dsp04_handoff=dsp04_handoff,
+        dsp05_handoff=dsp05_handoff,
         material_cost_breakdown=breakdown,
     )
 

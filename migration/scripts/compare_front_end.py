@@ -340,6 +340,28 @@ def main() -> None:
                     print(f"  {key}: {value}")
                 dsp04_summary_printed = True
 
+        if getattr(section, "dsp05_handoff", None) is not None:
+            handoff = section.dsp05_handoff
+            print("\nDSP05 final product summary:")
+            for field in (
+                "method",
+                "product_form",
+                "product_mass_kg",
+                "product_volume_m3",
+                "protein_concentration_g_per_l",
+                "moisture_wt_pct",
+                "bulk_density_kg_m3",
+                "step_recovery_fraction",
+                "cycle_time_h",
+                "client_cost_usd",
+                "capex_flagged_usd",
+            ):
+                value = getattr(handoff, field, None)
+                if value is not None:
+                    print(f"  {field}: {value}")
+            if getattr(handoff, "notes", None):
+                print(f"  notes: {', '.join(handoff.notes)}")
+
 
 if __name__ == "__main__":
     main()

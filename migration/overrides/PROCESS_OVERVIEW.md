@@ -63,6 +63,12 @@ Each YAML carries the scenario feed volumes, carbon totals, media type, and yiel
 - **Stage options:** `aex_repeat`, `cex_negative`, `hic_flowthrough`, `mixedbed_iex`, `enzymatic_tidyup`; append sterile filter automatically.  
 - **Overrides:** supply YAML such as `dsp04: { stage_order: ["cex_negative"], stages: { cex_negative: { enabled: true } } }` to enable polish before sterile filtration.
 
+## DSP05 Final Form & Finish
+- **Baseline:** `dsp05.method = SprayDry`; uses Excel spray dryer plan values but records method/cost metadata.  
+  - Config structure: `dsp05` with common tolling/cost fields and nested sections `spraydry`, `lyophilize`, `liquid` for variant-specific knobs.  
+- **Variants:** `SprayDry`, `Lyophilize`, `LiquidBulk`.  
+- **Overrides:** drop a YAML such as `dsp05: { method: Lyophilize, lyophilize: { primary_dry_time_h: 14 } }` to switch method and adjust parameters.
+
 ## Using Overrides
 - Load overrides via `build_front_end_section(..., baseline_config=YOUR.yaml)` or pass `--baseline-config` to `migration.scripts.compare_front_end`.  
 - YAML structure mirrors the baseline tree; any subkey you provide will update `plan.derived` or `plan.specs` before units are instantiated.
