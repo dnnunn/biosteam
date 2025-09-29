@@ -281,13 +281,30 @@ def main() -> None:
                     title = f"Capture {idx}: {unit.line}"
                     units.append((title, unit))
 
-        units.extend(
-            [
-                ("Predrying", section.predrying_unit),
-                ("Spray dryer", section.spray_dryer_unit),
-            ]
-        )
-        handoff_printed = False
+        dsp03_units: tuple[bst.Unit, ...] = getattr(section, "dsp03_units", ())
+        if dsp03_units:
+            if len(dsp03_units) == 1:
+                units.append(("DSP03", dsp03_units[0]))
+            else:
+                for idx, unit in enumerate(dsp03_units, start=1):
+                    title = f"DSP03 {idx}: {unit.line}"
+                    units.append((title, unit))
+
+        units.append(("Predrying", section.predrying_unit))
+
+        dsp04_units: tuple[bst.Unit, ...] = getattr(section, "dsp04_units", ())
+        if dsp04_units:
+            if len(dsp04_units) == 1:
+                units.append(("DSP04", dsp04_units[0]))
+            else:
+                for idx, unit in enumerate(dsp04_units, start=1):
+                    title = f"DSP04 {idx}: {unit.line}"
+                    units.append((title, unit))
+
+        units.append(("Spray dryer", section.spray_dryer_unit))
+
+        capture_summary_printed = False
+        dsp04_summary_printed = False
         for title, unit in units:
             _print_unit_details(
                 title,
@@ -295,7 +312,7 @@ def main() -> None:
                 component_threshold=args.component_threshold,
             )
             if (
-                not handoff_printed
+                not capture_summary_printed
                 and title.startswith("Capture")
                 and getattr(section, "capture_handoff", None) is not None
             ):
@@ -307,7 +324,21 @@ def main() -> None:
                             print(f"  {key}: {', '.join(value)}")
                         continue
                     print(f"  {key}: {value}")
-                handoff_printed = True
+                capture_summary_printed = True
+            if (
+                not dsp04_summary_printed
+                and title.startswith("DSP04")
+                and getattr(section, "dsp04_handoff", None) is not None
+            ):
+                handoff = section.dsp04_handoff
+                print("\nDSP04 handoff summary:")
+                for key, value in handoff.as_dict().items():
+                    if key == "notes":
+                        if value:
+                            print(f"  {key}: {', '.join(value)}")
+                        continue
+                    print(f"  {key}: {value}")
+                dsp04_summary_printed = True
 
 
 if __name__ == "__main__":

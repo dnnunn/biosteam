@@ -54,8 +54,14 @@ Each YAML carries the scenario feed volumes, carbon totals, media type, and yiel
 - **Route logic:**
   - PolyP present or `Needs_DF_Flag` → DF branch.
   - Otherwise defaults to SPTFF; cTFF available for steady campaigns.
-- Overrides mirror baseline structure; drop a YAML with `dsp03: { method: df, df: {...} }` to force routes or tweak flux/TMP limits.
+- Overrides mirror baseline structure; drop a YAML with `dsp03: { method: df, df: {...} }` to force routes or tweak flux/TMP limits.  
   - Example files: `dsp03_uf_only.yaml`, `dsp03_df_polyP.yaml`, `dsp03_sptff_fast.yaml`, `dsp03_ctff_campaign.yaml`.
+
+## DSP04 Polish & Sterile Filter
+- **Baseline:** no polish stages enabled; always includes `SterileFilter_0p2um`.  
+  - Config structure: `dsp04.stage_order` (list of stages), `dsp04.stages.<stage>` toggles, `dsp04.sterile_filter` holds flux/ΔP/adsorption settings.  
+- **Stage options:** `aex_repeat`, `cex_negative`, `hic_flowthrough`, `mixedbed_iex`, `enzymatic_tidyup`; append sterile filter automatically.  
+- **Overrides:** supply YAML such as `dsp04: { stage_order: ["cex_negative"], stages: { cex_negative: { enabled: true } } }` to enable polish before sterile filtration.
 
 ## Using Overrides
 - Load overrides via `build_front_end_section(..., baseline_config=YOUR.yaml)` or pass `--baseline-config` to `migration.scripts.compare_front_end`.  

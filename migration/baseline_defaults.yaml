@@ -249,3 +249,43 @@ capture:
   targets:
     polish_conductivity_mM: 400.0
     chitosan_ppm_max: 100.0
+
+dsp03:
+  method: auto
+  uf:
+    flux_lmh: 90.0
+    tmp_bar_max: 1.5
+    sieving_fraction: 0.01
+  df:
+    flux_lmh: 100.0
+    diafiltration_volumes: 2.0
+    sieving_fraction: 0.005
+  sptff:
+    stages: 3
+    cf_per_stage: 1.7
+    flux_lmh: 85.0
+    tmp_bar_max: 1.2
+    sieving_fraction: 0.008
+  ctff:
+    flux_lmh: 80.0
+    tmp_bar_max: 1.2
+    bleed_rate_m3_per_h: 0.1
+
+dsp04:
+  stage_order: []
+  stages:
+    aex_repeat:
+      enabled: false
+    cex_negative:
+      enabled: false
+    hic_flowthrough:
+      enabled: false
+    mixedbed_iex:
+      enabled: false
+    enzymatic_tidyup:
+      enabled: false
+  sterile_filter:
+    flux_lmh: 300.0
+    max_dp_bar: 1.5
+    adsorption_loss_fraction: 0.0025
+    prefilter_enabled: false

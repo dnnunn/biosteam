@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, Optional
 
@@ -15,6 +15,8 @@ from .unit_factories import register_plan_backed_unit_factories
 from .cell_removal import build_cell_removal_chain
 from .capture import build_capture_chain, CaptureHandoff
 from .concentration import build_concentration_chain
+from .dsp03 import build_dsp03_chain
+from .dsp04 import build_dsp04_chain
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
 
@@ -52,6 +54,9 @@ class FrontEndSection:
     computed_material_cost_per_batch_usd: Optional[float] = None
     capture_handoff: Optional[CaptureHandoff] = None
     capture_units: tuple[bst.Unit, ...] = field(default_factory=tuple)
+    dsp03_units: tuple[bst.Unit, ...] = field(default_factory=tuple)
+    dsp04_units: tuple[bst.Unit, ...] = field(default_factory=tuple)
+    dsp04_handoff: Optional[CaptureHandoff] = None
     material_cost_breakdown: Dict[str, float] = field(default_factory=dict)
 
     def units(self) -> tuple[bst.Unit, ...]:
@@ -63,7 +68,10 @@ class FrontEndSection:
             *self.cell_removal_units,
             *self.concentration_units,
             self.ufdf_unit,
+            *self.capture_units,
+            *self.dsp03_units,
             self.predrying_unit,
+            *self.dsp04_units,
             self.spray_dryer_unit,
         )
 
@@ -566,6 +574,11 @@ def build_front_end_section(
     capture_buffer_cost = None
     capture_handoff: Optional[CaptureHandoff] = None
     capture_units_tuple: tuple[bst.Unit, ...] = ()
+    dsp03_units_tuple: tuple[bst.Unit, ...] = ()
+    dsp04_units_tuple: tuple[bst.Unit, ...] = ()
+    dsp03_handoff: Optional[CaptureHandoff] = None
+    dsp03_route_value: Optional[str] = None
+    dsp04_handoff: Optional[CaptureHandoff] = None
     if mode_normalized == "baseline":
         capture_config_raw = baseline_overrides.get("capture") if baseline_overrides else None
         capture_config = (
@@ -592,6 +605,18 @@ def build_front_end_section(
         capture_buffer_cost = chain.buffer_cost_per_batch
         capture_handoff = chain.handoff
         capture_units_tuple = tuple(chain.units)
+
+        dsp03_config_raw = baseline_overrides.get("dsp03") if baseline_overrides else None
+        dsp03_chain = build_dsp03_chain(
+            capture_handoff=capture_handoff,
+            config_mapping=dsp03_config_raw if isinstance(dsp03_config_raw, Mapping) else {},
+            upstream_plan=chromatography_unit.plan,
+        )
+        dsp03_units_tuple = tuple(dsp03_chain.units)
+        dsp03_handoff = dsp03_chain.handoff
+        dsp03_route_value = dsp03_chain.route.value
+    if dsp03_handoff is None:
+        dsp03_handoff = capture_handoff
 
     chrom_plan = chromatography_unit.plan
     chrom_plan.derived.setdefault("input_product_kg", product_after_uf)
@@ -620,11 +645,37 @@ def build_front_end_section(
         post_elution_conc_volume_l = chrom_plan.derived.get("output_volume_l", post_elution_conc_volume_l)
         post_elution_volume_l = chrom_plan.derived.get("eluate_volume_l", post_elution_volume_l)
 
+    dsp04_config_raw = baseline_overrides.get("dsp04") if baseline_overrides else None
+    dsp04_chain = build_dsp04_chain(
+        capture_handoff=capture_handoff or dsp03_handoff,
+        dsp03_handoff=dsp03_handoff or capture_handoff,
+        config_mapping=dsp04_config_raw if isinstance(dsp04_config_raw, Mapping) else {},
+    )
+    dsp04_units_tuple = tuple(dsp04_chain.stages + [dsp04_chain.sterile_filter])
+    dsp04_handoff = dsp04_chain.handoff
+
     predry_plan = predrying_unit.plan
+    predry_input_volume_l = predry_plan.derived.get("input_volume_l", post_elution_conc_volume_l)
+    predry_input_product_kg = product_after_chrom
+    if dsp03_handoff is not None:
+        if dsp03_handoff.pool_volume_l is not None:
+            predry_input_volume_l = dsp03_handoff.pool_volume_l * 1_000.0
+        if (
+            dsp03_handoff.pool_volume_l is not None
+            and dsp03_handoff.opn_concentration_g_per_l is not None
+        ):
+            predry_input_product_kg = (
+                dsp03_handoff.pool_volume_l
+                * dsp03_handoff.opn_concentration_g_per_l
+                / 1_000.0
+            )
+        if dsp03_route_value is not None:
+            predry_plan.derived.setdefault("dsp03_route", dsp03_route_value)
+
     predry_plan.derived.update(
         {
-            "input_product_kg": product_after_chrom,
-            "input_volume_l": post_elution_conc_volume_l,
+            "input_product_kg": predry_input_product_kg,
+            "input_volume_l": predry_input_volume_l,
             "output_volume_l": volume_to_spray_l,
             "product_out_kg": product_after_predry,
         }
@@ -636,9 +687,29 @@ def build_front_end_section(
         volume_to_spray_l = predry_plan.derived.get("output_volume_l", volume_to_spray_l)
 
     spray_plan = spray_dryer_unit.plan
+    spray_input_product_kg = product_after_predry
+    spray_input_volume_l = predry_plan.derived.get("output_volume_l", volume_to_spray_l)
+    if dsp04_handoff is not None:
+        if dsp04_handoff.pool_volume_l is not None:
+            spray_input_volume_l = dsp04_handoff.pool_volume_l * 1_000.0
+        if (
+            dsp04_handoff.pool_volume_l is not None
+            and dsp04_handoff.opn_concentration_g_per_l is not None
+        ):
+            spray_input_product_kg = (
+                dsp04_handoff.pool_volume_l
+                * dsp04_handoff.opn_concentration_g_per_l
+                / 1_000.0
+            )
+        spray_plan.derived.setdefault(
+            "dsp04_stages",
+            [unit.plan.derived.get("route") for unit in dsp04_units_tuple if unit.plan is not None],
+        )
+
     spray_plan.derived.update(
         {
-            "input_product_kg": product_after_predry,
+            "input_product_kg": spray_input_product_kg,
+            "input_volume_l": spray_input_volume_l,
             "product_out_kg": final_product_kg,
         }
     )
@@ -780,8 +851,22 @@ def build_front_end_section(
     chromatography_unit.ins[0] = previous
     previous = chromatography_unit.outs[0]
 
+    for unit in capture_units_tuple:
+        unit.ins[0] = previous
+        previous = unit.outs[0]
+
+    for unit in dsp03_units_tuple:
+        unit.ins[0] = previous
+        previous = unit.outs[0]
+
     predrying_unit.ins[0] = previous
-    spray_dryer_unit.ins[0] = predrying_unit.outs[0]
+    previous = predrying_unit.outs[0]
+
+    for unit in dsp04_units_tuple:
+        unit.ins[0] = previous
+        previous = unit.outs[0]
+
+    spray_dryer_unit.ins[0] = previous
 
     active_flowsheet = flowsheet or bst.Flowsheet("bd_front_end")
     bst.main_flowsheet.set_flowsheet(active_flowsheet)
@@ -794,7 +879,10 @@ def build_front_end_section(
             *cell_removal_units_tuple,
             *concentration_units_tuple,
             chromatography_unit,
+            *capture_units_tuple,
+            *dsp03_units_tuple,
             predrying_unit,
+            *dsp04_units_tuple,
             spray_dryer_unit,
         ),
     )
@@ -819,6 +907,9 @@ def build_front_end_section(
         computed_material_cost_per_batch_usd=computed_material_cost,
         capture_handoff=capture_handoff,
         capture_units=capture_units_tuple,
+        dsp03_units=dsp03_units_tuple,
+        dsp04_units=dsp04_units_tuple,
+        dsp04_handoff=dsp04_handoff,
         material_cost_breakdown=breakdown,
     )
 
