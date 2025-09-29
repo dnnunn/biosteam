@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, Optional
 
@@ -13,6 +13,7 @@ from .module_registry import ModuleRegistry
 from .unit_builders import register_baseline_unit_builders, set_defaults_loader
 from .unit_factories import register_plan_backed_unit_factories
 from .cell_removal import build_cell_removal_chain
+from .capture import build_capture_chain, CaptureHandoff
 from .concentration import build_concentration_chain
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
@@ -49,6 +50,8 @@ class FrontEndSection:
     cost_per_kg_usd: Optional[float] = None
     materials_cost_per_batch_usd: Optional[float] = None
     computed_material_cost_per_batch_usd: Optional[float] = None
+    capture_handoff: Optional[CaptureHandoff] = None
+    capture_units: tuple[bst.Unit, ...] = field(default_factory=tuple)
     material_cost_breakdown: Dict[str, float] = field(default_factory=dict)
 
     def units(self) -> tuple[bst.Unit, ...]:
@@ -60,7 +63,6 @@ class FrontEndSection:
             *self.cell_removal_units,
             *self.concentration_units,
             self.ufdf_unit,
-            self.chromatography_unit,
             self.predrying_unit,
             self.spray_dryer_unit,
         )
@@ -556,20 +558,67 @@ def build_front_end_section(
         product_after_uf = uf_plan.derived.get("product_out_kg", product_after_uf)
         post_uf_volume_l = uf_plan.derived.get("output_volume_l", post_uf_volume_l)
 
+    capture_route = None
+    capture_pool_cond = None
+    capture_pool_ph = None
+    capture_cdmo_cost = None
+    capture_resin_cost = None
+    capture_buffer_cost = None
+    capture_handoff: Optional[CaptureHandoff] = None
+    capture_units_tuple: tuple[bst.Unit, ...] = ()
+    if mode_normalized == "baseline":
+        capture_config_raw = baseline_overrides.get("capture") if baseline_overrides else None
+        capture_config = (
+            capture_config_raw if isinstance(capture_config_raw, Mapping) else {}
+        )
+        chain = build_capture_chain(
+            method=capture_config.get("method"),
+            config=capture_config,
+            concentration_plan=uf_plan,
+        )
+        if chain.product_out_kg is not None:
+            product_after_chrom = chain.product_out_kg
+        if chain.pool_volume_l is not None:
+            post_elution_conc_volume_l = chain.pool_volume_l
+            post_elution_volume_l = chain.pool_volume_l
+        if chain.notes:
+            for note in chain.notes:
+                chromatography_unit.plan.add_note(note)
+        capture_route = chain.route.value if chain.route else None
+        capture_pool_cond = chain.pool_conductivity_mM
+        capture_pool_ph = chain.pool_ph
+        capture_cdmo_cost = chain.cdmo_cost_per_batch
+        capture_resin_cost = chain.resin_cost_per_batch
+        capture_buffer_cost = chain.buffer_cost_per_batch
+        capture_handoff = chain.handoff
+        capture_units_tuple = tuple(chain.units)
+
     chrom_plan = chromatography_unit.plan
-    chrom_plan.derived.update(
-        {
-            "input_product_kg": product_after_uf,
-            "eluate_volume_l": post_elution_volume_l,
-            "output_volume_l": post_elution_conc_volume_l,
-            "product_out_kg": product_after_chrom,
-        }
-    )
+    chrom_plan.derived.setdefault("input_product_kg", product_after_uf)
+    chrom_plan.derived.setdefault("product_out_kg", product_after_chrom)
+    chrom_plan.derived.setdefault("output_volume_l", post_elution_conc_volume_l)
+    chrom_plan.derived.setdefault("eluate_volume_l", post_elution_volume_l)
+    if capture_route is not None:
+        chrom_plan.derived.setdefault("capture_route", capture_route)
+    if capture_pool_cond is not None:
+        chrom_plan.derived.setdefault("pool_conductivity_mM", capture_pool_cond)
+    if capture_pool_ph is not None:
+        chrom_plan.derived.setdefault("pool_ph", capture_pool_ph)
+    if capture_cdmo_cost is not None:
+        chrom_plan.derived.setdefault("cdmo_cost_per_batch", capture_cdmo_cost)
+    if capture_resin_cost is not None:
+        chrom_plan.derived.setdefault("resin_cost_per_batch", capture_resin_cost)
+    if capture_buffer_cost is not None:
+        chrom_plan.derived.setdefault("buffer_cost_per_batch", capture_buffer_cost)
+    if capture_handoff is not None:
+        for key, value in capture_handoff.as_dict().items():
+            chrom_plan.derived[f"handoff_{key}"] = value
 
     if baseline_overrides:
         _apply_plan_overrides(chrom_plan, baseline_overrides.get("chromatography"))
         product_after_chrom = chrom_plan.derived.get("product_out_kg", product_after_chrom)
         post_elution_conc_volume_l = chrom_plan.derived.get("output_volume_l", post_elution_conc_volume_l)
+        post_elution_volume_l = chrom_plan.derived.get("eluate_volume_l", post_elution_volume_l)
 
     predry_plan = predrying_unit.plan
     predry_plan.derived.update(
@@ -729,7 +778,9 @@ def build_front_end_section(
         previous = unit.outs[0]
 
     chromatography_unit.ins[0] = previous
-    predrying_unit.ins[0] = chromatography_unit.outs[0]
+    previous = chromatography_unit.outs[0]
+
+    predrying_unit.ins[0] = previous
     spray_dryer_unit.ins[0] = predrying_unit.outs[0]
 
     active_flowsheet = flowsheet or bst.Flowsheet("bd_front_end")
@@ -766,6 +817,8 @@ def build_front_end_section(
         cost_per_kg_usd=cost_per_kg_usd,
         materials_cost_per_batch_usd=materials_cost_per_batch,
         computed_material_cost_per_batch_usd=computed_material_cost,
+        capture_handoff=capture_handoff,
+        capture_units=capture_units_tuple,
         material_cost_breakdown=breakdown,
     )
 

@@ -89,14 +89,33 @@ def _print_plan_details(unit: bst.Unit) -> None:
 
 
 def _collect_stream_components(stream: bst.Stream, min_mass: float) -> Mapping[str, float]:
+    if stream is None or not hasattr(stream, "imass") or stream.imass is None:
+        return {}
+
     data = defaultdict(float)
-    # Access sparse vector directly to avoid triggering alias lookups repeatedly.
-    for index, mass in stream.imass.data.dct.items():
-        value = float(mass)
+
+    sparse = getattr(stream.imass, "data", None)
+    items = getattr(sparse, "dct", None) if sparse is not None else None
+    if items is None:
+        try:
+            items = dict(stream.imass.items())
+        except Exception:
+            return {}
+
+    chemicals = getattr(stream, "chemicals", None)
+    for index, mass in items.items():
+        try:
+            value = float(mass)
+        except (TypeError, ValueError):
+            continue
         if abs(value) < min_mass:
             continue
-        component = stream.chemicals.IDs[index]
+        if chemicals and isinstance(index, int):
+            component = chemicals.IDs[index]
+        else:
+            component = str(index)
         data[component] += value
+
     return dict(sorted(data.items(), key=lambda item: (-abs(item[1]), item[0])))
 
 
@@ -253,19 +272,42 @@ def main() -> None:
                 title = f"Concentration {idx}: {unit.line}"
                 units.append((title, unit))
 
+        capture_units: tuple[bst.Unit, ...] = getattr(section, "capture_units", ())
+        if capture_units:
+            if len(capture_units) == 1:
+                units.append(("Capture", capture_units[0]))
+            else:
+                for idx, unit in enumerate(capture_units, start=1):
+                    title = f"Capture {idx}: {unit.line}"
+                    units.append((title, unit))
+
         units.extend(
             [
-                ("Chromatography", section.chromatography_unit),
                 ("Predrying", section.predrying_unit),
                 ("Spray dryer", section.spray_dryer_unit),
             ]
         )
+        handoff_printed = False
         for title, unit in units:
             _print_unit_details(
                 title,
                 unit,
                 component_threshold=args.component_threshold,
             )
+            if (
+                not handoff_printed
+                and title.startswith("Capture")
+                and getattr(section, "capture_handoff", None) is not None
+            ):
+                handoff = section.capture_handoff
+                print("\nCapture handoff summary:")
+                for key, value in handoff.as_dict().items():
+                    if key == "notes":
+                        if value:
+                            print(f"  {key}: {', '.join(value)}")
+                        continue
+                    print(f"  {key}: {value}")
+                handoff_printed = True
 
 
 if __name__ == "__main__":

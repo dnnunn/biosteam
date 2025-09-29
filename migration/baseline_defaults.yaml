@@ -168,3 +168,83 @@ concentration:
     membrane_cost_per_m2: 260.0
     membrane_life_batches: 30.0
     operation_hours: 16.0
+
+capture:
+  method: aex
+  feed:
+    protein_concentration_g_per_l: 72.0
+    dna_mg_per_l: 0.6
+    conductivity_mM: 55.0
+    ph: 6.0
+    temperature_c: 22.0
+  aex:
+    resin_type: Q strong AEX
+    particle_diameter_um: 75.0
+    resin_cost_per_l: 520.0
+    resin_life_cycles: 120.0
+    bed_height_cm: 25.0
+    packing_factor: 0.72
+    lin_vel_cm_per_h: 300.0
+    rt_load_min: 4.0
+    delta_p_max_bar: 3.0
+    fouling_factor_dp: 0.002
+    ph_bind: 6.0
+    cond_bind_mM_max: 200.0
+    ph_elute: 8.0
+    elute_salt_mM: 500.0
+    temperature_c: 22.0
+    dbc_base_mg_per_ml: 60.0
+    dbc_cond_slope: -0.08
+    dna_competition_coeff: 0.0005
+    mass_transfer_beta: 0.5
+    rt_ref_min: 4.0
+    target_recovery_pct: 92.0
+    target_pool_cond_mM: 450.0
+    uv_pooling_rule: conductivity_window
+    utilization_fraction: 0.9
+    columns_in_service: 2
+    equilibration_bv: 3.0
+    wash1_bv: 2.0
+    wash2_bv: 1.0
+    elution_bv: 4.0
+    strip_bv: 1.0
+    cip_bv: 1.0
+    reequil_bv: 2.0
+    resin_fee_per_l_per_cycle: 25.0
+    column_rental_per_day: 0.0
+    column_setup_fee_per_campaign: 0.0
+    equil_fee_per_m3: 220.0
+    wash_fee_per_m3: 200.0
+    elute_fee_per_m3: 260.0
+    strip_fee_per_m3: 230.0
+    cip_fee_per_m3: 180.0
+    reequil_fee_per_m3: 220.0
+    ops_labor_h_per_cycle: 8.0
+    blended_rate_per_h: 95.0
+    disposables_per_cycle: 450.0
+    overhead_per_cycle: 320.0
+  chitosan:
+    capture_yield_fraction: 0.92
+    elution_yield_fraction: 0.93
+    eluate_volume_l: 6500.0
+    charge_ratio: 2.4
+    chitosan_concentration_g_per_l: 10.0
+    chitosan_cost_per_kg: 180.0
+    degree_deacetylation_pct: 90.0
+    hold_time_min: 30.0
+    polymer_recovery_fraction: 0.85
+    polymer_bleed_fraction: 0.03
+    polymer_makeup_cost_per_kg: 150.0
+    ionic_strength_mM: 80.0
+    elution_mode: polyphosphate
+    polyphosphate_mM: 200.0
+    elution_ph: 7.5
+    elution_conductivity_mM: 420.0
+    separator_sigma_m2: 6000.0
+    separator_power_kwh_per_m3: 0.45
+    acid_cost_per_kg: 0.6
+    base_cost_per_kg: 0.45
+    polyphosphate_cost_per_kg: 3.5
+  targets:
+    polish_conductivity_mM: 400.0
+    chitosan_ppm_max: 100.0

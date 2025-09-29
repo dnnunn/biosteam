@@ -645,19 +645,9 @@ class SprayDryerUnit(PlanBackedUnit):
             product_mass = float(feed.imass.get('Osteopontin', 0.0))
         product_mass = max(product_mass or 0.0, 0.0)
 
-        solids_fraction = derived.get('final_solids_content')
-        if solids_fraction is None:
-            solids_percent = derived.get('final_solids_percent')
-            if solids_percent is not None:
-                solids_fraction = solids_percent / (100.0 if solids_percent > 1 else 1.0)
-        if solids_fraction is None:
-            solids_fraction = 1.0
-
-        product_total_mass = product_mass / max(solids_fraction, 1e-6)
         product_stream.imass['Osteopontin'] = product_mass
-        product_water = max(product_total_mass - product_mass, 0.0)
-        if product_water:
-            product_stream.imass['Water'] = product_water
+        # Spray dryer product is reported as dry powder for downstream handling.
+        product_total_mass = product_mass
 
         exhaust_water = max(feed.F_mass - product_total_mass, 0.0)
         if exhaust_water:
