@@ -137,8 +137,14 @@ def main() -> None:
     )
     section.system.simulate()
 
+    spray_product = section.spray_dryer_unit.outs[0]
+    try:
+        dry_product_mass = float(spray_product.imass['Osteopontin'])
+    except (KeyError, TypeError):
+        dry_product_mass = spray_product.F_mass
+
     checkpoints = [
-        ("Final product", section.spray_dryer_unit.outs[0].F_mass, metrics.final_product_kg),
+        ("Final product", dry_product_mass, metrics.final_product_kg),
         ("Fermentation", section.fermentation_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_preharvest_kg"]),
         ("Microfiltration", section.microfiltration_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_after_microfiltration_kg"]),
         ("UF/DF", section.ufdf_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_after_ufdf_kg"]),

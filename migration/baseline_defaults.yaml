@@ -3,11 +3,13 @@ seed:
     working_volume_l: 3500.0
     dcw_concentration_g_per_l: 60.0
     seed_glucose_conversion_fraction: 0.0
-    yeast_extract_per_batch_kg: 553.0
-    peptone_per_batch_kg: 1106.0
+    yeast_extract_per_batch_kg: 330.0
+    peptone_per_batch_kg: 500.0
+    od600_target: 150
+    wet_cell_density_g_per_l: 190.0
   specs:
-    yeast_extract_concentration_g_per_l: 10.0
-    peptone_concentration_g_per_l: 20.0
+    yeast_extract_concentration_g_per_l: 8.5
+    peptone_concentration_g_per_l: 12.5
     yeast_extract_cost_per_kg: 12.0
     peptone_cost_per_kg: 15.0
 
@@ -15,21 +17,32 @@ fermentation:
   derived:
     working_volume_l: 70000.0
     batch_cycle_hours: 72.0
-    target_titer_g_per_l: 4.2857142857142865
-    dcw_concentration_g_per_l: 60.0
-    total_glucose_feed_kg: 8750.0
-    total_glycerol_feed_kg: 7241.379310344828
-    total_molasses_feed_kg: 16800.0
-    product_out_kg: 300.0
-    antifoam_volume_l: 70.0
-    antifoam_cost_per_unit: 10.0
-    minor_nutrients_cost_total: 500.0
+    target_titer_g_per_l: 4.0
+    dcw_concentration_g_per_l: 45.0
+    total_glucose_feed_kg: 7800.0
+    total_glycerol_feed_kg: 6000.0
+    total_molasses_feed_kg: 12000.0
+    product_out_kg: 280.0
+    antifoam_volume_l: 40.0
+    antifoam_cost_per_unit: 12.0
+    minor_nutrients_cost_total: 650.0
+    nh3_consumption_kg: 250.0
+    pH_base_consumption_kg: 50.0
+    blower_air_vvm: 0.6
+    blower_power_kw_per_m3: 1.2
+    o2_enrichment_fraction: 0.05
+    crude_glycerol_pretreated_kg: 0.0
+    lactose_feed_concentration_g_per_l: 220.0
   specs:
     turnaround_time_hours: 24.0
     biomass_yield_glucose: 0.48
     product_yield_biomass: 0.0714286
     glucose_cost_per_kg: 0.75
-    antifoam_dosage: 0.1
+    antifoam_dosage: 0.05
+    ammonia_cost_per_kg: 0.35
+    pH_base_cost_per_kg: 0.25
+    blower_power_density_kw_m3: 1.2
+    o2_cost_per_kg: 0.4
 
 microfiltration:
   derived:
