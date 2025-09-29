@@ -14,10 +14,10 @@ do=150.
   - 70,000 L batch, 4 g/L titer, 280 kg OPN, 7.8 t glucose feed plus optional glycerol/molasses entries.  
   - Cost hooks for antifoam, NH₃, pH base, O₂, etc.
 - **Scenario overrides:**  
-    - Glucose: `fermentation_glucose_rich.yaml`, `fermentation_glucose_defined.yaml`
-    - Glycerol: `fermentation_glycerol_rich.yaml`, `fermentation_glycerol_defined.yaml`
-    - Molasses: `fermentation_molasses_rich.yaml`, `fermentation_molasses_defined.yaml`
-    - Lactose: `fermentation_lactose_rich.yaml`, `fermentation_lactose_defined.yaml`
+    - Glucose: `usp00_glucose_rich.yaml`, `usp00_glucose_defined.yaml`
+    - Glycerol: `usp00_glycerol_rich.yaml`, `usp00_glycerol_defined.yaml`
+    - Molasses: `usp00_molasses_rich.yaml`, `usp00_molasses_defined.yaml`
+    - Lactose: `usp00_lactose_rich.yaml`, `usp00_lactose_defined.yaml`
 
 Each YAML carries the scenario feed volumes, carbon totals, media type, and yield proxy flags.
 
@@ -26,7 +26,7 @@ Each YAML carries the scenario feed volumes, carbon totals, media type, and yiel
   - Feed: 70 m³ broths @ 8% v/v solids.  
   - Disc-stack specs (σ=9,000 m², 0.2 kWh/m³, 99.2% recovery).  
   - Depth filtration follow-up, MF-TFF polish (membrane cost and life).  
-- **Override example:** `micro_only.yaml` forces `method: microfiltration`
+- **Override example:** `usp03_micro_only.yaml` forces `method: microfiltration`
   - Use this when Excel parity requires skipping the new chain.
 
 ## Concentration & Buffer Exchange (DSP01)
@@ -34,10 +34,10 @@ Each YAML carries the scenario feed volumes, carbon totals, media type, and yiel
   - UF stage: VRR 6× at 90 LMH, 98.5% recovery.  
   - DF stage: 3 DiaVolumes @ 100 LMH, 99% recovery, 45 $/m³ buffer.  
 - **Alternative override files:**  
-  - `concentration_uf_only.yaml` – UF-only path.  
-  - `concentration_df_only.yaml` – DF-only cleanup.  
-  - `concentration_sptff.yaml` – single-pass TFF routing.  
-  - `concentration_ctff.yaml` – continuous TFF configuration.
+  - `dsp02_uf_only.yaml` – UF-only path.  
+  - `dsp02_df_only.yaml` – DF-only cleanup.  
+  - `dsp02_sptff.yaml` – single-pass TFF routing.  
+  - `dsp02_ctff.yaml` – continuous TFF configuration.
 
 ## Capture (DSP02)
 - **Baseline method:** `capture.method = aex`  
