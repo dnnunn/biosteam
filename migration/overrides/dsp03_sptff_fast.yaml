@@ -1,0 +1,19 @@
+dsp03:
+  method: sptff
+  uf:
+    flux_lmh: 90.0
+    tmp_bar_max: 1.5
+    sieving_fraction: 0.01
+  df:
+    flux_lmh: 100.0
+    diafiltration_volumes: 2.0
+    sieving_fraction: 0.005
+  sptff:
+    stages: 3
+    cf_per_stage: 1.8
+    flux_lmh: 95.0
+    tmp_bar_max: 1.1
+  ctff:
+    flux_lmh: 80.0
+    tmp_bar_max: 1.2
+    bleed_rate_m3_per_h: 0.1

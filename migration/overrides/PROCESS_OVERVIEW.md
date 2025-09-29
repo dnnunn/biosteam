@@ -48,6 +48,15 @@ Each YAML carries the scenario feed volumes, carbon totals, media type, and yiel
   - Capture yield 92%, elution yield 93%, PolyP elution (200 mM), recycle/bleed factors.  
   - When `capture.method` is overridden to `chitosan`, the new capture handoff publishes: pool volume/conductivity, polyP levels, DF/fines flags for DSP03.
 
+## DSP03 Membrane Conditioning
+- **Baseline:** `dsp03.method = auto` routes to SPTFF defaults (3 stages, CF≈4×).  
+  - Config sections: `dsp03.uf`, `dsp03.df`, `dsp03.sptff`, `dsp03.ctff` hold flux/TMP/sieving parameters.
+- **Route logic:**
+  - PolyP present or `Needs_DF_Flag` → DF branch.
+  - Otherwise defaults to SPTFF; cTFF available for steady campaigns.
+- Overrides mirror baseline structure; drop a YAML with `dsp03: { method: df, df: {...} }` to force routes or tweak flux/TMP limits.
+  - Example files: `dsp03_uf_only.yaml`, `dsp03_df_polyP.yaml`, `dsp03_sptff_fast.yaml`, `dsp03_ctff_campaign.yaml`.
+
 ## Using Overrides
 - Load overrides via `build_front_end_section(..., baseline_config=YOUR.yaml)` or pass `--baseline-config` to `migration.scripts.compare_front_end`.  
 - YAML structure mirrors the baseline tree; any subkey you provide will update `plan.derived` or `plan.specs` before units are instantiated.
