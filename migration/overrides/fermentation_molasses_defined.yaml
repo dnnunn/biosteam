@@ -1,0 +1,23 @@
+fermentation:
+  method: molasses_defined
+  feed:
+    working_volume_l: 70000.0
+    carbon_source: molasses
+    media_type: defined
+    oxygen_enrichment_fraction: 0.05
+    target_titer_g_per_l: 3.6
+    yield_proxy: literature_molasses_defined
+  derived:
+    total_glucose_feed_kg: 0.0
+    total_glycerol_feed_kg: 0.0
+    total_molasses_feed_kg: 12000.0
+    product_out_kg: 250.0
+    antifoam_volume_l: 40.0
+    nh3_consumption_kg: 300.0
+    pH_base_consumption_kg: 80.0
+    total_lactose_feed_kg: 0.0
+  specs:
+    biomass_yield_glucose: 0.4
+    product_yield_biomass: 0.066
+    media_cost_per_batch_usd: 0.0
+    molasses_cost_per_kg: 0.55

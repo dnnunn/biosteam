@@ -14,10 +14,10 @@ do=150.
   - 70,000 L batch, 4 g/L titer, 280 kg OPN, 7.8 t glucose feed plus optional glycerol/molasses entries.  
   - Cost hooks for antifoam, NH₃, pH base, O₂, etc.
 - **Scenario overrides:**  
-  - `fermentation_glucose_rich.yaml`
-  - `fermentation_glucose_defined.yaml`
-  - `fermentation_glycerol_defined.yaml`
-  - `fermentation_molasses_rich.yaml`
+    - Glucose: `fermentation_glucose_rich.yaml`, `fermentation_glucose_defined.yaml`
+    - Glycerol: `fermentation_glycerol_rich.yaml`, `fermentation_glycerol_defined.yaml`
+    - Molasses: `fermentation_molasses_rich.yaml`, `fermentation_molasses_defined.yaml`
+    - Lactose: `fermentation_lactose_rich.yaml`, `fermentation_lactose_defined.yaml`
 
 Each YAML carries the scenario feed volumes, carbon totals, media type, and yield proxy flags.
 
@@ -55,4 +55,3 @@ Each YAML carries the scenario feed volumes, carbon totals, media type, and yiel
 ## Next Steps
 - Extend this overview when you introduce DSP03/DSP04 polish choices.  
 - Capture additional handoff fields (e.g., chromatography pooling rules, DF volumes) as new overrides become available.
-
