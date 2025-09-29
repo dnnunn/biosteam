@@ -1,0 +1,11 @@
+dsp05:
+  method: Lyophilize
+  toll_fee_usd_per_m3_feed: 180.0
+  utilities_usd_per_batch: 950.0
+  consumables_usd_per_batch: 450.0
+  labor_h_per_batch: 10.0
+  lyophilize:
+    target_moisture_wt_pct: 1.0
+    primary_dry_time_h: 14.0
+    secondary_dry_time_h: 7.0
+    lyo_yield_frac: 0.985

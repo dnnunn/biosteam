@@ -1,0 +1,18 @@
+dsp04:
+  stage_order:
+    - cex_negative
+    - aex_repeat
+  stages:
+    cex_negative:
+      enabled: true
+      notes:
+        - "CEX FT to strip cationics"
+    aex_repeat:
+      enabled: true
+      notes:
+        - "AEX FT mop up DNA"
+  sterile_filter:
+    flux_lmh: 300.0
+    max_dp_bar: 1.3
+    adsorption_loss_fraction: 0.0025
+    prefilter_enabled: true

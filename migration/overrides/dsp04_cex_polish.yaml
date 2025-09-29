@@ -1,0 +1,13 @@
+dsp04:
+  stage_order:
+    - cex_negative
+  stages:
+    cex_negative:
+      enabled: true
+      notes:
+        - "CEX FT polish post-chitosan"
+  sterile_filter:
+    flux_lmh: 320.0
+    max_dp_bar: 1.5
+    adsorption_loss_fraction: 0.002
+    prefilter_enabled: true

@@ -1,0 +1,10 @@
+dsp05:
+  method: LiquidBulk
+  toll_fee_usd_per_m3_feed: 90.0
+  utilities_usd_per_batch: 400.0
+  consumables_usd_per_batch: 200.0
+  labor_h_per_batch: 4.0
+  liquid:
+    target_conc_gL: 120.0
+    hold_temp_C: 4.0
+    use_internal_precon: true

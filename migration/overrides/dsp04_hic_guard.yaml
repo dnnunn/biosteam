@@ -1,0 +1,13 @@
+dsp04:
+  stage_order:
+    - hic_flowthrough
+  stages:
+    hic_flowthrough:
+      enabled: true
+      notes:
+        - "HIC FT for aggregate cleanup"
+  sterile_filter:
+    flux_lmh: 310.0
+    max_dp_bar: 1.4
+    adsorption_loss_fraction: 0.002
+    prefilter_enabled: false
