@@ -1,0 +1,26 @@
+concentration:
+  method: continuous_tff
+  feed:
+    volume_m3: 15.0
+    density_kg_per_m3: 1018.0
+    target_vrr: 2.5
+    inline_capture: true
+    continuous_mode: true
+  continuous_tff:
+    concentration_factor: 3.0
+    flux_lmh: 115.0
+    product_recovery_fraction: 0.98
+    membrane_area_m2: 90.0
+    membrane_cost_per_m2: 280.0
+    membrane_life_batches: 18.0
+    operation_hours: 24.0
+  diafiltration:
+    enabled: true
+    dia_volumes: 2.0
+    flux_lmh: 105.0
+    product_recovery_fraction: 0.992
+    sieving_fraction: 0.01
+    buffer_cost_per_m3: 55.0
+    membrane_area_m2: 90.0
+    membrane_cost_per_m2: 280.0
+    membrane_life_batches: 18.0

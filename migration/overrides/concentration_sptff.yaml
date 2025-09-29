@@ -1,0 +1,16 @@
+concentration:
+  method: sptff
+  feed:
+    volume_m3: 20.0
+    density_kg_per_m3: 1020.0
+    target_vrr: 3.5
+    inline_capture: true
+    continuous_mode: false
+  sptff:
+    concentration_factor: 4.0
+    flux_lmh: 130.0
+    product_recovery_fraction: 0.98
+    membrane_area_m2: 80.0
+    membrane_cost_per_m2: 260.0
+    membrane_life_batches: 20.0
+  ue_buffer_placeholder: true

@@ -1,0 +1,21 @@
+concentration:
+  method: uf_only
+  feed:
+    volume_m3: 60.0
+    density_kg_per_m3: 1025.0
+    target_vrr: 4.0
+    inline_capture: false
+    continuous_mode: false
+  uf_concentration:
+    volume_reduction_ratio: 4.0
+    product_recovery_fraction: 0.987
+    flux_lmh: 95.0
+    tmp_bar: 1.1
+    crossflow_velocity_m_s: 1.8
+    fouling_derate: 0.92
+    mwco_kda: 30.0
+    membrane_area_m2: 120.0
+    membrane_cost_per_m2: 220.0
+    membrane_life_batches: 30.0
+  diafiltration:
+    enabled: false

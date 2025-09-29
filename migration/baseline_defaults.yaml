@@ -122,3 +122,49 @@ cell_removal:
     flux_lmh: 120.0
     membrane_cost_per_m2: 350.0
     membrane_life_batches: 30.0
+
+concentration:
+  method: uf_df
+  feed:
+    volume_m3: 60.0
+    density_kg_per_m3: 1025.0
+    target_vrr: 6.0
+    inline_capture: false
+    continuous_mode: false
+    target_conductivity_mscm: 5.0
+  uf_concentration:
+    volume_reduction_ratio: 6.0
+    product_recovery_fraction: 0.985
+    flux_lmh: 90.0
+    tmp_bar: 1.2
+    crossflow_velocity_m_s: 2.0
+    fouling_derate: 0.9
+    mwco_kda: 30.0
+    membrane_area_m2: 150.0
+    membrane_cost_per_m2: 220.0
+    membrane_life_batches: 30.0
+  diafiltration:
+    enabled: true
+    dia_volumes: 3.0
+    flux_lmh: 100.0
+    product_recovery_fraction: 0.99
+    sieving_fraction: 0.01
+    buffer_cost_per_m3: 45.0
+    membrane_area_m2: 150.0
+    membrane_cost_per_m2: 220.0
+    membrane_life_batches: 30.0
+  sptff:
+    concentration_factor: 4.0
+    flux_lmh: 120.0
+    product_recovery_fraction: 0.98
+    membrane_area_m2: 120.0
+    membrane_cost_per_m2: 240.0
+    membrane_life_batches: 25.0
+  continuous_tff:
+    concentration_factor: 3.0
+    flux_lmh: 110.0
+    product_recovery_fraction: 0.98
+    membrane_area_m2: 140.0
+    membrane_cost_per_m2: 260.0
+    membrane_life_batches: 30.0
+    operation_hours: 16.0

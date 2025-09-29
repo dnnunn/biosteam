@@ -245,9 +245,16 @@ def main() -> None:
                 title = f"Cell removal {idx}: {unit.line}"
                 units.append((title, unit))
 
+        conc_units = section.concentration_units
+        if len(conc_units) == 1:
+            units.append(("Concentration", conc_units[0]))
+        else:
+            for idx, unit in enumerate(conc_units, start=1):
+                title = f"Concentration {idx}: {unit.line}"
+                units.append((title, unit))
+
         units.extend(
             [
-                ("UF/DF", section.ufdf_unit),
                 ("Chromatography", section.chromatography_unit),
                 ("Predrying", section.predrying_unit),
                 ("Spray dryer", section.spray_dryer_unit),

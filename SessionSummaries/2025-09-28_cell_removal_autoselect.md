@@ -6,6 +6,7 @@
 - Established warning system for overrides that violate scale constraints (e.g., membrane-only at high solids).
 - Created `migration/overrides/micro_only.yaml` for Excel-style parity checks without touching baseline defaults.
 - Updated baseline loader to deep-merge override YAML with canonical defaults.
+- Implemented DSP01 concentration variants (UF concentration, DF, SPTFF, continuous TFF) per `Concentration options.md`, including auto-selection and override warnings.
 
 ## Key Commands
 ```bash

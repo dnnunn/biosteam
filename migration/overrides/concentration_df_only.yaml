@@ -1,0 +1,30 @@
+concentration:
+  method: df_only
+  feed:
+    volume_m3: 30.0
+    density_kg_per_m3: 1015.0
+    target_vrr: 1.0
+    target_conductivity_mscm: 3.0
+    inline_capture: false
+    continuous_mode: false
+  diafiltration:
+    enabled: true
+    dia_volumes: 5.0
+    flux_lmh: 110.0
+    product_recovery_fraction: 0.992
+    sieving_fraction: 0.008
+    buffer_cost_per_m3: 60.0
+    membrane_area_m2: 140.0
+    membrane_cost_per_m2: 240.0
+    membrane_life_batches: 25.0
+  uf_concentration:
+    volume_reduction_ratio: 1.0
+    product_recovery_fraction: 1.0
+    flux_lmh: 0.0
+    tmp_bar: 0.0
+    crossflow_velocity_m_s: 0.0
+    fouling_derate: 1.0
+    mwco_kda: 30.0
+    membrane_area_m2: 0.0
+    membrane_cost_per_m2: 0.0
+    membrane_life_batches: 0.0

@@ -91,6 +91,57 @@ class ContinuousCentrifugeSpecs:
 
 
 @dataclass
+class UFConcentrationSpecs:
+    key: str
+    mwco_kda: Number
+    flux_lmh: Number
+    tmp_bar: Number
+    crossflow_velocity_m_s: Number
+    volume_reduction_ratio: Number
+    protein_recovery_fraction: Number
+    fouling_derate: Number
+    membrane_area_m2: Number
+    membrane_cost_per_m2: Number
+    membrane_life_batches: Number
+
+
+@dataclass
+class DiafiltrationSpecs:
+    key: str
+    dia_volumes: Number
+    flux_lmh: Number
+    protein_recovery_fraction: Number
+    sieving_fraction: Number
+    buffer_cost_per_m3: Number
+    membrane_area_m2: Number
+    membrane_cost_per_m2: Number
+    membrane_life_batches: Number
+
+
+@dataclass
+class SPTFFSpecs:
+    key: str
+    concentration_factor: Number
+    flux_lmh: Number
+    protein_recovery_fraction: Number
+    membrane_area_m2: Number
+    membrane_cost_per_m2: Number
+    membrane_life_batches: Number
+
+
+@dataclass
+class ContinuousTFFSpecs:
+    key: str
+    concentration_factor: Number
+    protein_recovery_fraction: Number
+    flux_lmh: Number
+    membrane_area_m2: Number
+    membrane_cost_per_m2: Number
+    membrane_life_batches: Number
+    operation_hours: Number
+
+
+@dataclass
 class UltrafiltrationSpecs:
     key: str
     efficiency: Number
@@ -224,6 +275,10 @@ __all__ = [
     'DepthFilterSpecs',
     'MFTFFSpecs',
     'ContinuousCentrifugeSpecs',
+    'UFConcentrationSpecs',
+    'DiafiltrationSpecs',
+    'SPTFFSpecs',
+    'ContinuousTFFSpecs',
     'UltrafiltrationSpecs',
     'ChromatographySpecs',
     'PreDryingSpecs',

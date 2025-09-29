@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Iterable, Optional
+from typing import Any, Dict, Iterable, Mapping, Optional
 
 import biosteam as bst
 
@@ -13,6 +13,7 @@ from .module_registry import ModuleRegistry
 from .unit_builders import register_baseline_unit_builders, set_defaults_loader
 from .unit_factories import register_plan_backed_unit_factories
 from .cell_removal import build_cell_removal_chain
+from .concentration import build_concentration_chain
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
 
@@ -36,6 +37,7 @@ class FrontEndSection:
     fermentation_unit: bst.Unit
     microfiltration_unit: bst.Unit
     cell_removal_units: tuple[bst.Unit, ...]
+    concentration_units: tuple[bst.Unit, ...]
     ufdf_unit: bst.Unit
     chromatography_unit: bst.Unit
     predrying_unit: bst.Unit
@@ -56,6 +58,7 @@ class FrontEndSection:
             self.seed_unit,
             self.fermentation_unit,
             *self.cell_removal_units,
+            *self.concentration_units,
             self.ufdf_unit,
             self.chromatography_unit,
             self.predrying_unit,
@@ -425,7 +428,45 @@ def build_front_end_section(
     cell_removal_units_tuple = tuple(cell_removal_units)
     microfiltration_unit = cell_removal_units_tuple[-1]
 
+    concentration_units: list[bst.Unit] = [ufdf_unit]
+    concentration_route: Optional[str] = None
+    if mode_normalized == "baseline":
+        conc_config = baseline_overrides.get("concentration") if baseline_overrides else None
+        if conc_config:
+            feed_cfg = conc_config.get("feed", {}) if isinstance(conc_config, Mapping) else {}
+            density_m3 = feed_cfg.get("density_kg_per_m3")
+            density_kg_per_l = (
+                float(density_m3) / 1000.0
+                if isinstance(density_m3, (int, float)) and density_m3 > 0
+                else 1.0
+            )
+            chain = build_concentration_chain(
+                method=conc_config.get("method"),
+                config=conc_config,
+                micro_plan=micro_plan,
+                product_mass_kg=product_after_mf,
+                volume_l=clarified_volume_l,
+                density_kg_per_l=density_kg_per_l,
+            )
+            if chain.product_out_kg is not None:
+                product_after_uf = chain.product_out_kg
+            if chain.output_volume_l is not None:
+                post_uf_volume_l = chain.output_volume_l
+            if chain.units:
+                concentration_units = chain.units
+                ufdf_unit = chain.units[-1]
+            if chain.notes:
+                for note in chain.notes:
+                    ufdf_unit.plan.add_note(note)
+            concentration_route = chain.route.value
+
+    concentration_units_tuple = tuple(concentration_units)
+    if concentration_units_tuple:
+        ufdf_unit = concentration_units_tuple[-1]
+
     uf_plan = ufdf_unit.plan
+    if concentration_route:
+        uf_plan.derived.setdefault("concentration_route", concentration_route)
     uf_plan.derived.update(
         {
             "input_product_kg": product_after_mf,
@@ -603,8 +644,11 @@ def build_front_end_section(
         unit.ins[0] = previous
         previous = unit.outs[0]
 
-    ufdf_unit.ins[0] = previous
-    chromatography_unit.ins[0] = ufdf_unit.outs[0]
+    for unit in concentration_units_tuple:
+        unit.ins[0] = previous
+        previous = unit.outs[0]
+
+    chromatography_unit.ins[0] = previous
     predrying_unit.ins[0] = chromatography_unit.outs[0]
     spray_dryer_unit.ins[0] = predrying_unit.outs[0]
 
@@ -617,7 +661,7 @@ def build_front_end_section(
             seed_unit,
             fermentation_unit,
             *cell_removal_units_tuple,
-            ufdf_unit,
+            *concentration_units_tuple,
             chromatography_unit,
             predrying_unit,
             spray_dryer_unit,
@@ -630,6 +674,7 @@ def build_front_end_section(
         fermentation_unit=fermentation_unit,
         microfiltration_unit=microfiltration_unit,
         cell_removal_units=cell_removal_units_tuple,
+        concentration_units=concentration_units_tuple,
         ufdf_unit=ufdf_unit,
         chromatography_unit=chromatography_unit,
         predrying_unit=predrying_unit,
