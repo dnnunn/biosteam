@@ -35,9 +35,13 @@ class PlanBackedUnit(bst.Unit):
         summary = super()._summary()
         if summary is None:
             summary = {}
+        module = option = "<placeholder>"
+        if getattr(self, "plan", None) is not None and getattr(self.plan, "key", None) is not None:
+            module = self.plan.key.module or module
+            option = self.plan.key.option or option
         summary.update({
-            "module": self.plan.key.module,
-            "option": self.plan.key.option or "<default>",
+            "module": module,
+            "option": option,
         })
         return summary
 
