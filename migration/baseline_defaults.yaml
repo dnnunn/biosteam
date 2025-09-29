@@ -94,3 +94,31 @@ spray_dryer:
     solution_density: 1.08
     spray_dryer_efficiency: 0.98
     target_recovery_rate: 0.8
+
+cell_removal:
+  method: auto
+  feed:
+    volume_m3: 70.0
+    density_kg_per_m3: 1040.0
+    solids_vv: 0.08
+  disc_stack:
+    sigma_m2: 9000.0
+    product_recovery_fraction: 0.992
+    solids_carryover_fraction: 0.002
+    wet_cake_moisture_fraction: 0.8
+    power_kwh_per_m3: 0.2
+    parallel_trains: 1
+  depth_filter:
+    product_recovery_fraction: 0.99
+    holdup_loss_kg: 1.0
+    specific_capacity_l_per_m2:
+      - 120.0
+      - 70.0
+    flux_lmh: 100.0
+    terminal_delta_p_bar: 1.2
+    media_cost_per_m2: 75.0
+  mf_tff:
+    product_recovery_fraction: 0.995
+    flux_lmh: 120.0
+    membrane_cost_per_m2: 350.0
+    membrane_life_batches: 30.0

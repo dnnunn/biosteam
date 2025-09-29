@@ -145,11 +145,31 @@ def main() -> None:
 
     checkpoints = [
         ("Final product", dry_product_mass, metrics.final_product_kg),
-        ("Fermentation", section.fermentation_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_preharvest_kg"]),
-        ("Microfiltration", section.microfiltration_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_after_microfiltration_kg"]),
-        ("UF/DF", section.ufdf_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_after_ufdf_kg"]),
-        ("Chromatography", section.chromatography_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_after_chromatography_kg"]),
-        ("Predry", section.predrying_unit.plan.derived.get("product_out_kg"), metrics.mass_trail["product_after_predry_kg"]),
+        (
+            "Fermentation",
+            section.fermentation_unit.plan.derived.get("product_out_kg"),
+            metrics.mass_trail["product_preharvest_kg"],
+        ),
+        (
+            "Cell removal",
+            section.microfiltration_unit.plan.derived.get("product_out_kg"),
+            metrics.mass_trail["product_after_microfiltration_kg"],
+        ),
+        (
+            "UF/DF",
+            section.ufdf_unit.plan.derived.get("product_out_kg"),
+            metrics.mass_trail["product_after_ufdf_kg"],
+        ),
+        (
+            "Chromatography",
+            section.chromatography_unit.plan.derived.get("product_out_kg"),
+            metrics.mass_trail["product_after_chromatography_kg"],
+        ),
+        (
+            "Predry",
+            section.predrying_unit.plan.derived.get("product_out_kg"),
+            metrics.mass_trail["product_after_predry_kg"],
+        ),
     ]
 
     print(f"Excel baseline: {metrics.workbook_path}")
@@ -215,12 +235,24 @@ def main() -> None:
         units = [
             ("Seed", section.seed_unit),
             ("Fermentation", section.fermentation_unit),
-            ("Microfiltration", section.microfiltration_unit),
-            ("UF/DF", section.ufdf_unit),
-            ("Chromatography", section.chromatography_unit),
-            ("Predrying", section.predrying_unit),
-            ("Spray dryer", section.spray_dryer_unit),
         ]
+
+        cr_units = section.cell_removal_units
+        if len(cr_units) == 1:
+            units.append(("Cell removal", cr_units[0]))
+        else:
+            for idx, unit in enumerate(cr_units, start=1):
+                title = f"Cell removal {idx}: {unit.line}"
+                units.append((title, unit))
+
+        units.extend(
+            [
+                ("UF/DF", section.ufdf_unit),
+                ("Chromatography", section.chromatography_unit),
+                ("Predrying", section.predrying_unit),
+                ("Spray dryer", section.spray_dryer_unit),
+            ]
+        )
         for title, unit in units:
             _print_unit_details(
                 title,

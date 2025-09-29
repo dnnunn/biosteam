@@ -50,6 +50,47 @@ class MicrofiltrationSpecs:
 
 
 @dataclass
+class DiscStackSpecs:
+    key: str
+    sigma_m2: Number
+    product_recovery_fraction: Number
+    solids_carryover_fraction: Number
+    wet_cake_moisture_fraction: Number
+    power_kwh_per_m3: Number
+    parallel_trains: Optional[int] = None
+
+
+@dataclass
+class DepthFilterSpecs:
+    key: str
+    product_recovery_fraction: Number
+    holdup_loss_kg: Number
+    specific_capacity_l_per_m2: Optional[list[Number]] = None
+    flux_lmh: Number = None  # type: ignore[assignment]
+    terminal_delta_p_bar: Number = None  # type: ignore[assignment]
+    media_cost_per_m2: Number = None  # type: ignore[assignment]
+
+
+@dataclass
+class MFTFFSpecs:
+    key: str
+    product_recovery_fraction: Number
+    flux_lmh: Number
+    membrane_cost_per_m2: Number
+    membrane_life_batches: Optional[float] = None
+
+
+@dataclass
+class ContinuousCentrifugeSpecs:
+    key: str
+    sigma_m2: Number
+    product_recovery_fraction: Number
+    solids_carryover_fraction: Number
+    wet_cake_moisture_fraction: Number
+    power_kwh_per_m3: Number
+
+
+@dataclass
 class UltrafiltrationSpecs:
     key: str
     efficiency: Number
@@ -179,6 +220,10 @@ __all__ = [
     'FermentationSpecs',
     'SeedTrainSpecs',
     'MicrofiltrationSpecs',
+    'DiscStackSpecs',
+    'DepthFilterSpecs',
+    'MFTFFSpecs',
+    'ContinuousCentrifugeSpecs',
     'UltrafiltrationSpecs',
     'ChromatographySpecs',
     'PreDryingSpecs',

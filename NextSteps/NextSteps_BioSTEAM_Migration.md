@@ -1,21 +1,21 @@
 # BioSTEAM Migration Next Steps
 
 ## Short-Term Build Targets
-- Excel-driven parity pass is complete. Next phase: add a BioSTEAM baseline mode that can run without direct Excel overrides, then progressively turn on physics-based behavior per unit.
-- Immediate tasks for the BioSTEAM baseline toggle:
-  1. Introduce a configuration layer (YAML/JSON) that captures default plan/spec values for each stage when Excel data is not injected.
-  2. Update ``build_front_end_section`` (and plan builders) to accept ``mode="excel"`` vs ``mode="baseline"``; keep the CLI defaulting to Excel parity.
-  3. Seed the baseline config with values matching Excel to keep regression green, then iterate to BioSTEAM defaults.
-- ``tests/opn/test_opn_front_end.py`` and ``migration/scripts/compare_front_end.py`` should be extended later to emit both Excel vs Excel-driven and Excel vs BioSTEAM-baseline deltas once the toggle exists.
-- Any workbook assumptions unearthed during baseline wiring (e.g., inoculation ratios, buffer recipes) should be logged so we know which values need literature/industry references during the physics-based phase.
+- Excel parity + baseline toggle complete. Next focus: USP3 (cell removal) stage with interchangeable BioSTEAM units reflecting industry practice.
+- Immediate tasks for cell-removal module:
+  1. Create BioSTEAM classes for disc-stack centrifuge, depth filtration, MF-TFF (pre/post-centrifuge), and continuous centrifuge using specs in ``Cell Removal Specs.md``.
+  2. Add a ``cell_removal`` section to ``baseline_defaults.yaml`` capturing feed properties, method selection, and per-unit parameters (Σ area, flux, membrane cost, etc.).
+  3. Extend ``build_front_end_section`` to route the fermentation effluent through the selected method(s); keep Excel mode using the historical microfiltration path until new units are toggled on.
+  4. Surface stream/cost metrics in ``compare_front_end.py`` so Excel vs baseline differences are obvious (e.g., clarified supernatant, wet cell cake, depth filter losses).
+- Optional (if time permits): implement an auto-selection heuristic based on scale and solids (disc stack + depth as default for ≥100 m³) while keeping manual overrides in the config.
 
 ## Validation Workflow
 - Generate a comparison report that juxtaposes BioSTEAM results with Excel KPIs (cost per kg, batch cost, annual production cost) targeting ±5–10% deviation.
 - Extend the report to break out chromatography resin, buffer, and CMO cost contributors using the same grouping found in ``Final Costs``.
 
 ## Future Enhancements
-- Expand the registry to cover non-default module options and scenario toggles once the baseline matches Excel outputs.
-- Introduce campaign-based economic toggles (e.g., PROJ02 sensitivity) after baseline validation to explore alternative CMO pricing structures.
+- Auto-selection logic for cell removal (use scale + solids to recommend disc stack vs MF-TFF vs alternate centrifuge).
+- Campaign-based economic toggles (e.g., PROJ02 sensitivity) after baseline validation to explore alternative CMO pricing structures.
 - Install missing runtime dependencies (e.g., ``numba``) so ``biosteam`` imports succeed; current sandbox blocks network installs, so resolve this manually on the host environment before attaching full unit builders.
 
 ## Implementation Notes

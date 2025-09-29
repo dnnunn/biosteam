@@ -12,6 +12,7 @@ from .excel_defaults import ExcelModuleDefaults, ModuleConfig, ModuleKey
 from .module_registry import ModuleRegistry
 from .unit_builders import register_baseline_unit_builders, set_defaults_loader
 from .unit_factories import register_plan_backed_unit_factories
+from .cell_removal import build_cell_removal_chain
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
 
@@ -34,6 +35,7 @@ class FrontEndSection:
     seed_unit: bst.Unit
     fermentation_unit: bst.Unit
     microfiltration_unit: bst.Unit
+    cell_removal_units: tuple[bst.Unit, ...]
     ufdf_unit: bst.Unit
     chromatography_unit: bst.Unit
     predrying_unit: bst.Unit
@@ -53,7 +55,7 @@ class FrontEndSection:
         return (
             self.seed_unit,
             self.fermentation_unit,
-            self.microfiltration_unit,
+            *self.cell_removal_units,
             self.ufdf_unit,
             self.chromatography_unit,
             self.predrying_unit,
@@ -236,8 +238,15 @@ def build_front_end_section(
 
     baseline_overrides: Dict[str, Any] = {}
     if mode_normalized == "baseline":
-        config_path = baseline_config if baseline_config is not None else DEFAULT_BASELINE_CONFIG
-        baseline_overrides = dict(load_baseline_defaults(config_path))
+        config_path = (
+            Path(baseline_config) if baseline_config is not None else DEFAULT_BASELINE_CONFIG
+        )
+        default_data = load_baseline_defaults(DEFAULT_BASELINE_CONFIG)
+        if config_path != DEFAULT_BASELINE_CONFIG:
+            merged = load_baseline_defaults(config_path, merge_with=default_data)
+            baseline_overrides = dict(merged)
+        else:
+            baseline_overrides = dict(default_data)
 
     registry = ModuleRegistry()
     _register_front_end_builders(registry)
@@ -369,11 +378,12 @@ def build_front_end_section(
         fermentation_product = fermentation_plan.derived.get("product_out_kg", fermentation_product)
 
     micro_plan = microfiltration_unit.plan
+    clarified_volume_l = harvest_volume_l
     micro_plan.derived.update(
         {
             "input_product_kg": fermentation_product,
             "input_volume_l": working_volume_l,
-            "output_volume_l": harvest_volume_l,
+            "output_volume_l": clarified_volume_l,
             "product_out_kg": product_after_mf,
             "harvested_product_kg": harvested_product,
         }
@@ -382,14 +392,44 @@ def build_front_end_section(
     if baseline_overrides:
         _apply_plan_overrides(micro_plan, baseline_overrides.get("microfiltration"))
         product_after_mf = micro_plan.derived.get("product_out_kg", product_after_mf)
-        harvest_volume_l = micro_plan.derived.get("output_volume_l", harvest_volume_l)
+        clarified_volume_l = micro_plan.derived.get("output_volume_l", clarified_volume_l)
         fermentation_product = micro_plan.derived.get("input_product_kg", fermentation_product)
+
+    cell_removal_units: list[bst.Unit] = [microfiltration_unit]
+    if mode_normalized == "baseline":
+        cell_config = baseline_overrides.get("cell_removal") if baseline_overrides else None
+        if cell_config:
+            chain = build_cell_removal_chain(
+                method=cell_config.get("method"),
+                config=cell_config,
+                fermentation_plan=fermentation_plan,
+                micro_plan=micro_plan,
+                harvested_volume_l=harvest_volume_l,
+            )
+            if chain.product_out_kg is not None:
+                product_after_mf = chain.product_out_kg
+                micro_plan.derived["product_out_kg"] = chain.product_out_kg
+            if chain.output_volume_l is not None:
+                clarified_volume_l = chain.output_volume_l
+                micro_plan.derived["output_volume_l"] = chain.output_volume_l
+            if chain.units:
+                cell_removal_units = chain.units
+            if chain.notes:
+                for note in chain.notes:
+                    micro_plan.add_note(note)
+            micro_plan.derived.setdefault(
+                "clarification_route",
+                cell_config.get("method"),
+            )
+
+    cell_removal_units_tuple = tuple(cell_removal_units)
+    microfiltration_unit = cell_removal_units_tuple[-1]
 
     uf_plan = ufdf_unit.plan
     uf_plan.derived.update(
         {
             "input_product_kg": product_after_mf,
-            "input_volume_l": harvest_volume_l,
+            "input_volume_l": clarified_volume_l,
             "output_volume_l": post_uf_volume_l,
             "product_out_kg": product_after_uf,
         }
@@ -558,8 +598,12 @@ def build_front_end_section(
     seed_vent, seed_broth = seed_unit.outs
     fermentation_unit.ins[0] = seed_broth
     fermentation_vent, fermentation_broth = fermentation_unit.outs
-    microfiltration_unit.ins[0] = fermentation_broth
-    ufdf_unit.ins[0] = microfiltration_unit.outs[0]
+    previous = fermentation_broth
+    for unit in cell_removal_units_tuple:
+        unit.ins[0] = previous
+        previous = unit.outs[0]
+
+    ufdf_unit.ins[0] = previous
     chromatography_unit.ins[0] = ufdf_unit.outs[0]
     predrying_unit.ins[0] = chromatography_unit.outs[0]
     spray_dryer_unit.ins[0] = predrying_unit.outs[0]
@@ -572,7 +616,7 @@ def build_front_end_section(
         path=(
             seed_unit,
             fermentation_unit,
-            microfiltration_unit,
+            *cell_removal_units_tuple,
             ufdf_unit,
             chromatography_unit,
             predrying_unit,
@@ -585,6 +629,7 @@ def build_front_end_section(
         seed_unit=seed_unit,
         fermentation_unit=fermentation_unit,
         microfiltration_unit=microfiltration_unit,
+        cell_removal_units=cell_removal_units_tuple,
         ufdf_unit=ufdf_unit,
         chromatography_unit=chromatography_unit,
         predrying_unit=predrying_unit,
