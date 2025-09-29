@@ -42,7 +42,7 @@ Each YAML carries the scenario feed volumes, carbon totals, media type, and yiel
 ## Capture (DSP02)
 - **Baseline method:** `capture.method = aex`  
   - Feed: 72 g/L protein, 0.6 mg/L DNA, 55 mM conductivity.  
-  - AEX specs: Q resin, 60 mg/mL base DBC, 25 cm bed, 0.9 utilization, 2 columns, full buffer/fee schedule.  
+  - AEX specs: Q resin, 60 mg/mL base DBC, 25 cm bed, 0.9 utilization, pH 7 buffers (10 mM phosphate) with NaCl-driven elution, 2 columns, full buffer/fee schedule.  
   - Targets block: conductivity cutoff (400 mM) and chitosan ppm guard (100 ppm).
 - **Chitosan path:** included in baseline defaults under `capture.chitosan`  
   - Capture yield 92%, elution yield 93%, PolyP elution (200 mM), recycle/bleed factors.  

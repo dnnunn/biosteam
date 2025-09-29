@@ -188,9 +188,10 @@ capture:
     rt_load_min: 4.0
     delta_p_max_bar: 3.0
     fouling_factor_dp: 0.002
-    ph_bind: 6.0
+    ph_bind: 7.0
     cond_bind_mM_max: 200.0
-    ph_elute: 8.0
+    ph_elute: 7.0
+    phosphate_buffer_mM: 10.0
     elute_salt_mM: 500.0
     temperature_c: 22.0
     dbc_base_mg_per_ml: 60.0
