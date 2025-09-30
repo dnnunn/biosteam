@@ -4,12 +4,14 @@ This note consolidates the baseline configuration and available overrides for th
 
 ## Seed Train (USP01)
 - **Baseline source:** `migration/baseline_defaults.yaml:seed`  
-  - Working volume 3,500 L, DCW 60 g/L, OD
-do=150.  
+  - Working volume 3,500 L, DCW 60 g/L, OD600 ~150.  
   - Yeast extract 8.5 g/L (@ $12/kg) and peptone 12.5 g/L (@ $15/kg).  
-- **Override knobs:** currently implicit (no dedicated YAML). Adjust batch volume, nutrients, or costs directly in `seed.derived/specs`.
+- **Override files:**
+  - `usp01_shake_flask.yaml` — single-stage shake flask expansion for pilot/demo runs; trims media mass, zero CIP/SIP time, lower labor.
+  - `usp01_two_stage.yaml` — two-seed bioreactors mirroring the Excel baseline with explicit labor/media/CIP hooks.
+  - `usp01_three_stage.yaml` — adds a 5 m³ third stage for ≥100 m³ production, increases media/labor and tracks Stage 3 volume.
 
-## Production Fermentation (USP00)
+## Production Fermentation (USP02)
 - **Baseline:** `baseline_defaults.yaml:fermentation`  
   - 70,000 L batch, 4 g/L titer, 280 kg OPN, 7.8 t glucose feed plus optional glycerol/molasses entries.  
   - Cost hooks for antifoam, NH₃, pH base, O₂, etc.
@@ -18,6 +20,7 @@ do=150.
     - Glycerol: `usp00_glycerol_rich.yaml`, `usp00_glycerol_defined.yaml`
     - Molasses: `usp00_molasses_rich.yaml`, `usp00_molasses_defined.yaml`
     - Lactose: `usp00_lactose_rich.yaml`, `usp00_lactose_defined.yaml`
+    - Method toggles: `usp02_batch.yaml`, `usp02_fedbatch.yaml`, `usp02_continuous.yaml` encode Batch/FedBatch/Continuous cycle time, titers, and O₂ policies.
 
 Each YAML carries the scenario feed volumes, carbon totals, media type, and yield proxy flags.
 

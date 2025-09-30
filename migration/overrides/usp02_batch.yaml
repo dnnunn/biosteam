@@ -1,0 +1,23 @@
+fermentation:
+  method: Batch
+  feed:
+    working_volume_l: 60000.0
+    target_titer_g_per_l: 12.0
+    carbon_source: glucose
+    media_type: complex
+    oxygen_enrichment_fraction: 0.0
+    yield_proxy: batch_reference
+  derived:
+    batch_cycle_hours: 96.0
+    product_out_kg: 720.0
+    total_glucose_feed_kg: 7200.0
+    antifoam_volume_l: 30.0
+    nh3_consumption_kg: 180.0
+    pH_base_consumption_kg: 42.0
+  specs:
+    turnaround_time_hours: 18.0
+    biomass_yield_glucose: 0.45
+    product_yield_biomass: 0.08
+    glucose_cost_per_kg: 0.75
+    antifoam_dosage: 0.035
+    blower_power_density_kw_m3: 1.2

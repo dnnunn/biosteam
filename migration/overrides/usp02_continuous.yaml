@@ -1,0 +1,27 @@
+fermentation:
+  method: Continuous
+  feed:
+    working_volume_l: 60000.0
+    target_titer_g_per_l: 70.0
+    carbon_source: glycerol
+    media_type: defined
+    oxygen_enrichment_fraction: 0.12
+    yield_proxy: continuous_high_productivity
+  derived:
+    batch_cycle_hours: 48.0
+    product_out_kg: 4200.0
+    total_glycerol_feed_kg: 21000.0
+    antifoam_volume_l: 60.0
+    nh3_consumption_kg: 500.0
+    pH_base_consumption_kg: 110.0
+    dilution_rate_per_h: 0.10
+    o2_enrichment_fraction: 0.12
+    glycerol_cost_per_kg: 1.2
+  specs:
+    turnaround_time_hours: 16.0
+    biomass_yield_glucose: 0.55
+    product_yield_biomass: 0.14
+    glucose_cost_per_kg: null
+    antifoam_dosage: 0.06
+    blower_power_density_kw_m3: 2.0
+    o2_cost_per_kg: 0.5

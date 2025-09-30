@@ -1,0 +1,25 @@
+fermentation:
+  method: FedBatch
+  feed:
+    working_volume_l: 80000.0
+    target_titer_g_per_l: 45.0
+    carbon_source: glucose
+    media_type: defined
+    oxygen_enrichment_fraction: 0.08
+    yield_proxy: fedbatch_reference
+  derived:
+    batch_cycle_hours: 120.0
+    product_out_kg: 3600.0
+    total_glucose_feed_kg: 15000.0
+    antifoam_volume_l: 42.0
+    nh3_consumption_kg: 420.0
+    pH_base_consumption_kg: 90.0
+    o2_enrichment_fraction: 0.08
+  specs:
+    turnaround_time_hours: 24.0
+    biomass_yield_glucose: 0.5
+    product_yield_biomass: 0.12
+    glucose_cost_per_kg: 0.72
+    antifoam_dosage: 0.05
+    blower_power_density_kw_m3: 1.6
+    o2_cost_per_kg: 0.45

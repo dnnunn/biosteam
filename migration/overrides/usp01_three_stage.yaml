@@ -1,0 +1,17 @@
+seed:
+  method: ThreeStage_Bioreactor
+  derived:
+    seed_stage_count: 3
+    seed_total_time_h: 66.0
+    viability_fraction: 0.97
+    seed3_working_volume_m3: 5.0
+    yeast_extract_per_batch_kg: 520.0
+    peptone_per_batch_kg: 790.0
+    labor_hours_per_batch: 18.0
+    media_cost_per_batch_usd: 2450.0
+    cip_sip_time_h: 6.0
+  specs:
+    yeast_extract_concentration_g_per_l: 9.0
+    peptone_concentration_g_per_l: 13.0
+    yeast_extract_cost_per_kg: 11.5
+    peptone_cost_per_kg: 14.5

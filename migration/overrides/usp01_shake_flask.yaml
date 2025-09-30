@@ -1,0 +1,16 @@
+seed:
+  method: ShakeFlaskOnly
+  derived:
+    seed_stage_count: 1
+    seed_total_time_h: 36.0
+    viability_fraction: 0.92
+    yeast_extract_per_batch_kg: 12.0
+    peptone_per_batch_kg: 18.0
+    labor_hours_per_batch: 10.0
+    media_cost_per_batch_usd: 450.0
+    cip_sip_time_h: 0.0
+  specs:
+    yeast_extract_concentration_g_per_l: 5.0
+    peptone_concentration_g_per_l: 10.0
+    yeast_extract_cost_per_kg: 14.0
+    peptone_cost_per_kg: 18.0
