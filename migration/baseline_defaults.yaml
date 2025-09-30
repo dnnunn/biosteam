@@ -17,17 +17,17 @@ fermentation:
   derived:
     working_volume_l: 70000.0
     batch_cycle_hours: 72.0
-    target_titer_g_per_l: 4.0
-    dcw_concentration_g_per_l: 45.0
-    total_glucose_feed_kg: 7800.0
+    target_titer_g_per_l: 4.285714285714286
+    dcw_concentration_g_per_l: 47.5
+    total_glucose_feed_kg: 8125.0
     total_glycerol_feed_kg: 6000.0
     total_molasses_feed_kg: 12000.0
-    product_out_kg: 280.0
-    antifoam_volume_l: 40.0
+    product_out_kg: 300.0
+    antifoam_volume_l: 58.33333333333333
     antifoam_cost_per_unit: 12.0
-    minor_nutrients_cost_total: 650.0
-    nh3_consumption_kg: 250.0
-    pH_base_consumption_kg: 50.0
+    minor_nutrients_cost_total: 500.0
+    nh3_consumption_kg: 233.33333333333334
+    pH_base_consumption_kg: 46.666666666666664
     blower_air_vvm: 0.6
     blower_power_kw_per_m3: 1.2
     o2_enrichment_fraction: 0.05
@@ -48,9 +48,9 @@ microfiltration:
   derived:
     input_product_kg: 300.0
     input_volume_l: 70000.0
-    output_volume_l: 60000.0
-    product_out_kg: 231.42857142857144
-    harvested_product_kg: 270.0
+    output_volume_l: 54046.4
+    product_out_kg: 293.624
+    harvested_product_kg: 293.624
     broth_density_kg_per_l: 1.0
 
 ufdf:
@@ -96,7 +96,7 @@ spray_dryer:
     target_recovery_rate: 0.8
 
 cell_removal:
-  method: auto
+  method: disc_stack_depth
   feed:
     volume_m3: 70.0
     density_kg_per_m3: 1040.0

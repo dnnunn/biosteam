@@ -15,6 +15,7 @@ from migration.baseline_metrics import BaselineMetrics
 
 FIXTURE_PATH = Path(__file__).with_name("baseline_metrics.json")
 WORKBOOK_PATH = Path("BaselineModel.xlsx")
+BASELINE_CONFIG_PATH = Path("migration/baseline_defaults.yaml")
 
 
 @pytest.fixture(scope="module")
@@ -36,7 +37,11 @@ def baseline_metrics() -> BaselineMetrics:
 @pytest.fixture(scope="module")
 def front_end_section(baseline_metrics: BaselineMetrics):
     bst.main_flowsheet.clear()
-    section = build_front_end_section(str(WORKBOOK_PATH))
+    section = build_front_end_section(
+        str(WORKBOOK_PATH),
+        mode="baseline",
+        baseline_config=str(BASELINE_CONFIG_PATH),
+    )
     section.system.simulate()
     return section
 
