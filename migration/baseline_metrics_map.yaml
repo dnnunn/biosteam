@@ -4,26 +4,26 @@
 mass_trail:
   working_titer_g_per_l: Calculations!B47
   dcw_concentration_g_per_l: Calculations!B29
-  total_glucose_feed_kg: Calculations!B82
-  total_glycerol_feed_kg: Calculations!B83
-  total_molasses_feed_kg: Calculations!B85
-  yeast_extract_per_batch_kg: Calculations!B86
-  peptone_per_batch_kg: Calculations!B87
-  antifoam_volume_l: Calculations!B88
-  product_preharvest_kg: Calculations!B44
-  harvested_product_kg: Calculations!B45
-  harvest_volume_l: Calculations!B105
-  product_after_microfiltration_kg: Calculations!B108
-  product_after_ufdf_kg: Calculations!B111
-  post_uf_volume_l: Calculations!B112
-  product_after_chromatography_kg: Calculations!B113
-  post_elution_volume_l: Calculations!B116
-  post_elution_concentrate_volume_l: Calculations!B117
-  volume_to_spray_l: Calculations!B118
-  product_after_predry_kg: Calculations!B120
+  total_glucose_feed_kg: Total_Glucose_Per_Batch
+  total_glycerol_feed_kg: Total_Glycerol_Per_Batch
+  total_molasses_feed_kg: Total_Molasses_Per_Batch
+  yeast_extract_per_batch_kg: Yeast_Extract_Per_Batch
+  peptone_per_batch_kg: Peptone_Per_Batch
+  antifoam_volume_l: Antifoam_Volume
+  product_preharvest_kg: Preharvest_total_product
+  harvested_product_kg: Harvested_total_product
+  harvest_volume_l: Harvested_supernatant_volume
+  product_after_microfiltration_kg: Product_After_MF
+  product_after_ufdf_kg: Product_After_UF_DF
+  post_uf_volume_l: Post_UF_Volume
+  product_after_chromatography_kg: Product_After_Chromatography
+  post_elution_volume_l: Eluate_To_UF_L
+  post_elution_concentrate_volume_l: Product_After_Pre_Drying_TFF
+  volume_to_spray_l: Volume_to_Spray_Drying
+  product_after_predry_kg: Product_After_Pre_Drying_TFF
 
 final_product:
-  cell: Calculations!B2
+  cell: Final_Product_After_Spray_Drying
 
 # Fill this in once the financial worksheet cell is confirmed, e.g. Financials!D20
 cost_per_kg:
@@ -36,11 +36,11 @@ cmo_fees:
   cell: Calculations!B248
 
 materials_costs:
-  carbon_source: Calculations!B167
-  yeast_extract: Calculations!B168
-  peptone: Calculations!B169
+  carbon_source: Carbon_source_Cost_Total
+  yeast_extract: Yeast_Extract_Cost_Total
+  peptone: Peptone_Cost_Total
   minor_nutrients: Calculations!B170
-  antifoam: Calculations!B171
+  antifoam: Antifoam_Cost_Total
   buffers: Calculations!B194
   resin: Calculations!B178
   mf_membranes: Calculations!B172

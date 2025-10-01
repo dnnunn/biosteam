@@ -1,0 +1,37 @@
+name: conservative_cmo_default
+include_capex: false
+stages:
+  usp01_seed:
+    fixed_per_batch: 0.0
+    notes:
+      - Seed train nutrients, disposables, and utilities treated as direct materials per USP01 follow-up
+  usp02_fermentation:
+    per_hour: 2656.25           # 75k fermenter-day with 15% campaign discount -> 63,750 / 24 h
+    notes:
+      - Fermenter-day toll (PROJ02 Fermenter_Daily_Rate × (1 - Fermenter_Campaign_Discount))
+      - Apply to batch_cycle_hours + turnaround_time_hours
+  dsp_suite:
+    per_hour: 2812.5            # 75k DSP-day with 10% campaign discount -> 67,500 / 24 h
+    notes:
+      - Downstream suite day rate (PROJ02 DSP_Daily_Rate × (1 - DSP_Campaign_Discount))
+      - Allocate against total downstream processing hours per batch
+  spray_dryer:
+    per_hour: 950.0             # 1,000 USD/h toll with 5% campaign discount
+    notes:
+      - Spray dryer hourly toll (PROJ02 Spray_Dryer_Hourly_Rate × (1 - Spray_Dryer_Campaign_Discount))
+  labor:
+    fixed_per_batch: 16000.0    # 20k baseline labor with 20% campaign discount
+    notes:
+      - Operations labor charge (PROJ02 Labor_Cost_Per_Batch × (1 - Labor_Campaign_Discount))
+  documentation:
+    fixed_per_batch: 5000.0
+    notes:
+      - Batch documentation charge (PROJ02 Documentation_Base_Fee)
+  qa_review:
+    fixed_per_batch: 8500.0     # 10k QA fee with 15% campaign discount
+    notes:
+      - QA review charge (PROJ02 QA_Review_Base_Fee × (1 - QA_Campaign_Discount))
+  campaign_setup:
+    fixed_per_batch: 41666.666666666664
+    notes:
+      - Campaign setup fee amortised per batch (PROJ02 Campaign_Setup_Fee_Per_Batch)

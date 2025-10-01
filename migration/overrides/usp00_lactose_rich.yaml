@@ -1,3 +1,26 @@
+seed:
+  method: TwoStage_Bioreactor
+  derived:
+    seed_stage_count: 2
+    seed_total_time_h: 48.0
+    viability_fraction: 0.95
+    yeast_extract_per_batch_kg: 330.0
+    peptone_per_batch_kg: 500.0
+    labor_hours_per_batch: 14.0
+    media_cost_per_batch_usd: 1650.0
+    cip_sip_time_h: 4.0
+    carbon_source: lactose
+    feed_carbon_concentration_g_per_l: 500.0
+    initial_carbon_concentration_g_per_l: 20.0
+    total_nutrient_concentration_g_per_l: 30.0
+    wet_cell_density_g_per_l: 190.0
+    seed_glucose_conversion_fraction: 0.0
+  specs:
+    yeast_extract_concentration_g_per_l: 8.5
+    peptone_concentration_g_per_l: 12.5
+    yeast_extract_cost_per_kg: 12.0
+    peptone_cost_per_kg: 15.0
+
 fermentation:
   method: lactose_rich
   feed:

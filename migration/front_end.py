@@ -4,10 +4,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
+import math
 from typing import Any, Dict, Iterable, Mapping, Optional
 
 import biosteam as bst
 
+from .cmo import compute_cmo_costs, load_cmo_profile, StageCostSummary
+from .unit_specs import DepthFilterSpecs
 from .excel_defaults import ExcelModuleDefaults, ModuleConfig, ModuleKey
 from .module_registry import ModuleRegistry
 from .unit_builders import register_baseline_unit_builders, set_defaults_loader
@@ -17,7 +20,7 @@ from .capture import build_capture_chain, CaptureHandoff
 from .concentration import build_concentration_chain
 from .dsp03 import build_dsp03_chain
 from .dsp04 import build_dsp04_chain
-from .dsp05 import build_dsp05_chain, FinalProductHandoff
+from .dsp05 import build_dsp05_chain, FinalProductHandoff, DSP05Config
 from .usp01 import SeedConfig, determine_seed_method
 from .usp02 import ProductionConfig, determine_production_method
 from .thermo_setup import set_migration_thermo
@@ -62,6 +65,9 @@ class FrontEndSection:
     dsp04_handoff: Optional[CaptureHandoff] = None
     dsp05_handoff: Optional[FinalProductHandoff] = None
     material_cost_breakdown: Dict[str, float] = field(default_factory=dict)
+    cmo_profile_name: str = "conservative_cmo_default"
+    cmo_stage_costs: Dict[str, StageCostSummary] = field(default_factory=dict)
+    cmo_total_fee_usd: float = 0.0
 
     def units(self) -> tuple[bst.Unit, ...]:
         """Return the ordered unit operations for convenience."""
@@ -117,6 +123,145 @@ def _get_parameter(
     if record is None:
         return None
     return record.value
+
+
+def _coerce_float(value: Any, default: float = 0.0) -> float:
+    """Best-effort conversion of ``value`` to float with a fallback."""
+
+    try:
+        if value is None:
+            return default
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _compute_media_cost(
+    media_cfg: Mapping[str, Any],
+    working_volume_l: float,
+) -> tuple[float, Dict[str, float]]:
+    """Calculate salts/trace media cost and optional CSL addition."""
+
+    volume_m3 = max(_coerce_float(working_volume_l, 0.0) / 1_000.0, 0.0)
+    costs_cfg = media_cfg.get("costs", {}) if isinstance(media_cfg, Mapping) else {}
+
+    salts_cost = _coerce_float(costs_cfg.get("salts_usd_per_m3"), 0.0) * volume_m3
+    ptm_cost = _coerce_float(costs_cfg.get("ptm1_usd_per_m3"), 0.0) * volume_m3
+
+    csl_cost = 0.0
+    csl_cfg = media_cfg.get("csl") if isinstance(media_cfg, Mapping) else None
+    if isinstance(csl_cfg, Mapping) and csl_cfg.get("enable"):
+        csl_g_per_l = _coerce_float(csl_cfg.get("g_per_l"), 0.0)
+        csl_usd_per_kg = _coerce_float(
+            csl_cfg.get("usd_per_kg"),
+            _coerce_float(costs_cfg.get("csl_usd_per_kg"), 0.0),
+        )
+        csl_mass_kg = csl_g_per_l * working_volume_l / 1_000.0
+        csl_cost = csl_mass_kg * csl_usd_per_kg
+
+    breakdown = {
+        "salts_usd": salts_cost,
+        "ptm1_usd": ptm_cost,
+    }
+    if csl_cost:
+        breakdown["csl_usd"] = csl_cost
+
+    total = salts_cost + ptm_cost + csl_cost
+    return total, breakdown
+
+
+def _estimate_depth_filter_hours(plan: Any) -> float:
+    """Estimate depth-filter processing time from flux and specific capacity."""
+
+    volume_l = _coerce_float(plan.derived.get("input_volume_l"), 0.0)
+    if volume_l <= 0.0:
+        volume_l = _coerce_float(plan.derived.get("harvest_volume_l"), 0.0)
+    if volume_l <= 0.0:
+        return 0.0
+
+    throughput = _coerce_float(plan.derived.get("throughput_l_per_hr"), 0.0)
+    if throughput > 0.0:
+        return volume_l / throughput
+
+    specs = getattr(plan, "specs", None)
+    if not isinstance(specs, DepthFilterSpecs):
+        return 0.0
+
+    flux = _coerce_float(getattr(specs, "flux_lmh", None), 0.0)
+    capacities = [
+        _coerce_float(cap, 0.0)
+        for cap in (specs.specific_capacity_l_per_m2 or [])
+        if cap
+    ]
+    if flux <= 0.0 or not capacities:
+        return 0.0
+
+    limiting_capacity = min(capacities)
+    if limiting_capacity <= 0.0:
+        return 0.0
+
+    area_m2 = volume_l / limiting_capacity
+    throughput = flux * area_m2
+    if throughput <= 0.0:
+        return 0.0
+    return volume_l / throughput
+
+
+def _estimate_ufdf_hours(plan: Any) -> float:
+    """Estimate UF/DF time from throughput and diavolumes."""
+
+    throughput = _coerce_float(plan.derived.get("throughput_l_per_hr"), 0.0)
+    if throughput <= 0.0:
+        return 0.0
+
+    input_volume = _coerce_float(plan.derived.get("input_volume_l"), 0.0)
+    output_volume = _coerce_float(plan.derived.get("output_volume_l"), 0.0)
+    dia_volumes = _coerce_float(plan.derived.get("diafiltration_volumes"), 0.0)
+
+    total_volume = input_volume + dia_volumes * output_volume
+    if total_volume <= 0.0:
+        total_volume = input_volume
+    if total_volume <= 0.0:
+        return 0.0
+
+    return total_volume / throughput
+
+
+def _estimate_tff_hours(plan: Any) -> float:
+    """Estimate post-capture TFF processing time."""
+
+    throughput = _coerce_float(plan.derived.get("throughput_l_per_hr"), 0.0)
+    volume = _coerce_float(plan.derived.get("input_volume_l"), 0.0)
+    if throughput <= 0.0 or volume <= 0.0:
+        return 0.0
+    return volume / throughput
+
+
+def _estimate_spray_hours(predry_plan: Any, spray_plan: Any) -> float:
+    """Estimate spray dryer occupancy based on evaporation duty."""
+
+    capacity = _coerce_float(spray_plan.derived.get("capacity_kg_per_hr"), 0.0)
+    if capacity <= 0.0:
+        return 0.0
+
+    feed_volume_l = _coerce_float(predry_plan.derived.get("output_volume_l"), 0.0)
+    if feed_volume_l <= 0.0:
+        feed_volume_l = _coerce_float(predry_plan.derived.get("input_volume_l"), 0.0)
+    if feed_volume_l <= 0.0:
+        return 0.0
+
+    density = _coerce_float(spray_plan.derived.get("solution_density"), 1.0)
+    feed_mass = feed_volume_l * density
+
+    final_product_mass = _coerce_float(spray_plan.derived.get("product_out_kg"), 0.0)
+    recovery = _coerce_float(spray_plan.derived.get("target_recovery_rate"), 0.0)
+    upstream_solids = final_product_mass / recovery if recovery > 0.0 else final_product_mass
+
+    water_evap = max(feed_mass - upstream_solids, 0.0)
+    if water_evap <= 0.0:
+        return 0.0
+
+    return water_evap / capacity
 
 
 def _read_calculation_cell(
@@ -237,6 +382,19 @@ def _apply_fermentation_override(
             else:
                 plan.derived[key] = value
 
+    media_cfg = override.get("media") if isinstance(override, Mapping) else None
+    if isinstance(media_cfg, Mapping):
+        plan.derived.setdefault("media", media_cfg)
+        working_volume_l = plan.derived.get("working_volume_l")
+        if working_volume_l is not None:
+            media_cost, breakdown = _compute_media_cost(media_cfg, working_volume_l)
+            plan.derived["media_cost_per_batch_usd"] = media_cost
+            plan.derived["media_cost_breakdown_usd"] = breakdown
+        else:
+            notes.append(
+                "Fermentation media override supplied without working_volume_l; cannot compute base media cost."
+            )
+
     descriptor = method or "custom"
     if method or media_type or yield_proxy:
         notes.append(
@@ -263,12 +421,24 @@ def _build_seed_media_stream(
     feed_carbon = derived.get("feed_carbon_concentration_g_per_l") or derived.get(
         "initial_carbon_concentration_g_per_l"
     )
-    glucose_mass = (feed_carbon or 0.0) * seed_volume_l / 1e3
-    water_mass = max(total_mass - glucose_mass, 0.0)
+    carbon_mass = (feed_carbon or 0.0) * seed_volume_l / 1e3
+    water_mass = max(total_mass - carbon_mass, 0.0)
 
     feed.imass["Water"] = water_mass
-    if glucose_mass > 0:
-        feed.imass["Glucose"] = glucose_mass
+
+    carbon_source = derived.get("carbon_source") or seed_unit.plan.derived.get(
+        "carbon_source"
+    )
+    component_map = {
+        "glucose": "Glucose",
+        "glycerol": "Glycerol",
+        "lactose": "Lactose",
+        "molasses": "Molasses",
+    }
+    component_id = component_map.get(str(carbon_source).strip().lower(), "Glucose")
+
+    if carbon_mass > 0:
+        feed.imass[component_id] = carbon_mass
 
     specs = seed_unit.plan.specs
     def _add_if_available(component: str, value: Optional[float]) -> None:
@@ -386,12 +556,12 @@ def build_front_end_section(
     if total_molasses_feed_kg is not None:
         fermentation_plan.derived["total_molasses_feed_kg"] = total_molasses_feed_kg
 
-    if working_titer is not None:
+    if product_preharvest is not None:
+        fermentation_plan.derived["product_out_kg"] = product_preharvest
+    elif working_titer is not None:
         fermentation_plan.derived["product_out_kg"] = (
             working_titer * working_volume_l / 1_000.0
         )
-    elif product_preharvest is not None:
-        fermentation_plan.derived["product_out_kg"] = product_preharvest
 
     seed_plan = seed_unit.plan
     seed_plan.derived.update(
@@ -553,10 +723,10 @@ def build_front_end_section(
     if concentration_units_tuple:
         ufdf_unit = concentration_units_tuple[-1]
 
-    uf_plan = ufdf_unit.plan
+    ufdf_plan = ufdf_unit.plan
     if concentration_route:
-        uf_plan.derived.setdefault("concentration_route", concentration_route)
-    uf_plan.derived.update(
+        ufdf_plan.derived.setdefault("concentration_route", concentration_route)
+    ufdf_plan.derived.update(
         {
             "input_product_kg": product_after_mf,
             "input_volume_l": clarified_volume_l,
@@ -566,9 +736,9 @@ def build_front_end_section(
     )
 
     if baseline_overrides:
-        _apply_plan_overrides(uf_plan, baseline_overrides.get("ufdf"))
-        product_after_uf = uf_plan.derived.get("product_out_kg", product_after_uf)
-        post_uf_volume_l = uf_plan.derived.get("output_volume_l", post_uf_volume_l)
+        _apply_plan_overrides(ufdf_plan, baseline_overrides.get("ufdf"))
+        product_after_uf = ufdf_plan.derived.get("product_out_kg", product_after_uf)
+        post_uf_volume_l = ufdf_plan.derived.get("output_volume_l", post_uf_volume_l)
 
     capture_route = None
     capture_pool_cond = None
@@ -592,7 +762,7 @@ def build_front_end_section(
         chain = build_capture_chain(
             method=capture_config.get("method"),
             config=capture_config,
-            concentration_plan=uf_plan,
+            concentration_plan=ufdf_plan,
         )
         if chain.product_out_kg is not None:
             product_after_chrom = chain.product_out_kg
@@ -620,6 +790,18 @@ def build_front_end_section(
         dsp03_units_tuple = tuple(dsp03_chain.units)
         dsp03_handoff = dsp03_chain.handoff
         dsp03_route_value = dsp03_chain.route.value
+        if dsp03_handoff.pool_volume_l is not None:
+            post_elution_conc_volume_l = dsp03_handoff.pool_volume_l
+            post_elution_volume_l = dsp03_handoff.pool_volume_l
+        if (
+            dsp03_handoff.pool_volume_l is not None
+            and dsp03_handoff.opn_concentration_g_per_l is not None
+        ):
+            product_after_chrom = (
+                dsp03_handoff.pool_volume_l
+                * dsp03_handoff.opn_concentration_g_per_l
+                / 1_000.0
+            )
     if dsp03_handoff is None:
         dsp03_handoff = capture_handoff
 
@@ -668,7 +850,7 @@ def build_front_end_section(
     predry_input_product_kg = product_after_chrom
     if dsp03_handoff is not None:
         if dsp03_handoff.pool_volume_l is not None:
-            predry_input_volume_l = dsp03_handoff.pool_volume_l * 1_000.0
+            predry_input_volume_l = dsp03_handoff.pool_volume_l
         if (
             dsp03_handoff.pool_volume_l is not None
             and dsp03_handoff.opn_concentration_g_per_l is not None
@@ -695,15 +877,33 @@ def build_front_end_section(
         product_after_predry = predry_plan.derived.get("product_out_kg", product_after_predry)
         volume_to_spray_l = predry_plan.derived.get("output_volume_l", volume_to_spray_l)
 
+    dsp05_config_raw = baseline_overrides.get("dsp05") if baseline_overrides else None
+    dsp05_config = DSP05Config.from_mapping(
+        dsp05_config_raw if isinstance(dsp05_config_raw, Mapping) else None
+    )
+
     spray_plan = spray_dryer_unit.plan
+    spray_density = _coerce_float(spray_plan.derived.get("solution_density"), 1.0)
+    if (
+        dsp05_config.spraydry.precon_enable
+        and product_after_predry is not None
+    ):
+        target_solids_frac = (
+            _coerce_float(dsp05_config.spraydry.precon_target_solids_wt_pct, 0.0) / 100.0
+        )
+        if target_solids_frac > 0 and spray_density > 0:
+            volume_to_spray_l = (
+                product_after_predry / (target_solids_frac * spray_density)
+            )
+            predry_plan.derived["output_volume_l"] = volume_to_spray_l
+
     spray_input_product_kg = product_after_predry
-    spray_input_volume_l = predry_plan.derived.get("output_volume_l", volume_to_spray_l)
+    spray_input_volume_l = volume_to_spray_l
     final_handoff_for_spray = dsp04_handoff or dsp03_handoff or capture_handoff
     if final_handoff_for_spray is not None:
-        if final_handoff_for_spray.pool_volume_l is not None:
-            spray_input_volume_l = final_handoff_for_spray.pool_volume_l * 1_000.0
         if (
-            final_handoff_for_spray.pool_volume_l is not None
+            spray_input_product_kg is None
+            and final_handoff_for_spray.pool_volume_l is not None
             and final_handoff_for_spray.opn_concentration_g_per_l is not None
         ):
             spray_input_product_kg = (
@@ -711,6 +911,8 @@ def build_front_end_section(
                 * final_handoff_for_spray.opn_concentration_g_per_l
                 / 1_000.0
             )
+        if spray_input_volume_l is None and final_handoff_for_spray.pool_volume_l is not None:
+            spray_input_volume_l = final_handoff_for_spray.pool_volume_l
     if dsp04_units_tuple:
         spray_plan.derived.setdefault(
             "dsp04_stages",
@@ -729,7 +931,6 @@ def build_front_end_section(
         _apply_plan_overrides(spray_plan, baseline_overrides.get("spray_dryer"))
         final_product_kg = spray_plan.derived.get("product_out_kg", final_product_kg)
 
-    dsp05_config_raw = baseline_overrides.get("dsp05") if baseline_overrides else None
     dsp05_handoff = build_dsp05_chain(
         config_mapping=dsp05_config_raw if isinstance(dsp05_config_raw, Mapping) else None,
         feed_volume_m3=final_handoff_for_spray.pool_volume_l if final_handoff_for_spray else None,
@@ -825,9 +1026,12 @@ def build_front_end_section(
     def _set_cost(key: str, computed: Optional[float], fallback: Optional[float]) -> None:
         nonlocal computed_material_cost
         value = computed if computed is not None else fallback
-        if value is not None:
-            breakdown[key] = value
-            computed_material_cost += value
+        if value is None:
+            return
+        if isinstance(value, float) and math.isnan(value):
+            return
+        breakdown[key] = value
+        computed_material_cost += value
 
     _set_cost("carbon_source", carbon_cost_calc, _calc_cell(166))
     _set_cost("yeast_extract", yeast_cost_calc, _calc_cell(167))
@@ -850,6 +1054,95 @@ def build_front_end_section(
         fermentation_plan.derived.get("media_cost_per_batch_usd"),
         None,
     )
+
+    final_product_mass = spray_plan.derived.get("product_out_kg", final_product_kg)
+
+    cmo_config_raw = baseline_overrides.get("cmo") if isinstance(baseline_overrides, Mapping) else None
+    cmo_profile_path = None
+    if isinstance(cmo_config_raw, Mapping):
+        profile_path_raw = cmo_config_raw.get("profile_path")
+        if profile_path_raw:
+            cmo_profile_path = Path(profile_path_raw)
+    cmo_profile = load_cmo_profile(cmo_profile_path)
+
+    fermentation_hours = _coerce_float(fermentation_plan.derived.get("batch_cycle_hours"), 0.0)
+    turnaround_hours = _coerce_float(
+        getattr(fermentation_unit.plan.specs, "turnaround_time_hours", None),
+        0.0,
+    )
+    fermentation_hours += turnaround_hours
+
+    micro_hours = _estimate_depth_filter_hours(micro_plan)
+    ufdf_hours = _estimate_ufdf_hours(ufdf_plan)
+    predry_hours = _estimate_tff_hours(predry_plan)
+    dsp_hours = micro_hours + ufdf_hours + predry_hours
+
+    spray_hours_est = _estimate_spray_hours(predry_plan, spray_plan)
+    spray_hours = spray_hours_est
+
+    if isinstance(cmo_config_raw, Mapping):
+        dsp_hours_default = _coerce_float(cmo_config_raw.get("dsp_hours_per_batch"), 0.0)
+        if dsp_hours <= 0.0 and dsp_hours_default > 0.0:
+            dsp_hours = dsp_hours_default
+        spray_hours_default = _coerce_float(
+            cmo_config_raw.get("spray_dryer_hours_per_batch"),
+            0.0,
+        )
+        if spray_hours <= 0.0 and spray_hours_default > 0.0:
+            spray_hours = spray_hours_default
+
+    if dsp_hours < 0.0:
+        dsp_hours = 0.0
+    if spray_hours < 0.0:
+        spray_hours = 0.0
+
+    seed_hours = _coerce_float(seed_plan.derived.get("seed_train_duration_hours"), 0.0)
+
+    fermentation_feed_m3 = _coerce_float(
+        fermentation_plan.derived.get("working_volume_l"),
+        working_volume_l,
+    ) / 1_000.0
+    dsp_feed_m3 = _coerce_float(
+        micro_plan.derived.get("input_volume_l"),
+        harvest_volume_l,
+    ) / 1_000.0
+    spray_feed_m3 = _coerce_float(
+        spray_plan.derived.get("input_volume_l"),
+        volume_to_spray_l,
+    ) / 1_000.0
+
+    cmo_metrics: Dict[str, Dict[str, float]] = {
+        "usp01_seed": {
+            "feed_volume_m3": seed_volume_l / 1_000.0,
+            "hours": seed_hours,
+        },
+        "usp02_fermentation": {
+            "feed_volume_m3": fermentation_feed_m3,
+            "product_kg": _coerce_float(fermentation_plan.derived.get("product_out_kg"), 0.0),
+            "hours": fermentation_hours,
+        },
+        "dsp_suite": {
+            "feed_volume_m3": dsp_feed_m3,
+            "product_kg": _coerce_float(spray_plan.derived.get("product_out_kg"), 0.0),
+            "hours": dsp_hours,
+        },
+        "spray_dryer": {
+            "feed_volume_m3": spray_feed_m3,
+            "product_kg": _coerce_float(spray_plan.derived.get("product_out_kg"), 0.0),
+            "hours": spray_hours,
+        },
+    }
+
+    cmo_stage_costs, cmo_total_fee = compute_cmo_costs(cmo_profile, cmo_metrics)
+    materials_cost = computed_material_cost
+    total_cost = materials_cost + cmo_total_fee
+
+    cost_per_kg = None
+    if final_product_mass:
+        try:
+            cost_per_kg = total_cost / float(final_product_mass)
+        except ZeroDivisionError:
+            cost_per_kg = None
 
     feed = _build_seed_media_stream(
         fermentation_unit=fermentation_unit,
@@ -923,11 +1216,11 @@ def build_front_end_section(
         spray_dryer_unit=spray_dryer_unit,
         system=system,
         defaults=defaults,
-        total_cost_per_batch_usd=total_cost_per_batch_usd,
-        cmo_fees_usd=cmo_fees_usd,
-        cost_per_kg_usd=cost_per_kg_usd,
-        materials_cost_per_batch_usd=materials_cost_per_batch,
-        computed_material_cost_per_batch_usd=computed_material_cost,
+        total_cost_per_batch_usd=total_cost,
+        cmo_fees_usd=cmo_total_fee,
+        cost_per_kg_usd=cost_per_kg,
+        materials_cost_per_batch_usd=materials_cost,
+        computed_material_cost_per_batch_usd=materials_cost,
         capture_handoff=capture_handoff,
         capture_units=capture_units_tuple,
         dsp03_units=dsp03_units_tuple,
@@ -935,6 +1228,9 @@ def build_front_end_section(
         dsp04_handoff=dsp04_handoff,
         dsp05_handoff=dsp05_handoff,
         material_cost_breakdown=breakdown,
+        cmo_profile_name=cmo_profile.name,
+        cmo_stage_costs=cmo_stage_costs,
+        cmo_total_fee_usd=cmo_total_fee,
     )
 
 

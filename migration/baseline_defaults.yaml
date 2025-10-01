@@ -1,10 +1,14 @@
+# USP01 seed train numbers come from the vendor follow-up briefing
+# (Biosteam BD Module Specs/USP01-Seed Fermentation Followup.md).
+# They reflect the conservative inoculum volume (3.5 m³), 60 g/L DCW, and
+# nutrient loads that the CMO quoted; keep these synced with that document.
 seed:
   derived:
     working_volume_l: 3500.0
     dcw_concentration_g_per_l: 60.0
     seed_glucose_conversion_fraction: 0.0
-    yeast_extract_per_batch_kg: 330.0
-    peptone_per_batch_kg: 500.0
+    yeast_extract_per_batch_kg: 553.0
+    peptone_per_batch_kg: 1106.0
     od600_target: 150
     wet_cell_density_g_per_l: 190.0
   specs:
@@ -13,19 +17,24 @@ seed:
     yeast_extract_cost_per_kg: 12.0
     peptone_cost_per_kg: 15.0
 
+# USP02 production fermentation defaults mirror the outside-CMO guidance
+# captured in Biosteam BD Module Specs/USP02-Production Fermentation Followup.md.
+# They assume the conservative 70 m³ working volume, 6.2 g/L broth titer, and
+# current antifoam/NH3/NaOH usage. Carbon-source switches stay at zero until we
+# recalibrate those scenarios with BioSTEAM data.
 fermentation:
   derived:
     working_volume_l: 70000.0
     batch_cycle_hours: 72.0
-    target_titer_g_per_l: 4.285714285714286
+    target_titer_g_per_l: 6.176470588235295
     dcw_concentration_g_per_l: 47.5
-    total_glucose_feed_kg: 8125.0
-    total_glycerol_feed_kg: 6000.0
-    total_molasses_feed_kg: 12000.0
-    product_out_kg: 300.0
-    antifoam_volume_l: 58.33333333333333
-    antifoam_cost_per_unit: 12.0
-    minor_nutrients_cost_total: 500.0
+    total_glucose_feed_kg: 8750.0
+    total_glycerol_feed_kg: 0.0
+    total_molasses_feed_kg: 0.0
+    product_out_kg: 350.0
+    antifoam_volume_l: 70.0
+    antifoam_cost_per_unit: 10.0
+    minor_nutrients_cost_total: 0.0
     nh3_consumption_kg: 233.33333333333334
     pH_base_consumption_kg: 46.666666666666664
     blower_air_vvm: 0.6
@@ -44,21 +53,12 @@ fermentation:
     blower_power_density_kw_m3: 1.2
     o2_cost_per_kg: 0.4
 
-microfiltration:
-  derived:
-    input_product_kg: 300.0
-    input_volume_l: 70000.0
-    output_volume_l: 54046.4
-    product_out_kg: 293.624
-    harvested_product_kg: 293.624
-    broth_density_kg_per_l: 1.0
-
 ufdf:
   derived:
-    input_product_kg: 231.42857142857144
-    input_volume_l: 60000.0
-    output_volume_l: 3000.0
-    product_out_kg: 219.85714285714286
+    input_product_kg: 270.5294117647059
+    input_volume_l: 48666.666666666664
+    output_volume_l: 7000.0
+    product_out_kg: 257.0029411764706
     diafiltration_volumes: 5.0
     throughput_l_per_hr: 3000.0
     membrane_cost_per_cycle: 15.0
@@ -66,35 +66,44 @@ ufdf:
 
 chromatography:
   derived:
-    input_product_kg: 219.85714285714286
-    eluate_volume_l: 8000.0
-    output_volume_l: 1600.0
-    product_out_kg: 175.8857142857143
-    buffer_cost_per_batch: 829.0575
+    input_product_kg: 257.0029411764706
+    eluate_volume_l: 67500.0
+    output_volume_l: 195.32223529411766
+    product_out_kg: 205.6023529411765
+    buffer_cost_per_batch: 803.9175
     total_buffer_bv: 12.0
     broth_density_kg_per_l: 1.0
 
 predrying:
   derived:
-    input_product_kg: 175.8857142857143
-    input_volume_l: 1600.0
-    output_volume_l: 1600.0
-    product_out_kg: 167.0914285714286
+    input_product_kg: 205.6023529411765
+    input_volume_l: 195.32223529411766
+    output_volume_l: 195.32223529411766
+    product_out_kg: 195.32223529411766
     throughput_l_per_hr: 1225.0
     membrane_cost_per_cycle: 630.0
     broth_density_kg_per_l: 1.0
 
 spray_dryer:
   derived:
-    input_product_kg: 167.0914285714286
-    product_out_kg: 163.7496
-    capacity_kg_per_hr: 150.0
-    final_solids_percent: 15.0
-    final_solids_content: 0.15
-    solution_density: 1.08
-    spray_dryer_efficiency: 0.98
-    target_recovery_rate: 0.8
+    input_product_kg: 195.32223529411766
+    product_out_kg: 191.41579058823532
+    # DSP05 follow-up: conservative spray dryer defaults
+    capacity_kg_per_hr: 1500.0
+    final_solids_percent: 12.0
+    final_solids_content: 0.12
+    solution_density: 1.05
+    spray_dryer_efficiency: 0.65
+    target_recovery_rate: 0.985
 
+# CMO/TEA scaffolding – baseline toll assumptions drawn from PROJ02 defaults
+# and the vendor follow-up notes. Update these when the commercial model is
+# refined or when alternative CMO profiles are introduced.
+cmo:
+  profile: conservative_cmo_default
+  profile_path: migration/cmo_profiles/default.yaml
+  dsp_hours_per_batch: 24.0      # conservative single-day downstream slot per batch
+  spray_dryer_hours_per_batch: 6.0  # spray dryer occupancy per batch (matches DSP05 labor assumption)
 cell_removal:
   method: disc_stack_depth
   feed:
@@ -103,23 +112,30 @@ cell_removal:
     solids_vv: 0.08
   disc_stack:
     sigma_m2: 9000.0
-    product_recovery_fraction: 0.992
+    # Vendor follow-up (USP03-Cell Separation Followup.md, 2025-09-30):
+    # Conservative disc-stack yield band 97–99 %.
+    product_recovery_fraction: 0.985
+    # Carry over a small fraction of solids with the centrate to represent entrained fines.
     solids_carryover_fraction: 0.002
-    wet_cake_moisture_fraction: 0.8
+    # Wet cake typically 25–35 % dry; set moisture to 70 % (dry fraction 30 %).
+    wet_cake_moisture_fraction: 0.7
     power_kwh_per_m3: 0.2
     parallel_trains: 1
   depth_filter:
+    # Depth modules sized for yeast centrate (70–120 L/m² @ ≤1.2 bar).
     product_recovery_fraction: 0.99
-    holdup_loss_kg: 1.0
+    # Capsule hold-up ~0.6 L per 10" module after blow-down.
+    holdup_loss_kg: 0.6
     specific_capacity_l_per_m2:
       - 120.0
       - 70.0
-    flux_lmh: 100.0
+    flux_lmh: 90.0
     terminal_delta_p_bar: 1.2
     media_cost_per_m2: 75.0
   mf_tff:
-    product_recovery_fraction: 0.995
-    flux_lmh: 120.0
+    # MF polish post-centrifuge: 80–120 LMH; run conservatively at 90 LMH.
+    product_recovery_fraction: 0.99
+    flux_lmh: 90.0
     membrane_cost_per_m2: 350.0
     membrane_life_batches: 30.0
 
@@ -128,14 +144,17 @@ concentration:
   feed:
     volume_m3: 60.0
     density_kg_per_m3: 1025.0
-    target_vrr: 6.0
+    # DSP01 follow-up (Biosteam BD Module Specs/DSP01-Concentration & Buffer Exchange Followup.md)
+    # recommends sizing UF to the column load-time need and capping baseline CF at 4×.
+    target_vrr: 4.0
     inline_capture: false
     continuous_mode: false
     target_conductivity_mscm: 5.0
   uf_concentration:
-    volume_reduction_ratio: 6.0
+    # Conservative UF design: VRR≈4, flux 80 LMH, TMP ≤1.2 bar, recovery ≈98.5 %.
+    volume_reduction_ratio: 4.0
     product_recovery_fraction: 0.985
-    flux_lmh: 90.0
+    flux_lmh: 80.0
     tmp_bar: 1.2
     crossflow_velocity_m_s: 2.0
     fouling_derate: 0.9
@@ -145,25 +164,27 @@ concentration:
     membrane_life_batches: 30.0
   diafiltration:
     enabled: true
-    dia_volumes: 3.0
-    flux_lmh: 100.0
-    product_recovery_fraction: 0.99
-    sieving_fraction: 0.01
+    # Trim DF to 1 DV unless analytics force more; sieving ≈0.005–0.01, so keep losses small.
+    dia_volumes: 1.0
+    flux_lmh: 90.0
+    product_recovery_fraction: 0.995
+    sieving_fraction: 0.007
     buffer_cost_per_m3: 45.0
     membrane_area_m2: 150.0
     membrane_cost_per_m2: 220.0
     membrane_life_batches: 30.0
   sptff:
+    # Single-pass baseline: 3 stages at ~1.6× each, overall CF ≈4×, recovery about 99 %.
     concentration_factor: 4.0
-    flux_lmh: 120.0
-    product_recovery_fraction: 0.98
+    flux_lmh: 80.0
+    product_recovery_fraction: 0.99
     membrane_area_m2: 120.0
     membrane_cost_per_m2: 240.0
     membrane_life_batches: 25.0
   continuous_tff:
     concentration_factor: 3.0
-    flux_lmh: 110.0
-    product_recovery_fraction: 0.98
+    flux_lmh: 75.0
+    product_recovery_fraction: 0.987
     membrane_area_m2: 140.0
     membrane_cost_per_m2: 260.0
     membrane_life_batches: 30.0
@@ -182,11 +203,13 @@ capture:
     particle_diameter_um: 75.0
     resin_cost_per_l: 520.0
     resin_life_cycles: 120.0
+    # DSP02 follow-up (Biosteam BD Module Specs/DSP02-AEX Chromatography Followup.md)
+    # Use 25 cm bed, 300 cm/h load velocity, and cap ΔP at 2 bar for conservative sizing.
     bed_height_cm: 25.0
     packing_factor: 0.72
     lin_vel_cm_per_h: 300.0
     rt_load_min: 4.0
-    delta_p_max_bar: 3.0
+    delta_p_max_bar: 2.0
     fouling_factor_dp: 0.002
     ph_bind: 7.0
     cond_bind_mM_max: 200.0
@@ -195,22 +218,22 @@ capture:
     elute_salt_mM: 500.0
     temperature_c: 22.0
     dbc_base_mg_per_ml: 60.0
-    dbc_cond_slope: -0.08
-    dna_competition_coeff: 0.0005
+    dbc_cond_slope: -0.0008
+    dna_competition_coeff: 0.0001
     mass_transfer_beta: 0.5
     rt_ref_min: 4.0
-    target_recovery_pct: 92.0
+    target_recovery_pct: 94.0
     target_pool_cond_mM: 450.0
     uv_pooling_rule: conductivity_window
     utilization_fraction: 0.9
     columns_in_service: 2
     equilibration_bv: 3.0
-    wash1_bv: 2.0
-    wash2_bv: 1.0
-    elution_bv: 4.0
-    strip_bv: 1.0
-    cip_bv: 1.0
-    reequil_bv: 2.0
+    wash1_bv: 3.0
+    wash2_bv: 0.0
+    elution_bv: 3.0
+    strip_bv: 2.0
+    cip_bv: 3.0
+    reequil_bv: 3.0
     resin_fee_per_l_per_cycle: 25.0
     column_rental_per_day: 0.0
     column_setup_fee_per_campaign: 0.0
@@ -275,9 +298,11 @@ dsp04:
   stage_order: []
   stages:
     aex_repeat:
-      enabled: false
+      # DSP04 follow-up: enable when downstream analytics flag DNA/anion issues
+      enabled: true
     cex_negative:
-      enabled: false
+      # Default polish after chitosan pH-mode (chitosan removal)
+      enabled: true
     hic_flowthrough:
       enabled: false
     mixedbed_iex:
@@ -285,7 +310,8 @@ dsp04:
     enzymatic_tidyup:
       enabled: false
   sterile_filter:
-    flux_lmh: 300.0
+    # Sterile filter conservative settings (Biosteam BD Module Specs/DSP04-Polish & Sterile Finish Followup.md)
+    flux_lmh: 250.0
     max_dp_bar: 1.5
-    adsorption_loss_fraction: 0.0025
+    adsorption_loss_fraction: 0.0005
     prefilter_enabled: false

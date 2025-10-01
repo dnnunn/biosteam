@@ -22,7 +22,10 @@ This note consolidates the baseline configuration and available overrides for th
     - Lactose: `usp00_lactose_rich.yaml`, `usp00_lactose_defined.yaml`
     - Method toggles: `usp02_batch.yaml`, `usp02_fedbatch.yaml`, `usp02_continuous.yaml` encode Batch/FedBatch/Continuous cycle time, titers, and O₂ policies.
 
-Each YAML carries the scenario feed volumes, carbon totals, media type, and yield proxy flags.
+Each carbon-source YAML now bundles the matching USP01 seed plan (media loads, nutrient
+costs) with the USP02 fermentation settings so parity runs don’t mix glucose seed media
+with glycerol/molasses production batches. Each file carries scenario feed volumes, carbon
+totals, media type, and yield proxy flags.
 
 ## Cell Removal (USP03)
 - **Baseline auto-selection:** `baseline_defaults.yaml:cell_removal`

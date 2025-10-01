@@ -1,3 +1,26 @@
+seed:
+  method: TwoStage_Bioreactor
+  derived:
+    seed_stage_count: 2
+    seed_total_time_h: 48.0
+    viability_fraction: 0.95
+    yeast_extract_per_batch_kg: 330.0
+    peptone_per_batch_kg: 500.0
+    labor_hours_per_batch: 14.0
+    media_cost_per_batch_usd: 0.0
+    cip_sip_time_h: 4.0
+    carbon_source: molasses
+    feed_carbon_concentration_g_per_l: 500.0
+    initial_carbon_concentration_g_per_l: 20.0
+    total_nutrient_concentration_g_per_l: 30.0
+    wet_cell_density_g_per_l: 190.0
+    seed_glucose_conversion_fraction: 0.0
+  specs:
+    yeast_extract_concentration_g_per_l: 8.5
+    peptone_concentration_g_per_l: 12.5
+    yeast_extract_cost_per_kg: 12.0
+    peptone_cost_per_kg: 15.0
+
 fermentation:
   method: molasses_defined
   feed:
@@ -21,3 +44,16 @@ fermentation:
     product_yield_biomass: 0.066
     media_cost_per_batch_usd: 0.0
     molasses_cost_per_kg: 0.55
+  media:
+    base: BSM_KLi
+    ptm1_mL_per_L: 4.2
+    nitrogen:
+      mode: NH4OH
+      nh4oh_wt_pct: 28
+    csl:
+      enable: false
+      g_per_l: 20.0
+      usd_per_kg: 1.5
+    costs:
+      salts_usd_per_m3: 30.0
+      ptm1_usd_per_m3: 5.0

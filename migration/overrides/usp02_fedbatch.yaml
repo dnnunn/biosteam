@@ -23,3 +23,16 @@ fermentation:
     antifoam_dosage: 0.05
     blower_power_density_kw_m3: 1.6
     o2_cost_per_kg: 0.45
+  media:
+    base: BSM_KLi
+    ptm1_mL_per_L: 4.2
+    nitrogen:
+      mode: NH4OH
+      nh4oh_wt_pct: 28
+    csl:
+      enable: false
+      g_per_l: 20.0
+      usd_per_kg: 1.5
+    costs:
+      salts_usd_per_m3: 30.0
+      ptm1_usd_per_m3: 5.0

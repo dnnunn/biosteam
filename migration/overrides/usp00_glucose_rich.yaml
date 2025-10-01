@@ -1,3 +1,26 @@
+seed:
+  method: TwoStage_Bioreactor
+  derived:
+    seed_stage_count: 2
+    seed_total_time_h: 48.0
+    viability_fraction: 0.95
+    yeast_extract_per_batch_kg: 330.0
+    peptone_per_batch_kg: 500.0
+    labor_hours_per_batch: 14.0
+    media_cost_per_batch_usd: 1650.0
+    cip_sip_time_h: 4.0
+    carbon_source: glucose
+    feed_carbon_concentration_g_per_l: 500.0
+    initial_carbon_concentration_g_per_l: 20.0
+    total_nutrient_concentration_g_per_l: 30.0
+    wet_cell_density_g_per_l: 190.0
+    seed_glucose_conversion_fraction: 0.0
+  specs:
+    yeast_extract_concentration_g_per_l: 8.5
+    peptone_concentration_g_per_l: 12.5
+    yeast_extract_cost_per_kg: 12.0
+    peptone_cost_per_kg: 15.0
+
 fermentation:
   method: glucose_rich
   feed:
@@ -5,16 +28,16 @@ fermentation:
     carbon_source: glucose
     media_type: rich
     oxygen_enrichment_fraction: 0.05
-    target_titer_g_per_l: 4.0
+    target_titer_g_per_l: 4.285714285714286
     yield_proxy: literature_glucose
   derived:
-    total_glucose_feed_kg: 7800.0
+    total_glucose_feed_kg: 8125.0
     total_glycerol_feed_kg: 0.0
     total_molasses_feed_kg: 0.0
-    product_out_kg: 280.0
-    antifoam_volume_l: 40.0
-    nh3_consumption_kg: 250.0
-    pH_base_consumption_kg: 50.0
+    product_out_kg: 300.0
+    antifoam_volume_l: 58.33333333333333
+    nh3_consumption_kg: 233.33333333333334
+    pH_base_consumption_kg: 46.666666666666664
   specs:
     biomass_yield_glucose: 0.48
     product_yield_biomass: 0.0714286

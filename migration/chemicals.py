@@ -111,6 +111,15 @@ LUMP_COMPONENTS = {
         'Cp': 2.10,
         'S0': (0.70, 'J/g/K'),
     },
+    'Molasses': {
+        'formula': 'CH1.8O0.8',
+        'phase': 'l',
+        'MW': 200.0,
+        'rho': 1350.0,
+        'Hf': (-2.5e3, 'J/g'),
+        'Cp': 3.5,
+        'S0': (1.10, 'J/g/K'),
+    },
 }
 
 
@@ -120,6 +129,9 @@ DEFAULT_COMPONENTS = [
     'N2',
     'CO2',
     'Glucose',
+    'Glycerol',
+    'Lactose',
+    'Molasses',
     'Yeast',
     'YeastExtract',
     'Peptone',

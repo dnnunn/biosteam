@@ -548,6 +548,10 @@ def build_concentration_chain(
         vrr = _safe_fraction(specs.volume_reduction_ratio, 1.0)
         if vrr <= 0:
             vrr = 1.0
+        elif vrr > 6.0:
+            notes.append(
+                "UF VRR exceeds 6×; review viscosity/TMP limits before accepting this target"
+            )
         if current_volume is None:
             current_volume_local = _coerce(feed_cfg.get("volume_l"))
         else:
@@ -607,6 +611,10 @@ def build_concentration_chain(
         plan = _make_plan(stage_key, specs)
 
         dia_volumes = _safe_fraction(specs.dia_volumes, 0.0)
+        if dia_volumes > 2.0:
+            notes.append(
+                "Diafiltration ND > 2; expect additional yield/time penalties"
+            )
         recovery = _safe_fraction(specs.protein_recovery_fraction, 0.99)
         product_out = None if current_product is None else max(current_product * recovery, 0.0)
         buffer_volume_l = 0.0
@@ -659,6 +667,10 @@ def build_concentration_chain(
         plan = _make_plan(stage_key, specs)
 
         conc_factor = _safe_fraction(specs.concentration_factor, 2.0)
+        if conc_factor > 4.0:
+            notes.append(
+                "SPTFF concentration factor > 4×; verify staged TMP/viscosity before proceeding"
+            )
         recovery = _safe_fraction(specs.protein_recovery_fraction, 0.98)
         product_out = None if current_product is None else max(current_product * recovery, 0.0)
         output_volume = None

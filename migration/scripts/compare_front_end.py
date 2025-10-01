@@ -10,7 +10,7 @@ from typing import Iterable, Mapping
 import biosteam as bst
 import numpy as np
 
-from migration.baseline_metrics import load_baseline_metrics
+from migration.baseline_metrics import BaselineMetrics, load_baseline_metrics
 from migration.front_end import build_front_end_section
 
 
@@ -38,6 +38,11 @@ def parse_args() -> argparse.Namespace:
         "--baseline-config",
         type=Path,
         help="Path to baseline YAML overrides (defaults to migration/baseline_defaults.yaml)",
+    )
+    parser.add_argument(
+        "--baseline-metrics-json",
+        type=Path,
+        help="Optional JSON metrics snapshot (tests/opn/baseline_metrics.json) to use instead of reading the Excel workbook",
     )
     parser.add_argument(
         "--detailed",
@@ -146,7 +151,13 @@ def _print_unit_details(
 
 def main() -> None:
     args = parse_args()
-    metrics = load_baseline_metrics(workbook_path=args.workbook, config_path=args.config)
+    if args.baseline_metrics_json:
+        metrics = BaselineMetrics.from_json(args.baseline_metrics_json)
+    else:
+        metrics = load_baseline_metrics(
+            workbook_path=args.workbook,
+            config_path=args.config,
+        )
 
     bst.main_flowsheet.clear()
     section = build_front_end_section(

@@ -14,7 +14,7 @@ from migration.front_end import build_front_end_section
 from migration.baseline_metrics import BaselineMetrics
 
 FIXTURE_PATH = Path(__file__).with_name("baseline_metrics.json")
-WORKBOOK_PATH = Path("BaselineModel.xlsx")
+WORKBOOK_PATH = Path("Revised Baseline Excel Model.xlsx")
 BASELINE_CONFIG_PATH = Path("migration/baseline_defaults.yaml")
 
 

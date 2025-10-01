@@ -125,6 +125,32 @@ ProdBase (abstract)
 
 ------
 
+# Scenario parity capture
+
+- Use `migration/scripts/export_carbon_overrides.py` to snapshot Excel vs BioSTEAM checkpoints
+  for each carbon-source override (`usp00_*`). Example:
+
+```bash
+python -m migration.scripts.export_carbon_overrides \
+  --out tmp/carbon_parity.json \
+  --csv tmp/carbon_parity.csv \
+  --max-delta 5 \
+  --max-delta-pct 0.05
+```
+
+- The JSON payload lists mass-trail stages, batch-level cost metrics, and material breakdown
+  entries. Hydrate the Excel columns referenced in `migration/baseline_metrics_map.yaml`
+  before exporting so the captured “excel” values reflect the workbook scenario we’re
+  reconciling against.
+- The CSV companion and optional `--max-delta` / `--max-delta-pct` flags give quick
+  validation feedback; the command exits non-zero when any absolute or relative delta
+  exceeds the thresholds.
+- Record the target Excel cells/assumptions for each scenario in this section once the
+  parity numbers are finalized; these notes become the regression spec when BioSTEAM unit
+  swaps begin.
+
+------
+
 # Selector logic
 
 - If `Target_Titer<15 g/L` → Batch acceptable.
@@ -140,4 +166,3 @@ ProdBase (abstract)
 - Warn if `Batch_Time` exceeds 7 d.
 - Flag if antifoam addition > spec (risk OTR penalty).
 - Ensure inoculum volume ≥5% working volume.
-

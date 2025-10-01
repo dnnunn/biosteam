@@ -9,7 +9,7 @@ from typing import Dict, Iterable, Mapping, Optional
 import json
 import math
 
-import pandas as pd
+from openpyxl import load_workbook
 import yaml
 
 __all__ = [
@@ -49,6 +49,34 @@ class BaselineMetrics:
             "materials_cost_breakdown": dict(self.materials_cost_breakdown),
         }
 
+    @classmethod
+    def from_json(cls, path: Path | str) -> "BaselineMetrics":
+        path = Path(path)
+        with path.open("r", encoding="utf-8") as handle:
+            data = json.load(handle)
+
+        def _get_float(key: str) -> Optional[float]:
+            value = data.get(key)
+            if value is None:
+                return None
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                return None
+
+        return cls(
+            workbook_path=Path(data.get("workbook", "")),
+            mass_trail={k: float(v) for k, v in data.get("mass_trail", {}).items()},
+            final_product_kg=float(data["final_product_kg"]),
+            cost_per_kg_usd=_get_float("cost_per_kg_usd"),
+            total_cost_per_batch_usd=_get_float("total_cost_per_batch_usd"),
+            cmo_fees_usd=_get_float("cmo_fees_usd"),
+            materials_cost_per_batch_usd=_get_float("materials_cost_per_batch_usd"),
+            materials_cost_breakdown={
+                k: float(v) for k, v in data.get("materials_cost_breakdown", {}).items()
+            },
+        )
+
 
 def export_baseline_metrics(
     *,
@@ -78,36 +106,43 @@ def load_baseline_metrics(
         raise FileNotFoundError(f"Baseline workbook not found: {workbook_path}")
 
     config = _load_config(config_path)
-    mass_trail = {}
-    for name, cell in config["mass_trail"].items():
-        value = _read_cell(workbook_path, cell)
-        if value is None:
-            raise ValueError(f"Failed to read mass-trail cell {cell!r} for {name}")
-        mass_trail[name] = value
 
-    final_product_cell = config["final_product"]["cell"]
-    final_product = _read_cell(workbook_path, final_product_cell)
-    if final_product is None:
-        raise ValueError(
-            f"Failed to read final product cell {final_product_cell!r}; update the map"
+    wb = load_workbook(workbook_path, data_only=True, read_only=True)
+    try:
+        mass_trail = {}
+        for name, descriptor in config["mass_trail"].items():
+            value = _read_cell(descriptor, wb)
+            if value is None:
+                raise ValueError(
+                    f"Failed to read mass-trail cell {descriptor!r} for {name}"
+                )
+            mass_trail[name] = value
+
+        final_product_cell = config["final_product"]["cell"]
+        final_product = _read_cell(final_product_cell, wb)
+        if final_product is None:
+            raise ValueError(
+                f"Failed to read final product cell {final_product_cell!r}; update the map"
+            )
+
+        cost_per_kg_cell = config.get("cost_per_kg", {}).get("cell")
+        cost_per_kg = _read_cell(cost_per_kg_cell, wb) if cost_per_kg_cell else None
+
+        total_cost_cell = config.get("total_cost_per_batch", {}).get("cell")
+        total_cost_per_batch = (
+            _read_cell(total_cost_cell, wb) if total_cost_cell else None
         )
 
-    cost_per_kg_cell = config.get("cost_per_kg", {}).get("cell")
-    cost_per_kg = _read_cell(workbook_path, cost_per_kg_cell) if cost_per_kg_cell else None
+        cmo_fees_cell = config.get("cmo_fees", {}).get("cell")
+        cmo_fees = _read_cell(cmo_fees_cell, wb) if cmo_fees_cell else None
 
-    total_cost_cell = config.get("total_cost_per_batch", {}).get("cell")
-    total_cost_per_batch = (
-        _read_cell(workbook_path, total_cost_cell) if total_cost_cell else None
-    )
-
-    cmo_fees_cell = config.get("cmo_fees", {}).get("cell")
-    cmo_fees = _read_cell(workbook_path, cmo_fees_cell) if cmo_fees_cell else None
-
-    material_breakdown: Dict[str, float] = {}
-    for key, cell in config.get("materials_costs", {}).items():
-        value = _read_cell(workbook_path, cell)
-        if value is not None:
-            material_breakdown[key] = value
+        material_breakdown: Dict[str, float] = {}
+        for key, descriptor in config.get("materials_costs", {}).items():
+            value = _read_cell(descriptor, wb)
+            if value is not None:
+                material_breakdown[key] = value
+    finally:
+        wb.close()
 
     return BaselineMetrics(
         workbook_path=workbook_path,
@@ -146,32 +181,54 @@ def _validate_config(data: Mapping[str, object]) -> None:
         raise ValueError(f"Baseline config missing keys: {sorted(missing)}")
 
 
-def _read_cell(workbook: Path, descriptor: Optional[str]) -> Optional[float]:
+def _read_cell(descriptor: Optional[str], workbook) -> Optional[float]:
     if not descriptor:
         return None
-    sheet, row, col = _parse_cell_descriptor(descriptor)
+
+    descriptor = descriptor.strip()
+    if not descriptor:
+        return None
+
+    if "!" not in descriptor:
+        defined = workbook.defined_names.get(descriptor)
+        if defined is None:
+            return None
+        destinations = list(defined.destinations)
+        if not destinations:
+            return None
+        sheet_name, address = destinations[0]
+        if not address:
+            return None
+        return _read_cell(f"{sheet_name}!{address}", workbook)
+
+    sheet, cell = descriptor.split("!", 1)
+    sheet = sheet.strip()
+    cell = cell.strip()
     try:
-        df = pd.read_excel(
-            workbook,
-            sheet_name=sheet,
-            header=None,
-            skiprows=row,
-            nrows=1,
-            usecols=[col],
-        )
+        ws = workbook[sheet]
+    except KeyError:
+        return None
+    try:
+        raw = ws[cell].value
     except Exception:
         return None
-    try:
-        raw = df.iloc[0, 0]
-    except (IndexError, ValueError):
+    return _coerce_float(raw)
+
+
+def _coerce_float(value: object | None) -> Optional[float]:
+    if value is None:
         return None
+    if isinstance(value, (int, float)):
+        if isinstance(value, float) and math.isnan(value):
+            return None
+        return float(value)
     try:
-        value = float(raw)
+        number = float(str(value).strip())
     except (TypeError, ValueError):
         return None
-    if math.isnan(value):
+    if math.isnan(number):
         return None
-    return value
+    return number
 
 
 def _parse_cell_descriptor(descriptor: str) -> tuple[str, int, int]:
