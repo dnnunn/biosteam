@@ -21,6 +21,7 @@ class StageCostRates:
     per_kg_product: float = 0.0
     per_hour: float = 0.0
     per_m2_membrane: float = 0.0
+    minimum_hours: float = 0.0
     notes: list[str] = field(default_factory=list)
 
 
@@ -73,6 +74,7 @@ def load_cmo_profile(path: Optional[Path | str]) -> CMOCostProfile:
             per_kg_product=_as_float(cfg.get("per_kg_product")),
             per_hour=_as_float(cfg.get("per_hour")),
             per_m2_membrane=_as_float(cfg.get("per_m2_membrane")),
+            minimum_hours=_as_float(cfg.get("minimum_hours")),
             notes=[str(note) for note in cfg.get("notes", [])] if isinstance(cfg.get("notes"), list) else [],
         )
 
@@ -107,10 +109,14 @@ def evaluate_stage_cost(
         components["per_kg_product"] = cost
         total += cost
 
-    if rates.per_hour and hours:
-        cost = rates.per_hour * hours
-        components["per_hour"] = cost
-        total += cost
+    effective_hours = hours
+    if rates.per_hour:
+        if effective_hours < rates.minimum_hours:
+            effective_hours = rates.minimum_hours
+        cost = rates.per_hour * effective_hours if effective_hours else 0.0
+        if cost:
+            components["per_hour"] = cost
+            total += cost
 
     if rates.per_m2_membrane and membrane_area_m2:
         cost = rates.per_m2_membrane * membrane_area_m2

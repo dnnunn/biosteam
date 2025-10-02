@@ -12,11 +12,14 @@ stages:
       - Apply to batch_cycle_hours + turnaround_time_hours
   dsp_suite:
     per_hour: 2812.5            # 75k DSP-day with 10% campaign discount -> 67,500 / 24 h
+    minimum_hours: 24.0         # charge a full DSP day even if the calculated occupancy is shorter
+    fixed_per_batch: 6645.0     # covers campaign CIP/prep that Excel treated as part of the day rate
     notes:
       - Downstream suite day rate (PROJ02 DSP_Daily_Rate × (1 - DSP_Campaign_Discount))
       - Allocate against total downstream processing hours per batch
   spray_dryer:
     per_hour: 950.0             # 1,000 USD/h toll with 5% campaign discount
+    minimum_hours: 6.0          # minimum spray slot charged by the CMO (historical baseline)
     notes:
       - Spray dryer hourly toll (PROJ02 Spray_Dryer_Hourly_Rate × (1 - Spray_Dryer_Campaign_Discount))
   labor:

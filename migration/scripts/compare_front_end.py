@@ -1,9 +1,10 @@
-"""Compare BioSTEAM front-end outputs against Excel baseline checkpoints."""
+"""Compare BioSTEAM front-end outputs against a reference baseline snapshot."""
 
 from __future__ import annotations
 
 import argparse
 from collections import defaultdict
+import math
 from pathlib import Path
 from typing import Iterable, Mapping
 
@@ -19,20 +20,29 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--workbook",
         type=Path,
-        default=Path("BaselineModel.xlsx"),
-        help="Path to the Excel baseline workbook (default: %(default)s)",
+        default=Path("Revised Baseline Excel Model.xlsx"),
+        help=(
+            "Legacy workbook path. Only required for historical parity checks; "
+            "the BioSTEAM baseline no longer consumes it by default."
+        ),
     )
     parser.add_argument(
         "--config",
         type=Path,
         default=Path("migration/baseline_metrics_map.yaml"),
-        help="Cell mapping config (default: %(default)s)",
+        help=(
+            "Mapping between workbook cells and metrics (used only when the workbook "
+            "parity mode is explicitly requested)."
+        ),
     )
     parser.add_argument(
         "--mode",
-        choices=["excel", "baseline"],
-        default="excel",
-        help="Data source mode: Excel parity or BioSTEAM baseline (default: %(default)s)",
+        choices=["baseline", "excel"],
+        default="baseline",
+        help=(
+            "Comparison mode. 'baseline' uses BioSTEAM-generated metrics as the reference; "
+            "'excel' falls back to the legacy workbook mapping."
+        ),
     )
     parser.add_argument(
         "--baseline-config",
@@ -67,6 +77,19 @@ def _format_value(value: object) -> str:
     if isinstance(value, float):
         return f"{value:.6g}"
     return str(value)
+
+
+def _stream_component_mass(stream: bst.Stream, component: str) -> float | None:
+    if stream is None or not hasattr(stream, "imass"):
+        return None
+    try:
+        value = stream.imass[component]
+    except Exception:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
 
 
 def _print_plan_details(unit: bst.Unit) -> None:
@@ -151,8 +174,9 @@ def _print_unit_details(
 
 def main() -> None:
     args = parse_args()
-    if args.baseline_metrics_json:
-        metrics = BaselineMetrics.from_json(args.baseline_metrics_json)
+    if args.mode == "baseline":
+        metrics_path = args.baseline_metrics_json or Path("tests/opn/baseline_metrics.json")
+        metrics = BaselineMetrics.from_json(metrics_path)
     else:
         metrics = load_baseline_metrics(
             workbook_path=args.workbook,
@@ -160,8 +184,9 @@ def main() -> None:
         )
 
     bst.main_flowsheet.clear()
+    defaults_arg = str(args.workbook) if args.mode == "excel" else None
     section = build_front_end_section(
-        str(args.workbook),
+        defaults_arg,
         mode=args.mode,
         baseline_config=args.baseline_config,
     )
@@ -173,47 +198,122 @@ def main() -> None:
     except (KeyError, TypeError):
         dry_product_mass = spray_product.F_mass
 
-    checkpoints = [
-        ("Final product", dry_product_mass, metrics.final_product_kg),
+    checkpoints = []
+
+    # Final product – stream-based mass already available
+    checkpoints.append(
+        (
+            "Final product",
+            metrics.final_product_kg,
+            section.spray_dryer_unit.plan.derived.get("product_out_kg"),
+            dry_product_mass,
+        )
+    )
+
+    checkpoints.append(
         (
             "Fermentation",
-            section.fermentation_unit.plan.derived.get("product_out_kg"),
             metrics.mass_trail["product_preharvest_kg"],
-        ),
+            section.fermentation_unit.plan.derived.get("product_out_kg"),
+            _stream_component_mass(section.fermentation_unit.outs[1], "Osteopontin"),
+        )
+    )
+
+    checkpoints.append(
         (
             "Cell removal",
-            section.microfiltration_unit.plan.derived.get("product_out_kg"),
             metrics.mass_trail["product_after_microfiltration_kg"],
-        ),
+            section.microfiltration_unit.plan.derived.get("product_out_kg"),
+            _stream_component_mass(section.microfiltration_unit.outs[0], "Osteopontin"),
+        )
+    )
+
+    checkpoints.append(
         (
             "UF/DF",
-            section.ufdf_unit.plan.derived.get("product_out_kg"),
             metrics.mass_trail["product_after_ufdf_kg"],
-        ),
+            section.ufdf_unit.plan.derived.get("product_out_kg"),
+            _stream_component_mass(section.ufdf_unit.outs[0], "Osteopontin"),
+        )
+    )
+
+    checkpoints.append(
         (
             "Chromatography",
-            section.chromatography_unit.plan.derived.get("product_out_kg"),
             metrics.mass_trail["product_after_chromatography_kg"],
-        ),
+            section.chromatography_unit.plan.derived.get("product_out_kg"),
+            _stream_component_mass(section.chromatography_unit.outs[0], "Osteopontin"),
+        )
+    )
+
+    checkpoints.append(
         (
             "Predry",
-            section.predrying_unit.plan.derived.get("product_out_kg"),
             metrics.mass_trail["product_after_predry_kg"],
-        ),
-    ]
+            section.predrying_unit.plan.derived.get("product_out_kg"),
+            _stream_component_mass(section.predrying_unit.outs[0], "Osteopontin"),
+        )
+    )
 
-    print(f"Excel baseline: {metrics.workbook_path}")
+    reference_label = "Baseline" if args.mode == "baseline" else "Excel"
+    plan_label = "Plan target"
+    stream_label = "Stream"
+
+    if getattr(metrics, "workbook_path", None):
+        print(f"Reference source: {metrics.workbook_path}")
+
+    print(
+        "NOTE: Plan targets currently reflect the configured baseline defaults. "
+        "Stream values come from the simulated BioSTEAM unit outputs."
+    )
+
     print("\nMass trail comparison (kg):")
-    print(f"{'Stage':20} {'Excel':>12} {'BioSTEAM':>12} {'Δ':>12} {'Δ%':>8}")
-    for stage, observed, expected in checkpoints:
-        if expected is None or observed is None:
-            delta = rel = np.nan
-        else:
-            delta = observed - expected
-            rel = delta / expected if expected else np.nan
+    print(
+        f"{'Stage':20} {reference_label:>12} {plan_label:>14} {stream_label:>12} "
+        f"{'Plan Δ':>12} {'Stream Δ':>12}"
+    )
+
+    training_wheel_notes: list[str] = []
+    for stage, baseline_value, plan_value, stream_value in checkpoints:
+        if baseline_value is None:
+            baseline_value = math.nan
+        plan_delta = (
+            plan_value - baseline_value
+            if plan_value is not None and not math.isnan(baseline_value)
+            else math.nan
+        )
+        stream_delta = (
+            stream_value - baseline_value
+            if stream_value is not None and not math.isnan(baseline_value)
+            else math.nan
+        )
+
+        tolerance = 1e-3
+        if (
+            plan_value is not None
+            and stream_value is not None
+            and not math.isnan(plan_value)
+            and not math.isnan(stream_value)
+            and abs(plan_value - stream_value) > tolerance
+        ):
+            training_wheel_notes.append(
+                f"{stage}: plan target {plan_value:.3f} kg vs. stream {stream_value:.3f} kg"
+            )
+
+        def _fmt(value: float | None) -> str:
+            if value is None or math.isnan(value):
+                return "   N/A"
+            return f"{value:12.3f}"
+
         print(
-            f"{stage:20} {expected:12.3f} {observed:12.3f} "
-            f"{delta:12.3f} {rel:8.2%}"
+            f"{stage:20} {_fmt(baseline_value)} {_fmt(plan_value)} {_fmt(stream_value)} "
+            f"{_fmt(plan_delta)} {_fmt(stream_delta)}"
+        )
+
+    if training_wheel_notes:
+        print(
+            "\n⚠ Units still using plan targets: "
+            + "; ".join(training_wheel_notes)
         )
 
     print("\nCost summary (USD):")
@@ -232,7 +332,9 @@ def main() -> None:
         ("Cost per kg", metrics.cost_per_kg_usd, section.cost_per_kg_usd),
     ]
 
-    print(f"{'Metric':25} {'Excel':>15} {'BioSTEAM':>15} {'Δ':>15} {'Δ%':>8}")
+    print(
+        f"{'Metric':25} {reference_label:>15} {plan_label:>15} {'Δ':>15} {'Δ%':>8}"
+    )
     for label, excel_value, biosteam_value in cost_rows:
         if excel_value is None or biosteam_value is None:
             delta = rel = np.nan
@@ -247,7 +349,7 @@ def main() -> None:
 
     if metrics.materials_cost_breakdown:
         print("\nMaterials cost breakdown (USD):")
-        print(f"{'Component':25} {'Excel':>15} {'BioSTEAM':>15} {'Δ':>15} {'Δ%':>8}")
+        print(f"{'Component':25} {reference_label:>15} {plan_label:>15} {'Δ':>15} {'Δ%':>8}")
         for key, excel_value in sorted(metrics.materials_cost_breakdown.items()):
             bs_value = section.material_cost_breakdown.get(key)
             if excel_value is None or bs_value is None:
