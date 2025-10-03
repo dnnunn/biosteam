@@ -70,7 +70,12 @@ def show_module(loader: ExcelModuleDefaults, module: str, option: str | None, as
 
 def parse_args(argv: Iterable[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("workbook", type=Path, help="Path to the Excel workbook")
+    parser.add_argument(
+        "--defaults",
+        type=Path,
+        default=Path(__file__).resolve().parent.parent / "module_defaults.yaml",
+        help="Path to the module defaults snapshot (YAML)",
+    )
     parser.add_argument("--module", help="Module identifier (e.g., USP00)")
     parser.add_argument("--option", help="Module option (e.g., USP00a)")
     parser.add_argument(
@@ -93,7 +98,7 @@ def parse_args(argv: Iterable[str] | None = None) -> argparse.Namespace:
 
 def main(argv: Iterable[str] | None = None) -> None:
     args = parse_args(argv)
-    loader = ExcelModuleDefaults(args.workbook)
+    loader = ExcelModuleDefaults(args.defaults)
 
     if args.list or not args.module:
         list_modules(loader, active_only=not args.include_inactive)

@@ -17,3 +17,15 @@ Commits should be concise, present-tense summaries (e.g., `fix pressure bug`, `a
 
 ## Documentation & Support
 Run `make html` inside `docs/` (after installing Sphinx extras) to validate documentation before release. Questions on modelling patterns should be captured in `SessionSummaries/` or escalated through GitHub Discussions rather than ad-hoc chats. Keep `SETUP_GUIDE.md` aligned with any environment assumptions you introduce.
+
+## Agent Startup Checklist
+> These commands must be run manually by the user before any Python tooling that
+> depends on BioSTEAM/ThermoSTEAM. Agents should **not** execute them directly.
+
+- Activate the shared Conda env before running tools:
+  `conda activate /Users/davidnunn/Desktop/Apps/Biosteam/.conda-envs/biosteam310`
+- Prime `PYTHONPATH` so BioSTEAM/ThermoSTEAM modules import correctly:
+  `export PYTHONPATH=".:pkgs/biosteam/src:pkgs/thermosteam/src"`
+- Refresh the regression snapshot whenever any front-end model or defaults change:
+  `python3 -m migration.scripts.export_baseline_metrics`
+  (run from the repo root after the environment steps above, then commit the regenerated `tests/opn/baseline_metrics.json`.)

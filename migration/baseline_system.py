@@ -1,4 +1,4 @@
-"""Baseline BioSTEAM system builder using Excel-derived defaults."""
+"""Baseline BioSTEAM system builder using static module defaults."""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ class BaselineSystem:
 
 
 def build_baseline_system(
-    workbook_path: str,
+    defaults_path: str,
     *,
     registry: ModuleRegistry,
     module_sequence: Optional[Iterable[ModuleKey]] = None,
@@ -45,7 +45,7 @@ def build_baseline_system(
     Parameters
     ----------
     workbook_path:
-        Path to the Excel workbook.
+        Path to the module defaults snapshot (YAML).
     registry:
         Module registry containing builder callables for the modules we plan to
         instantiate.
@@ -54,10 +54,10 @@ def build_baseline_system(
         ``DEFAULT_MODULE_SEQUENCE``.
     defaults_loader:
         Optional pre-constructed :class:`ExcelModuleDefaults` instance.  If
-        omitted, one is created internally using *workbook_path*.
+        omitted, one is created internally using *defaults_path*.
     """
 
-    loader = defaults_loader or ExcelModuleDefaults(workbook_path)
+    loader = defaults_loader or ExcelModuleDefaults(defaults_path)
     system = BaselineSystem()
 
     sequence = list(module_sequence or DEFAULT_MODULE_SEQUENCE)

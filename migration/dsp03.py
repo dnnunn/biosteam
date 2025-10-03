@@ -136,6 +136,13 @@ class DSP03PassthroughUnit(PlanBackedUnit):
         product = self.outs[0]
         product.copy_like(feed)
 
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(product)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(product)
+
 
 def _select_route(route: DSP03Route, handoff: CaptureHandoff) -> DSP03Route:
     if route is not DSP03Route.AUTO:

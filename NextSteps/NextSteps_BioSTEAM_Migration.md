@@ -1,6 +1,21 @@
 # BioSTEAM Migration Next Steps
 
 ## Short-Term Build Targets
+- **Excel decoupling plan** *(new priority)*:
+  - **To-dos**
+    1. Replace `ExcelModuleDefaults` ingestion with a static YAML/JSON bundle that mirrors the workbook parameters (module specs, costs, fluxes, recoveries).
+    2. Refactor `unit_builders`/`module_registry` so plan objects hydrate from the static bundle + baseline overrides; delete `_read_*` workbook fallbacks in `front_end`.
+    3. Move TEA/material cost derivations to BioSTEAM data sources (plan-derived volumes, consumables, rate cards) and drop the Excel calculations lookup.
+    4. Regenerate `tests/opn/baseline_metrics.json` from a BioSTEAM-only run and update `compare_front_end.py` callers/documentation accordingly.
+    5. Sweep remaining scripts/utilities for workbook dependencies; either remove them or gate behind an explicit `--mode excel` flag for historical comparisons.
+  - **Expected outcomes**
+    - All baseline runs succeed without the Excel files present; CI/regression depends solely on BioSTEAM outputs.
+    - Cost breakdowns (materials, membranes, buffers, CMO fees) trace back to plan configuration, making override-driven scenarios self-consistent.
+    - Comparison tooling defaults to the BioSTEAM snapshot, with Excel parity retained only as an optional legacy check.
+  - **Next steps once complete**
+    - Promote static defaults to a shared data package so downstream modules (DSP04, TEA dashboards) can reuse them.
+    - Expand override coverage (carbon feeds, DSP routes) knowing they no longer have hidden spreadsheet dependencies.
+    - Revisit CMO pricing sensitivity using the cleaner TEA inputs.
 - Excel parity + baseline toggle complete. Two parallel tracks now:
   - **Carbon-source parity prep**: finish calibrating the eight USP00 carbon-source overrides and lock their Excel checkpoints before we start swapping unit models.
   - **Cell-removal migration**: keep building the interchangeable BioSTEAM unit stack for USP03 (see tasks below).

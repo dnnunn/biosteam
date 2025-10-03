@@ -473,6 +473,13 @@ class AEXCaptureUnit(PlanBackedUnit):
         waste_stream.T = feed.T
         waste_stream.P = feed.P
 
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(product_stream)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(product_stream)
+
     def _design(self) -> None:
         derived = self.plan.derived
         self.design_results.update(
@@ -565,6 +572,13 @@ class ChitosanCaptureUnit(PlanBackedUnit):
         product_stream.P = feed.P
         waste_stream.T = feed.T
         waste_stream.P = feed.P
+
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(product_stream)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(product_stream)
 
     def _design(self) -> None:
         derived = self.plan.derived

@@ -6,10 +6,8 @@ seed:
   derived:
     working_volume_l: 3500.0
     dcw_concentration_g_per_l: 60.0
-    seed_glucose_conversion_fraction: 0.0
-    yeast_extract_per_batch_kg: 553.0
-    peptone_per_batch_kg: 1106.0
     od600_target: 150
+    od_to_dcw_g_per_l_per_od: 0.4
     wet_cell_density_g_per_l: 190.0
   specs:
     yeast_extract_concentration_g_per_l: 8.5
@@ -19,82 +17,49 @@ seed:
 
 # USP02 production fermentation defaults mirror the outside-CMO guidance
 # captured in Biosteam BD Module Specs/USP02-Production Fermentation Followup.md.
-# They assume the conservative 70 m³ working volume, 6.2 g/L broth titer, and
-# current antifoam/NH3/NaOH usage. Carbon-source switches stay at zero until we
+# They assume the conservative 70 m³ working volume, 5.0 g/L broth target titer,
+# and current antifoam/NH3/NaOH usage. Carbon-source switches stay at zero until we
 # recalibrate those scenarios with BioSTEAM data.
 fermentation:
   derived:
     working_volume_l: 70000.0
     batch_cycle_hours: 72.0
-    target_titer_g_per_l: 6.176470588235295
+    target_titer_g_per_l: 5.0
+    clarified_supernatant_titer_g_per_l: 6.176470588235295
     dcw_concentration_g_per_l: 47.5
-    total_glucose_feed_kg: 8750.0
+    total_glucose_feed_kg: 10572.916666666668
+    od600_target: 150.0
+    od_to_dcw_g_per_l_per_od: 0.31666666666666665
+    maintenance_coefficient_g_glucose_per_gdcw_h: 0.0297
+    loss_fraction_glucose: 0.03
+    specific_productivity_g_per_gdcw_h: 0.00275
+    product_model: specific_productivity
+    nitrogen_requirement_g_per_gdcw: 0.1
+    nh4oh_kg_per_kg_n: 1.0
     total_glycerol_feed_kg: 0.0
     total_molasses_feed_kg: 0.0
-    product_out_kg: 350.0
     antifoam_volume_l: 70.0
     antifoam_cost_per_unit: 10.0
     minor_nutrients_cost_total: 0.0
-    nh3_consumption_kg: 233.33333333333334
-    pH_base_consumption_kg: 46.666666666666664
+    nh3_consumption_kg: 311.5
+    pH_base_consumption_kg: 311.5
     blower_air_vvm: 0.6
     blower_power_kw_per_m3: 1.2
     o2_enrichment_fraction: 0.05
     crude_glycerol_pretreated_kg: 0.0
-    lactose_feed_concentration_g_per_l: 220.0
+    lactose_feed_concentration_g_per_l: 200.0
+    broth_density_kg_per_l: 1.05
   specs:
     turnaround_time_hours: 24.0
     biomass_yield_glucose: 0.48
     product_yield_biomass: 0.0714286
     glucose_cost_per_kg: 0.75
-    antifoam_dosage: 0.05
+    # 0.1 % v/v addition → stored as fraction for consistency
+    antifoam_dosage: 0.001
     ammonia_cost_per_kg: 0.35
     pH_base_cost_per_kg: 0.25
     blower_power_density_kw_m3: 1.2
     o2_cost_per_kg: 0.4
-
-ufdf:
-  derived:
-    input_product_kg: 270.5294117647059
-    input_volume_l: 48666.666666666664
-    output_volume_l: 7000.0
-    product_out_kg: 257.0029411764706
-    diafiltration_volumes: 5.0
-    throughput_l_per_hr: 3000.0
-    membrane_cost_per_cycle: 15.0
-    broth_density_kg_per_l: 1.0
-
-chromatography:
-  derived:
-    input_product_kg: 257.0029411764706
-    eluate_volume_l: 67500.0
-    output_volume_l: 195.32223529411766
-    product_out_kg: 205.6023529411765
-    buffer_cost_per_batch: 803.9175
-    total_buffer_bv: 12.0
-    broth_density_kg_per_l: 1.0
-
-predrying:
-  derived:
-    input_product_kg: 205.6023529411765
-    input_volume_l: 195.32223529411766
-    output_volume_l: 195.32223529411766
-    product_out_kg: 195.32223529411766
-    throughput_l_per_hr: 1225.0
-    membrane_cost_per_cycle: 630.0
-    broth_density_kg_per_l: 1.0
-
-spray_dryer:
-  derived:
-    input_product_kg: 195.32223529411766
-    product_out_kg: 191.41579058823532
-    # DSP05 follow-up: conservative spray dryer defaults
-    capacity_kg_per_hr: 1500.0
-    final_solids_percent: 12.0
-    final_solids_content: 0.12
-    solution_density: 1.05
-    spray_dryer_efficiency: 0.65
-    target_recovery_rate: 0.985
 
 # CMO/TEA scaffolding – baseline toll assumptions drawn from PROJ02 defaults
 # and the vendor follow-up notes. Update these when the commercial model is
@@ -138,6 +103,9 @@ cell_removal:
     flux_lmh: 90.0
     membrane_cost_per_m2: 350.0
     membrane_life_batches: 30.0
+
+microfiltration:
+  derived: {}
 
 concentration:
   method: uf_df
@@ -189,6 +157,9 @@ concentration:
     membrane_cost_per_m2: 260.0
     membrane_life_batches: 30.0
     operation_hours: 16.0
+
+ufdf:
+  derived: {}
 
 capture:
   method: aex
@@ -315,3 +286,18 @@ dsp04:
     max_dp_bar: 1.5
     adsorption_loss_fraction: 0.0005
     prefilter_enabled: false
+
+predrying:
+  derived:
+    throughput_l_per_hr: 1225.0
+    membrane_cost_per_cycle: 12.6
+
+spray_dryer:
+  derived:
+    # DSP05 follow-up: conservative spray dryer defaults
+    capacity_kg_per_hr: 1500.0
+    final_solids_percent: 12.0
+    final_solids_content: 0.12
+    solution_density: 1.05
+    spray_dryer_efficiency: 0.98
+    target_recovery_rate: 0.985

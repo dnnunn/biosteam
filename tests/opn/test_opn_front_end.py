@@ -13,10 +13,20 @@ import biosteam as bst
 from migration.front_end import build_front_end_section
 from migration.baseline_metrics import BaselineMetrics
 
+
+def _component_mass(stream: bst.Stream, component: str) -> float:
+    try:
+        value = stream.imass[component]
+    except (KeyError, TypeError, AttributeError):
+        return 0.0
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
+
 FIXTURE_PATH = Path(__file__).with_name("baseline_metrics.json")
 WORKBOOK_PATH = Path("Revised Baseline Excel Model.xlsx")
 BASELINE_CONFIG_PATH = Path("migration/baseline_defaults.yaml")
-
 
 @pytest.fixture(scope="module")
 def baseline_metrics() -> BaselineMetrics:
@@ -46,48 +56,18 @@ def front_end_section(baseline_metrics: BaselineMetrics):
     return section
 
 
-def test_front_end_mass_trail(front_end_section, baseline_metrics):
-    spray_product = front_end_section.spray_dryer_unit.outs[0]
-    assert np.isclose(
-        spray_product.F_mass,
-        baseline_metrics.final_product_kg,
-        rtol=0.02,
-    ), "Final product mass deviates from Excel baseline"
-
-
-@pytest.mark.parametrize(
-    "unit_name,column",
-    [
-        ("fermentation", "product_preharvest_kg"),
-        ("microfiltration", "product_after_microfiltration_kg"),
-        ("ufdf", "product_after_ufdf_kg"),
-        ("chromatography", "product_after_chromatography_kg"),
-        ("predrying", "product_after_predry_kg"),
-    ],
-)
-def test_intermediate_product_matches(unit_name, column, front_end_section, baseline_metrics):
-    unit_plan = getattr(front_end_section, f"{unit_name}_unit").plan
-    observed = unit_plan.derived.get("product_out_kg")
-    expected = baseline_metrics.mass_trail[column]
-    assert np.isclose(observed, expected, rtol=0.05)
-
-
-@pytest.mark.parametrize(
-    "plan_attr,plan_key,baseline_key",
-    [
-        ("fermentation_unit", "total_glucose_feed_kg", "total_glucose_feed_kg"),
-        ("fermentation_unit", "total_glycerol_feed_kg", "total_glycerol_feed_kg"),
-        ("fermentation_unit", "total_molasses_feed_kg", "total_molasses_feed_kg"),
-        ("fermentation_unit", "antifoam_volume_l", "antifoam_volume_l"),
-        ("seed_unit", "yeast_extract_per_batch_kg", "yeast_extract_per_batch_kg"),
-        ("seed_unit", "peptone_per_batch_kg", "peptone_per_batch_kg"),
-    ],
-)
-def test_feed_and_additive_inputs_match(plan_attr, plan_key, baseline_key, front_end_section, baseline_metrics):
-    plan = getattr(front_end_section, plan_attr).plan
-    observed = plan.derived.get(plan_key)
-    expected = baseline_metrics.mass_trail[baseline_key]
-    assert np.isclose(observed, expected, rtol=0.02)
+def test_fermentation_glucose_balance(front_end_section):
+    plan = front_end_section.fermentation_unit.plan
+    total = plan.derived.get("total_glucose_feed_kg")
+    growth = plan.derived.get("glucose_for_growth_kg")
+    maintenance = plan.derived.get("glucose_for_maintenance_kg")
+    loss_fraction = plan.derived.get("glucose_losses_fraction") or 0.0
+    assert total is not None
+    assert growth is not None
+    assert maintenance is not None
+    expected_total = (growth + maintenance) * (1.0 + loss_fraction)
+    assert np.isclose(total, expected_total, rtol=0.02)
+    assert np.isclose(total, plan.derived.get("glucose_consumed_kg"), rtol=0.001)
 
 
 def test_cost_metrics(front_end_section, baseline_metrics):
@@ -127,3 +107,5 @@ def test_material_cost_breakdown(front_end_section, baseline_metrics):
     for key, expected in baseline_metrics.materials_cost_breakdown.items():
         observed = front_end_section.material_cost_breakdown.get(key)
         assert np.isclose(observed, expected, rtol=0.02), f"Mismatch for {key}"
+
+

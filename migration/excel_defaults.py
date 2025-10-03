@@ -1,36 +1,30 @@
-"""Lean ingestion layer for default module parameters from the Excel cost model.
+"""Static loader for module defaults used by the migration front end.
 
-This module focuses on the ``Inputs and Assumptions`` worksheet used during the
-BetterDairy BioSTEAM migration.  It provides typed containers to capture default
-parameter values keyed by (module, module option) pairs so downstream code can
-construct BioSTEAM units with minimal coupling to the Excel format.
+The historical Excel-based migration relied on scraping the
+``Inputs and Assumptions`` worksheet and associated dropdown metadata to obtain
+module defaults.  To make the toolchain reproducible without the workbook, we
+capture that information in ``module_defaults.yaml`` and expose the same helper
+objects that the rest of the migration code expects.
+
+This module now reads the YAML snapshot at import time and materialises
+``ModuleConfig`` objects that mirror the original Excel-driven structures.
+The public API is unchanged so downstream code can continue to call
+``ExcelModuleDefaults`` even though the implementation no longer touches Excel.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Iterable, Iterator, Mapping, MutableMapping, Optional, Tuple
+from typing import Any, Dict, Iterable, Iterator, Mapping, MutableMapping, Optional, Tuple
 
-import pandas as pd
-
-# Column labels used in the Excel workbook.  They are kept as constants so that we
-# fail fast if the workbook structure changes.
-PARAMETER_COL = "Parameter Name"
-VALUE_COL = "Value"
-UNIT_COL = "Unit"
-NOTES_COL = "Notes"
-MODULE_COL = "Module"
-MODULE_OPTION_COL = "Module_Option"
-DEFAULT_COL = "Default"
-
-DEFAULT_SHEET_NAME = "Inputs and Assumptions"
-DEFAULT_HEADER_ROW = 4  # 0-based offset applied via pandas ``header`` argument
+import math
+import yaml
 
 
 @dataclass(frozen=True)
 class ModuleKey:
-    """Identifier for a module/option combination in the Excel workbook."""
+    """Identifier for a module/option combination."""
 
     module: str
     option: Optional[str] = None
@@ -41,7 +35,7 @@ class ModuleKey:
 
 @dataclass
 class ParameterRecord:
-    """Container for a single Excel parameter row."""
+    """Container for a single parameter entry."""
 
     name: str
     value: Optional[float]
@@ -70,34 +64,25 @@ class ModuleConfig:
 
 
 class ExcelModuleDefaults:
-    """Parse default parameters from the Excel model.
-
-    Parameters
-    ----------
-    workbook_path:
-        Path to the Excel workbook (``.xlsx``).
-    sheet_name:
-        Worksheet containing the parameter table.  Defaults to
-        ``"Inputs and Assumptions"``.
-    header_row:
-        Zero-based row index passed to :func:`pandas.read_excel` for the sheet's
-        header.  The default (4) matches the current workbook layout where the
-        first four rows contain titles and metadata.
-    """
+    """Loader that hydrates module defaults from the static YAML snapshot."""
 
     def __init__(
         self,
-        workbook_path: Path | str,
-        sheet_name: str = DEFAULT_SHEET_NAME,
-        option_sheet_name: str = "Dropdown_Lookup",
-        header_row: int = DEFAULT_HEADER_ROW,
+        data_source: Path | str | None = None,
+        *,
+        workbook_path: Path | str | None = None,
     ) -> None:
-        self.workbook_path = Path(workbook_path)
-        self.sheet_name = sheet_name
-        self.option_sheet_name = option_sheet_name
-        self.header_row = header_row
+        if data_source is None:
+            data_source = Path(__file__).with_name("module_defaults.yaml")
+        self.data_path = Path(data_source)
+        # ``workbook_path`` is kept for backward compatibility with callers that
+        # still pass an Excel path; the attribute now simply records the provided
+        # path (or the YAML path when omitted).
+        if workbook_path is not None:
+            self.workbook_path = Path(workbook_path)
+        else:
+            self.workbook_path = self.data_path
         self._cache: Optional[Dict[ModuleKey, ModuleConfig]] = None
-        self._option_status_cache: Optional[Dict[ModuleKey, bool]] = None
 
     def load_defaults(self) -> Mapping[ModuleKey, ModuleConfig]:
         """Load default parameter rows grouped by module.
@@ -111,36 +96,45 @@ class ExcelModuleDefaults:
         if self._cache is not None:
             return self._cache
 
-        frame = self._read_sheet()
-        frame = self._normalize_columns(frame)
-        option_status = self._load_option_status()
+        if not self.data_path.exists():
+            raise FileNotFoundError(f"Module defaults snapshot not found: {self.data_path}")
+
+        with self.data_path.open("r", encoding="utf-8") as handle:
+            raw_data = yaml.safe_load(handle) or {}
 
         grouped: MutableMapping[ModuleKey, ModuleConfig] = {}
-        for idx, row in frame.iterrows():
-            module = row.get(MODULE_COL)
-            option = row.get(MODULE_OPTION_COL)
-            name = row.get(PARAMETER_COL)
-
-            if (module, option) == ("Module", "Module_Option"):
+        for module_name, options in raw_data.items():
+            if not isinstance(options, Mapping):
                 continue
+            for option_key, payload in options.items():
+                option = _normalize_option(option_key)
+                key = ModuleKey(module=str(module_name), option=option)
+                config = ModuleConfig(key=key)
+                if isinstance(payload, Mapping):
+                    config.mark_active(_coerce_bool(payload.get("active")))
+                    parameters = payload.get("parameters", {})
+                else:
+                    parameters = {}
 
-            if not name or not isinstance(name, str):
-                continue  # Skip unnamed rows
+                if isinstance(parameters, Mapping):
+                    for name, record in parameters.items():
+                        if not isinstance(record, Mapping):
+                            continue
+                        value = _safe_numeric(record.get("value"))
+                        unit = _normalize_str(record.get("unit"))
+                        notes = _normalize_str(record.get("notes"))
+                        source_row = _safe_int(record.get("source_row"))
+                        config.add(
+                            ParameterRecord(
+                                name=str(name),
+                                value=value,
+                                unit=unit,
+                                notes=notes,
+                                source_row=source_row,
+                            )
+                        )
 
-            key = ModuleKey(module=module or "GLOBAL", option=_normalize_str(option))
-            config = grouped.setdefault(key, ModuleConfig(key=key))
-            record = ParameterRecord(
-                name=name,
-                value=_safe_numeric(row.get(VALUE_COL)),
-                unit=_normalize_str(row.get(UNIT_COL)),
-                notes=_normalize_str(row.get(NOTES_COL)),
-                source_row=idx + 1,  # Excel rows are 1-based
-            )
-            config.add(record)
-            status_flag = option_status.get(key)
-            if status_flag is None and key.option is not None:
-                status_flag = option_status.get(ModuleKey(key.module, None))
-            config.mark_active(status_flag if status_flag is not None else bool(row.get(DEFAULT_COL)))
+                grouped[key] = config
 
         self._cache = dict(grouped)
         return self._cache
@@ -198,70 +192,51 @@ class ExcelModuleDefaults:
             for record in config:
                 yield key, record
 
-    def _load_option_status(self) -> Dict[ModuleKey, bool]:
-        if self._option_status_cache is not None:
-            return self._option_status_cache
 
-        try:
-            frame = pd.read_excel(
-                self.workbook_path,
-                sheet_name=self.option_sheet_name,
-                engine="openpyxl",
-            )
-        except ValueError:
-            self._option_status_cache = {}
-            return self._option_status_cache
-
-        frame = frame.dropna(axis=0, how="all")
-        status: Dict[ModuleKey, bool] = {}
-        for _, row in frame.iterrows():
-            module = _normalize_module(row.get(MODULE_COL))
-            option = _normalize_str(row.get(MODULE_OPTION_COL))
-            if (module, option) == ("Module", "Module_Option"):
-                continue
-            key = ModuleKey(module=module or "GLOBAL", option=option)
-            status[key] = _coerce_bool(row.get(DEFAULT_COL))
-
-        self._option_status_cache = status
-        return self._option_status_cache
-
-    def _read_sheet(self) -> pd.DataFrame:
-        if not self.workbook_path.exists():
-            raise FileNotFoundError(f"Workbook not found: {self.workbook_path}")
-
-        frame = pd.read_excel(
-            self.workbook_path,
-            sheet_name=self.sheet_name,
-            header=self.header_row,
-            engine="openpyxl",
-        )
-        frame = frame.dropna(axis=0, how="all").dropna(axis=1, how="all")
-        return frame
-
-    def _normalize_columns(self, frame: pd.DataFrame) -> pd.DataFrame:
-        missing = [col for col in [
-            PARAMETER_COL,
-            VALUE_COL,
-            MODULE_COL,
-            MODULE_OPTION_COL,
-            DEFAULT_COL,
-        ] if col not in frame.columns]
-        if missing:
-            raise KeyError(
-                "Worksheet is missing expected columns: " + ", ".join(missing)
-            )
-
-        frame[DEFAULT_COL] = frame[DEFAULT_COL].apply(_coerce_bool)
-        frame[MODULE_COL] = frame[MODULE_COL].apply(_normalize_module)
-        frame[MODULE_OPTION_COL] = frame[MODULE_OPTION_COL].apply(_normalize_str)
-        frame[PARAMETER_COL] = frame[PARAMETER_COL].apply(_normalize_parameter_name)
-        return frame
+def _normalize_option(option: Any) -> Optional[str]:
+    if option in (None, "<default>"):
+        return None
+    return str(option)
 
 
-def _coerce_bool(value: object) -> bool:
-    if value is None or (isinstance(value, float) and pd.isna(value)):
+def _normalize_str(value: Any) -> Optional[str]:
+    if value is None:
+        return None
+    text = str(value).strip()
+    return text or None
+
+
+def _safe_numeric(value: Any) -> Optional[float]:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        if isinstance(value, float) and math.isnan(value):
+            return None
+        return float(value)
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if not math.isnan(parsed) else None
+
+
+def _safe_int(value: Any) -> Optional[int]:
+    if value is None:
+        return None
+    if isinstance(value, int):
+        return value
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _coerce_bool(value: Any) -> bool:
+    if value is None:
         return False
-    if isinstance(value, (bool, int)):
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
         return bool(value)
     if isinstance(value, str):
         normalized = value.strip().lower()
@@ -269,26 +244,9 @@ def _coerce_bool(value: object) -> bool:
     return False
 
 
-def _normalize_module(value: object) -> str:
-    if not value or (isinstance(value, float) and pd.isna(value)):
-        return "GLOBAL"
-    return str(value).strip()
-
-
-def _normalize_str(value: object) -> Optional[str]:
-    if not value or (isinstance(value, float) and pd.isna(value)):
-        return None
-    text = str(value).strip()
-    return text or None
-
-
-def _normalize_parameter_name(value: object) -> str:
-    if not value or (isinstance(value, float) and pd.isna(value)):
-        return "(unnamed parameter)"
-    return str(value).strip()
-
-
-def _safe_numeric(value: object) -> Optional[float]:
-    if isinstance(value, (int, float)) and not pd.isna(value):
-        return float(value)
-    return None
+__all__ = [
+    "ExcelModuleDefaults",
+    "ModuleConfig",
+    "ModuleKey",
+    "ParameterRecord",
+]

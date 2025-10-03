@@ -181,14 +181,19 @@ class DiscStackCentrifuge(PlanBackedUnit):
         feed = self.ins[0]
         clarified, wet_cake = self.outs
 
-        clarified.copy_like(feed)
-        wet_cake.empty()
-
+        chemicals = getattr(feed, "chemicals", None)
+        component_ids = chemicals.IDs if chemicals is not None else ()
+        feed_T = feed.T
+        feed_P = feed.P
+        initial_masses = {
+            component: float(feed.imass[component])
+            for component in component_ids
+        }
         derived = self.plan.derived
 
-        product_in = _get_component_mass(feed, "Osteopontin")
-        solids_in = _get_component_mass(feed, "Yeast")
-        water_in = _get_component_mass(feed, "Water")
+        product_in = initial_masses.get("Osteopontin", 0.0)
+        solids_in = initial_masses.get("Yeast", 0.0)
+        water_in = initial_masses.get("Water", 0.0)
 
         target_product = derived.get("product_out_kg")
         if target_product is None:
@@ -208,6 +213,18 @@ class DiscStackCentrifuge(PlanBackedUnit):
         cake_water = max(wet_cake_mass - solids_to_cake - product_to_cake, 0.0)
         cake_water = min(cake_water, water_in)
 
+        clarified._imol = feed._imol.copy()
+        wet_cake._imol = feed._imol.copy()
+
+        clarified.empty()
+        wet_cake.empty()
+
+        for component, mass in initial_masses.items():
+            if component in {"Osteopontin", "Yeast", "Water"}:
+                continue
+            if mass:
+                clarified.imass[component] = mass
+
         clarified.imass["Osteopontin"] = product_to_supernatant
         clarified.imass["Yeast"] = solids_to_supernatant
         clarified.imass["Water"] = max(water_in - cake_water, 0.0)
@@ -216,13 +233,6 @@ class DiscStackCentrifuge(PlanBackedUnit):
         wet_cake.imass["Yeast"] = solids_to_cake
         if cake_water:
             wet_cake.imass["Water"] = cake_water
-
-        # Preserve remaining dissolved species in clarified stream.
-        for index, mass in feed.imass.data.dct.items():
-            component = feed.chemicals.IDs[index]
-            if component in {"Osteopontin", "Yeast", "Water"}:
-                continue
-            clarified.imass[component] = mass
 
         self.performance_results.update(
             {
@@ -234,6 +244,18 @@ class DiscStackCentrifuge(PlanBackedUnit):
                 ),
             }
         )
+
+        clarified.T = feed_T
+        clarified.P = feed_P
+
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(clarified)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(clarified)
+        wet_cake.T = feed_T
+        wet_cake.P = feed_P
 
     def _design(self) -> None:
         specs = self.plan.specs
@@ -283,10 +305,19 @@ class DepthFiltrationUnit(PlanBackedUnit):
         feed = self.ins[0]
         filtrate, waste = self.outs
 
-        filtrate.copy_like(feed)
+        chemicals = getattr(feed, "chemicals", None)
+        component_ids = chemicals.IDs if chemicals is not None else ()
+        initial_masses = {
+            component: float(feed.imass[component])
+            for component in component_ids
+        }
+
+        filtrate._imol = feed._imol.copy()
+        filtrate.empty()
+        waste._imol = feed._imol.copy()
         waste.empty()
 
-        product_in = _get_component_mass(feed, "Osteopontin")
+        product_in = initial_masses.get("Osteopontin", 0.0)
         target_out = self.plan.derived.get("product_out_kg")
         if target_out is None:
             product_out = product_in
@@ -294,22 +325,26 @@ class DepthFiltrationUnit(PlanBackedUnit):
             product_out = min(max(target_out, 0.0), product_in)
         product_loss = max(product_in - product_out, 0.0)
 
+        for component, mass in initial_masses.items():
+            if component in {"Osteopontin", "Yeast", "Water"}:
+                continue
+            if mass:
+                filtrate.imass[component] = mass
+
         filtrate.imass["Osteopontin"] = product_out
         waste.imass["Osteopontin"] = product_loss
 
         holdup_loss = _safe_positive(self.plan.derived.get("holdup_loss_kg"), 0.0)
         if holdup_loss:
-            water_in = _get_component_mass(feed, "Water")
+            water_in = initial_masses.get("Water", 0.0)
             transfer = min(holdup_loss, water_in)
             filtrate.imass["Water"] = max(water_in - transfer, 0.0)
             waste.imass["Water"] = transfer
 
-        # Ensure mass balance by moving remaining deficit as water to waste.
-        mass_deficit = feed.F_mass - (filtrate.F_mass + waste.F_mass)
+        mass_deficit = sum(initial_masses.values()) - (filtrate.F_mass + waste.F_mass)
         if mass_deficit > 1e-9:
             waste.imass["Water"] += mass_deficit
         elif mass_deficit < -1e-9:
-            # Correct slight excess by reducing filtrate water.
             current_water = _get_component_mass(filtrate, "Water")
             correction = min(-mass_deficit, current_water)
             if correction:
@@ -323,6 +358,17 @@ class DepthFiltrationUnit(PlanBackedUnit):
                 "holdup_loss": holdup_loss,
             }
         )
+        filtrate.T = feed.T
+        filtrate.P = feed.P
+        waste.T = feed.T
+        waste.P = feed.P
+
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(filtrate)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(filtrate)
 
     def _design(self) -> None:
         self.design_results["Holdup loss"] = _safe_positive(
@@ -367,10 +413,23 @@ class MFTFFPolishUnit(PlanBackedUnit):
         feed = self.ins[0]
         permeate, retentate = self.outs
 
-        permeate.copy_like(feed)
-        retentate.empty()
+        feed_snapshot = feed.copy()
+        feed_snapshot.mol = feed_snapshot.mol.copy()
 
-        product_in = _get_component_mass(feed, "Osteopontin")
+        initial_masses = {
+            component: _get_component_mass(feed_snapshot, component)
+            for component in feed_snapshot.chemicals.IDs
+        }
+
+        permeate_snapshot = feed_snapshot.copy()
+        permeate_snapshot.mol = permeate_snapshot.mol.copy()
+        permeate_snapshot.empty()
+
+        retentate_snapshot = feed_snapshot.copy()
+        retentate_snapshot.mol = retentate_snapshot.mol.copy()
+        retentate_snapshot.empty()
+
+        product_in = initial_masses.get("Osteopontin", 0.0)
         target_out = self.plan.derived.get("product_out_kg")
         if target_out is None:
             product_out = product_in
@@ -378,14 +437,20 @@ class MFTFFPolishUnit(PlanBackedUnit):
             product_out = min(max(target_out, 0.0), product_in)
         product_loss = max(product_in - product_out, 0.0)
 
-        permeate.imass["Osteopontin"] = product_out
-        retentate.imass["Osteopontin"] = product_loss
+        for component, mass in initial_masses.items():
+            if component in {"Osteopontin", "Yeast", "Water"}:
+                continue
+            if mass:
+                permeate_snapshot.imass[component] = mass
 
-        feed_mass = feed.F_mass
-        permeate_mass = permeate.F_mass
+        permeate_snapshot.imass["Osteopontin"] = product_out
+        retentate_snapshot.imass["Osteopontin"] = product_loss
+
+        feed_mass = feed_snapshot.F_mass
+        permeate_mass = permeate_snapshot.F_mass
         deficit = feed_mass - (permeate_mass + product_loss)
         if deficit > 1e-9:
-            retentate.imass["Water"] = deficit
+            retentate_snapshot.imass["Water"] = deficit
 
         self.performance_results.update(
             {
@@ -394,6 +459,22 @@ class MFTFFPolishUnit(PlanBackedUnit):
                 ),
             }
         )
+
+        feed.empty()
+        for component, mass in initial_masses.items():
+            if mass:
+                feed.imass[component] = mass
+        feed.T = feed_snapshot.T
+        feed.P = feed_snapshot.P
+        permeate.copy_like(permeate_snapshot)
+        retentate.copy_like(retentate_snapshot)
+
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(permeate)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(permeate)
 
     def _design(self) -> None:
         specs = self.plan.specs

@@ -124,6 +124,13 @@ class DSP04StageUnit(PlanBackedUnit):
         product = self.outs[0]
         product.copy_like(feed)
 
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(product)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(product)
+
 
 class SterileFilterUnit(PlanBackedUnit):
     """Placeholder sterile filter with integrity pass flag."""
@@ -136,6 +143,13 @@ class SterileFilterUnit(PlanBackedUnit):
         feed = self.ins[0]
         product = self.outs[0]
         product.copy_like(feed)
+
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(product)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(product)
 
 
 def _default_stage_order(handoff: CaptureHandoff) -> List[DSP04Stage]:

@@ -1,0 +1,95 @@
+{
+  "start_mass_kg": 350.0,
+  "stage_chain": [
+    {
+      "unit_id": "CR_DiscStack",
+      "unit_line": "DiscStack",
+      "plan_input_kg": 350.0,
+      "plan_output_kg": 344.75,
+      "stage_efficiency": 0.985,
+      "baseline_mass_from_350_kg": 344.75,
+      "stream_output_kg": 344.75
+    },
+    {
+      "unit_id": "CR_Depth",
+      "unit_line": "DepthFiltration",
+      "plan_input_kg": 344.75,
+      "plan_output_kg": 340.7025,
+      "stage_efficiency": 0.9882596084118926,
+      "baseline_mass_from_350_kg": 340.7025,
+      "stream_output_kg": 340.70249999999993
+    },
+    {
+      "unit_id": "DSP01_UF",
+      "unit_line": "UF Concentration",
+      "plan_input_kg": 340.7025,
+      "plan_output_kg": 335.59196249999997,
+      "stage_efficiency": 0.985,
+      "baseline_mass_from_350_kg": 335.59196249999997,
+      "stream_output_kg": 335.5919625
+    },
+    {
+      "unit_id": "DSP01_DF",
+      "unit_line": "Diafiltration",
+      "plan_input_kg": 340.7025,
+      "plan_output_kg": 333.9140026875,
+      "stage_efficiency": 0.980075,
+      "baseline_mass_from_350_kg": 328.9052926471875,
+      "stream_output_kg": 333.9140026875
+    },
+    {
+      "unit_id": "DSP02_DSP02a",
+      "unit_line": "Chromatography",
+      "plan_input_kg": 333.9140026875,
+      "plan_output_kg": 313.87916252624996,
+      "stage_efficiency": 0.94,
+      "baseline_mass_from_350_kg": 309.1709750883562,
+      "stream_output_kg": 313.87916252625
+    },
+    {
+      "unit_id": "DSP02_AEX",
+      "unit_line": "AEX Capture",
+      "plan_input_kg": 333.9140026875,
+      "plan_output_kg": 313.87916252624996,
+      "stage_efficiency": 0.94,
+      "baseline_mass_from_350_kg": 290.62071658305484,
+      "stream_output_kg": 313.87916252625
+    },
+    {
+      "unit_id": "DSP03_df",
+      "unit_line": "DSP03",
+      "plan_input_kg": 0.0,
+      "plan_output_kg": 0.0,
+      "stage_efficiency": 0.0,
+      "baseline_mass_from_350_kg": 290.62071658305484,
+      "stream_output_kg": 313.87916252625
+    },
+    {
+      "unit_id": "DSP03_DSP03a",
+      "unit_line": "PreDrying",
+      "plan_input_kg": 313.87916252624996,
+      "plan_output_kg": 298.18520439993745,
+      "stage_efficiency": 0.95,
+      "baseline_mass_from_350_kg": 276.0896807539021,
+      "stream_output_kg": 298.18520439993745
+    },
+    {
+      "unit_id": "DSP04_SterileFilter",
+      "unit_line": "SterileFilter",
+      "plan_input_kg": 0.0,
+      "plan_output_kg": 0.0,
+      "stage_efficiency": 0.0,
+      "baseline_mass_from_350_kg": 276.0896807539021,
+      "stream_output_kg": 298.18520439993745
+    },
+    {
+      "unit_id": "DSP05_DSP05a",
+      "unit_line": "SprayDryer",
+      "plan_input_kg": 298.18520439993745,
+      "plan_output_kg": 287.8381778072596,
+      "stage_efficiency": 0.9653,
+      "baseline_mass_from_350_kg": 266.5093688317417,
+      "stream_output_kg": 287.8381778072596
+    }
+  ]
+}

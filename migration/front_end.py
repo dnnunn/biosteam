@@ -53,6 +53,7 @@ class FrontEndSection:
     spray_dryer_unit: bst.Unit
     system: bst.System
     defaults: ExcelModuleDefaults
+    fermentation_handoff_stream: Optional[bst.Stream] = None
     total_cost_per_batch_usd: Optional[float] = None
     cmo_fees_usd: Optional[float] = None
     cost_per_kg_usd: Optional[float] = None
@@ -68,6 +69,7 @@ class FrontEndSection:
     cmo_profile_name: str = "conservative_cmo_default"
     cmo_stage_costs: Dict[str, StageCostSummary] = field(default_factory=dict)
     cmo_total_fee_usd: float = 0.0
+    handoff_streams: Dict[str, bst.Stream] = field(default_factory=dict)
 
     def units(self) -> tuple[bst.Unit, ...]:
         """Return the ordered unit operations for convenience."""
@@ -78,6 +80,7 @@ class FrontEndSection:
             *self.cell_removal_units,
             *self.concentration_units,
             self.ufdf_unit,
+            self.chromatography_unit,
             *self.capture_units,
             *self.dsp03_units,
             self.predrying_unit,
@@ -264,61 +267,34 @@ def _estimate_spray_hours(predry_plan: Any, spray_plan: Any) -> float:
     return water_evap / capacity
 
 
-def _read_calculation_cell(
+def _get_module_parameter(
     defaults: ExcelModuleDefaults,
-    row: int,
-    col: int,
+    module: str,
+    option: Optional[str],
+    name: str,
 ) -> Optional[float]:
-    try:
-        import pandas as pd
-    except ImportError:  # pragma: no cover
+    config = defaults.get_module_config(ModuleKey(module, option))
+    if config is None:
         return None
-
-    try:
-        value = pd.read_excel(
-            defaults.workbook_path,
-            sheet_name="Calculations",
-            header=None,
-            skiprows=row,
-            nrows=1,
-            usecols=[col],
-        ).iloc[0, 0]
-    except Exception:
+    record = config.parameters.get(name)
+    if record is None:
         return None
-
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
+    return record.value
 
 
-def _read_sheet_cell(
-    workbook_path: Path | str,
-    sheet_name: str,
-    row: int,
-    col: int,
-) -> Optional[float]:
-    try:
-        import pandas as pd
-    except ImportError:  # pragma: no cover
-        return None
+def _section_mapping(overrides: Mapping[str, Any], section: str) -> Mapping[str, Any]:
+    data = overrides.get(section)
+    return data if isinstance(data, Mapping) else {}
 
-    try:
-        value = pd.read_excel(
-            workbook_path,
-            sheet_name=sheet_name,
-            header=None,
-            skiprows=row,
-            nrows=1,
-            usecols=[col],
-        ).iloc[0, 0]
-    except Exception:
-        return None
 
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
+def _section_values(
+    overrides: Mapping[str, Any],
+    section: str,
+    category: str,
+) -> Mapping[str, Any]:
+    section_data = _section_mapping(overrides, section)
+    values = section_data.get(category)
+    return values if isinstance(values, Mapping) else {}
 
 
 def _apply_plan_overrides(plan: Any, overrides: Optional[Dict[str, Any]]) -> None:
@@ -458,12 +434,8 @@ def _build_seed_media_stream(
     return feed
 
 
-def _read_inputs_cell(defaults: ExcelModuleDefaults, row_1_based: int) -> Optional[float]:
-    return _read_sheet_cell(defaults.workbook_path, "Inputs and Assumptions", row_1_based - 1, 1)
-
-
 def build_front_end_section(
-    workbook_path: str,
+    workbook_path: Optional[str] = None,
     *,
     batch_volume_l: Optional[float] = None,
     flowsheet: Optional[bst.Flowsheet] = None,
@@ -476,7 +448,13 @@ def build_front_end_section(
     if mode_normalized not in {"excel", "baseline"}:
         raise ValueError(f"Unsupported mode {mode!r}; expected 'excel' or 'baseline'")
 
-    defaults = ExcelModuleDefaults(workbook_path)
+    module_defaults_path = Path(__file__).with_name("module_defaults.yaml")
+    data_source: Path | str = module_defaults_path
+    if workbook_path:
+        candidate = Path(workbook_path)
+        if candidate.suffix.lower() in {".yaml", ".yml"} and candidate.exists():
+            data_source = candidate
+    defaults = ExcelModuleDefaults(data_source)
     set_defaults_loader(defaults)
     set_migration_thermo()
 
@@ -519,27 +497,100 @@ def build_front_end_section(
     ) or 0.05
     seed_volume_l = working_volume_l * inoc_ratio
 
-    working_titer = _read_calculation_cell(defaults, 46, 1)  # Calculations!B47
-    dcw_concentration = _read_calculation_cell(defaults, 28, 1)  # Calculations!B29
-    total_glucose_feed_kg = _read_calculation_cell(defaults, 81, 1)  # Calculations!B82
-    total_glycerol_feed_kg = _read_calculation_cell(defaults, 82, 1)  # Calculations!B83
-    total_molasses_feed_kg = _read_calculation_cell(defaults, 84, 1)  # Calculations!B85
-    yeast_extract_per_batch = _read_calculation_cell(defaults, 85, 1)  # Calculations!B86
-    peptone_per_batch = _read_calculation_cell(defaults, 86, 1)  # Calculations!B87
-    antifoam_volume_l = _read_calculation_cell(defaults, 87, 1)  # Calculations!B88
+    fermentation_derived = _section_values(baseline_overrides, "fermentation", "derived")
+    fermentation_specs_override = _section_values(baseline_overrides, "fermentation", "specs")
+    seed_derived = _section_values(baseline_overrides, "seed", "derived")
+    seed_specs_override = _section_values(baseline_overrides, "seed", "specs")
+    cell_feed = _section_values(baseline_overrides, "cell_removal", "feed")
+    concentration_feed = _section_values(baseline_overrides, "concentration", "feed")
 
-    product_preharvest = _read_calculation_cell(defaults, 43, 1)  # Calculations!B44
-    harvested_product = _read_calculation_cell(defaults, 44, 1)  # Calculations!B45
-    harvest_volume_l = _read_calculation_cell(defaults, 104, 1)  # Calculations!B105
-    product_after_mf = _read_calculation_cell(defaults, 107, 1)  # Calculations!B108
-    product_after_uf = _read_calculation_cell(defaults, 110, 1)  # Calculations!B111
-    post_uf_volume_l = _read_calculation_cell(defaults, 111, 1)  # Calculations!B112
-    product_after_chrom = _read_calculation_cell(defaults, 112, 1)  # Calculations!B113
-    post_elution_volume_l = _read_calculation_cell(defaults, 115, 1)  # Calculations!B116
-    post_elution_conc_volume_l = _read_calculation_cell(defaults, 116, 1)  # Calculations!B117
-    volume_to_spray_l = _read_calculation_cell(defaults, 117, 1)  # Calculations!B118
-    product_after_predry = _read_calculation_cell(defaults, 119, 1)  # Calculations!B120
-    final_product_kg = _read_calculation_cell(defaults, 120, 1)  # Calculations!B121
+    od_to_dcw_default = _get_module_parameter(
+        defaults, "GLOBAL00", "GLOBAL00a", "OD to Biomass Conversion"
+    )
+    fermentation_od_default = _get_module_parameter(
+        defaults, "GLOBAL00", "GLOBAL00b", "Fermentation OD600"
+    )
+
+    working_volume_l = _coerce_float(fermentation_derived.get("working_volume_l"), 0.0)
+    if working_volume_l <= 0.0:
+        vessel_m3 = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00c", "Fermenter size")
+        if vessel_m3 is not None and vessel_m3 > 0:
+            working_volume_l = vessel_m3 * 1_000.0
+        else:
+            working_volume_l = 70_000.0
+
+    working_titer = fermentation_derived.get("target_titer_g_per_l")
+    if working_titer is None:
+        working_titer = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00c", "Strain_Titer")
+
+    fermentation_od_target = fermentation_derived.get("od600_target")
+    if fermentation_od_target is None:
+        fermentation_od_target = fermentation_od_default
+
+    fermentation_od_to_dcw = fermentation_derived.get("od_to_dcw_g_per_l_per_od")
+    if fermentation_od_to_dcw is None:
+        dcw_from_override = fermentation_derived.get("dcw_concentration_g_per_l")
+        if dcw_from_override and fermentation_od_target:
+            fermentation_od_to_dcw = dcw_from_override / fermentation_od_target
+        else:
+            fermentation_od_to_dcw = od_to_dcw_default
+
+    if fermentation_od_target and fermentation_od_to_dcw:
+        dcw_concentration = fermentation_od_target * fermentation_od_to_dcw
+    else:
+        dcw_concentration = fermentation_derived.get("dcw_concentration_g_per_l")
+        if dcw_concentration is None:
+            dcw_concentration = seed_derived.get("dcw_concentration_g_per_l")
+
+    total_glucose_feed_kg = fermentation_derived.get("total_glucose_feed_kg")
+    total_glycerol_feed_kg = fermentation_derived.get("total_glycerol_feed_kg")
+    total_molasses_feed_kg = fermentation_derived.get("total_molasses_feed_kg")
+
+    initial_carbon_conc = fermentation_derived.get("initial_carbon_concentration_g_per_l")
+    feed_carbon_conc = fermentation_derived.get("feed_carbon_concentration_g_per_l")
+    if initial_carbon_conc is None:
+        initial_carbon_conc = _get_module_parameter(
+            defaults,
+            "GLOBAL00",
+            "GLOBAL00c",
+            "Initial_Glucose_Concentration",
+        )
+    if feed_carbon_conc is None:
+        feed_carbon_conc = _get_module_parameter(
+            defaults,
+            "GLOBAL00",
+            "GLOBAL00c",
+            "Feed_Glucose_Concentration",
+        )
+
+    yeast_extract_per_batch = seed_derived.get("yeast_extract_per_batch_kg")
+    peptone_per_batch = seed_derived.get("peptone_per_batch_kg")
+    antifoam_volume_l = fermentation_derived.get("antifoam_volume_l")
+
+    product_preharvest = fermentation_derived.get("product_out_kg")
+    harvested_product = product_preharvest
+
+    harvest_volume_l = None
+    feed_volume_m3 = cell_feed.get("volume_m3")
+    if isinstance(feed_volume_m3, (int, float)) and feed_volume_m3 > 0:
+        harvest_volume_l = feed_volume_m3 * 1_000.0
+    if harvest_volume_l is None or harvest_volume_l <= 0.0:
+        harvest_volume_l = working_volume_l
+
+    product_after_mf = product_preharvest
+    product_after_uf = product_preharvest
+    product_after_chrom = product_preharvest
+    product_after_predry = product_preharvest
+    final_product_kg = None
+
+    post_uf_volume_l = None
+    conc_volume_m3 = concentration_feed.get("volume_m3")
+    if isinstance(conc_volume_m3, (int, float)) and conc_volume_m3 > 0:
+        post_uf_volume_l = conc_volume_m3 * 1_000.0
+
+    post_elution_volume_l = None
+    post_elution_conc_volume_l = None
+    volume_to_spray_l = None
 
     fermentation_plan = fermentation_unit.plan
     fermentation_plan.derived.update(
@@ -547,9 +598,52 @@ def build_front_end_section(
             "working_volume_l": working_volume_l,
             "target_titer_g_per_l": working_titer,
             "dcw_concentration_g_per_l": dcw_concentration,
+            "od600_target": fermentation_od_target,
+            "od_to_dcw_g_per_l_per_od": fermentation_od_to_dcw,
             "total_glucose_feed_kg": total_glucose_feed_kg,
+            "initial_carbon_concentration_g_per_l": initial_carbon_conc,
+            "feed_carbon_concentration_g_per_l": feed_carbon_conc,
         }
     )
+
+    maintenance_coeff = fermentation_derived.get("maintenance_coefficient_g_glucose_per_gdcw_h")
+    if maintenance_coeff is None:
+        maintenance_coeff = 0.03
+    fermentation_plan.derived.setdefault(
+        "maintenance_coefficient_g_glucose_per_gdcw_h",
+        maintenance_coeff,
+    )
+
+    loss_fraction = fermentation_derived.get("loss_fraction_glucose")
+    if loss_fraction is None:
+        loss_fraction = 0.0
+    fermentation_plan.derived.setdefault("loss_fraction_glucose", loss_fraction)
+
+    specific_productivity = fermentation_derived.get("specific_productivity_g_per_gdcw_h")
+    if specific_productivity is None:
+        specific_productivity = 0.0
+    fermentation_plan.derived.setdefault(
+        "specific_productivity_g_per_gdcw_h",
+        specific_productivity,
+    )
+
+    product_model = fermentation_derived.get("product_model")
+    if product_model is None:
+        product_model = "specific_productivity" if specific_productivity else "growth_associated"
+    fermentation_plan.derived.setdefault("product_model", product_model)
+
+    nitrogen_requirement = fermentation_derived.get("nitrogen_requirement_g_per_gdcw")
+    if nitrogen_requirement is None:
+        nitrogen_requirement = 0.1
+    fermentation_plan.derived.setdefault(
+        "nitrogen_requirement_g_per_gdcw",
+        nitrogen_requirement,
+    )
+
+    nh4oh_ratio = fermentation_derived.get("nh4oh_kg_per_kg_n")
+    if nh4oh_ratio is None:
+        nh4oh_ratio = 1.0
+    fermentation_plan.derived.setdefault("nh4oh_kg_per_kg_n", nh4oh_ratio)
 
     if total_glycerol_feed_kg is not None:
         fermentation_plan.derived["total_glycerol_feed_kg"] = total_glycerol_feed_kg
@@ -564,10 +658,24 @@ def build_front_end_section(
         )
 
     seed_plan = seed_unit.plan
+    seed_od_target = seed_derived.get("od600_target")
+    if seed_od_target is None:
+        seed_od_target = fermentation_od_target
+    seed_od_to_dcw = seed_derived.get("od_to_dcw_g_per_l_per_od")
+    if seed_od_to_dcw is None:
+        seed_dcw = seed_derived.get("dcw_concentration_g_per_l")
+        if seed_dcw and seed_od_target:
+            seed_od_to_dcw = seed_dcw / seed_od_target
+        else:
+            seed_od_to_dcw = od_to_dcw_default
+    seed_dcw_concentration = seed_od_target * seed_od_to_dcw if seed_od_target and seed_od_to_dcw else seed_derived.get("dcw_concentration_g_per_l")
+
     seed_plan.derived.update(
         {
             "working_volume_l": seed_volume_l,
-            "dcw_concentration_g_per_l": dcw_concentration,
+            "dcw_concentration_g_per_l": seed_dcw_concentration,
+            "od600_target": seed_od_target,
+            "od_to_dcw_g_per_l_per_od": seed_od_to_dcw,
             "seed_glucose_conversion_fraction": 0.0,
         }
     )
@@ -580,13 +688,30 @@ def build_front_end_section(
         _apply_plan_overrides(seed_plan, baseline_overrides.get("seed"))
 
     seed_specs = seed_unit.plan.specs
-    yeast_cost_per_kg = _read_inputs_cell(defaults, 138)
+    yeast_cost_per_kg = seed_specs_override.get("yeast_extract_cost_per_kg")
+    if yeast_cost_per_kg is None:
+        yeast_cost_per_kg = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Yeast_Extract_Cost")
     if yeast_cost_per_kg is not None and getattr(seed_specs, "yeast_extract_cost_per_kg", None) in (None, 0):
         seed_specs.yeast_extract_cost_per_kg = yeast_cost_per_kg
 
-    peptone_cost_per_kg = _read_inputs_cell(defaults, 139)
+    peptone_cost_per_kg = seed_specs_override.get("peptone_cost_per_kg")
+    if peptone_cost_per_kg is None:
+        peptone_cost_per_kg = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Peptone_Cost")
     if peptone_cost_per_kg is not None and getattr(seed_specs, "peptone_cost_per_kg", None) in (None, 0):
         seed_specs.peptone_cost_per_kg = peptone_cost_per_kg
+
+    seed_biomass_total = None
+    if seed_dcw_concentration is not None and seed_volume_l:
+        seed_biomass_total = seed_dcw_concentration * seed_volume_l / 1_000.0
+
+    if seed_biomass_total is not None:
+        initial_biomass_conc_g_per_l = (seed_biomass_total * 1_000.0 / working_volume_l) if working_volume_l else None
+        initial_od = None
+        if initial_biomass_conc_g_per_l is not None and fermentation_od_to_dcw:
+            initial_od = initial_biomass_conc_g_per_l / fermentation_od_to_dcw
+        fermentation_plan.derived.setdefault("initial_biomass_kg", seed_biomass_total)
+        if initial_od is not None:
+            fermentation_plan.derived.setdefault("initial_od600", initial_od)
 
     fermentation_product = fermentation_plan.derived.get("product_out_kg")
 
@@ -607,12 +732,16 @@ def build_front_end_section(
         fermentation_plan.derived["antifoam_volume_l"] = antifoam_volume_l
 
     fermentation_specs = fermentation_unit.plan.specs
-    glucose_cost = _read_inputs_cell(defaults, 134)
-    glycerol_cost = _read_inputs_cell(defaults, 135)
-    molasses_cost = _read_inputs_cell(defaults, 137)
+    glucose_cost = fermentation_specs_override.get("glucose_cost_per_kg")
+    if glucose_cost is None:
+        glucose_cost = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Glucose_Cost")
+    glycerol_cost = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Glycerol_Cost")
+    lactose_cost = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Lactose_Cost")
+    molasses_cost = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Molasses_Cost")
     carbon_cost_lookup = {
         "glucose": glucose_cost,
         "glycerol": glycerol_cost,
+        "lactose": lactose_cost,
         "molasses": molasses_cost,
     }
     carbon_source = fermentation_plan.derived.get("carbon_source")
@@ -620,13 +749,15 @@ def build_front_end_section(
     if carbon_cost is not None and getattr(fermentation_specs, "glucose_cost_per_kg", None) in (None, 0):
         fermentation_specs.glucose_cost_per_kg = carbon_cost
 
-    antifoam_cost = _read_inputs_cell(defaults, 141)
+    antifoam_cost = fermentation_derived.get("antifoam_cost_per_unit")
+    if antifoam_cost is None:
+        antifoam_cost = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Antifoam_Cost")
     if antifoam_cost is not None:
         fermentation_plan.derived.setdefault("antifoam_cost_per_unit", antifoam_cost)
 
     minor_nutrient_total = fermentation_plan.derived.get("minor_nutrients_cost_total")
     if minor_nutrient_total is None:
-        value = _read_inputs_cell(defaults, 140)
+        value = _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00a", "Minor_Nutrients_Cost")
         if value is not None:
             fermentation_plan.derived["minor_nutrients_cost_total"] = value
 
@@ -806,31 +937,40 @@ def build_front_end_section(
         dsp03_handoff = capture_handoff
 
     chrom_plan = chromatography_unit.plan
-    chrom_plan.derived.setdefault("input_product_kg", product_after_uf)
-    chrom_plan.derived.setdefault("product_out_kg", product_after_chrom)
-    chrom_plan.derived.setdefault("output_volume_l", post_elution_conc_volume_l)
-    chrom_plan.derived.setdefault("eluate_volume_l", post_elution_volume_l)
+
+    chrom_actual: Dict[str, float] = {}
+
+    def _set_chrometric(key: str, value: Optional[float]) -> None:
+        if value is not None:
+            chrom_actual[key] = value
+
+    _set_chrometric("input_product_kg", product_after_uf)
+    _set_chrometric("product_out_kg", product_after_chrom)
+    _set_chrometric("output_volume_l", post_elution_conc_volume_l)
+    _set_chrometric("eluate_volume_l", post_elution_volume_l)
+    _set_chrometric("pool_conductivity_mM", capture_pool_cond)
+    _set_chrometric("pool_ph", capture_pool_ph)
+    _set_chrometric("cdmo_cost_per_batch", capture_cdmo_cost)
+    _set_chrometric("resin_cost_per_batch", capture_resin_cost)
+    _set_chrometric("buffer_cost_per_batch", capture_buffer_cost)
+
     if capture_route is not None:
-        chrom_plan.derived.setdefault("capture_route", capture_route)
-    if capture_pool_cond is not None:
-        chrom_plan.derived.setdefault("pool_conductivity_mM", capture_pool_cond)
-    if capture_pool_ph is not None:
-        chrom_plan.derived.setdefault("pool_ph", capture_pool_ph)
-    if capture_cdmo_cost is not None:
-        chrom_plan.derived.setdefault("cdmo_cost_per_batch", capture_cdmo_cost)
-    if capture_resin_cost is not None:
-        chrom_plan.derived.setdefault("resin_cost_per_batch", capture_resin_cost)
-    if capture_buffer_cost is not None:
-        chrom_plan.derived.setdefault("buffer_cost_per_batch", capture_buffer_cost)
+        chrom_actual["capture_route"] = capture_route
+
+    for key, value in chrom_actual.items():
+        chrom_plan.derived[key] = value
     if capture_handoff is not None:
         for key, value in capture_handoff.as_dict().items():
             chrom_plan.derived[f"handoff_{key}"] = value
 
     if baseline_overrides:
         _apply_plan_overrides(chrom_plan, baseline_overrides.get("chromatography"))
-        product_after_chrom = chrom_plan.derived.get("product_out_kg", product_after_chrom)
-        post_elution_conc_volume_l = chrom_plan.derived.get("output_volume_l", post_elution_conc_volume_l)
-        post_elution_volume_l = chrom_plan.derived.get("eluate_volume_l", post_elution_volume_l)
+        for key, value in chrom_actual.items():
+            chrom_plan.derived[key] = value
+
+    product_after_chrom = chrom_actual.get("product_out_kg", product_after_chrom)
+    post_elution_conc_volume_l = chrom_actual.get("output_volume_l", post_elution_conc_volume_l)
+    post_elution_volume_l = chrom_actual.get("eluate_volume_l", post_elution_volume_l)
 
     dsp04_config_raw = baseline_overrides.get("dsp04") if baseline_overrides else None
     base_handoff_for_dsp04 = dsp03_handoff or capture_handoff
@@ -846,6 +986,7 @@ def build_front_end_section(
         dsp04_handoff = None
 
     predry_plan = predrying_unit.plan
+    predry_specs = predrying_unit.plan.specs
     predry_input_volume_l = predry_plan.derived.get("input_volume_l", post_elution_conc_volume_l)
     predry_input_product_kg = product_after_chrom
     if dsp03_handoff is not None:
@@ -863,19 +1004,49 @@ def build_front_end_section(
         if dsp03_route_value is not None:
             predry_plan.derived.setdefault("dsp03_route", dsp03_route_value)
 
-    predry_plan.derived.update(
-        {
-            "input_product_kg": predry_input_product_kg,
-            "input_volume_l": predry_input_volume_l,
-            "output_volume_l": volume_to_spray_l,
-            "product_out_kg": product_after_predry,
-        }
-    )
+    efficiency = getattr(predry_specs, "efficiency", None)
+    if efficiency is None:
+        efficiency = 1.0
+    efficiency = max(min(efficiency, 1.0), 0.0)
+
+    concentration_factor = getattr(predry_specs, "concentration_factor", None)
+    if concentration_factor is None or concentration_factor <= 0.0:
+        concentration_factor = 1.0
+
+    predry_output_product_kg = None
+    if predry_input_product_kg is not None:
+        predry_output_product_kg = max(predry_input_product_kg * efficiency, 0.0)
+
+    predry_output_volume_l = predry_input_volume_l
+    if predry_input_volume_l is not None and concentration_factor:
+        predry_output_volume_l = predry_input_volume_l / concentration_factor
+
+    predry_recovery_fraction = None
+    if predry_input_product_kg and predry_input_product_kg > 0:
+        predry_recovery_fraction = (predry_output_product_kg or 0.0) / predry_input_product_kg
+
+    predry_actual = {
+        "input_product_kg": predry_input_product_kg,
+        "input_volume_l": predry_input_volume_l,
+        "output_volume_l": predry_output_volume_l,
+        "product_out_kg": predry_output_product_kg,
+        "product_recovery_fraction": predry_recovery_fraction,
+    }
+    if predry_plan.derived.get("broth_density_kg_per_l") is None and chrom_plan.derived.get("density_kg_per_l") is not None:
+        predry_actual["broth_density_kg_per_l"] = chrom_plan.derived.get("density_kg_per_l")
+
+    for key, value in predry_actual.items():
+        if value is not None:
+            predry_plan.derived[key] = value
 
     if baseline_overrides:
         _apply_plan_overrides(predry_plan, baseline_overrides.get("predrying"))
-        product_after_predry = predry_plan.derived.get("product_out_kg", product_after_predry)
-        volume_to_spray_l = predry_plan.derived.get("output_volume_l", volume_to_spray_l)
+        for key, value in predry_actual.items():
+            if value is not None:
+                predry_plan.derived[key] = value
+
+    product_after_predry = predry_actual.get("product_out_kg", product_after_predry)
+    volume_to_spray_l = predry_actual.get("output_volume_l", volume_to_spray_l)
 
     dsp05_config_raw = baseline_overrides.get("dsp05") if baseline_overrides else None
     dsp05_config = DSP05Config.from_mapping(
@@ -942,52 +1113,27 @@ def build_front_end_section(
     )
     spray_plan.derived.setdefault("dsp05_method", dsp05_handoff.method.value)
 
-    cost_per_kg_usd = _read_calculation_cell(defaults, 0, 1)
-    cmo_fees_usd = _read_calculation_cell(defaults, 247, 1)
-    total_cost_per_batch_usd = _read_sheet_cell(
-        defaults.workbook_path, "Final Costs", 7, 1
-    )
+    cost_per_kg_usd = None
+    cmo_fees_usd = None
+    total_cost_per_batch_usd = None
     materials_cost_per_batch = None
-    if (
-        total_cost_per_batch_usd is not None
-        and cmo_fees_usd is not None
-    ):
-        materials_cost_per_batch = total_cost_per_batch_usd - cmo_fees_usd
-
-    if (
-        cost_per_kg_usd is None
-        and total_cost_per_batch_usd is not None
-        and final_product_kg is not None
-        and final_product_kg != 0
-    ):
-        cost_per_kg_usd = total_cost_per_batch_usd / final_product_kg
-
-    # Compute material cost breakdown using Excel-derived values (subject to refinement).
-    def _calc_cell(row: int, col: int = 1) -> Optional[float]:
-        return _read_calculation_cell(defaults, row, col)
 
     breakdown: Dict[str, float] = {}
 
     def _add_breakdown(key: str, value: Optional[float]) -> float:
-        if value is not None:
-            breakdown[key] = value
-            return value
-        return 0.0
-
-    carbon_cost = _calc_cell(166)  # Calculations!B167
-    yeast_cost = _calc_cell(167)   # Calculations!B168
-    peptone_cost = _calc_cell(168)  # Calculations!B169
-    minor_nutrients_cost = _calc_cell(169)  # Calculations!B170
-    antifoam_cost = _calc_cell(170)  # Calculations!B171
-    buffer_cost = _calc_cell(193)  # Calculations!B194
-    resin_cost = _calc_cell(177)  # Calculations!B178
-    mf_membrane_cost = _calc_cell(171)  # Calculations!B172
-    uf_membrane_cost = _calc_cell(174)  # Calculations!B175
-    tff_membrane_cost = _calc_cell(189)  # Calculations!B190
-    cip_chemicals_cost = _calc_cell(192)  # Calculations!B193
-    membrane_cleaning_cost = _read_sheet_cell(
-        defaults.workbook_path, "Inputs and Assumptions", 168, 1
-    )
+        nonlocal breakdown
+        nonlocal computed_material_cost
+        if value is None:
+            return 0.0
+        try:
+            numeric = float(value)
+        except (TypeError, ValueError):
+            return 0.0
+        if math.isnan(numeric):
+            return 0.0
+        breakdown[key] = numeric
+        computed_material_cost += numeric
+        return numeric
 
     fermentation_specs = fermentation_unit.plan.specs
     carbon_source = fermentation_plan.derived.get("carbon_source")
@@ -1004,11 +1150,21 @@ def build_front_end_section(
 
     seed_specs = seed_unit.plan.specs
     yeast_mass = seed_plan.derived.get("yeast_extract_per_batch_kg")
+    if yeast_mass is None:
+        conc = getattr(seed_specs, "yeast_extract_concentration_g_per_l", None)
+        working_vol = seed_plan.derived.get("working_volume_l") or seed_volume_l
+        if conc and working_vol:
+            yeast_mass = conc * working_vol / 1_000.0
     yeast_cost_calc = None
     if yeast_mass is not None and seed_specs.yeast_extract_cost_per_kg is not None:
         yeast_cost_calc = yeast_mass * seed_specs.yeast_extract_cost_per_kg
 
     peptone_mass = seed_plan.derived.get("peptone_per_batch_kg")
+    if peptone_mass is None:
+        conc = getattr(seed_specs, "peptone_concentration_g_per_l", None)
+        working_vol = seed_plan.derived.get("working_volume_l") or seed_volume_l
+        if conc and working_vol:
+            peptone_mass = conc * working_vol / 1_000.0
     peptone_cost_calc = None
     if peptone_mass is not None and seed_specs.peptone_cost_per_kg is not None:
         peptone_cost_calc = peptone_mass * seed_specs.peptone_cost_per_kg
@@ -1021,39 +1177,49 @@ def build_front_end_section(
 
     minor_nutrients_cost_calc = fermentation_plan.derived.get("minor_nutrients_cost_total")
 
+    cip_cost_calc = None
+    cip_fee_per_m3 = concentration_feed.get("cip_fee_per_m3")
+    cip_bv = concentration_feed.get("cip_bv")
+    if (
+        isinstance(cip_fee_per_m3, (int, float))
+        and isinstance(cip_bv, (int, float))
+        and cip_fee_per_m3 > 0
+        and cip_bv > 0
+        and working_volume_l > 0
+    ):
+        cip_cost_calc = cip_fee_per_m3 * cip_bv * (working_volume_l / 1_000.0)
+
     computed_material_cost = 0.0
 
-    def _set_cost(key: str, computed: Optional[float], fallback: Optional[float]) -> None:
-        nonlocal computed_material_cost
-        value = computed if computed is not None else fallback
-        if value is None:
-            return
-        if isinstance(value, float) and math.isnan(value):
-            return
-        breakdown[key] = value
-        computed_material_cost += value
+    def _set_cost(key: str, value: Optional[float]) -> None:
+        _add_breakdown(key, value)
 
-    _set_cost("carbon_source", carbon_cost_calc, _calc_cell(166))
-    _set_cost("yeast_extract", yeast_cost_calc, _calc_cell(167))
-    _set_cost("peptone", peptone_cost_calc, _calc_cell(168))
-    _set_cost("minor_nutrients", minor_nutrients_cost_calc, _calc_cell(169))
-    _set_cost("antifoam", antifoam_cost_calc, _calc_cell(170))
-    _set_cost("buffers", None, _calc_cell(193))
-    _set_cost("resin", None, _calc_cell(177))
-    _set_cost("mf_membranes", None, _calc_cell(171))
-    _set_cost("uf_df_membranes", None, _calc_cell(174))
-    _set_cost("predry_tff_membranes", None, _calc_cell(189))
-    _set_cost("cip_chemicals", None, _calc_cell(192))
+    _set_cost("carbon_source", carbon_cost_calc)
+    _set_cost("yeast_extract", yeast_cost_calc)
+    _set_cost("peptone", peptone_cost_calc)
+    _set_cost("minor_nutrients", minor_nutrients_cost_calc)
+    _set_cost("antifoam", antifoam_cost_calc)
+    _set_cost("buffers", chrom_plan.derived.get("buffer_cost_per_batch"))
+    _set_cost("resin", chrom_plan.derived.get("resin_cost_per_batch"))
     _set_cost(
-        "membrane_cleaning",
-        None,
-        _read_sheet_cell(defaults.workbook_path, "Inputs and Assumptions", 168, 1),
+        "mf_membranes",
+        micro_plan.derived.get("membrane_cost_per_cycle"),
     )
+    _set_cost(
+        "uf_df_membranes",
+        ufdf_plan.derived.get("membrane_cost_per_cycle"),
+    )
+    _set_cost(
+        "predry_tff_membranes",
+        predry_plan.derived.get("membrane_cost_per_cycle"),
+    )
+    _set_cost("cip_chemicals", cip_cost_calc)
     _set_cost(
         "media",
         fermentation_plan.derived.get("media_cost_per_batch_usd"),
-        None,
     )
+
+    materials_cost_per_batch = computed_material_cost or None
 
     final_product_mass = spray_plan.derived.get("product_out_kg", final_product_kg)
 
@@ -1155,32 +1321,50 @@ def build_front_end_section(
     seed_vent, seed_broth = seed_unit.outs
     fermentation_unit.ins[0] = seed_broth
     fermentation_vent, fermentation_broth = fermentation_unit.outs
-    previous = fermentation_broth
+
+
+    handoff_streams: Dict[str, bst.Stream] = {}
+
+    def _wire_unit_with_handoff(unit: bst.Unit, incoming: bst.Stream) -> bst.Stream:
+        unit.ins[0] = incoming
+        product_stream = unit.outs[0]
+        handoff = product_stream.copy(f"{product_stream.ID}_handoff")
+        handoff.empty()
+        report_clone = product_stream.copy(f"{product_stream.ID}_report")
+        report_clone.empty()
+        setattr(unit, "_handoff_stream", handoff)
+        setattr(unit, "_handoff_report_stream", report_clone)
+        handoff_streams[unit.ID] = report_clone
+        return handoff
+
+    fermentation_handoff = fermentation_broth.copy(
+        f"{fermentation_broth.ID}_to_cell_removal"
+    )
+    fermentation_handoff.copy_like(fermentation_broth)
+    setattr(fermentation_unit, "_handoff_stream", fermentation_handoff)
+    fermentation_report = fermentation_handoff.copy(f"{fermentation_handoff.ID}_report")
+    setattr(fermentation_unit, "_handoff_report_stream", fermentation_report)
+    handoff_streams[fermentation_unit.ID] = fermentation_report
+
+    previous = fermentation_handoff
     for unit in cell_removal_units_tuple:
-        unit.ins[0] = previous
-        previous = unit.outs[0]
+        previous = _wire_unit_with_handoff(unit, previous)
 
     for unit in concentration_units_tuple:
-        unit.ins[0] = previous
-        previous = unit.outs[0]
+        previous = _wire_unit_with_handoff(unit, previous)
 
-    chromatography_unit.ins[0] = previous
-    previous = chromatography_unit.outs[0]
+    previous = _wire_unit_with_handoff(chromatography_unit, previous)
 
     for unit in capture_units_tuple:
-        unit.ins[0] = previous
-        previous = unit.outs[0]
+        previous = _wire_unit_with_handoff(unit, previous)
 
     for unit in dsp03_units_tuple:
-        unit.ins[0] = previous
-        previous = unit.outs[0]
+        previous = _wire_unit_with_handoff(unit, previous)
 
-    predrying_unit.ins[0] = previous
-    previous = predrying_unit.outs[0]
+    previous = _wire_unit_with_handoff(predrying_unit, previous)
 
     for unit in dsp04_units_tuple:
-        unit.ins[0] = previous
-        previous = unit.outs[0]
+        previous = _wire_unit_with_handoff(unit, previous)
 
     spray_dryer_unit.ins[0] = previous
 
@@ -1214,6 +1398,8 @@ def build_front_end_section(
         chromatography_unit=chromatography_unit,
         predrying_unit=predrying_unit,
         spray_dryer_unit=spray_dryer_unit,
+        fermentation_handoff_stream=fermentation_handoff,
+        handoff_streams=handoff_streams,
         system=system,
         defaults=defaults,
         total_cost_per_batch_usd=total_cost,

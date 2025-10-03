@@ -176,59 +176,93 @@ class UFConcentrationUnit(PlanBackedUnit):
     def _run(self) -> None:
         feed = self.ins[0]
         retentate, permeate = self.outs
+        derived = self.plan.derived
+
+        feed_T = feed.T
+        feed_P = feed.P
+        chemicals = getattr(feed, "chemicals", None)
+        component_ids = chemicals.IDs if chemicals is not None else ()
+        initial_masses = {component: float(feed.imass[component]) for component in component_ids}
+        if 'Osteopontin' not in initial_masses:
+            initial_masses['Osteopontin'] = _get_component_mass(feed, 'Osteopontin')
+        if 'Water' not in initial_masses:
+            initial_masses['Water'] = _get_component_mass(feed, 'Water')
+        feed_total_mass = sum(initial_masses.values())
 
         retentate.empty()
         permeate.empty()
 
-        derived = self.plan.derived
         density = derived.get("density_kg_per_l") or 1.0
 
         input_product = derived.get("input_product_kg")
         if input_product is None:
-            input_product = _get_component_mass(feed, "Osteopontin")
-        input_product = max(input_product, 0.0)
+            input_product = initial_masses.get("Osteopontin", 0.0)
+        input_product = max(float(input_product), 0.0)
+
+        product_out = derived.get("product_out_kg")
+        if product_out is None:
+            recovery = derived.get("protein_recovery_fraction") or 1.0
+            product_out = input_product * recovery
+        product_out = max(float(product_out), 0.0)
 
         input_volume = derived.get("input_volume_l")
-        if input_volume is None and density:
-            input_volume = feed.F_mass / density if feed.F_mass is not None else None
+        if (input_volume is None or input_volume <= 0.0) and density > 0.0 and feed_total_mass > 0.0:
+            input_volume = feed_total_mass / density
+        if input_volume is not None and input_volume > 0.0:
+            derived['input_volume_l'] = input_volume
+        else:
+            derived.pop('input_volume_l', None)
 
-        vrr = derived.get("volume_reduction_ratio") or (
-            (input_volume / derived.get("output_volume_l"))
-            if input_volume and derived.get("output_volume_l")
-            else None
-        )
-
-        product_recovery = derived.get("protein_recovery_fraction") or 1.0
-        product_out = input_product * product_recovery
-
+        vrr = derived.get("volume_reduction_ratio")
         output_volume = derived.get("output_volume_l")
-        if output_volume is None and vrr and vrr > 0:
-            output_volume = input_volume / vrr if input_volume is not None else None
+        if (output_volume is None or output_volume <= 0.0) and input_volume:
+            if vrr and vrr > 0.0:
+                output_volume = input_volume / vrr
+        if (output_volume is None or output_volume <= 0.0) and density > 0.0 and product_out > 0.0:
+            output_volume = product_out / density
+        if output_volume is not None and output_volume > 0.0:
+            derived['output_volume_l'] = output_volume
+        else:
+            derived.pop('output_volume_l', None)
 
-        if output_volume is None and density:
-            output_volume = (product_out / density) if density else None
+        if output_volume is not None and output_volume > 0.0:
+            ret_mass = output_volume * density
+        else:
+            ret_mass = product_out
 
-        ret_mass = (output_volume * density) if (output_volume is not None and density) else product_out
-        retentate.imass["Osteopontin"] = product_out
-        if ret_mass is not None:
-            retentate.imass["Water"] = max(ret_mass - product_out, 0.0)
+        for component, mass in initial_masses.items():
+            if component in {"Osteopontin", "Water"}:
+                continue
+            if mass:
+                retentate.imass[component] = mass
+
+        retentate.imass['Osteopontin'] = product_out
+        retentate.imass['Water'] = max(ret_mass - product_out, 0.0)
 
         permeate_product = max(input_product - product_out, 0.0)
-        if permeate_product:
-            permeate.imass["Osteopontin"] = permeate_product
+        if permeate_product > 0.0:
+            permeate.imass['Osteopontin'] = permeate_product
 
-        if input_volume is not None and density is not None:
-            feed_mass = input_volume * density
-        else:
-            feed_mass = feed.F_mass or 0.0
-        if ret_mass is None:
-            ret_mass = feed_mass - permeate_product
-        permeate_mass = max(feed_mass - ret_mass, 0.0)
-        permeate.imass["Water"] = max(permeate_mass - permeate_product, 0.0)
+        permeate_mass = max(feed_total_mass - ret_mass, 0.0)
+        permeate.imass['Water'] = max(permeate_mass - permeate_product, 0.0)
 
-        for stream in (retentate, permeate):
-            stream.T = feed.T
-            stream.P = feed.P
+        retentate.T = feed_T
+        retentate.P = feed_P
+        permeate.T = feed_T
+        permeate.P = feed_P
+
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(retentate)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(retentate)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(retentate)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(retentate)
 
     def _design(self) -> None:
         derived = self.plan.derived
@@ -265,40 +299,69 @@ class DiafiltrationUnit(PlanBackedUnit):
     def _run(self) -> None:
         feed = self.ins[0]
         retentate, permeate = self.outs
+        derived = self.plan.derived
+
+        feed_T = feed.T
+        feed_P = feed.P
+        chemicals = getattr(feed, "chemicals", None)
+        component_ids = chemicals.IDs if chemicals is not None else ()
+        initial_masses = {component: float(feed.imass[component]) for component in component_ids}
+        if 'Osteopontin' not in initial_masses:
+            initial_masses['Osteopontin'] = _get_component_mass(feed, 'Osteopontin')
+        if 'Water' not in initial_masses:
+            initial_masses['Water'] = _get_component_mass(feed, 'Water')
+        feed_total_mass = sum(initial_masses.values())
 
         retentate.empty()
         permeate.empty()
 
-        derived = self.plan.derived
         density = derived.get("density_kg_per_l") or 1.0
 
         input_product = derived.get("input_product_kg")
         if input_product is None:
-            input_product = _get_component_mass(feed, "Osteopontin")
-        input_product = max(input_product, 0.0)
+            input_product = initial_masses.get("Osteopontin", 0.0)
+        input_product = max(float(input_product), 0.0)
 
-        product_recovery = derived.get("protein_recovery_fraction") or 1.0
-        product_out = input_product * product_recovery
+        product_out = derived.get("product_out_kg")
+        if product_out is None:
+            recovery = derived.get("protein_recovery_fraction") or 1.0
+            product_out = input_product * recovery
+        product_out = max(float(product_out), 0.0)
 
-        volume = derived.get("input_volume_l")
-        if volume is None and density:
-            volume = feed.F_mass / density if feed.F_mass is not None else None
+        for component, mass in initial_masses.items():
+            if component in {"Osteopontin", "Water"}:
+                continue
+            if mass:
+                retentate.imass[component] = mass
 
-        total_mass = (volume * density) if (volume is not None and density) else product_out
-        retentate.imass["Osteopontin"] = product_out
-        if total_mass is not None:
-            retentate.imass["Water"] = max(total_mass - product_out, 0.0)
+        retentate.imass['Osteopontin'] = product_out
+        input_volume = derived.get('input_volume_l')
+        if input_volume and density > 0.0:
+            total_mass = float(input_volume) * density
+        else:
+            total_mass = product_out + max(initial_masses.get('Water', 0.0), 0.0)
+        retentate.imass['Water'] = max(total_mass - product_out, 0.0)
 
-        product_loss = max(input_product - product_out, 0.0)
-        if product_loss:
-            permeate.imass["Osteopontin"] = product_loss
+        permeate_product = max(input_product - product_out, 0.0)
+        if permeate_product > 0.0:
+            permeate.imass['Osteopontin'] = permeate_product
 
-        buffer_mass = derived.get("buffer_mass_kg") or 0.0
-        permeate.imass["Water"] += max(buffer_mass, 0.0)
+        buffer_mass = max(float(derived.get('buffer_mass_kg') or 0.0), 0.0)
+        permeate_mass = max(feed_total_mass - retentate.F_mass, 0.0)
+        permeate_water = max(permeate_mass - permeate_product, 0.0)
+        permeate.imass['Water'] = permeate_water + buffer_mass
 
-        for stream in (retentate, permeate):
-            stream.T = feed.T
-            stream.P = feed.P
+        retentate.T = feed_T
+        retentate.P = feed_P
+        permeate.T = feed_T
+        permeate.P = feed_P
+
+        handoff = getattr(self, "_handoff_stream", None)
+        if handoff is not None:
+            handoff.copy_like(retentate)
+        report = getattr(self, "_handoff_report_stream", None)
+        if report is not None:
+            report.copy_like(retentate)
 
     def _design(self) -> None:
         derived = self.plan.derived
