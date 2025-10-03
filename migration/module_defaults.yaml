@@ -1,0 +1,1042 @@
+DSP01:
+  DSP01a:
+    active: false
+    parameters:
+      Diafiltration_Volumes:
+        notes: Number of buffer exchanges
+        source_row: 89
+        unit: integer
+        value: 5.0
+      UF_Concentration_Factor:
+        notes: Volume reduction in UF
+        source_row: 87
+        unit: integer
+        value: 20.0
+      UF_DF_Efficiency:
+        notes: Ultrafiltration/Diafiltration efficiency
+        source_row: 85
+        unit: '%'
+        value: 0.95
+      UF_DF_Flux:
+        notes: Ultrafiltration/diafiltration flux
+        source_row: 86
+        unit: LMH
+        value: 20.0
+      UF_Membrane_Area:
+        notes: Membrane area for UF/DF operations
+        source_row: 88
+        unit: m²
+        value: 150.0
+      UF_Membrane_Cost:
+        notes: Ultrafiltration membrane cost
+        source_row: 146
+        unit: $/m²
+        value: 1500.0
+      UF_Membrane_Lifetime:
+        notes: Cycles before replacement
+        source_row: 147
+        unit: cycles
+        value: 100.0
+DSP02:
+  DSP02a:
+    active: false
+    parameters:
+      Buffer_Component_Cost_Basic_kg:
+        notes: Base $/kg for commodity salts
+        source_row: 159
+        unit: $/kg
+        value: null
+      Buffer_Component_Cost_Premium_kg:
+        notes: Premium-grade buffer chemical cost (2X basic grade)
+        source_row: 160
+        unit: $/kg
+        value: 0.0
+      Chromatography_Dynamic_Capacity:
+        notes: Protein binding capacity of resin
+        source_row: 91
+        unit: g/L
+        value: 60.0
+      Chromatography_Yield:
+        notes: Product recovery in chromatography
+        source_row: 92
+        unit: '%'
+        value: 0.8
+      Columns_in_Service:
+        notes: PCC 3–4; SMB 6–8
+        source_row: 98
+        unit: integer
+        value: 3.0
+      DBC_g_per_L:
+        notes: Dynamic binding capacity
+        source_row: 99
+        unit: g/L
+        value: 80.0
+      Eluate_Peak_Fraction_of_Elution:
+        notes: Peak fraction to UF/TFF
+        source_row: 101
+        unit: '%'
+        value: 0.9
+      Elution_BV:
+        notes: Per-cycle bed volumes
+        source_row: 95
+        unit: integer
+        value: 5.0
+      NaCl_Cost:
+        notes: null
+        source_row: 153
+        unit: $/kg
+        value: 0.1
+      NaCl_MW_g_per_mol:
+        notes: Sodium chloride MW
+        source_row: 154
+        unit: g/mol
+        value: 58.44
+      NaCl_M_Elution:
+        notes: NaCl for Elution
+        source_row: 157
+        unit: M
+        value: 0.375
+      NaCl_M_Strip:
+        notes: NaCl for Strip
+        source_row: 158
+        unit: M
+        value: 1.0
+      NaCl_M_Wash1:
+        notes: NaCl for Wash 1
+        source_row: 155
+        unit: M
+        value: 0.25
+      NaCl_M_Wash2:
+        notes: NaCl for Wash 2
+        source_row: 156
+        unit: M
+        value: 0.25
+      Phosphate_Cost:
+        notes: null
+        source_row: 150
+        unit: $/kg
+        value: 1.5
+      Phosphate_M:
+        notes: Total phosphate concentration
+        source_row: 152
+        unit: M
+        value: 0.01
+      Phosphate_MW_g_per_mol:
+        notes: null
+        source_row: 151
+        unit: g/mol
+        value: 120.0
+      Resin_Column_Volume_L:
+        notes: Packed bed volume per column
+        source_row: 97
+        unit: L
+        value: 5000.0
+      Resin_Cost:
+        notes: Chromatography resin cost
+        source_row: 148
+        unit: $/L
+        value: 1000.0
+      Resin_Lifetime:
+        notes: Number of uses before replacement
+        source_row: 149
+        unit: cycles
+        value: 30.0
+      Strip_BV:
+        notes: Optional
+        source_row: 96
+        unit: integer
+        value: 2.0
+      Utilization_pct:
+        notes: Fraction of DBC used
+        source_row: 100
+        unit: '%'
+        value: 0.85
+      Wash1_BV:
+        notes: Per-cycle bed volumes
+        source_row: 93
+        unit: integer
+        value: 3.0
+      Wash2_BV:
+        notes: Per-cycle bed volumes
+        source_row: 94
+        unit: integer
+        value: 2.0
+  DSP02e:
+    active: false
+    parameters:
+      Acid_Base_Cost:
+        notes: Acid/base reagent cost for pH elution (Optimization/Circular).
+        source_row: 166
+        unit: $/kg (as 1N equiv)
+        value: 0.2
+      Adsorption_Buffer_Composition:
+        notes: Text recipe (e.g., 10 mM citrate, 150 mM NaCl, pH 4.5)
+        source_row: 163
+        unit: '-'
+        value: null
+      Adsorption_Buffer_Name:
+        notes: Name/ID of buffer used to form coacervate
+        source_row: 162
+        unit: '-'
+        value: null
+      Adsorption_Conductivity:
+        notes: Ionic strength target at adsorption
+        source_row: 105
+        unit: mS/cm
+        value: null
+      Adsorption_pH:
+        notes: Target pH for coacervation window
+        source_row: 104
+        unit: pH
+        value: 4.5
+      Binding_Efficiency:
+        notes: Fraction of OPN captured onto polymer
+        source_row: 109
+        unit: '%'
+        value: 0.9
+      Chitosan_Cost:
+        notes: Bulk food/Pharma-grade chitosan price
+        source_row: 161
+        unit: $/kg
+        value: 40.0
+      Chitosan_to_OPN_Ratio:
+        notes: Polymer mass per kg OPN feed (stoichiometric or empirical)
+        source_row: 103
+        unit: kg/kg-OPN
+        value: 3.0
+      Coacervate_Separation_Method:
+        notes: Centrifuge | Screen | Microfiltration | Settling
+        source_row: 106
+        unit: enum
+        value: null
+      Elution_Buffer_Composition:
+        notes: Text recipe for dissociation (e.g., 50–200 mM citrate/phosphate)
+        source_row: 167
+        unit: '-'
+        value: null
+      Elution_Buffer_Volume:
+        notes: Elution volume relative to feed or absolute L
+        source_row: 108
+        unit: L/L feed
+        value: 0.1
+      Elution_Efficiency:
+        notes: Fraction of bound OPN eluted
+        source_row: 110
+        unit: '%'
+        value: 0.9
+      Overall_Recovery:
+        notes: Calculated = Binding_Efficiency × Elution_Efficiency × losses
+        source_row: 113
+        unit: '%'
+        value: 0.81
+      Polymer_OPN_Separation_Method:
+        notes: Post-elution removal of polymer (screen/centrifuge/filtration)
+        source_row: 112
+        unit: enum
+        value: null
+      Pyrophosphate_Cost:
+        notes: Bulk pyrophosphate price for coacervate elution (Simplified).
+        source_row: 165
+        unit: $/kg
+        value: 1.8
+      Wash_Buffer_Composition:
+        notes: Text recipe for impurity wash
+        source_row: 164
+        unit: '-'
+        value: null
+      Wash_Buffer_Volumes:
+        notes: Total wash volume in column volumes (or L/L feed)
+        source_row: 107
+        unit: CV
+        value: 0.5
+DSP03:
+  DSP03a:
+    active: false
+    parameters:
+      Pre_Drying_Concentration_Factor:
+        notes: Concentration factor before drying
+        source_row: 118
+        unit: integer
+        value: 5.0
+      Pre_Drying_TFF_UFF_Efficiency:
+        notes: Efficiency of pre-drying TFF
+        source_row: 115
+        unit: '%'
+        value: 0.95
+      Pre_Drying_TFF_UFF_Flux:
+        notes: TFF flux before spray drying
+        source_row: 116
+        unit: LMH
+        value: 35.0
+      Pre_Drying_TFF_UFF_Membrane_Area:
+        notes: Membrane area for pre-drying TFF
+        source_row: 117
+        unit: m²
+        value: 35.0
+  DSP03b:
+    active: false
+    parameters:
+      Membrane_Cleaning_Cost:
+        notes: Ceramic membrane cleaning chemicals
+        source_row: 171
+        unit: $
+        value: 200.0
+      Pre_Drying_TFF_Membrane_Cost:
+        notes: Pre-drying TFF membrane cost
+        source_row: 169
+        unit: $/m²
+        value: 1800.0
+      Pre_Drying_TFF_Membrane_Lifetime:
+        notes: Cycles before replacement
+        source_row: 170
+        unit: cycles
+        value: 100.0
+DSP04:
+  DSP04d:
+    active: false
+    parameters:
+      (unnamed parameter):
+        notes: null
+        source_row: 123
+        unit: null
+        value: null
+DSP05:
+  DSP05a:
+    active: false
+    parameters:
+      Final_Solids_Content:
+        notes: Solids content sent to spray dryer
+        source_row: 129
+        unit: '%'
+        value: 0.15
+      Solution_Density:
+        notes: Density of concentrated protein solution before spray drying
+        source_row: 128
+        unit: kg/L
+        value: 1.08
+      Spray_Dryer_Capacity:
+        notes: Water evaporation rate
+        source_row: 126
+        unit: kg/h
+        value: 150.0
+      Spray_Dryer_Efficiency:
+        notes: Product recovery in spray drying
+        source_row: 125
+        unit: '%'
+        value: 0.98
+      Target_Recovery_Rate:
+        notes: Target overall recovery rate
+        source_row: 127
+        unit: '%'
+        value: 0.8
+GLOBAL:
+  <default>:
+    active: false
+    parameters:
+      Adsorption_Loss_Frac:
+        notes: null
+        source_row: 73
+        unit: null
+        value: 0.0003
+      Backflush_Unrecovered_L:
+        notes: null
+        source_row: 74
+        unit: L
+        value: 0.0
+      CMO Campaign Structure & Fees:
+        notes: null
+        source_row: 184
+        unit: null
+        value: null
+      Carbon_source:
+        notes: null
+        source_row: 37
+        unit: null
+        value: null
+      Cell removal-Ceramic Membrane:
+        notes: null
+        source_row: 79
+        unit: null
+        value: null
+      Cell removal-centrifugation:
+        notes: null
+        source_row: 75
+        unit: null
+        value: null
+      Cell removal-microfiltration:
+        notes: null
+        source_row: 66
+        unit: null
+        value: null
+      Chromatography:
+        notes: null
+        source_row: 90
+        unit: null
+        value: null
+      Clarification_Route:
+        notes: null
+        source_row: 70
+        unit: null
+        value: null
+      DSP Specifications and Efficiencies:
+        notes: null
+        source_row: 64
+        unit: null
+        value: null
+      Fee Structure:
+        notes: null
+        source_row: 186
+        unit: null
+        value: null
+      Fermentation Process Parameters:
+        notes: null
+        source_row: 35
+        unit: null
+        value: null
+      Fermenter Specifications:
+        notes: null
+        source_row: 8
+        unit: null
+        value: null
+      Filter_HoldUp_L_per_10in:
+        notes: depth filter hold-up per 10″ module
+        source_row: 71
+        unit: '%'
+        value: 0.006
+      Filter_Modules:
+        notes: null
+        source_row: 72
+        unit: null
+        value: 20.0
+      Polishing & Sterile Filtration:
+        notes: null
+        source_row: 119
+        unit: null
+        value: null
+      Post_Elution_Concentration_Factor:
+        notes: null
+        source_row: 111
+        unit: factor
+        value: 0.2
+      Product adsorbtion-Chitosan:
+        notes: null
+        source_row: 102
+        unit: null
+        value: null
+      Product concentration:
+        notes: null
+        source_row: 114
+        unit: null
+        value: null
+      Product preparation-spray-draying:
+        notes: null
+        source_row: 124
+        unit: null
+        value: null
+      Raw Material Costs:
+        notes: null
+        source_row: 131
+        unit: null
+        value: null
+      Seed Train Specifications:
+        notes: null
+        source_row: 16
+        unit: null
+        value: null
+      Supernatant concentration-Ultrafiltration:
+        notes: null
+        source_row: 84
+        unit: null
+        value: null
+      Utility Costs:
+        notes: null
+        source_row: 174
+        unit: null
+        value: null
+GLOBAL00:
+  GLOBAL00a:
+    active: false
+    parameters:
+      Antifoam_Cost:
+        notes: Antifoam agent cost
+        source_row: 140
+        unit: $/kg
+        value: 10.0
+      CIP_Chemicals_Cost:
+        notes: Cost of cleaning agents
+        source_row: 142
+        unit: $/kg
+        value: 3.0
+      Cell Solids Content:
+        notes: Percentage of solids in yeast cells (typically 25-35%)<--- Input from
+          Concentration Cal.
+        source_row: 41
+        unit: '%'
+        value: 0.3
+      Glucose_Cost:
+        notes: Bulk dextrose price
+        source_row: 133
+        unit: $/kg
+        value: 0.75
+      Glycerol_Cost:
+        notes: Bulk refined glycerin F/G
+        source_row: 134
+        unit: $/kg
+        value: 1.2
+      Lactose_Cost:
+        notes: Bulk lactose price
+        source_row: 135
+        unit: $/kg
+        value: 0.95
+      Minor_Nutrients_Cost:
+        notes: Trace elements, vitamins, etc.
+        source_row: 139
+        unit: $/batch
+        value: 500.0
+      Molasses_Cost:
+        notes: Bulk  first grade molasses F/G
+        source_row: 136
+        unit: $/kg
+        value: 0.25
+      OD to Biomass Conversion:
+        notes: Calculated from limited K. lactis data, typically 0.45 for S. cerevisiae.
+          Coefficient of variation is 11.5%
+        source_row: 39
+        unit: g/L per OD
+        value: 0.4
+      Peptone_Cost:
+        notes: Peptone powder cost
+        source_row: 138
+        unit: $/kg
+        value: 15.0
+      QC_Testing_Cost_Per_Batch:
+        notes: QC release testing costs
+        source_row: 172
+        unit: $
+        value: 15000.0
+      SIP_Steam:
+        notes: Steam for SIP (tonnes) (estimate)
+        source_row: 143
+        unit: tonnes
+        value: 10.0
+      Sludge_Dry_Fraction:
+        notes: Maximum concentration of concentrated sludge from continuous dewatering
+          (centrifuge or MF)
+        source_row: 43
+        unit: '%'
+        value: 0.35
+      Wet Cell Density:
+        notes: Density of wet yeast cells<--- Input from Concentration Cal.
+        source_row: 40
+        unit: kg/L
+        value: 1.05
+      Yeast_Extract_Cost:
+        notes: YE powder cost
+        source_row: 137
+        unit: $/kg
+        value: 12.0
+  GLOBAL00b:
+    active: false
+    parameters:
+      Batches_Per_Year:
+        notes: Number of production runs
+        source_row: 6
+        unit: number
+        value: 30.0
+      Biomass_Volume_Fraction:
+        notes: null
+        source_row: 14
+        unit: null
+        value: 0.1904761904761905
+      Fermentation OD600:
+        notes: Optical density of the fermentation
+        source_row: 38
+        unit: null
+        value: 150.0
+      Liquid_Fraction_in_Sludge:
+        notes: Percentage of liquid in yeast cells <--- Input from Concentration Cal.
+        source_row: 42
+        unit: '&'
+        value: 0.7
+      Product_Recovery_Rate:
+        notes: This value is calculated from the DSP step efficiencies
+        source_row: 3
+        unit: '%'
+        value: 0.636804
+      Working_Volume:
+        notes: Working volume of fermenter
+        source_row: 11
+        unit: L
+        value: 70000.0
+  GLOBAL00c:
+    active: false
+    parameters:
+      Annual_Campaigns:
+        notes: Production campaigns per year
+        source_row: 5
+        unit: number
+        value: 5.0
+      Annual_Production_Target_Year:
+        notes: Target production of purified product
+        source_row: 1
+        unit: kg
+        value: 10000.0
+      Antifoam_Dosage:
+        notes: Fraction of fermenter working volume (0.1 % v/v)
+        source_row: 141
+        unit: fraction v/v
+        value: 0.001
+      Batches_Per_Campaign:
+        notes: Number of consecutive batches in a campaign
+        source_row: 4
+        unit: number
+        value: 6.0
+      Feed_Glucose_Concentration:
+        notes: Concentrated glucose feed solution
+        source_row: 47
+        unit: g/L
+        value: 500.0
+      Feed_Glycerol_Concentration:
+        notes: Concentrated glucose feed solution
+        source_row: 45
+        unit: g/L
+        value: 600.0
+      Feed_Lactose_Concentration:
+        notes: Concentrated lactose feed solution
+        source_row: 49
+        unit: g/L
+        value: 200.0
+      Feed_Molasses_Concentration:
+        notes: Concentrated molasses feed solution
+        source_row: 51
+        unit: g/L
+        value: 1000.0
+      Fermentation_Time:
+        notes: Duration of fermentation (including fed-batch)
+        source_row: 12
+        unit: h
+        value: 48.0
+      Fermenter size:
+        notes: Total size of fermenter
+        source_row: 10
+        unit: m3
+        value: 100.0
+      Glucose_Feed_Rate:
+        notes: Specific feeding rate during fed-batch
+        source_row: 52
+        unit: g/L/h
+        value: 1.0
+      Initial_Glucose_Concentration:
+        notes: Glucose in initial media
+        source_row: 46
+        unit: g/L
+        value: 20.0
+      Initial_Glycerol_Concentration:
+        notes: Glucose in initial media
+        source_row: 44
+        unit: g/L
+        value: 20.0
+      Initial_Lactose_Concentration:
+        notes: Lactose in initial media
+        source_row: 48
+        unit: g/L
+        value: 20.0
+      Initial_Molasses_Concentration:
+        notes: Molasses in initial media
+        source_row: 50
+        unit: g/L
+        value: 40.0
+      Strain_Titer:
+        notes: Concentration measured in clarified supernatant
+        source_row: 2
+        unit: g/L
+        value: 5.0
+      Turnaround_Time:
+        notes: Time between batches for cleaning & setup
+        source_row: 13
+        unit: h
+        value: 24.0
+PROJ01:
+  PROJ01a:
+    active: false
+    parameters:
+      Compressed_Air_Cost:
+        notes: Compressed air cost
+        source_row: 181
+        unit: $/m³
+        value: 0.02
+      Electricity_Cost:
+        notes: Electricity rate
+        source_row: 176
+        unit: $/kWh
+        value: 0.15
+      Steam_Cost:
+        notes: Process steam cost
+        source_row: 177
+        unit: $/tonne
+        value: 25.0
+  PROJ01b:
+    active: false
+    parameters:
+      Chilled_Water_Cost:
+        notes: Cooling water cost
+        source_row: 178
+        unit: $/m³
+        value: 0.05
+      WFI_Cost:
+        notes: Water for injection cost
+        source_row: 182
+        unit: $/m³
+        value: 5.0
+      Water_Cost:
+        notes: Process water cost
+        source_row: 179
+        unit: $/m³
+        value: 2.0
+  PROJ01c:
+    active: false
+    parameters:
+      Wastewater_Treatment_Cost:
+        notes: Effluent treatment cost
+        source_row: 180
+        unit: $/m³
+        value: 3.0
+PROJ02:
+  PROJ02a:
+    active: false
+    parameters:
+      Annual_Price_Escalation:
+        notes: Annual price increase for multi-year contracts
+        source_row: 195
+        unit: '%'
+        value: 0.03
+      CMO_Consumables_Campaign_Discount:
+        notes: Discount on consumables markup for campaigns
+        source_row: 207
+        unit: '%'
+        value: 0.1
+      CMO_Overhead_Markup:
+        notes: CMO markup on consumables
+        source_row: 206
+        unit: '%'
+        value: 0.25
+      Campaign_Changeover_Time:
+        notes: Time between campaigns for facility changeover
+        source_row: 190
+        unit: days
+        value: 7.0
+      Campaign_Reservation_Months:
+        notes: Facility reservation time before campaign starts
+        source_row: 192
+        unit: months
+        value: 2.0
+      Campaign_Setup_Fee:
+        notes: One-time fee charged at the start of each campaign
+        source_row: 188
+        unit: $
+        value: 250000.0
+      Campaign_Setup_Fee_Per_Batch:
+        notes: null
+        source_row: 189
+        unit: $
+        value: 41666.666666666664
+      Contract_Length:
+        notes: Length of CMO contract
+        source_row: 194
+        unit: years
+        value: 3.0
+      DSP_Campaign_Discount:
+        notes: Discount on DSP suite for campaign batches
+        source_row: 201
+        unit: '%'
+        value: 0.1
+      DSP_Daily_Rate:
+        notes: Daily charge for DSP suite
+        source_row: 200
+        unit: $/day
+        value: 75000.0
+      Documentation_Base_Fee:
+        notes: Batch record & documentation fee
+        source_row: 208
+        unit: $/batch
+        value: 5000.0
+      Facility_Reservation_Fee:
+        notes: Monthly facility reservation fee
+        source_row: 191
+        unit: $
+        value: 50000.0
+      Fermenter_Campaign_Discount:
+        notes: Discount on daily rate for campaign batches
+        source_row: 199
+        unit: '%'
+        value: 0.15
+      Fermenter_Daily_Rate:
+        notes: Daily charge for fermenter
+        source_row: 198
+        unit: $/day
+        value: 75000.0
+      Labor_Campaign_Discount:
+        notes: Labor efficiency discount for campaign batches
+        source_row: 205
+        unit: '%'
+        value: 0.2
+      Labor_Cost_Per_Batch:
+        notes: Labor cost per batch
+        source_row: 204
+        unit: $/batch
+        value: 20000.0
+      Long_Term_Contract_Discount:
+        notes: Discount for multi-year contract commitment
+        source_row: 193
+        unit: '%'
+        value: 0.1
+      QA_Campaign_Discount:
+        notes: Discount on QA/QC for campaign batches
+        source_row: 210
+        unit: '%'
+        value: 0.15
+      QA_Review_Base_Fee:
+        notes: Quality assurance review cost
+        source_row: 209
+        unit: $/batch
+        value: 10000.0
+      Spray_Dryer_Campaign_Discount:
+        notes: Discount on spray dryer for campaign batches
+        source_row: 203
+        unit: '%'
+        value: 0.05
+      Spray_Dryer_Hourly_Rate:
+        notes: Hourly charge for spray dryer
+        source_row: 202
+        unit: $/h
+        value: 1000.0
+      Validation_Batch_Surcharge:
+        notes: Additional cost for validation batches
+        source_row: 196
+        unit: '%'
+        value: 0.25
+      Validation_Batches_Required:
+        notes: Number of validation batches required (initial)
+        source_row: 197
+        unit: count
+        value: 3.0
+USP00:
+  USP00a:
+    active: true
+    parameters:
+      Biomass_Yield_on_Glucose:
+        notes: Cell mass produced per gram of glucose
+        source_row: 55
+        unit: g/g
+        value: 0.48
+  USP00b:
+    active: false
+    parameters:
+      Biomass_Yield_on_Glycerol:
+        notes: Cell mass produced per gram of glycerol
+        source_row: 56
+        unit: g/g
+        value: 0.58
+  USP00c:
+    active: false
+    parameters:
+      Biomass_Yield_on_Lactose:
+        notes: Cell mass produced per gram of lactose
+        source_row: 57
+        unit: g/g
+        value: 0.45
+  USP00d:
+    active: false
+    parameters:
+      Biomass_Yield_on_Molasses:
+        notes: Cell mass produced per gram of molasses
+        source_row: 58
+        unit: g/g
+        value: 0.25
+  USP00z:
+    active: false
+    parameters:
+      Media_Offset_Value:
+        notes: Credit value per kg diverted chitosan used as C/N source in media.
+        source_row: 168
+        unit: $/kg-equiv
+        value: 0.4
+USP01:
+  USP01a:
+    active: false
+    parameters:
+      Inoc_ratio_to_S0:
+        notes: Working cell bank
+        source_row: 22
+        unit: ml
+        value: 1.0
+      Inoc_ratio_to_S1:
+        notes: Inoculation ratio into S1
+        source_row: 25
+        unit: v/v
+        value: 0.03
+      Inoc_ratio_to_S2:
+        notes: Inoculation ratio into S2
+        source_row: 28
+        unit: v/v
+        value: 0.05
+      Inoc_ratio_to_S3:
+        notes: Inoculation ratio into S3
+        source_row: 31
+        unit: v/v
+        value: 0.05
+      Inoc_ratio_vv_USP02:
+        notes: Inoculation ratio into production (link)
+        source_row: 33
+        unit: v/v
+        value: 0.05
+      S1_time:
+        notes: Duration of culture
+        source_row: 26
+        unit: h
+        value: 4.0
+      S2_time:
+        notes: Duration of culture
+        source_row: 29
+        unit: h
+        value: 4.0
+      S3_time:
+        notes: Duration of culture
+        source_row: 32
+        unit: h
+        value: 4.0
+      SO_time:
+        notes: Duration of culture
+        source_row: 23
+        unit: h
+        value: 4.0
+      Seed_DO_setpoint:
+        notes: Seed DO setpoint (linked to production)
+        source_row: 19
+        unit: '%'
+        value: 30.0
+      Seed_culture_T:
+        notes: Seed culture temperature (linked to production)
+        source_row: 18
+        unit: oC
+        value: 32.0
+      Working_fraction_S0:
+        notes: Working fraction of S0 vessel
+        source_row: 21
+        unit: fraction
+        value: 0.5
+      Working_fraction_S1:
+        notes: Working fraction of S1 vessel
+        source_row: 24
+        unit: fraction
+        value: 0.7
+      Working_fraction_S2:
+        notes: Working fraction of S2 vessel
+        source_row: 27
+        unit: fraction
+        value: 0.8
+      Working_fraction_S3:
+        notes: Working fraction of S3 vessel
+        source_row: 30
+        unit: fraction
+        value: 0.85
+      qO2_peak_mmol_gCDW_h:
+        notes: Peak oxygen uptake (for checks, optional)
+        source_row: 20
+        unit: mmol O2/gDCW/h
+        value: 6.0
+USP02:
+  USP02a:
+    active: false
+    parameters:
+      Aeration_Rate:
+        notes: Volume of air per volume of media per minute
+        source_row: 62
+        unit: vvm
+        value: 1.0
+      Agitation_Power_Intensity:
+        notes: Power input for mixing
+        source_row: 61
+        unit: kW/m³
+        value: 2.5
+      Oxygen_Transfer_Rate:
+        notes: OTR capability of fermenter
+        source_row: 60
+        unit: mmol/L/h
+        value: 100.0
+      Peptone_Concentration:
+        notes: Initial peptone in media
+        source_row: 54
+        unit: g/L
+        value: 20.0
+      Yeast_Extract_Concentration:
+        notes: Initial yeast extract in media
+        source_row: 53
+        unit: g/L
+        value: 10.0
+USP03:
+  USP03a:
+    active: false
+    parameters:
+      MF_Efficiency:
+        notes: Microfiltration step efficiency <---Input from Dewatering Efficiency
+          Cal.
+        source_row: 67
+        unit: '%'
+        value: 0.9
+      MF_Membrane_Area:
+        notes: Membrane area for MF
+        source_row: 68
+        unit: m²
+        value: 80.0
+      MF_Membrane_Cost:
+        notes: Microfiltration membrane cost
+        source_row: 144
+        unit: $/m²
+        value: 1000.0
+      MF_Membrane_Lifetime:
+        notes: Cycles before replacement
+        source_row: 145
+        unit: cycles
+        value: 50.0
+      Microfiltration_Flux:
+        notes: Liters per m² per hour
+        source_row: 69
+        unit: LMH
+        value: 45.0
+  USP03b:
+    active: false
+    parameters:
+      Ceramic_Membrane_Efficiency:
+        notes: null
+        source_row: 80
+        unit: '%'
+        value: null
+      Ceramic_Membrane_Energy:
+        notes: null
+        source_row: 81
+        unit: kw
+        value: null
+      Ceramic_Membrane_Flux:
+        notes: null
+        source_row: 82
+        unit: LMH
+        value: null
+  USP03c:
+    active: false
+    parameters:
+      Centrifugation_Efficiency:
+        notes: null
+        source_row: 76
+        unit: '%'
+        value: null
+      Centrifugation_Energy:
+        notes: null
+        source_row: 77
+        unit: kw
+        value: null
+      Centrifugation_Throughput:
+        notes: null
+        source_row: 78
+        unit: LMH
+        value: null
