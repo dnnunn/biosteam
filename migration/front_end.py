@@ -8,15 +8,21 @@ import math
 from typing import Any, Dict, Iterable, Mapping, Optional
 
 import biosteam as bst
-
-from .cmo import compute_cmo_costs, load_cmo_profile, StageCostSummary
+from .cmo_contracts import (
+    CMODiscounts,
+    CMORates,
+    CMOStructure,
+    CMOTimings,
+    StageCostSummary,
+    compute_contract_stage_costs,
+)
 from .unit_specs import DepthFilterSpecs
 from .excel_defaults import ExcelModuleDefaults, ModuleConfig, ModuleKey
 from .module_registry import ModuleRegistry
 from .unit_builders import register_baseline_unit_builders, set_defaults_loader
 from .unit_factories import register_plan_backed_unit_factories
 from .cell_removal import build_cell_removal_chain
-from .capture import build_capture_chain, CaptureHandoff
+from .capture import build_capture_chain, CaptureHandoff, CaptureRoute
 from .concentration import build_concentration_chain
 from .dsp03 import build_dsp03_chain
 from .dsp04 import build_dsp04_chain
@@ -25,6 +31,7 @@ from .usp01 import SeedConfig, determine_seed_method
 from .usp02 import ProductionConfig, determine_production_method
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
+from .usp_profiles import load_seed_fermentation_profile
 
 FRONT_END_KEYS = (
     ModuleKey("USP01", "USP01a"),
@@ -53,6 +60,7 @@ class FrontEndSection:
     spray_dryer_unit: bst.Unit
     system: bst.System
     defaults: ExcelModuleDefaults
+    ufdf_in_system: bool = True
     fermentation_handoff_stream: Optional[bst.Stream] = None
     total_cost_per_batch_usd: Optional[float] = None
     cmo_fees_usd: Optional[float] = None
@@ -69,24 +77,33 @@ class FrontEndSection:
     cmo_profile_name: str = "conservative_cmo_default"
     cmo_stage_costs: Dict[str, StageCostSummary] = field(default_factory=dict)
     cmo_total_fee_usd: float = 0.0
+    batches_per_campaign: float = 1.0
+    cmo_standard_batch_usd: Optional[float] = None
+    cmo_campaign_adders_usd: Optional[float] = None
+    materials_cost_per_kg_usd: Optional[float] = None
+    cmo_cost_per_kg_usd: Optional[float] = None
+    cmo_standard_cost_per_kg_usd: Optional[float] = None
+    cmo_campaign_cost_per_kg_usd: Optional[float] = None
     handoff_streams: Dict[str, bst.Stream] = field(default_factory=dict)
 
     def units(self) -> tuple[bst.Unit, ...]:
         """Return the ordered unit operations for convenience."""
 
-        return (
+        units: list[bst.Unit] = [
             self.seed_unit,
             self.fermentation_unit,
             *self.cell_removal_units,
-            *self.concentration_units,
-            self.ufdf_unit,
-            self.chromatography_unit,
-            *self.capture_units,
-            *self.dsp03_units,
-            self.predrying_unit,
-            *self.dsp04_units,
-            self.spray_dryer_unit,
-        )
+        ]
+        units.extend(self.concentration_units)
+        if self.ufdf_in_system:
+            units.append(self.ufdf_unit)
+        units.append(self.chromatography_unit)
+        units.extend(self.capture_units)
+        units.extend(self.dsp03_units)
+        units.append(self.predrying_unit)
+        units.extend(self.dsp04_units)
+        units.append(self.spray_dryer_unit)
+        return tuple(units)
 
     def simulate(self, *, design: bool = False, cost: bool = False) -> None:
         """Run the front-end units in sequence using plan-derived targets."""
@@ -213,21 +230,34 @@ def _estimate_depth_filter_hours(plan: Any) -> float:
 def _estimate_ufdf_hours(plan: Any) -> float:
     """Estimate UF/DF time from throughput and diavolumes."""
 
+    total, _, _ = _ufdf_time_breakdown(plan)
+    return total
+
+
+def _ufdf_time_breakdown(plan: Any) -> tuple[float, float, float]:
+    """Return total, UF-only, and DF-only processing hours."""
+
     throughput = _coerce_float(plan.derived.get("throughput_l_per_hr"), 0.0)
     if throughput <= 0.0:
-        return 0.0
+        return 0.0, 0.0, 0.0
 
     input_volume = _coerce_float(plan.derived.get("input_volume_l"), 0.0)
     output_volume = _coerce_float(plan.derived.get("output_volume_l"), 0.0)
-    dia_volumes = _coerce_float(plan.derived.get("diafiltration_volumes"), 0.0)
+    dia_volumes = _coerce_float(
+        plan.derived.get("dia_volumes"),
+        _coerce_float(plan.derived.get("diafiltration_volumes"), 0.0),
+    )
 
-    total_volume = input_volume + dia_volumes * output_volume
-    if total_volume <= 0.0:
-        total_volume = input_volume
-    if total_volume <= 0.0:
-        return 0.0
+    uf_time = input_volume / throughput if input_volume > 0 else 0.0
+    df_time = 0.0
+    if dia_volumes > 0 and output_volume > 0:
+        df_time = (dia_volumes * output_volume) / throughput
 
-    return total_volume / throughput
+    total_time = uf_time + df_time
+    if total_time <= 0.0 and input_volume > 0:
+        total_time = input_volume / throughput
+
+    return total_time, uf_time, df_time
 
 
 def _estimate_tff_hours(plan: Any) -> float:
@@ -684,6 +714,79 @@ def build_front_end_section(
     if peptone_per_batch is not None:
         seed_plan.derived["peptone_per_batch_kg"] = peptone_per_batch
 
+    seed_profile_name = None
+    fermentation_profile_name = None
+    seed_override_cfg = None
+    fermentation_override_cfg = None
+    if baseline_overrides:
+        seed_override_cfg = baseline_overrides.get("seed")
+        fermentation_override_cfg = baseline_overrides.get("fermentation")
+        if isinstance(seed_override_cfg, Mapping):
+            seed_profile_name = seed_override_cfg.get("profile")
+        if isinstance(fermentation_override_cfg, Mapping):
+            fermentation_profile_name = fermentation_override_cfg.get("profile")
+
+    profile_name = fermentation_profile_name or seed_profile_name
+    if profile_name:
+        try:
+            seed_profile_override, fermentation_profile_override = load_seed_fermentation_profile(profile_name)
+        except Exception as exc:  # pragma: no cover - defensive path
+            seed_plan.add_note(
+                f"Failed to load seed/fermentation profile '{profile_name}': {exc}"
+            )
+        else:
+            if seed_profile_override:
+                _apply_plan_overrides(seed_plan, seed_profile_override)
+                seed_plan.add_note(f"Seed profile '{profile_name}' applied")
+            if fermentation_profile_override:
+                profile_notes = _apply_fermentation_override(
+                    fermentation_plan,
+                    fermentation_profile_override,
+                )
+                if profile_notes:
+                    for note in profile_notes:
+                        fermentation_plan.add_note(note)
+                else:
+                    fermentation_plan.add_note(
+                        f"Fermentation profile '{profile_name}' applied"
+                    )
+                profile_feed = fermentation_profile_override.get("feed", {})
+                profile_derived = fermentation_profile_override.get("derived", {})
+                carbon_totals = {}
+                for key, carbon_key in (
+                    ("total_glucose_feed_kg", "glucose"),
+                    ("total_glycerol_feed_kg", "glycerol"),
+                    ("total_molasses_feed_kg", "molasses"),
+                    ("total_lactose_feed_kg", "lactose"),
+                ):
+                    value = profile_derived.get(key)
+                    if value is not None:
+                        carbon_totals[carbon_key] = value
+                if carbon_totals:
+                    fermentation_plan.derived["_profile_carbon_totals"] = carbon_totals
+                if "product_out_kg" in profile_derived:
+                    fermentation_plan.derived.setdefault(
+                        "_profile_product_out_kg",
+                        profile_derived.get("product_out_kg"),
+                    )
+                if isinstance(profile_feed, Mapping):
+                    carbon_source_override = profile_feed.get("carbon_source")
+                    if carbon_source_override:
+                        fermentation_plan.derived["carbon_source"] = carbon_source_override
+                    media_type_override = profile_feed.get("media_type")
+                    if media_type_override:
+                        fermentation_plan.derived["media_type"] = media_type_override
+            if isinstance(seed_override_cfg, dict):
+                updated_seed_override = dict(seed_override_cfg)
+                updated_seed_override.pop("profile", None)
+                baseline_overrides["seed"] = updated_seed_override
+                seed_override_cfg = updated_seed_override
+            if isinstance(fermentation_override_cfg, dict):
+                updated_ferm_override = dict(fermentation_override_cfg)
+                updated_ferm_override.pop("profile", None)
+                baseline_overrides["fermentation"] = updated_ferm_override
+                fermentation_override_cfg = updated_ferm_override
+
     if baseline_overrides:
         _apply_plan_overrides(seed_plan, baseline_overrides.get("seed"))
 
@@ -746,6 +849,7 @@ def build_front_end_section(
     }
     carbon_source = fermentation_plan.derived.get("carbon_source")
     carbon_cost = carbon_cost_lookup.get(carbon_source)
+    carbon_totals_override = fermentation_plan.derived.get("_profile_carbon_totals")
     if carbon_cost is not None and getattr(fermentation_specs, "glucose_cost_per_kg", None) in (None, 0):
         fermentation_specs.glucose_cost_per_kg = carbon_cost
 
@@ -819,6 +923,7 @@ def build_front_end_section(
     microfiltration_unit = cell_removal_units_tuple[-1]
 
     concentration_units: list[bst.Unit] = [ufdf_unit]
+    ufdf_in_system = True
     concentration_route: Optional[str] = None
     if mode_normalized == "baseline":
         conc_config = baseline_overrides.get("concentration") if baseline_overrides else None
@@ -903,14 +1008,27 @@ def build_front_end_section(
         if chain.notes:
             for note in chain.notes:
                 chromatography_unit.plan.add_note(note)
-        capture_route = chain.route.value if chain.route else None
+        capture_route_enum = chain.route or CaptureRoute.AEX
+        capture_route = capture_route_enum.value
         capture_pool_cond = chain.pool_conductivity_mM
         capture_pool_ph = chain.pool_ph
         capture_cdmo_cost = chain.cdmo_cost_per_batch
         capture_resin_cost = chain.resin_cost_per_batch
         capture_buffer_cost = chain.buffer_cost_per_batch
         capture_handoff = chain.handoff
-        capture_units_tuple = tuple(chain.units)
+
+        if chain.units:
+            chromatography_unit = chain.units[0]
+            capture_units_tuple = tuple(chain.units[1:])
+        else:
+            capture_units_tuple = tuple()
+
+        if capture_route_enum is CaptureRoute.CHITOSAN:
+            concentration_units = []
+            concentration_units_tuple = tuple()
+            ufdf_in_system = False
+            product_after_uf = product_after_mf
+            post_uf_volume_l = clarified_volume_l
 
         dsp03_config_raw = baseline_overrides.get("dsp03") if baseline_overrides else None
         dsp03_chain = build_dsp03_chain(
@@ -1138,12 +1256,18 @@ def build_front_end_section(
     fermentation_specs = fermentation_unit.plan.specs
     carbon_source = fermentation_plan.derived.get("carbon_source")
     carbon_mass = 0.0
-    if carbon_source == "glucose":
-        carbon_mass = fermentation_plan.derived.get("total_glucose_feed_kg") or 0.0
-    elif carbon_source == "glycerol":
-        carbon_mass = fermentation_plan.derived.get("total_glycerol_feed_kg") or 0.0
-    elif carbon_source == "molasses":
-        carbon_mass = fermentation_plan.derived.get("total_molasses_feed_kg") or 0.0
+    profile_carbon_totals = fermentation_plan.derived.get("_profile_carbon_totals") or {}
+    if carbon_source and carbon_source in profile_carbon_totals:
+        carbon_mass = profile_carbon_totals[carbon_source]
+    else:
+        if carbon_source == "glucose":
+            carbon_mass = fermentation_plan.derived.get("total_glucose_feed_kg") or 0.0
+        elif carbon_source == "glycerol":
+            carbon_mass = fermentation_plan.derived.get("total_glycerol_feed_kg") or 0.0
+        elif carbon_source == "molasses":
+            carbon_mass = fermentation_plan.derived.get("total_molasses_feed_kg") or 0.0
+        elif carbon_source == "lactose":
+            carbon_mass = fermentation_plan.derived.get("total_lactose_feed_kg") or 0.0
     carbon_cost_calc = None
     if carbon_mass and fermentation_specs.glucose_cost_per_kg:
         carbon_cost_calc = carbon_mass * fermentation_specs.glucose_cost_per_kg
@@ -1205,14 +1329,21 @@ def build_front_end_section(
         "mf_membranes",
         micro_plan.derived.get("membrane_cost_per_cycle"),
     )
-    _set_cost(
-        "uf_df_membranes",
-        ufdf_plan.derived.get("membrane_cost_per_cycle"),
-    )
+    if ufdf_in_system:
+        _set_cost(
+            "uf_df_membranes",
+            ufdf_plan.derived.get("membrane_cost_per_cycle"),
+        )
     _set_cost(
         "predry_tff_membranes",
         predry_plan.derived.get("membrane_cost_per_cycle"),
     )
+    capture_polymer = chrom_plan.derived.get("polymer_cost_per_batch")
+    capture_reagents = chrom_plan.derived.get("reagent_cost_per_batch")
+    capture_utilities = chrom_plan.derived.get("utilities_cost_per_batch")
+    _set_cost("capture_polymer", capture_polymer)
+    _set_cost("capture_reagents", capture_reagents)
+    _set_cost("capture_utilities", capture_utilities)
     _set_cost("cip_chemicals", cip_cost_calc)
     _set_cost(
         "media",
@@ -1221,15 +1352,14 @@ def build_front_end_section(
 
     materials_cost_per_batch = computed_material_cost or None
 
-    final_product_mass = spray_plan.derived.get("product_out_kg", final_product_kg)
+    final_product_mass = spray_plan.derived.get("product_out_kg")
+    if final_product_mass is None:
+        final_product_mass = final_product_kg
+    if final_product_mass in (None, 0):
+        target_recovery = _coerce_float(spray_plan.derived.get("target_recovery_rate"), 1.0)
+        final_product_mass = _coerce_float(product_after_predry, 0.0) * target_recovery
 
     cmo_config_raw = baseline_overrides.get("cmo") if isinstance(baseline_overrides, Mapping) else None
-    cmo_profile_path = None
-    if isinstance(cmo_config_raw, Mapping):
-        profile_path_raw = cmo_config_raw.get("profile_path")
-        if profile_path_raw:
-            cmo_profile_path = Path(profile_path_raw)
-    cmo_profile = load_cmo_profile(cmo_profile_path)
 
     fermentation_hours = _coerce_float(fermentation_plan.derived.get("batch_cycle_hours"), 0.0)
     turnaround_hours = _coerce_float(
@@ -1239,7 +1369,8 @@ def build_front_end_section(
     fermentation_hours += turnaround_hours
 
     micro_hours = _estimate_depth_filter_hours(micro_plan)
-    ufdf_hours = _estimate_ufdf_hours(ufdf_plan)
+    ufdf_hours_total, uf_hours_auto, df_hours_auto = _ufdf_time_breakdown(ufdf_plan)
+    ufdf_hours = ufdf_hours_total
     predry_hours = _estimate_tff_hours(predry_plan)
     dsp_hours = micro_hours + ufdf_hours + predry_hours
 
@@ -1262,6 +1393,17 @@ def build_front_end_section(
     if spray_hours < 0.0:
         spray_hours = 0.0
 
+    batches_per_campaign = _coerce_float(
+        _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00c", "Batches_Per_Campaign"),
+        0.0,
+    )
+    if isinstance(cmo_config_raw, Mapping):
+        override_batches = cmo_config_raw.get("batches_per_campaign")
+        if override_batches is not None:
+            batches_per_campaign = _coerce_float(override_batches, batches_per_campaign)
+    if batches_per_campaign <= 0.0:
+        batches_per_campaign = 1.0
+
     seed_hours = _coerce_float(seed_plan.derived.get("seed_train_duration_hours"), 0.0)
 
     fermentation_feed_m3 = _coerce_float(
@@ -1277,29 +1419,89 @@ def build_front_end_section(
         volume_to_spray_l,
     ) / 1_000.0
 
-    cmo_metrics: Dict[str, Dict[str, float]] = {
-        "usp01_seed": {
-            "feed_volume_m3": seed_volume_l / 1_000.0,
-            "hours": seed_hours,
-        },
-        "usp02_fermentation": {
-            "feed_volume_m3": fermentation_feed_m3,
-            "product_kg": _coerce_float(fermentation_plan.derived.get("product_out_kg"), 0.0),
-            "hours": fermentation_hours,
-        },
-        "dsp_suite": {
-            "feed_volume_m3": dsp_feed_m3,
-            "product_kg": _coerce_float(spray_plan.derived.get("product_out_kg"), 0.0),
-            "hours": dsp_hours,
-        },
-        "spray_dryer": {
-            "feed_volume_m3": spray_feed_m3,
-            "product_kg": _coerce_float(spray_plan.derived.get("product_out_kg"), 0.0),
-            "hours": spray_hours,
-        },
-    }
+    chrom_hours_auto = _coerce_float(
+        chrom_plan.derived.get("handoff_cycle_time_h"),
+        _coerce_float(chrom_plan.derived.get("cycle_time_h"), 0.0),
+    )
 
-    cmo_stage_costs, cmo_total_fee = compute_cmo_costs(cmo_profile, cmo_metrics)
+    timings_override = _section_mapping(cmo_config_raw, "timings") if isinstance(cmo_config_raw, Mapping) else {}
+
+    def _timing_value(name: str, default: float) -> float:
+        return _coerce_float(timings_override.get(name), default)
+
+    fermentation_process_hours = max(fermentation_hours - turnaround_hours, 0.0)
+
+    timings = CMOTimings(
+        seed_hours=_timing_value("seed_train_hours", seed_hours or 16.0),
+        fermentation_hours=_timing_value(
+            "fermentation_hours",
+            fermentation_process_hours or fermentation_hours,
+        ),
+        turnaround_hours=_timing_value("turnaround_hours", turnaround_hours),
+        micro_hours=_timing_value("micro_hours", micro_hours),
+        uf_hours=_timing_value("uf_hours", uf_hours_auto),
+        df_hours=_timing_value("df_hours", df_hours_auto),
+        chromatography_hours=_timing_value("chromatography_hours", chrom_hours_auto),
+        predry_hours=_timing_value("predry_hours", predry_hours),
+        spray_hours=_timing_value("spray_hours", spray_hours),
+    )
+
+    def _proj02_value(name: str, fallback: float = 0.0) -> float:
+        return _coerce_float(_get_module_parameter(defaults, "PROJ02", "PROJ02a", name), fallback)
+
+    def _global_value(option: str, name: str, fallback: float = 0.0) -> float:
+        return _coerce_float(_get_module_parameter(defaults, option, option + "a", name), fallback)
+
+    rates = CMORates(
+        fermenter_daily_rate=_proj02_value("Fermenter_Daily_Rate"),
+        dsp_daily_rate=_proj02_value("DSP_Daily_Rate"),
+        spray_hourly_rate=_proj02_value("Spray_Dryer_Hourly_Rate"),
+        labor_per_batch=_proj02_value("Labor_Cost_Per_Batch"),
+        documentation_per_batch=_proj02_value("Documentation_Base_Fee"),
+        qa_review_per_batch=_proj02_value("QA_Review_Base_Fee"),
+        qc_testing_per_batch=_global_value("GLOBAL00", "QC_Testing_Cost_Per_Batch"),
+        consumables_markup_fraction=_proj02_value("CMO_Overhead_Markup"),
+    )
+
+    discounts = CMODiscounts(
+        fermenter_campaign=_proj02_value("Fermenter_Campaign_Discount"),
+        dsp_campaign=_proj02_value("DSP_Campaign_Discount"),
+        spray_campaign=_proj02_value("Spray_Dryer_Campaign_Discount"),
+        labor_campaign=_proj02_value("Labor_Campaign_Discount"),
+        qa_campaign=_proj02_value("QA_Campaign_Discount"),
+        consumables_campaign=_proj02_value("CMO_Consumables_Campaign_Discount"),
+        long_term_contract=_proj02_value("Long_Term_Contract_Discount"),
+        contract_length_years=_proj02_value("Contract_Length", 3.0),
+        annual_price_escalation=_proj02_value("Annual_Price_Escalation"),
+    )
+
+    structure = CMOStructure(
+        batches_per_campaign=batches_per_campaign,
+        annual_campaigns=_coerce_float(
+            _get_module_parameter(defaults, "GLOBAL00", "GLOBAL00c", "Annual_Campaigns"),
+            1.0,
+        ),
+        campaign_setup_fee=_proj02_value("Campaign_Setup_Fee"),
+        facility_reservation_fee=_proj02_value("Facility_Reservation_Fee"),
+        campaign_reservation_months=_proj02_value("Campaign_Reservation_Months"),
+        validation_batches_required=_proj02_value("Validation_Batches_Required"),
+        validation_batch_surcharge=_proj02_value("Validation_Batch_Surcharge"),
+    )
+
+    consumables_base_override = None
+    if isinstance(cmo_config_raw, Mapping):
+        raw_value = cmo_config_raw.get("consumables_base_markup_usd")
+        if raw_value is not None:
+            consumables_base_override = _coerce_float(raw_value, 0.0)
+
+    cmo_stage_costs, standard_batch_cost, campaign_adders, cmo_total_fee = compute_contract_stage_costs(
+        timings,
+        rates,
+        discounts,
+        structure,
+        materials_cost_usd=computed_material_cost,
+        consumables_base_override=consumables_base_override,
+    )
     materials_cost = computed_material_cost
     total_cost = materials_cost + cmo_total_fee
 
@@ -1309,6 +1511,23 @@ def build_front_end_section(
             cost_per_kg = total_cost / float(final_product_mass)
         except ZeroDivisionError:
             cost_per_kg = None
+
+    materials_cost_per_kg = None
+    cmo_cost_per_kg = None
+    cmo_standard_cost_per_kg = None
+    cmo_campaign_cost_per_kg = None
+    if final_product_mass:
+        try:
+            fm = float(final_product_mass)
+            if fm > 0:
+                materials_cost_per_kg = computed_material_cost / fm
+                cmo_cost_per_kg = cmo_total_fee / fm
+                if standard_batch_cost is not None:
+                    cmo_standard_cost_per_kg = standard_batch_cost / fm
+                if campaign_adders is not None:
+                    cmo_campaign_cost_per_kg = campaign_adders / fm
+        except (TypeError, ValueError):
+            pass
 
     feed = _build_seed_media_stream(
         fermentation_unit=fermentation_unit,
@@ -1371,20 +1590,24 @@ def build_front_end_section(
     active_flowsheet = flowsheet or bst.Flowsheet("bd_front_end")
     bst.main_flowsheet.set_flowsheet(active_flowsheet)
 
+    system_path_units = [
+        seed_unit,
+        fermentation_unit,
+        *cell_removal_units_tuple,
+        *concentration_units_tuple,
+    ]
+    if ufdf_in_system:
+        system_path_units.append(ufdf_unit)
+    system_path_units.append(chromatography_unit)
+    system_path_units.extend(capture_units_tuple)
+    system_path_units.extend(dsp03_units_tuple)
+    system_path_units.append(predrying_unit)
+    system_path_units.extend(dsp04_units_tuple)
+    system_path_units.append(spray_dryer_unit)
+
     system = bst.System(
         "front_end",
-        path=(
-            seed_unit,
-            fermentation_unit,
-            *cell_removal_units_tuple,
-            *concentration_units_tuple,
-            chromatography_unit,
-            *capture_units_tuple,
-            *dsp03_units_tuple,
-            predrying_unit,
-            *dsp04_units_tuple,
-            spray_dryer_unit,
-        ),
+        path=tuple(system_path_units),
     )
 
     return FrontEndSection(
@@ -1395,6 +1618,7 @@ def build_front_end_section(
         cell_removal_units=cell_removal_units_tuple,
         concentration_units=concentration_units_tuple,
         ufdf_unit=ufdf_unit,
+        ufdf_in_system=ufdf_in_system,
         chromatography_unit=chromatography_unit,
         predrying_unit=predrying_unit,
         spray_dryer_unit=spray_dryer_unit,
@@ -1414,9 +1638,20 @@ def build_front_end_section(
         dsp04_handoff=dsp04_handoff,
         dsp05_handoff=dsp05_handoff,
         material_cost_breakdown=breakdown,
-        cmo_profile_name=cmo_profile.name,
+        cmo_profile_name=(
+            str(cmo_config_raw.get("profile", "contract_default"))
+            if isinstance(cmo_config_raw, Mapping)
+            else "contract_default"
+        ),
         cmo_stage_costs=cmo_stage_costs,
         cmo_total_fee_usd=cmo_total_fee,
+        batches_per_campaign=batches_per_campaign,
+        cmo_standard_batch_usd=standard_batch_cost,
+        cmo_campaign_adders_usd=campaign_adders,
+        materials_cost_per_kg_usd=materials_cost_per_kg,
+        cmo_cost_per_kg_usd=cmo_cost_per_kg,
+        cmo_standard_cost_per_kg_usd=cmo_standard_cost_per_kg,
+        cmo_campaign_cost_per_kg_usd=cmo_campaign_cost_per_kg,
     )
 
 

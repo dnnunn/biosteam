@@ -1,0 +1,28 @@
+{
+  "AEX": {
+    "total_cost_per_batch_usd": 478188.63506098825,
+    "cost_per_kg_usd": 1984.433509544651,
+    "materials_cost_per_batch_usd": 299872.44711524155,
+    "materials_cost_per_kg_usd": 1244.4397231831856,
+    "cmo_cost_per_batch_usd": 178316.18794574667,
+    "cmo_cost_per_kg_usd": 739.9937863614654,
+    "cmo_standard_cost_per_kg_usd": 493.8014580586578,
+    "cmo_campaign_cost_per_kg_usd": 246.1923283028076,
+    "resin_cost_per_batch_usd": 254469.00494077324,
+    "resin_lifetimes_consumed": 1.25,
+    "cycles_per_batch": 25,
+    "cycle_time_hours": 2.2135171655354773,
+    "processing_time_hours": 55.33792913838693,
+    "pool_volume_l": 21205.750411731104
+  },
+  "Chitosan": {
+    "total_cost_per_batch_usd": 215007.81850973674,
+    "cost_per_kg_usd": 929.1474210131105,
+    "materials_cost_per_batch_usd": 36691.63056399005,
+    "materials_cost_per_kg_usd": 158.56136836137105,
+    "cmo_cost_per_batch_usd": 178316.18794574667,
+    "cmo_cost_per_kg_usd": 770.5860526517395,
+    "polymer_cost_per_batch_usd": 18541.094132699996,
+    "pool_volume_l": 6500.0
+  }
+}

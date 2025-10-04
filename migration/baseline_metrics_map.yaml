@@ -33,7 +33,10 @@ total_cost_per_batch:
   cell: Final Costs!B8
 
 cmo_fees:
-  cell: Calculations!B248
+  cell: Calculations!B239
+
+materials_cost_per_batch:
+  cell: Calculations!B194
 
 materials_costs:
   carbon_source: Carbon_source_Cost_Total
@@ -42,7 +45,7 @@ materials_costs:
   minor_nutrients: Calculations!B170
   antifoam: Antifoam_Cost_Total
   buffers: Calculations!B194
-  resin: Calculations!B178
+  resin: Calculations!B176
   mf_membranes: Calculations!B172
   uf_df_membranes: Calculations!B175
   predry_tff_membranes: Calculations!B190

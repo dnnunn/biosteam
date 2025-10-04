@@ -17,6 +17,7 @@ class StageCostRates:
     """CMO rate card for a single stage."""
 
     fixed_per_batch: float = 0.0
+    fixed_per_campaign: float = 0.0
     per_m3_feed: float = 0.0
     per_kg_product: float = 0.0
     per_hour: float = 0.0
@@ -70,6 +71,7 @@ def load_cmo_profile(path: Optional[Path | str]) -> CMOCostProfile:
         cfg = cfg or {}
         stages[stage] = StageCostRates(
             fixed_per_batch=_as_float(cfg.get("fixed_per_batch")),
+            fixed_per_campaign=_as_float(cfg.get("fixed_per_campaign")),
             per_m3_feed=_as_float(cfg.get("per_m3_feed")),
             per_kg_product=_as_float(cfg.get("per_kg_product")),
             per_hour=_as_float(cfg.get("per_hour")),
@@ -89,15 +91,29 @@ def evaluate_stage_cost(
     product_kg: float = 0.0,
     hours: float = 0.0,
     membrane_area_m2: float = 0.0,
+    batches_per_campaign: float = 1.0,
 ) -> StageCostSummary:
     """Compute the cost for a single stage given the available metrics."""
 
     components: Dict[str, float] = {}
     total = 0.0
+    notes = list(rates.notes)
 
     if rates.fixed_per_batch:
         components["fixed_per_batch"] = rates.fixed_per_batch
         total += rates.fixed_per_batch
+
+    if rates.fixed_per_campaign:
+        batches = batches_per_campaign if batches_per_campaign and batches_per_campaign > 0 else 1.0
+        cost = rates.fixed_per_campaign / batches
+        components["fixed_per_campaign"] = cost
+        total += cost
+        notes.append(
+            "Campaign fee {fee:,.2f} USD / {batches:g} batches".format(
+                fee=rates.fixed_per_campaign,
+                batches=batches,
+            )
+        )
 
     if rates.per_m3_feed and feed_volume_m3:
         cost = rates.per_m3_feed * feed_volume_m3
@@ -127,13 +143,15 @@ def evaluate_stage_cost(
         stage=stage,
         total_usd=total,
         components=components,
-        notes=list(rates.notes),
+        notes=notes,
     )
 
 
 def compute_cmo_costs(
     profile: CMOCostProfile,
     metrics: Mapping[str, Mapping[str, float]],
+    *,
+    batches_per_campaign: float = 1.0,
 ) -> tuple[Dict[str, StageCostSummary], float]:
     """Evaluate all stage costs and return summaries and the total fee."""
 
@@ -149,6 +167,7 @@ def compute_cmo_costs(
             product_kg=stage_metrics.get("product_kg", 0.0),
             hours=stage_metrics.get("hours", 0.0),
             membrane_area_m2=stage_metrics.get("membrane_area_m2", 0.0),
+            batches_per_campaign=batches_per_campaign,
         )
         summaries[stage] = summary
         total += summary.total_usd

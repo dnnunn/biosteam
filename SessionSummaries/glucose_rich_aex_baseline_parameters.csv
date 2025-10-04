@@ -1,0 +1,57 @@
+Category,Parameter,Value,Units,Explanation
+Overall,Final product after spray drying,236.1504480275075,kg,Mass of saleable product per fermentation batch
+Overall,Total cost per batch,478188.63506098825,USD,Sum of materials and CMO charges for the batch
+Overall,Cost per kg product,1984.433509544651,USD/kg,Batch total divided by final product mass
+Overall,Materials cost per batch,299872.44711524155,USD,Consumables cost captured in BioSTEAM
+Overall,CMO fees per batch,178316.18794574667,USD,Contractual toll assessed per batch
+Overall,Materials cost per kg,1244.4397231831856,USD/kg,Materials spend divided by final product mass
+Overall,CMO cost per kg,739.9937863614654,USD/kg,CMO fee divided by final product mass
+Seed train,Working volume,3500.0,L,Seed bioreactor operating volume
+Seed train,Carbon source,glucose,,Primary carbon source in seed media
+Seed train,Feed carbon concentration,500.0,g/L,Seed feed concentration for charge calculations
+Seed train,Yeast extract per batch,330.0,kg,Total yeast extract usage in the seed stage
+Seed train,Peptone per batch,500.00000000000006,kg,Total peptone usage in the seed stage
+Seed train,Seed total time,48.0,h,Elapsed time for the two-stage seed train
+Fermentation,Working volume,70000.0,L,Production fermenter operating volume
+Fermentation,Batch cycle time,72.0,h,Main fermentation residence time
+Fermentation,Total glucose feed,10577.281493333336,kg,Glucose charged across seed and production
+Fermentation,Product titer,4.9995,g/L,Modeled product concentration in broth
+Fermentation,Product mass before harvest,349.965,kg,Product mass entering clarification
+Fermentation,Antifoam volume,58.33333333333333,L,Antifoam usage per batch
+Cell removal,Product after clarification,291.945,kg,Product mass exiting the disc stack/depth filtration
+Cell removal,Post-MF pool volume,,L,Volume entering UF/DF
+UF/DF,UF/DF pool volume,,L,Volume headed to the capture column
+UF/DF,UF/DF buffer volume,14841.065705128207,L,Diafiltration buffer used
+UF/DF,UF/DF membrane cost,1100.0,USD,Membrane amortization per batch
+AEX capture,Capture route,aex,,Modeled capture technology
+AEX capture,Column ID,1.2,m,Inner diameter of the packed column
+AEX capture,Bed height,0.25,m,Packed-bed height used for sizing
+AEX capture,Installed resin volume,203.57520395261858,L,Total resin inventory in service
+AEX capture,Dynamic binding capacity,44.9973,mg/mL,Effective DBC after utilization adjustments
+AEX capture,Cycles per batch,25,cycles,Column load/elute cycles per fermentation
+AEX capture,Cycle time,2.2135171655354773,h,Per-cycle occupancy including buffer steps
+AEX capture,Total processing time,55.33792913838693,h,Cumulative capture duration per batch
+AEX capture,Eluate volume,21205.750411731104,L,Total pool volume handed off to DSP03
+AEX capture,Buffer cost per batch,26153.758841135023,USD,Sum of equilibration/wash/strip/CIP/reequilibration fees
+AEX capture,CDMO labor & disposables,165484.50247038662,USD,"Cycle-based labor, disposables, and optional fees"
+AEX capture,Resin lifetimes consumed,1.25,lifetimes,Cycles per batch divided by resin_life_cycles
+AEX capture,Resin cost per batch,254469.00494077324,USD,Installed resin volume × 1000 USD/L × lifetimes consumed
+Predrying TFF,Input volume,21205.750411731104,L,Volume entering pre-drying TFF
+Predrying TFF,Output volume,2038.6619706093747,L,Concentrated volume sent to spray
+Predrying TFF,Product recovery,0.95,fraction,Mass yield through predry step
+Predrying TFF,Membrane cost,12.6,USD,Membrane amortization at predry
+Spray dryer,Feed volume,2038.6619706093747,L,Volume fed to spray dryer
+Spray dryer,Evaporated water,62.25258193452805,kg,Water removed during drying
+Spray dryer,Spray recovery,0.9652999999999999,fraction,Spray dryer mass recovery
+CMO contract,Standard batch fee,118991.26077264133,USD,Fermentation + DSP + spray + labor + documentation + QA/QC + consumables
+CMO contract,Campaign adders,59324.927173105345,USD,"Campaign setup, facility reservation, and validation amortized per batch"
+Materials breakdown,Carbon Source,6093.75,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Yeast Extract,3960.0,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Peptone,7500.0,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Minor Nutrients,0.0,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Antifoam,583.3333333333333,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Buffers,26153.758841135023,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Resin,254469.00494077324,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Uf Df Membranes,1100.0,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Predry Tff Membranes,12.6,USD,Cost component recorded in BioSTEAM
+Materials breakdown,Media,0.0,USD,Cost component recorded in BioSTEAM

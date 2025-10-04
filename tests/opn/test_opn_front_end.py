@@ -98,6 +98,11 @@ def test_cost_metrics(front_end_section, baseline_metrics):
             baseline_metrics.materials_cost_per_batch_usd,
             rtol=0.02,
         )
+        assert np.isclose(
+            front_end_section.materials_cost_per_kg_usd,
+            baseline_metrics.materials_cost_per_batch_usd / baseline_metrics.final_product_kg,
+            rtol=0.02,
+        )
 
 
 def test_material_cost_breakdown(front_end_section, baseline_metrics):
@@ -109,3 +114,108 @@ def test_material_cost_breakdown(front_end_section, baseline_metrics):
         assert np.isclose(observed, expected, rtol=0.02), f"Mismatch for {key}"
 
 
+def test_cmo_contract_breakdown(front_end_section):
+    expected_stage_totals = {
+        "usp02_fermentation": 74418.09374999999,
+        "dsp_suite": 17964.685329861106,
+        "spray_dryer": 882.749361,
+        "labor": 5154.5,
+        "documentation": 1353.05625,
+        "qa_review": 2706.1125,
+        "qc_testing": 4059.16875,
+        "consumables": 12452.894831780239,
+        "campaign_setup": 41666.666666666664,
+        "facility_reservation": 16666.666666666668,
+        "validation": 991.593839772011,
+    }
+
+    for key, expected_value in expected_stage_totals.items():
+        observed = front_end_section.cmo_stage_costs[key].total_usd
+        assert np.isclose(observed, expected_value, rtol=0.02), f"CMO stage mismatch for {key}"
+
+    assert np.isclose(
+        front_end_section.cmo_standard_batch_usd,
+        sum(
+            expected_stage_totals[k]
+            for k in (
+                "usp02_fermentation",
+                "dsp_suite",
+                "spray_dryer",
+                "labor",
+                "documentation",
+                "qa_review",
+                "qc_testing",
+                "consumables",
+            )
+        ),
+        rtol=0.02,
+    )
+    assert np.isclose(
+        front_end_section.cmo_campaign_adders_usd,
+        expected_stage_totals["campaign_setup"]
+        + expected_stage_totals["facility_reservation"]
+        + expected_stage_totals["validation"],
+        rtol=0.02,
+    )
+
+
+def test_aex_cycle_profile(front_end_section):
+    plan = front_end_section.chromatography_unit.plan
+
+    assert plan.derived.get("cycles_per_batch") == 25
+    assert np.isclose(plan.derived.get("cycle_time_h"), 2.2135171655354773, rtol=0.05)
+    assert np.isclose(plan.derived.get("processing_time_h"), 55.33792913838693, rtol=0.05)
+    assert np.isclose(plan.derived.get("pool_volume_l"), 21205.750411731104, rtol=0.02)
+    final_mass = front_end_section.spray_dryer_unit.plan.derived.get("product_out_kg")
+    assert final_mass and final_mass > 0
+    assert np.isclose(
+        front_end_section.cmo_cost_per_kg_usd,
+        front_end_section.cmo_total_fee_usd / final_mass,
+        rtol=0.02,
+    )
+    assert np.isclose(
+        front_end_section.cmo_standard_cost_per_kg_usd,
+        front_end_section.cmo_standard_batch_usd / final_mass,
+        rtol=0.02,
+    )
+    assert np.isclose(
+        front_end_section.cmo_campaign_cost_per_kg_usd,
+        front_end_section.cmo_campaign_adders_usd / final_mass,
+        rtol=0.02,
+    )
+
+
+def test_fermentation_profile_switch(tmp_path):
+    baseline_section = build_front_end_section(
+        "Revised Baseline Excel Model.xlsx",
+        mode="baseline",
+        baseline_config="migration/baseline_defaults.yaml",
+    )
+    baseline_section.system.simulate()
+
+    override_path = tmp_path / "glucose_defined.yaml"
+    override_path.write_text(
+        "seed:\n  profile: glucose_defined\nfermentation:\n  profile: glucose_defined\n",
+        encoding="utf-8",
+    )
+
+    defined_section = build_front_end_section(
+        "Revised Baseline Excel Model.xlsx",
+        mode="baseline",
+        baseline_config=str(override_path),
+    )
+    defined_section.system.simulate()
+
+    base_totals = baseline_section.fermentation_unit.plan.derived.get("_profile_carbon_totals", {})
+    defined_totals = defined_section.fermentation_unit.plan.derived.get("_profile_carbon_totals", {})
+
+    assert base_totals.get("glucose") == pytest.approx(8125.0)
+    assert defined_totals.get("glucose") == pytest.approx(7000.0)
+
+    base_carbon_cost = baseline_section.material_cost_breakdown.get("carbon_source")
+    defined_carbon_cost = defined_section.material_cost_breakdown.get("carbon_source")
+    assert defined_carbon_cost < base_carbon_cost
+
+    assert defined_section.material_cost_breakdown.get("media", 0.0) >= 0.0
+    assert baseline_section.fermentation_unit.plan.derived.get("media_type") == "rich"
+    assert defined_section.fermentation_unit.plan.derived.get("media_type") == "defined"

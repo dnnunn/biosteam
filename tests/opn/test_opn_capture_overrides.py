@@ -32,9 +32,9 @@ def _component_mass(stream, component: str) -> float:
     [
         (
             {"capture": {"method": "chitosan"}},
-            285.696820699425,
+            247.29184299488622,
             6_500.0,
-            21_637.627374150004,
+            18_541.094132699996,
         ),
     ],
 )
@@ -55,9 +55,12 @@ def test_capture_chitosan_override(
     )
     section.system.simulate()
 
-    capture_unit = section.capture_units[0]
+    assert section.capture_units == tuple()
+    capture_unit = section.chromatography_unit
     derived = capture_unit.plan.derived
 
+    assert section.concentration_units == tuple()
+    assert not section.ufdf_in_system
     assert capture_unit.line == "Chitosan Capture"
     assert np.isclose(derived.get("product_out_kg"), expected_output, rtol=0.01)
     assert np.isclose(derived.get("pool_volume_l"), expected_pool_volume, rtol=1e-6)
@@ -67,7 +70,7 @@ def test_capture_chitosan_override(
 
     assert section.capture_handoff is not None
     assert section.capture_handoff.route is CaptureRoute.CHITOSAN
-    assert section.capture_handoff.needs_df
+    assert not section.capture_handoff.needs_df
     assert section.capture_handoff.pool_volume_l == pytest.approx(expected_pool_volume)
 
     report_stream = section.handoff_streams[capture_unit.ID]
@@ -76,3 +79,14 @@ def test_capture_chitosan_override(
         expected_output,
         rtol=1e-6,
     )
+
+    breakdown = section.material_cost_breakdown
+    polymer_cost = breakdown.get("capture_polymer")
+    assert polymer_cost is not None
+    assert np.isclose(polymer_cost, expected_polymer_cost, rtol=0.01)
+    reagents_cost = breakdown.get("capture_reagents")
+    assert reagents_cost is not None
+    assert np.isclose(reagents_cost, 0.18525, rtol=0.05)
+    utilities_cost = breakdown.get("capture_utilities")
+    assert utilities_cost is not None
+    assert np.isclose(utilities_cost, 0.6678479567307694, rtol=0.05)

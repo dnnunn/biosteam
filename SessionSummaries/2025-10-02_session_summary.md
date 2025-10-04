@@ -62,3 +62,14 @@ This addendum captures the extra steps we took today so we don’t lose context 
 
 **Next focus:**
 - Rebuild the front-end regression coverage to exercise the module overrides, starting with the chitosan/coacervate capture path (mass, pool volume, and cost assertions). Once those tests land we can expand back toward the legacy suite.
+
+### 2025-10-04 — Chitosan capture wiring & testing
+
+- Added a quick regression (`tests/opn/test_opn_capture_overrides.py`) that forces the DSP02 chitosan override, asserts the capture unit’s mass/cost numbers, checks the UF/DF bypass, and verifies the cloned handoff stream.
+- Rewired the front-end build so when `capture.method = chitosan`, the DSP01 concentration block is removed, the flow jumps directly from clarification to the chitosan unit, and the reporting clone sits on the new capture slot.
+- Adjusted the cost breakdown to remove the AEX resin entry when chitosan is active and surface the polymer/reagent/utility spend coming from the chitosan plan.
+- Began porting the conservative defaults from *Biosteam BD Module Specs/DSP02-Chitosan Coacervate…* into `baseline_defaults.yaml` so the capture yields, wash losses, elution mode, and downstream flags reflect the documented process.
+
+**Next focus:**
+- Finish translating the chitosan specs (wash/elution volumes, buffer usage, recycle parameters, DF losses) from the repo docs so the model matches the intended economics.
+- Use those same specs to drive any other override modules (AEX follow-up, DSP03/DSP04 polishing) as we fold in more of the *Biosteam BD Module Specs* knowledge.

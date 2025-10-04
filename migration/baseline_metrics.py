@@ -136,6 +136,11 @@ def load_baseline_metrics(
         cmo_fees_cell = config.get("cmo_fees", {}).get("cell")
         cmo_fees = _read_cell(cmo_fees_cell, wb) if cmo_fees_cell else None
 
+        materials_cost_cell = config.get("materials_cost_per_batch", {}).get("cell")
+        materials_cost_per_batch = (
+            _read_cell(materials_cost_cell, wb) if materials_cost_cell else None
+        )
+
         material_breakdown: Dict[str, float] = {}
         for key, descriptor in config.get("materials_costs", {}).items():
             value = _read_cell(descriptor, wb)
@@ -152,9 +157,13 @@ def load_baseline_metrics(
         total_cost_per_batch_usd=total_cost_per_batch,
         cmo_fees_usd=cmo_fees,
         materials_cost_per_batch_usd=(
-            total_cost_per_batch - cmo_fees
-            if total_cost_per_batch is not None and cmo_fees is not None
-            else None
+            materials_cost_per_batch
+            if materials_cost_per_batch is not None
+            else (
+                total_cost_per_batch - cmo_fees
+                if total_cost_per_batch is not None and cmo_fees is not None
+                else None
+            )
         ),
         materials_cost_breakdown=material_breakdown,
     )

@@ -7,6 +7,7 @@ from enum import Enum
 from typing import Dict, List, Mapping, Optional, Tuple
 
 import biosteam as bst
+import math
 
 from .excel_defaults import ModuleKey
 from .module_builders import ModuleData
@@ -73,6 +74,8 @@ class AEXChromatographySpecs:
     rt_load_min: Optional[float] = None
     delta_p_max_bar: Optional[float] = None
     fouling_factor_dp: Optional[float] = None
+    column_inner_diameter_m: Optional[float] = None
+    nonproductive_time_per_cycle_h: Optional[float] = None
 
     ph_bind: Optional[float] = None
     cond_bind_mM_max: Optional[float] = None
@@ -234,6 +237,8 @@ class CaptureConfig:
             rt_load_min=_as_float(aex_cfg.get("rt_load_min")) if isinstance(aex_cfg, Mapping) else None,
             delta_p_max_bar=_as_float(aex_cfg.get("delta_p_max_bar")) if isinstance(aex_cfg, Mapping) else None,
             fouling_factor_dp=_as_float(aex_cfg.get("fouling_factor_dp")) if isinstance(aex_cfg, Mapping) else None,
+            column_inner_diameter_m=_as_float(aex_cfg.get("column_inner_diameter_m")) if isinstance(aex_cfg, Mapping) else None,
+            nonproductive_time_per_cycle_h=_as_float(aex_cfg.get("nonproductive_time_per_cycle_h")) if isinstance(aex_cfg, Mapping) else None,
             ph_bind=_as_float(aex_cfg.get("ph_bind")) if isinstance(aex_cfg, Mapping) else None,
             cond_bind_mM_max=_as_float(aex_cfg.get("cond_bind_mM_max")) if isinstance(aex_cfg, Mapping) else None,
             ph_elute=_as_float(aex_cfg.get("ph_elute")) if isinstance(aex_cfg, Mapping) else None,
@@ -715,20 +720,111 @@ def _build_aex_unit(
     valid_feed_mass = feed_product_input_kg if feed_product_input_kg and feed_product_input_kg > 0 else None
 
     product_mass_g = feed_product_kg * 1000.0
-    resin_volume_l = 0.0
-    if dbc_eff > 0.0 and utilization > 0.0:
-        resin_volume_l = product_mass_g / (dbc_eff * utilization)
-    resin_volume_l = max(resin_volume_l, 0.0)
 
-    columns = specs.columns_in_service or 1
-    if columns > 0:
-        resin_per_column = resin_volume_l / columns
-    else:
-        resin_per_column = resin_volume_l
-        columns = 1
+    required_resin_volume_l = 0.0
+    if dbc_eff > 0.0 and utilization > 0.0:
+        required_resin_volume_l = (
+            product_mass_g / (dbc_eff * utilization)
+        )
+        required_resin_volume_l /= 1000.0  # convert mL -> L
+    required_resin_volume_l = max(required_resin_volume_l, 0.0)
+
+    columns = _safe_int(specs.columns_in_service) or 1
+    columns = max(columns, 1)
 
     packing_factor = _safe_fraction(specs.packing_factor, 0.72)
-    bed_volume_l = resin_volume_l / packing_factor if packing_factor > 0 else resin_volume_l
+
+    column_diameter_m = _safe_positive(getattr(specs, "column_inner_diameter_m", None), None)
+    bed_height_cm = _safe_positive(specs.bed_height_cm, None)
+    bed_height_m = bed_height_cm / 100.0 if bed_height_cm else None
+
+    column_area_m2 = None
+    if column_diameter_m:
+        column_area_m2 = math.pi * (column_diameter_m / 2.0) ** 2
+
+    bed_volume_per_column_l = None
+    if column_area_m2 is not None and bed_height_m is not None:
+        bed_volume_per_column_l = column_area_m2 * bed_height_m * 1000.0
+
+    if bed_volume_per_column_l is None:
+        if required_resin_volume_l > 0.0 and packing_factor > 0.0:
+            estimated_resin_per_column = required_resin_volume_l / columns
+            bed_volume_per_column_l = estimated_resin_per_column / packing_factor
+            notes.append(
+                "AEX column geometry missing; estimating bed volume from resin usage."
+            )
+        else:
+            bed_volume_per_column_l = 0.0
+
+    slurry_volume_per_column_l = bed_volume_per_column_l
+    resin_per_column_l = slurry_volume_per_column_l * packing_factor if packing_factor > 0.0 else slurry_volume_per_column_l
+    if resin_per_column_l <= 0.0:
+        resin_per_column_l = required_resin_volume_l / columns if columns > 0 else required_resin_volume_l
+        slurry_volume_per_column_l = resin_per_column_l
+    resin_inventory_total_l = resin_per_column_l * columns
+
+    if column_diameter_m and bed_height_m:
+        notes.append(
+            "AEX column geometry: {:.2f} m ID × {:.0f} cm bed (≈{:.0f} L slurry per column).".format(
+                column_diameter_m,
+                bed_height_m * 100.0,
+                slurry_volume_per_column_l,
+            )
+        )
+
+    dbc_g_per_l = dbc_eff  # mg/mL equivalent to g/L
+    per_column_capacity_kg = slurry_volume_per_column_l * dbc_g_per_l * utilization / 1000.0
+    if per_column_capacity_kg <= 0:
+        per_column_capacity_kg = 0.0
+        notes.append("AEX column capacity is zero; check DBC/utilization inputs.")
+
+    capacity_per_cycle_total_kg = per_column_capacity_kg * columns
+    if capacity_per_cycle_total_kg > 0.0 and feed_product_kg > 0.0:
+        cycles_per_batch = math.ceil(feed_product_kg / capacity_per_cycle_total_kg)
+    else:
+        cycles_per_batch = 1
+    cycles_per_batch = max(cycles_per_batch, 1)
+
+    avg_product_per_cycle_total_kg = (feed_product_kg or 0.0) / cycles_per_batch
+    avg_product_per_cycle_per_column_kg = avg_product_per_cycle_total_kg / columns
+
+    notes.append(
+        "AEX delivers ≈{:.1f} kg per cycle ({:.1f} kg/column) across {} cycles.".format(
+            avg_product_per_cycle_total_kg,
+            avg_product_per_cycle_per_column_kg,
+            cycles_per_batch,
+        )
+    )
+
+    if cycles_per_batch > 30:
+        notes.append(
+            f"AEX executes {cycles_per_batch} cycles per batch on a {column_diameter_m or 'N/A'} m column; consider larger diameter or parallel columns."
+        )
+
+    protein_conc = _safe_positive(protein_conc_g_per_l, None)
+    if protein_conc is None and feed_product_kg > 0.0 and feed_volume_l:
+        protein_conc = (feed_product_kg * 1000.0) / feed_volume_l
+
+    load_volume_per_cycle_per_column_l = 0.0
+    if protein_conc and protein_conc > 0.0:
+        load_volume_per_cycle_per_column_l = (
+            avg_product_per_cycle_per_column_kg * 1000.0 / protein_conc
+        )
+    elif feed_volume_l and cycles_per_batch > 0:
+        load_volume_per_cycle_per_column_l = feed_volume_l / (cycles_per_batch * columns)
+
+    lin_vel_cm_per_h = _safe_positive(specs.lin_vel_cm_per_h, None)
+    flowrate_l_per_h = None
+    if lin_vel_cm_per_h and column_area_m2 is not None:
+        flowrate_l_per_h = (lin_vel_cm_per_h / 100.0) * column_area_m2 * 1000.0
+
+    load_time_h = 0.0
+    if flowrate_l_per_h and flowrate_l_per_h > 0.0:
+        load_time_h = load_volume_per_cycle_per_column_l / flowrate_l_per_h if load_volume_per_cycle_per_column_l else 0.0
+    elif load_volume_per_cycle_per_column_l > 0.0:
+        assumed_flow = 1000.0  # L/h placeholder when geometry missing
+        load_time_h = load_volume_per_cycle_per_column_l / assumed_flow
+        notes.append("Chromatography flow rate unavailable; assuming 1000 L/h for load-time estimate.")
 
     equil_bv = _safe_positive(specs.equilibration_bv, 3.0)
     wash1_bv = _safe_positive(specs.wash1_bv, 2.0)
@@ -741,15 +837,45 @@ def _build_aex_unit(
         equil_bv + wash1_bv + wash2_bv + elution_bv + strip_bv + cip_bv + reequil_bv
     )
 
-    buffer_volumes_l: Dict[str, float] = {
-        "equilibration": bed_volume_l * equil_bv,
-        "wash1": bed_volume_l * wash1_bv,
-        "wash2": bed_volume_l * wash2_bv,
-        "elution": bed_volume_l * elution_bv,
-        "strip": bed_volume_l * strip_bv,
-        "cip": bed_volume_l * cip_bv,
-        "reequil": bed_volume_l * reequil_bv,
+    buffer_volumes_per_cycle_per_column: Dict[str, float] = {
+        "equilibration": bed_volume_per_column_l * equil_bv,
+        "wash1": bed_volume_per_column_l * wash1_bv,
+        "wash2": bed_volume_per_column_l * wash2_bv,
+        "elution": bed_volume_per_column_l * elution_bv,
+        "strip": bed_volume_per_column_l * strip_bv,
+        "cip": bed_volume_per_column_l * cip_bv,
+        "reequil": bed_volume_per_column_l * reequil_bv,
     }
+
+    buffer_volumes_per_cycle_l = {
+        step: volume * columns for step, volume in buffer_volumes_per_cycle_per_column.items()
+    }
+
+    buffer_volumes_l = {
+        step: volume * cycles_per_batch for step, volume in buffer_volumes_per_cycle_l.items()
+    }
+
+    buffer_volume_per_cycle_per_column_total = sum(buffer_volumes_per_cycle_per_column.values())
+    buffer_time_h = 0.0
+    if flowrate_l_per_h and flowrate_l_per_h > 0.0:
+        buffer_time_h = buffer_volume_per_cycle_per_column_total / flowrate_l_per_h
+    elif buffer_volume_per_cycle_per_column_total > 0.0:
+        assumed_flow = 1000.0
+        buffer_time_h = buffer_volume_per_cycle_per_column_total / assumed_flow
+
+    nonproductive_time_h = _safe_positive(
+        getattr(specs, "nonproductive_time_per_cycle_h", None),
+    )
+    if nonproductive_time_h is None:
+        nonproductive_time_h = 1.0
+
+    cycle_time_h = load_time_h + buffer_time_h + nonproductive_time_h
+    total_processing_time_h = cycle_time_h * cycles_per_batch
+
+    if cycle_time_h > 0.0:
+        notes.append(
+            f"AEX cycle time ≈ {cycle_time_h:.2f} h; total processing ≈ {total_processing_time_h:.1f} h per batch."
+        )
 
     pool_volume_l = buffer_volumes_l["elution"]
     eluate_volume_l = pool_volume_l
@@ -761,9 +887,15 @@ def _build_aex_unit(
     pool_ph = specs.ph_elute or config.feed.ph
 
     resin_cost_per_batch = None
+    resin_replacements_per_batch = None
+    resin_lifetimes_consumed = None
     if specs.resin_cost_per_l is not None and specs.resin_life_cycles:
+        life = max(specs.resin_life_cycles, 1.0)
+        cycles_used = max(cycles_per_batch or 0.0, 0.0)
+        resin_lifetimes_consumed = cycles_used / life
+        resin_replacements_per_batch = resin_lifetimes_consumed
         resin_cost_per_batch = (
-            specs.resin_cost_per_l * resin_volume_l / max(specs.resin_life_cycles, 1.0)
+            specs.resin_cost_per_l * resin_inventory_total_l * resin_replacements_per_batch
         )
 
     buffer_cost = 0.0
@@ -784,13 +916,20 @@ def _build_aex_unit(
 
     cdmo_cost = 0.0
     if specs.resin_fee_per_l_per_cycle is not None:
-        cdmo_cost += specs.resin_fee_per_l_per_cycle * resin_volume_l
+        cdmo_cost += specs.resin_fee_per_l_per_cycle * resin_per_column_l * columns * cycles_per_batch
     if specs.ops_labor_h_per_cycle is not None and specs.blended_rate_per_h is not None:
-        cdmo_cost += specs.ops_labor_h_per_cycle * specs.blended_rate_per_h
+        cdmo_cost += (
+            specs.ops_labor_h_per_cycle * specs.blended_rate_per_h * cycles_per_batch
+        )
     if specs.disposables_per_cycle is not None:
-        cdmo_cost += specs.disposables_per_cycle
+        cdmo_cost += specs.disposables_per_cycle * cycles_per_batch
     if specs.overhead_per_cycle is not None:
-        cdmo_cost += specs.overhead_per_cycle
+        cdmo_cost += specs.overhead_per_cycle * cycles_per_batch
+    if specs.column_rental_per_day is not None and cycle_time_h > 0.0:
+        days = max(total_processing_time_h / 24.0, 1.0)
+        cdmo_cost += specs.column_rental_per_day * days
+    if specs.column_setup_fee_per_campaign is not None:
+        cdmo_cost += specs.column_setup_fee_per_campaign
 
     derived = {
         "input_product_kg": feed_product_kg,
@@ -801,10 +940,17 @@ def _build_aex_unit(
         "pool_conductivity_mM": pool_conductivity,
         "pool_ph": pool_ph,
         "dbc_effective_mg_per_ml": dbc_eff,
-        "resin_volume_l": resin_volume_l,
-        "bed_volume_l": bed_volume_l,
+        "resin_volume_l": resin_inventory_total_l,
+        "resin_inventory_total_l": resin_inventory_total_l,
+        "required_resin_volume_l": required_resin_volume_l,
+        "resin_lifetimes_consumed": resin_lifetimes_consumed,
+        "bed_volume_l": bed_volume_per_column_l * columns,
+        "bed_volume_per_column_l": bed_volume_per_column_l,
+        "slurry_volume_per_column_l": slurry_volume_per_column_l,
+        "column_inner_diameter_m": column_diameter_m,
+        "column_area_m2": column_area_m2,
         "columns_in_service": columns,
-        "resin_per_column_l": resin_per_column,
+        "resin_per_column_l": resin_per_column_l,
         "total_buffer_bv": total_buffer_bv,
         "buffer_cost_per_batch": buffer_cost if buffer_cost else None,
         "resin_cost_per_batch": resin_cost_per_batch,
@@ -813,6 +959,20 @@ def _build_aex_unit(
         "utilization_fraction": utilization,
         "target_recovery_fraction": target_recovery,
         "buffer_volumes_l": buffer_volumes_l,
+        "buffer_volumes_per_cycle_l": buffer_volumes_per_cycle_l,
+        "buffer_volumes_per_cycle_per_column_l": buffer_volumes_per_cycle_per_column,
+        "cycles_per_batch": cycles_per_batch,
+        "mass_per_cycle_kg": avg_product_per_cycle_total_kg,
+        "mass_per_cycle_per_column_kg": avg_product_per_cycle_per_column_kg,
+        "resin_replacements_per_batch": resin_replacements_per_batch,
+        "load_volume_per_cycle_l": load_volume_per_cycle_per_column_l * columns,
+        "load_volume_per_cycle_per_column_l": load_volume_per_cycle_per_column_l,
+        "load_time_h": load_time_h,
+        "buffer_time_h": buffer_time_h,
+        "nonproductive_time_h": nonproductive_time_h,
+        "cycle_time_h": cycle_time_h,
+        "processing_time_h": total_processing_time_h,
+        "flow_rate_l_per_h": flowrate_l_per_h,
     }
 
     if feed_conductivity is not None and cond_ref is not None and feed_conductivity > cond_ref:
@@ -822,6 +982,8 @@ def _build_aex_unit(
 
     plan = _make_plan("DSP02_AEX", specs)
     plan.derived.update(derived)
+    for message in notes:
+        plan.add_note(message)
 
     unit = AEXCaptureUnit("DSP02_AEX", plan=plan)
 
@@ -863,7 +1025,7 @@ def _build_aex_unit(
         step_recovery_fraction=step_recovery,
         needs_df=needs_df,
         needs_fines_polish=False,
-        cycle_time_h=None,
+        cycle_time_h=cycle_time_h,
         cost_per_batch=cost_per_batch,
         notes=list(notes),
     )
@@ -895,8 +1057,25 @@ def _build_chitosan_unit(
 
     specs = config.chitosan
     capture_yield = _safe_fraction(specs.capture_yield_fraction, 0.9)
-    elution_yield = _safe_fraction(specs.elution_yield_fraction, 0.95)
-    product_out_kg = (feed_product_kg or 0.0) * capture_yield * elution_yield
+    wash_loss = _safe_fraction(getattr(specs, "wash_loss_fraction", None), 0.0)
+    wash_count = _safe_positive(getattr(specs, "wash_count", None), 0.0)
+    wash_factor = (1.0 - wash_loss) ** wash_count if wash_count else 1.0
+
+    elution_mode = (getattr(specs, "elution_mode", "pH") or "pH").strip().lower()
+    elution_yield = _safe_fraction(specs.elution_yield_fraction, 0.97 if not elution_mode.startswith("poly") else 0.97)
+    clarifier_recovery = _safe_fraction(
+        getattr(specs, "clarifier_recovery_fraction", None),
+        0.99,
+    )
+    df_loss = 0.0
+    if elution_mode.startswith("poly"):
+        df_loss = _safe_fraction(getattr(specs, "df_protein_loss_fraction", None), 0.01)
+
+    product_after_capture = (feed_product_kg or 0.0) * capture_yield
+    product_after_wash = product_after_capture * wash_factor
+    product_after_elution = product_after_wash * elution_yield
+    product_after_df = product_after_elution * (1.0 - df_loss)
+    product_out_kg = product_after_df * clarifier_recovery
 
     pool_volume_l = specs.eluate_volume_l
     if pool_volume_l is None and feed_volume_l is not None:
@@ -906,6 +1085,9 @@ def _build_chitosan_unit(
     eluate_volume_l = pool_volume_l
     pool_conductivity = specs.elution_conductivity_mM
     pool_ph = specs.elution_ph
+    if elution_mode.startswith("p"):
+        pool_ph = pool_ph if pool_ph is not None else 7.5
+        pool_conductivity = pool_conductivity if pool_conductivity is not None else 100.0
 
     polymer_ratio = _safe_positive(specs.charge_ratio, 2.0)
     polymer_recovery = _safe_fraction(specs.polymer_recovery_fraction, 0.85)
@@ -942,6 +1124,11 @@ def _build_chitosan_unit(
         "pool_ph": pool_ph,
         "capture_yield_fraction": capture_yield,
         "elution_yield_fraction": elution_yield,
+        "wash_loss_fraction": wash_loss if wash_count else None,
+        "wash_count": wash_count if wash_count else None,
+        "clarifier_recovery_fraction": clarifier_recovery,
+        "df_protein_loss_fraction": df_loss if df_loss > 0 else None,
+        "elution_mode": elution_mode,
         "polymer_cost_per_batch": polymer_cost,
         "reagent_cost_per_batch": reagent_cost or None,
         "utilities_cost_per_batch": utilities_cost or None,
@@ -959,6 +1146,8 @@ def _build_chitosan_unit(
         target_cond = config.targets.polish_conductivity_mM
 
     polyp_mM = specs.polyphosphate_mM or 0.0
+    if not elution_mode.startswith("poly"):
+        polyp_mM = 0.0
 
     needs_df = False
     if polyp_mM and polyp_mM > 0:
