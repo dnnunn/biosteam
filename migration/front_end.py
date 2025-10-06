@@ -32,6 +32,7 @@ from .usp02 import ProductionConfig, determine_production_method
 from .thermo_setup import set_migration_thermo
 from .baseline_config import load_baseline_defaults, DEFAULT_BASELINE_CONFIG
 from .usp_profiles import load_seed_fermentation_profile
+from .cmo_resin_allocation import CMOResinAllocation, compute_allocation
 
 FRONT_END_KEYS = (
     ModuleKey("USP01", "USP01a"),
@@ -84,7 +85,10 @@ class FrontEndSection:
     cmo_cost_per_kg_usd: Optional[float] = None
     cmo_standard_cost_per_kg_usd: Optional[float] = None
     cmo_campaign_cost_per_kg_usd: Optional[float] = None
+    cmo_retainer_annual_usd: Optional[float] = None
     handoff_streams: Dict[str, bst.Stream] = field(default_factory=dict)
+    _allocation_result: Optional[CMOResinAllocation] = None
+    allocation_inputs: Dict[str, Any] = field(default_factory=dict)
 
     def units(self) -> tuple[bst.Unit, ...]:
         """Return the ordered unit operations for convenience."""
@@ -114,6 +118,105 @@ class FrontEndSection:
                 unit._design()
             if cost:
                 unit._cost()
+        self._refresh_post_simulation_metrics()
+
+    @property
+    def allocation_result(self) -> Optional[CMOResinAllocation]:
+        self._refresh_post_simulation_metrics()
+        return self._allocation_result
+
+    @allocation_result.setter
+    def allocation_result(self, value: Optional[CMOResinAllocation]) -> None:
+        self._allocation_result = value
+
+    def _refresh_post_simulation_metrics(self) -> None:
+        """Update allocation/per-kg summaries after the flowsheet runs."""
+
+        allocation = self._allocation_result
+        if allocation is None or not self.allocation_inputs:
+            return
+
+        final_mass_per_batch = _coerce_float(
+            self.spray_dryer_unit.plan.derived.get("product_out_kg"),
+            0.0,
+        )
+        if final_mass_per_batch <= 0.0:
+            return
+
+        batches_executed = _coerce_float(
+            allocation.metadata.get("batches_executed"),
+            0.0,
+        )
+        if batches_executed <= 0.0:
+            return
+
+        total_kg_released = final_mass_per_batch * batches_executed
+
+        recorded_total = allocation.metadata.get("total_kg_released")
+        if recorded_total is None or not math.isclose(
+            recorded_total,
+            total_kg_released,
+            rel_tol=1e-9,
+            abs_tol=1e-9,
+        ):
+            inputs = dict(self.allocation_inputs)
+            inputs["total_kg_released"] = total_kg_released
+            try:
+                allocation = compute_allocation(**inputs)
+            except Exception:
+                return
+            self._allocation_result = allocation
+            self.allocation_inputs = inputs
+            if allocation is None:
+                return
+
+        def _safe_divide(numerator: float, denominator: float):
+            if denominator == 0.0:
+                return None
+            return numerator / denominator
+
+        metadata = dict(allocation.metadata)
+        metadata["total_kg_released"] = total_kg_released
+
+        self._allocation_result = CMOResinAllocation(
+            basis=allocation.basis,
+            denominator_label=allocation.denominator_label,
+            denominator_value=total_kg_released,
+            cmo_fixed_total_usd=allocation.cmo_fixed_total_usd,
+            cmo_variable_total_usd=allocation.cmo_variable_total_usd,
+            cmo_total_usd=allocation.cmo_total_usd,
+            resin_amort_total_usd=allocation.resin_amort_total_usd,
+            resin_cip_total_usd=allocation.resin_cip_total_usd,
+            resin_total_usd=allocation.resin_total_usd,
+            pooled_total_usd=allocation.pooled_total_usd,
+            cmo_per_unit_usd=_safe_divide(allocation.cmo_total_usd, total_kg_released),
+            resin_per_unit_usd=_safe_divide(allocation.resin_total_usd, total_kg_released),
+            total_per_unit_usd=_safe_divide(
+                allocation.pooled_total_usd, total_kg_released
+            ),
+            metadata=metadata,
+        )
+
+        self.cost_per_kg_usd = _safe_divide(
+            self.total_cost_per_batch_usd or 0.0,
+            final_mass_per_batch,
+        )
+        self.materials_cost_per_kg_usd = _safe_divide(
+            self.materials_cost_per_batch_usd or 0.0,
+            final_mass_per_batch,
+        )
+        self.cmo_cost_per_kg_usd = _safe_divide(
+            self.cmo_total_fee_usd or 0.0,
+            final_mass_per_batch,
+        )
+        self.cmo_standard_cost_per_kg_usd = _safe_divide(
+            self.cmo_standard_batch_usd or 0.0,
+            final_mass_per_batch,
+        )
+        self.cmo_campaign_cost_per_kg_usd = _safe_divide(
+            self.cmo_campaign_adders_usd or 0.0,
+            final_mass_per_batch,
+        )
 
 
 def _register_front_end_builders(
@@ -154,6 +257,35 @@ def _coerce_float(value: Any, default: float = 0.0) -> float:
         return float(value)
     except (TypeError, ValueError):
         return default
+
+
+def _capture_cip_cost_per_batch(plan: Any) -> float:
+    """Estimate the capture CIP spend captured in buffer fees per batch."""
+
+    derived = getattr(plan, "derived", {})
+    volumes = derived.get("buffer_volumes_l")
+    if not isinstance(volumes, Mapping):
+        return 0.0
+    cip_volume_l = volumes.get("cip")
+    if cip_volume_l in (None, 0):
+        return 0.0
+    try:
+        cip_volume_l = float(cip_volume_l)
+    except (TypeError, ValueError):
+        return 0.0
+    if cip_volume_l <= 0.0:
+        return 0.0
+    specs = getattr(plan, "specs", None)
+    fee_per_m3 = getattr(specs, "cip_fee_per_m3", None)
+    if fee_per_m3 in (None, 0):
+        return 0.0
+    try:
+        fee_per_m3 = float(fee_per_m3)
+    except (TypeError, ValueError):
+        return 0.0
+    if fee_per_m3 <= 0.0:
+        return 0.0
+    return fee_per_m3 * (cip_volume_l / 1_000.0)
 
 
 def _compute_media_cost(
@@ -1529,6 +1661,76 @@ def build_front_end_section(
         except (TypeError, ValueError):
             pass
 
+    retainer_fee_per_year = 0.0
+    allocation_result: Optional[CMOResinAllocation] = None
+    try:
+        chrom_plan = chromatography_unit.plan
+        campaigns_planned = getattr(structure, "annual_campaigns", 0.0)
+        batches_planned_per_campaign = getattr(structure, "batches_per_campaign", 0.0)
+        batches_executed = getattr(structure, "batches_per_year", 0.0)
+        good_batches_released = batches_executed
+        final_product_mass_float = _coerce_float(final_product_mass, 0.0)
+        total_kg_released = final_product_mass_float * good_batches_released
+        process_hours_per_batch = sum(
+            _coerce_float(value, 0.0)
+            for value in (
+                timings.seed_hours,
+                timings.fermentation_hours,
+                timings.turnaround_hours,
+                timings.micro_hours,
+                timings.uf_hours,
+                timings.df_hours,
+                timings.chromatography_hours,
+                timings.predry_hours,
+                timings.spray_hours,
+            )
+        )
+        resin_cost_per_batch = _coerce_float(chrom_plan.derived.get("resin_cost_per_batch"), 0.0)
+        resin_cip_cost_per_batch = _capture_cip_cost_per_batch(chrom_plan)
+        resin_lifetimes_consumed = chrom_plan.derived.get("resin_lifetimes_consumed")
+        resin_cost_per_l = getattr(chrom_plan.specs, "resin_cost_per_l", None)
+        resin_volume_l = chrom_plan.derived.get("resin_volume_l")
+        cycles_per_batch = chrom_plan.derived.get("cycles_per_batch")
+        resin_salvage_fraction = chrom_plan.derived.get("resin_salvage_fraction")
+        if resin_salvage_fraction is None:
+            salvage_spec = getattr(chrom_plan.specs, "resin_salvage_fraction", None)
+            if salvage_spec is not None:
+                try:
+                    resin_salvage_fraction = float(salvage_spec)
+                except (TypeError, ValueError):
+                    resin_salvage_fraction = None
+
+        retainer_fee_per_year = _coerce_float(
+            _get_module_parameter(defaults, "PROJ02", "PROJ02a", "Retainer_Fee_per_Year"),
+            0.0,
+        )
+        if isinstance(cmo_config_raw, Mapping):
+            override_retainer = cmo_config_raw.get("retainer_fee_per_year")
+            if override_retainer is not None:
+                retainer_fee_per_year = _coerce_float(override_retainer, retainer_fee_per_year)
+
+        allocation_result = compute_allocation(
+            allocation_basis="KG_RELEASED",
+            campaigns_planned=campaigns_planned,
+            batches_planned_per_campaign=batches_planned_per_campaign,
+            batches_executed=batches_executed,
+            good_batches_released=good_batches_released,
+            total_kg_released=total_kg_released,
+            process_hours_per_batch=process_hours_per_batch,
+            cmo_standard_per_batch_usd=standard_batch_cost or 0.0,
+            cmo_campaign_per_batch_usd=campaign_adders or 0.0,
+            cmo_retainer_annual_usd=retainer_fee_per_year,
+            resin_cost_per_batch_usd=resin_cost_per_batch,
+            resin_cip_cost_per_batch_usd=resin_cip_cost_per_batch,
+            resin_lifetimes_consumed_per_batch=resin_lifetimes_consumed,
+            resin_cost_per_l=resin_cost_per_l,
+            resin_volume_l=resin_volume_l,
+            cycles_per_batch=cycles_per_batch,
+            resin_salvage_fraction=resin_salvage_fraction,
+        )
+    except Exception:
+        allocation_result = None
+
     feed = _build_seed_media_stream(
         fermentation_unit=fermentation_unit,
         seed_unit=seed_unit,
@@ -1610,7 +1812,27 @@ def build_front_end_section(
         path=tuple(system_path_units),
     )
 
-    return FrontEndSection(
+    allocation_inputs = {
+        "allocation_basis": "KG_RELEASED",
+        "campaigns_planned": campaigns_planned,
+        "batches_planned_per_campaign": batches_planned_per_campaign,
+        "batches_executed": batches_executed,
+        "good_batches_released": good_batches_released,
+        "total_kg_released": total_kg_released,
+        "process_hours_per_batch": process_hours_per_batch,
+        "cmo_standard_per_batch_usd": standard_batch_cost or 0.0,
+        "cmo_campaign_per_batch_usd": campaign_adders or 0.0,
+        "cmo_retainer_annual_usd": retainer_fee_per_year,
+        "resin_cost_per_batch_usd": resin_cost_per_batch,
+        "resin_cip_cost_per_batch_usd": resin_cip_cost_per_batch,
+        "resin_lifetimes_consumed_per_batch": resin_lifetimes_consumed,
+        "resin_cost_per_l": resin_cost_per_l,
+        "resin_volume_l": resin_volume_l,
+        "resin_salvage_fraction": resin_salvage_fraction,
+        "cycles_per_batch": cycles_per_batch,
+    }
+
+    section = FrontEndSection(
         feed=feed,
         seed_unit=seed_unit,
         fermentation_unit=fermentation_unit,
@@ -1652,7 +1874,14 @@ def build_front_end_section(
         cmo_cost_per_kg_usd=cmo_cost_per_kg,
         cmo_standard_cost_per_kg_usd=cmo_standard_cost_per_kg,
         cmo_campaign_cost_per_kg_usd=cmo_campaign_cost_per_kg,
+        cmo_retainer_annual_usd=retainer_fee_per_year,
+        _allocation_result=allocation_result,
+        allocation_inputs=allocation_inputs,
     )
+
+    section._refresh_post_simulation_metrics()
+
+    return section
 
 
 __all__ = [

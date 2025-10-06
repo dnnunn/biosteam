@@ -51,3 +51,11 @@ materials_costs:
   predry_tff_membranes: Calculations!B190
   cip_chemicals: Calculations!B193
   membrane_cleaning: Inputs and Assumptions!B169
+
+allocation:
+  basis: AllocationBasis
+  denominator: Allocation_Denominator
+  cmo_per_unit: CMO_per_unit
+  resin_per_unit: Resin_per_unit
+  total_per_unit: Total_per_unit
+  batches_executed: Policy!D13

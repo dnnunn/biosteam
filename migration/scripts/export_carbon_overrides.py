@@ -135,6 +135,36 @@ def collect_cost_rows(section, metrics) -> list[Row]:
         ),
         Row("Cost per kg", metrics.cost_per_kg_usd, section.cost_per_kg_usd),
     ]
+
+    allocation = getattr(section, "allocation_result", None)
+    if allocation is not None or any(
+        value is not None
+        for value in (
+            metrics.cmo_per_unit_usd,
+            metrics.resin_per_unit_usd,
+            metrics.total_per_unit_usd,
+        )
+    ):
+        rows.extend(
+            [
+                Row(
+                    "CMO per unit",
+                    metrics.cmo_per_unit_usd,
+                    allocation.cmo_per_unit_usd if allocation else None,
+                ),
+                Row(
+                    "Resin per unit",
+                    metrics.resin_per_unit_usd,
+                    allocation.resin_per_unit_usd if allocation else None,
+                ),
+                Row(
+                    "Total per unit",
+                    metrics.total_per_unit_usd,
+                    allocation.total_per_unit_usd if allocation else None,
+                ),
+            ]
+        )
+
     return rows
 
 

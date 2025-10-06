@@ -31,6 +31,11 @@ class BaselineMetrics:
     cmo_fees_usd: Optional[float] = None
     materials_cost_per_batch_usd: Optional[float] = None
     materials_cost_breakdown: Mapping[str, float] = field(default_factory=dict)
+    allocation_basis: Optional[str] = None
+    allocation_denominator: Optional[float] = None
+    cmo_per_unit_usd: Optional[float] = None
+    resin_per_unit_usd: Optional[float] = None
+    total_per_unit_usd: Optional[float] = None
 
     @property
     def product_per_batch_kg(self) -> float:
@@ -47,6 +52,11 @@ class BaselineMetrics:
             "cmo_fees_usd": self.cmo_fees_usd,
             "materials_cost_per_batch_usd": self.materials_cost_per_batch_usd,
             "materials_cost_breakdown": dict(self.materials_cost_breakdown),
+            "allocation_basis": self.allocation_basis,
+            "allocation_denominator": self.allocation_denominator,
+            "cmo_per_unit_usd": self.cmo_per_unit_usd,
+            "resin_per_unit_usd": self.resin_per_unit_usd,
+            "total_per_unit_usd": self.total_per_unit_usd,
         }
 
     @classmethod
@@ -75,6 +85,11 @@ class BaselineMetrics:
             materials_cost_breakdown={
                 k: float(v) for k, v in data.get("materials_cost_breakdown", {}).items()
             },
+            allocation_basis=data.get("allocation_basis"),
+            allocation_denominator=_get_float("allocation_denominator"),
+            cmo_per_unit_usd=_get_float("cmo_per_unit_usd"),
+            resin_per_unit_usd=_get_float("resin_per_unit_usd"),
+            total_per_unit_usd=_get_float("total_per_unit_usd"),
         )
 
 
@@ -146,6 +161,43 @@ def load_baseline_metrics(
             value = _read_cell(descriptor, wb)
             if value is not None:
                 material_breakdown[key] = value
+
+        allocation_cfg = config.get("allocation", {}) if isinstance(config, Mapping) else {}
+        allocation_basis = _read_text(allocation_cfg.get("basis"), wb)
+        allocation_denominator = _read_cell(allocation_cfg.get("denominator"), wb)
+        cmo_per_unit = _read_cell(allocation_cfg.get("cmo_per_unit"), wb)
+        resin_per_unit = _read_cell(allocation_cfg.get("resin_per_unit"), wb)
+        total_per_unit = _read_cell(allocation_cfg.get("total_per_unit"), wb)
+        batches_executed = _read_cell(allocation_cfg.get("batches_executed"), wb)
+
+        policy_metrics = _compute_policy_metrics(wb)
+
+        def _fallback(key: str, existing: Optional[float]) -> Optional[float]:
+            value = policy_metrics.get(key)
+            return existing if existing is not None else value
+
+        allocation_basis = allocation_basis or policy_metrics.get("basis")
+        if isinstance(allocation_basis, str):
+            allocation_basis = allocation_basis.strip() or None
+            if allocation_basis:
+                allocation_basis = allocation_basis.upper()
+        allocation_denominator = allocation_denominator or policy_metrics.get("denominator")
+        cmo_per_unit = _fallback("cmo_per_unit", cmo_per_unit)
+        resin_per_unit = _fallback("resin_per_unit", resin_per_unit)
+        total_per_unit = _fallback("total_per_unit", total_per_unit)
+        batches_executed = batches_executed or policy_metrics.get("batches_executed")
+
+        cmo_total = policy_metrics.get("cmo_total")
+        resin_total = policy_metrics.get("resin_total")
+
+        if cmo_total is None and cmo_per_unit is not None and allocation_denominator:
+            cmo_total = cmo_per_unit * allocation_denominator
+        if resin_total is None and resin_per_unit is not None and allocation_denominator:
+            resin_total = resin_per_unit * allocation_denominator
+
+        if cmo_fees is None and cmo_total is not None and batches_executed:
+            if batches_executed:
+                cmo_fees = cmo_total / batches_executed
     finally:
         wb.close()
 
@@ -166,6 +218,11 @@ def load_baseline_metrics(
             )
         ),
         materials_cost_breakdown=material_breakdown,
+        allocation_basis=allocation_basis,
+        allocation_denominator=allocation_denominator,
+        cmo_per_unit_usd=cmo_per_unit,
+        resin_per_unit_usd=resin_per_unit,
+        total_per_unit_usd=total_per_unit,
     )
 
 
@@ -224,6 +281,42 @@ def _read_cell(descriptor: Optional[str], workbook) -> Optional[float]:
     return _coerce_float(raw)
 
 
+def _read_text(descriptor: Optional[str], workbook) -> Optional[str]:
+    if not descriptor:
+        return None
+
+    descriptor = descriptor.strip()
+    if not descriptor:
+        return None
+
+    if "!" not in descriptor:
+        defined = workbook.defined_names.get(descriptor)
+        if defined is None:
+            return None
+        destinations = list(defined.destinations)
+        if not destinations:
+            return None
+        sheet_name, address = destinations[0]
+        if not address:
+            return None
+        return _read_text(f"{sheet_name}!{address}", workbook)
+
+    sheet, cell = descriptor.split("!", 1)
+    sheet = sheet.strip()
+    cell = cell.strip()
+    try:
+        ws = workbook[sheet]
+    except KeyError:
+        return None
+    try:
+        raw = ws[cell].value
+    except Exception:
+        return None
+    if raw is None:
+        return None
+    return str(raw)
+
+
 def _coerce_float(value: object | None) -> Optional[float]:
     if value is None:
         return None
@@ -268,3 +361,94 @@ def _letters_to_index(letters: str) -> int:
     for ch in letters:
         total = total * 26 + (ord(ch) - ord("A") + 1)
     return total - 1
+
+
+def _compute_policy_metrics(workbook) -> Dict[str, float]:
+    try:
+        ws = workbook["Policy"]
+    except KeyError:
+        return {}
+
+    def _num(cell: str) -> Optional[float]:
+        try:
+            return _coerce_float(ws[cell].value)
+        except Exception:
+            return None
+
+    def _text(cell: str) -> Optional[str]:
+        value = ws[cell].value
+        if value is None:
+            return None
+        return str(value)
+
+    basis = _text("D2")
+    campaigns_planned = _num("D4") or 0.0
+    batches_planned_per_campaign = _num("D5") or 0.0
+    campaign_days = _num("D6") or 0.0
+    process_hours_per_batch = _num("D7") or 0.0
+    campaign_fee = _num("D8") or 0.0
+    suite_fee = _num("D9") or 0.0
+    suite_fee_per_day = _num("D10") or 0.0
+    per_batch_fee = _num("D11") or 0.0
+    retainer_fee = _num("D12") or 0.0
+    batches_executed = _num("D13") or 0.0
+    good_batches_released = _num("D14") or batches_executed
+    avg_kg_per_batch = _num("D15") or 0.0
+    total_kg_released = _num("D16")
+    resin_cost_per_l = _num("D17") or 0.0
+    resin_volume_l = _num("D18") or 0.0
+    resin_salvage_fraction = _num("D19") or 0.0
+    resin_lifetime_cycles = _num("D20") or 0.0
+    cycles_per_batch = _num("D21") or 0.0
+    cip_cost_per_cycle = _num("D22") or 0.0
+
+    planned_batches = campaigns_planned * batches_planned_per_campaign
+
+    cmo_total = (
+        retainer_fee
+        + campaigns_planned * (campaign_fee + suite_fee)
+        + campaigns_planned * campaign_days * suite_fee_per_day
+        + batches_executed * per_batch_fee
+    )
+
+    resin_gross_cost = resin_cost_per_l * resin_volume_l
+    amortizable = resin_gross_cost * (1.0 - resin_salvage_fraction)
+    amort_per_cycle = amortizable / resin_lifetime_cycles if resin_lifetime_cycles else 0.0
+    total_cycles_used = batches_executed * cycles_per_batch
+    resin_amort_used = amort_per_cycle * min(total_cycles_used, resin_lifetime_cycles or total_cycles_used)
+    cip_total = total_cycles_used * cip_cost_per_cycle
+    resin_total = resin_amort_used + cip_total
+
+    if total_kg_released is None or total_kg_released <= 0.0:
+        total_kg_released = good_batches_released * avg_kg_per_batch
+
+    basis_key = (basis or "KG_RELEASED").strip().upper()
+    if basis_key == "KG_RELEASED":
+        denominator = total_kg_released
+    elif basis_key == "GOOD_BATCHES":
+        denominator = good_batches_released
+    elif basis_key == "SCHEDULED_CAPACITY":
+        denominator = planned_batches
+    elif basis_key == "PROCESS_TIME_HOURS":
+        denominator = batches_executed * process_hours_per_batch
+    else:
+        denominator = total_kg_released
+
+    if denominator and denominator > 0.0:
+        cmo_per_unit = cmo_total / denominator
+        resin_per_unit = resin_total / denominator
+        total_per_unit = (cmo_total + resin_total) / denominator
+    else:
+        cmo_per_unit = resin_per_unit = total_per_unit = None
+
+    return {
+        "basis": basis_key,
+        "denominator": denominator,
+        "cmo_total": cmo_total,
+        "resin_total": resin_total,
+        "cmo_per_unit": cmo_per_unit,
+        "resin_per_unit": resin_per_unit,
+        "total_per_unit": total_per_unit,
+        "batches_executed": batches_executed,
+        "total_kg_released": total_kg_released,
+    }

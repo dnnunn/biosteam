@@ -347,6 +347,50 @@ def main() -> None:
         rel_str = f"{rel:.2%}" if not np.isnan(rel) else "N/A"
         print(f"{label:25} {excel_str:>15} {bs_str:>15} {delta_str:>15} {rel_str:>8}")
 
+    allocation = section.allocation_result
+    allocation_rows = [
+        (
+            "CMO per unit",
+            metrics.cmo_per_unit_usd,
+            allocation.cmo_per_unit_usd if allocation else None,
+        ),
+        (
+            "Resin per unit",
+            metrics.resin_per_unit_usd,
+            allocation.resin_per_unit_usd if allocation else None,
+        ),
+        (
+            "Total per unit",
+            metrics.total_per_unit_usd,
+            allocation.total_per_unit_usd if allocation else None,
+        ),
+    ]
+
+    if any(row[1] is not None or row[2] is not None for row in allocation_rows):
+        print("\nAllocation per-unit (USD):")
+        print(f"{'Metric':25} {reference_label:>15} {plan_label:>15} {'Δ':>15} {'Δ%':>8}")
+        for label, excel_value, biosteam_value in allocation_rows:
+            if excel_value is None or biosteam_value is None:
+                delta = rel = np.nan
+            else:
+                delta = biosteam_value - excel_value
+                rel = delta / excel_value if excel_value else np.nan
+            excel_str = f"${excel_value:,.2f}" if excel_value is not None else "N/A"
+            bs_str = f"${biosteam_value:,.2f}" if biosteam_value is not None else "N/A"
+            delta_str = f"${delta:,.2f}" if not np.isnan(delta) else "N/A"
+            rel_str = f"{rel:.2%}" if not np.isnan(rel) else "N/A"
+            print(f"{label:25} {excel_str:>15} {bs_str:>15} {delta_str:>15} {rel_str:>8}")
+
+        basis_excel = metrics.allocation_basis or "N/A"
+        basis_bs = allocation.basis if allocation else "N/A"
+        print(f"Basis: {basis_excel} (ref) vs {basis_bs} (BioSTEAM)")
+        denom_excel = metrics.allocation_denominator
+        denom_bs = allocation.denominator_value if allocation else None
+        if denom_excel is not None or denom_bs is not None:
+            excel_str = f"{denom_excel:,.3f}" if denom_excel is not None else "N/A"
+            bs_str = f"{denom_bs:,.3f}" if denom_bs is not None else "N/A"
+            print(f"Denominator: {excel_str} vs {bs_str}")
+
     if metrics.materials_cost_breakdown:
         print("\nMaterials cost breakdown (USD):")
         print(f"{'Component':25} {reference_label:>15} {plan_label:>15} {'Δ':>15} {'Δ%':>8}")

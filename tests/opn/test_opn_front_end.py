@@ -41,6 +41,11 @@ def baseline_metrics() -> BaselineMetrics:
         cmo_fees_usd=data.get("cmo_fees_usd"),
         materials_cost_per_batch_usd=data.get("materials_cost_per_batch_usd"),
         materials_cost_breakdown=data.get("materials_cost_breakdown", {}),
+        allocation_basis=data.get("allocation_basis"),
+        allocation_denominator=data.get("allocation_denominator"),
+        cmo_per_unit_usd=data.get("cmo_per_unit_usd"),
+        resin_per_unit_usd=data.get("resin_per_unit_usd"),
+        total_per_unit_usd=data.get("total_per_unit_usd"),
     )
 
 
@@ -102,6 +107,42 @@ def test_cost_metrics(front_end_section, baseline_metrics):
             front_end_section.materials_cost_per_kg_usd,
             baseline_metrics.materials_cost_per_batch_usd / baseline_metrics.final_product_kg,
             rtol=0.02,
+        )
+
+
+def test_allocation_metrics(front_end_section, baseline_metrics):
+    allocation = front_end_section.allocation_result
+    assert allocation is not None
+
+    if baseline_metrics.allocation_basis:
+        assert allocation.basis == baseline_metrics.allocation_basis
+
+    if baseline_metrics.allocation_denominator is not None:
+        assert np.isclose(
+            allocation.denominator_value,
+            baseline_metrics.allocation_denominator,
+            rtol=5e-2,
+        )
+
+    if baseline_metrics.cmo_per_unit_usd is not None:
+        assert np.isclose(
+            allocation.cmo_per_unit_usd or 0.0,
+            baseline_metrics.cmo_per_unit_usd,
+            rtol=1e-6,
+        )
+
+    if baseline_metrics.resin_per_unit_usd is not None:
+        assert np.isclose(
+            allocation.resin_per_unit_usd or 0.0,
+            baseline_metrics.resin_per_unit_usd,
+            rtol=1e-6,
+        )
+
+    if baseline_metrics.total_per_unit_usd is not None:
+        assert np.isclose(
+            allocation.total_per_unit_usd or 0.0,
+            baseline_metrics.total_per_unit_usd,
+            rtol=1e-6,
         )
 
 
@@ -183,6 +224,51 @@ def test_aex_cycle_profile(front_end_section):
         front_end_section.cmo_campaign_adders_usd / final_mass,
         rtol=0.02,
     )
+
+
+def test_standardized_allocation(front_end_section):
+    allocation = front_end_section.allocation_result
+    assert allocation is not None
+    assert allocation.basis == "KG_RELEASED"
+
+    metadata = allocation.metadata
+    batches_executed = metadata["batches_executed"]
+    assert batches_executed > 0
+
+    chrom_plan = front_end_section.chromatography_unit.plan
+    resin_per_batch = chrom_plan.derived.get("resin_cost_per_batch") or 0.0
+    resin_cip_per_batch = metadata.get("resin_cip_cost_per_batch_usd", 0.0)
+
+    expected_cmo_total = front_end_section.cmo_total_fee_usd * batches_executed
+    expected_resin_total = (resin_per_batch + resin_cip_per_batch) * batches_executed
+
+    assert np.isclose(allocation.cmo_total_usd, expected_cmo_total, rtol=1e-6)
+    assert np.isclose(allocation.resin_total_usd, expected_resin_total, rtol=1e-6)
+    assert np.isclose(
+        allocation.pooled_total_usd,
+        allocation.cmo_total_usd + allocation.resin_total_usd,
+        rtol=1e-6,
+    )
+
+    final_mass_per_batch = front_end_section.spray_dryer_unit.plan.derived.get(
+        "product_out_kg"
+    )
+    assert final_mass_per_batch is not None
+    expected_total_kg = final_mass_per_batch * batches_executed
+    assert np.isclose(metadata["total_kg_released"], expected_total_kg, rtol=1e-6)
+
+    if allocation.denominator_value:
+        assert np.isclose(
+            allocation.total_per_unit_usd,
+            allocation.pooled_total_usd / allocation.denominator_value,
+            rtol=1e-6,
+        )
+        assert np.isclose(
+            allocation.total_per_unit_usd or 0.0,
+            (allocation.cmo_per_unit_usd or 0.0)
+            + (allocation.resin_per_unit_usd or 0.0),
+            rtol=1e-6,
+        )
 
 
 def test_fermentation_profile_switch(tmp_path):
