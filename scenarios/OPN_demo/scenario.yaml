@@ -1,0 +1,13 @@
+name: OPN_demo
+version: "0.1"
+thermo_package: null
+units:
+  - template: ProdFermenter_v2
+    id: prod1
+    overrides:
+      working_volume_m3: 70
+      titer_g_L: 5
+streams: []
+assumptions:
+  cmo_day_rate_usd: 25000
+uncertainty: {}

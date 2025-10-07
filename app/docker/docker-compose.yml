@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  api:
+    build: { context: ../, dockerfile: app/docker/Dockerfile.api }
+    ports: ["8000:8000"]
+    volumes: ["../scenarios:/scenarios"]
+  ui:
+    build: { context: ../, dockerfile: app/docker/Dockerfile.ui }
+    ports: ["3000:3000"]
+    environment:
+      - NEXT_PUBLIC_API=http://localhost:8000

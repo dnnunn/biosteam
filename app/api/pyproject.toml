@@ -1,0 +1,16 @@
+[project]
+name = "bdsteam-api"
+version = "0.1.0"
+description = "BioSTEAM scenario API"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.111",
+  "uvicorn[standard]>=0.30",
+  "pydantic>=2.8",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "SALib>=1.4",
+]
+
+[tool.pip]
+# local editable installs suggested in dev docs (see Makefile)
