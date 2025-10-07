@@ -1,0 +1,9 @@
+# nls_config.yaml
+# Map your existing spec field names to the adapter's expected keys.
+# Adjust ONLY if your YAMLs use different field names.
+fields:
+  unit_key: "template"        # canonical template identifier (e.g., AEX_Membrane_v1)
+  unit_synonyms: "synonyms"   # list[str] of human-friendly names
+  params_key: "parameters"    # list[dict] of parameter objects
+  param_name_key: "key"       # canonical parameter key (e.g., target_pH)
+  param_synonyms_key: "synonyms"  # list[str] of aliases like "pH"

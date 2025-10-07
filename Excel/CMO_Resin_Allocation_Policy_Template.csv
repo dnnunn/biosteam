@@ -1,0 +1,24 @@
+Category,Parameter,Unit,Value,Description,Notes
+Governance,AllocationBasis,{KG_RELEASED|GOOD_BATCHES|SCHEDULED_CAPACITY|PROCESS_TIME_HOURS},KG_RELEASED,Primary basis for apportioning fixed CMO and resin costs.,Choose one policy and apply consistently year-over-year.
+Governance,Tolerance_Utilization_Slip,%,10,Allowed deviation from planned utilization before triggering variance treatment.,"e.g., >10% under‑utilization -> record variance separately"
+Governance,Variance_Treatment,{EXPENSE_NOW|CARRY_FORWARD|ADJUST_NEXT_CAMPAIGN},EXPENSE_NOW,How to treat cost variances from misses/abortions.,Expensing immediately is conservative.
+Calendar,Campaigns_Planned_per_Year,#,5,Campaigns scheduled in the year.,Baseline provided by user.
+Calendar,Batches_Planned_per_Campaign,#,6,Batches per campaign (planned).,Baseline provided by user.
+Calendar,Campaign_Days,days,10,Active production days per campaign (exclude idle/holdover).,Used if Suite_Fee_Per_Day is used.
+Calendar,Process_Hours_per_Batch,h,36,Total process hours that tie up the suite per batch.,For PROCESS_TIME_HOURS basis.
+CMO,Campaign_Fee_per_Campaign,$,250000,Fixed fee billed once per campaign.,Non‑recoverable setup/turnaround.
+CMO,Suite_Fee_per_Campaign,$,150000,Fixed facility fee per campaign.,Retainer / occupancy.
+CMO,Suite_Fee_Per_Day,$/day,0,Daily facility fee during active campaign days.,Use 0 if not applicable.
+CMO,Per_Batch_Fee,$/batch,20000,Variable fee per executed batch.,Covers batch‑specific ops.
+CMO,Retainer_Fee_per_Year,$/yr,0,Annual retainer if any.,Charged irrespective of usage.
+Production,Batches_Executed,#,30,Total executed batches in the year.,Observed outcome.
+Production,Good_Batches_Released,#,29,Batches released to spec.,Failed batches excluded where policy dictates.
+Production,Avg_KG_Release_per_Batch,kg/batch,120,Average kg of spec product per released batch.,Will vary by titer/yield.
+Production,Total_KG_Released,kg,3480,Computed: Good_Batches_Released * Avg_KG_Release_per_Batch,"If provided, overrides computed."
+Resin,Resin_Cost_per_L,$/L,12000,Purchase cost.,
+Resin,Resin_Volume_L,L,10,Total packed volume in use.,
+Resin,Resin_Salvage_Fraction,fraction,0,Value fraction at retirement.,0 = no salvage.
+Resin,Resin_Lifetime_Cycles,#,100,Qualified lifetime in full load/elute cycles.,
+Resin,Cycles_per_Batch,#,2,Number of cycles consumed per batch.,"e.g., 2 loads/batch"
+Resin,CIP_Cost_per_Cycle,$/cycle,100,Chemicals/utilities per regeneration.,Exclude labor if in CMO batch fee.
+Resin,WriteOff_Policy,{STRAIGHT_LINE_PER_CYCLE|UNITS_OF_PRODUCTION|PER_CAMPAIGN},UNITS_OF_PRODUCTION,Amortization convention.,Units‑of‑production ties cost to cycles actually used.

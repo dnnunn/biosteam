@@ -1,0 +1,21 @@
+template: SeedFermenter_v1
+synonyms:
+- seed
+- seed fermenter
+- usp01
+parameters:
+- key: working_volume_m3
+  synonyms:
+  - seed volume
+  - working volume
+- key: temp_C
+  synonyms:
+  - temperature
+  - temp
+- key: pH
+  synonyms:
+  - seed pH
+- key: time_h
+  synonyms:
+  - seed time
+  - duration

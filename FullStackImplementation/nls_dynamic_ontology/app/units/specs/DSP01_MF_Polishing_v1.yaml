@@ -1,0 +1,22 @@
+template: MF_Polishing_v1
+synonyms:
+- microfiltration
+- mf
+- polishing filter
+- dsp01
+parameters:
+- key: area_m2
+  synonyms:
+  - membrane area
+  - area
+- key: flux_L_m2_h
+  synonyms:
+  - flux
+- key: yield_fraction
+  synonyms:
+  - yield
+  - recovery
+- key: TMP_bar
+  synonyms:
+  - tmp
+  - transmembrane pressure

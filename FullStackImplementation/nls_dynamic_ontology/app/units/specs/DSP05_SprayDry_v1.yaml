@@ -1,0 +1,25 @@
+template: SprayDry_v1
+synonyms:
+- spray dryer
+- spray dry
+- dsp05
+parameters:
+- key: evap_rate_kg_h
+  synonyms:
+  - evaporation rate
+  - throughput
+- key: inlet_C
+  synonyms:
+  - inlet temperature
+  - inlet
+- key: outlet_C
+  synonyms:
+  - outlet temperature
+  - outlet
+- key: yield_fraction
+  synonyms:
+  - yield
+- key: energy_kWh_per_kg_water
+  synonyms:
+  - specific energy
+  - energy

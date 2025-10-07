@@ -1,0 +1,27 @@
+template: UFDF_v1
+synonyms:
+- ufdf
+- tff
+- ultrafiltration diafiltration
+- dsp02
+parameters:
+- key: area_m2
+  synonyms:
+  - membrane area
+  - area
+- key: flux_L_m2_h
+  synonyms:
+  - flux
+- key: cff
+  synonyms:
+  - concentration factor
+  - cf
+- key: yield_fraction
+  synonyms:
+  - yield
+- key: membrane_cost_usd_m2
+  synonyms:
+  - membrane cost
+- key: lifetime_cycles
+  synonyms:
+  - lifetime

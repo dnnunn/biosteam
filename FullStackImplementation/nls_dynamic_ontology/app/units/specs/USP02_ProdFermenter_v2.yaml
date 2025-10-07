@@ -1,0 +1,27 @@
+template: ProdFermenter_v2
+synonyms:
+- production fermenter
+- prod
+- usp02
+- bioreactor
+parameters:
+- key: working_volume_m3
+  synonyms:
+  - volume
+  - reactor volume
+- key: titer_g_L
+  synonyms:
+  - titer
+  - concentration
+- key: glucose_g_L
+  synonyms:
+  - glucose
+  - feed glucose
+- key: temp_C
+  synonyms:
+  - temperature
+  - temp
+- key: time_h
+  synonyms:
+  - fermentation time
+  - duration

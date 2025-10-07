@@ -1,0 +1,17 @@
+template: DiskStack_v1
+synonyms:
+- disk stack
+- centrifuge
+- usp03
+parameters:
+- key: flow_m3_h
+  synonyms:
+  - flow
+  - throughput
+- key: yield_fraction
+  synonyms:
+  - recovery
+  - yield
+- key: power_kW
+  synonyms:
+  - power

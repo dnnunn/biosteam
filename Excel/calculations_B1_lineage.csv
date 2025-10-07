@@ -1,0 +1,246 @@
+Class,Sheet,Cell,NamedRange,Formula,Value(data_only),Direct Precedents
+FINAL,Calculations,B1,Cost_per_kg_base,=Total_Cost_Per_Batch/Final_Product_After_Spray_Drying,2054.3201556844856,"Final Costs!B8, Calculations!B126"
+INTERMEDIATE,Calculations,B25,Seed_Train_Duration,=SO_time+S1_time+S2_time+S3_time,16,"Inputs and Assumptions!B34, Inputs and Assumptions!B37, Inputs and Assumptions!B31, Calculations!S1, Inputs and Assumptions!B28, Calculations!S3, Calculations!S2"
+INTERMEDIATE,Calculations,B29,DCW,=OD_600*OD_Biomass_Factor,60,"Inputs and Assumptions!B43, Inputs and Assumptions!B42"
+INTERMEDIATE,Calculations,B30,Biomass_Volume,=(DCW/(Cell_Density*(Cell_Solids)))*100,190.47619047619045,"Calculations!B29, Inputs and Assumptions!B44, Inputs and Assumptions!B45"
+INTERMEDIATE,Calculations,B31,Sludge_Volume,=(DCW/(Cell_Density*(Sludge_Solids_Content)))*100,285.7142857142857,"Inputs and Assumptions!B47, Calculations!B29, Inputs and Assumptions!B44"
+INTERMEDIATE,Calculations,B33,Supernant_Volume,=1000-Biomass_Volume,809.5238095238095,Calculations!B30
+INTERMEDIATE,Calculations,B34,Entrained_supernatant_volume_in_sludge,=Sludge_Volume-Biomass_Volume,95.23809523809527,"Calculations!B31, Calculations!B30"
+INTERMEDIATE,Calculations,B40,Dilution_required,"=IF((((DCW/((1000*Target_product_loss*315)/(500+1000*Target_product_loss))))-1)>=0,(((DCW/((1000*Target_product_loss*315)/(500+1000*Target_product_loss))))-1),0)",0.14285714285714324,"Calculations!B29, Calculations!B110"
+INTERMEDIATE,Calculations,B41,Post_dilution_broth_volume,=Working_Volume*(1+Dilution_required),80000.00000000003,"Inputs and Assumptions!B16, Calculations!B40"
+INTERMEDIATE,Calculations,B42,Harvested_supernatant_volume,=(((Supernant_Volume/1000)*Working_Volume)+(Working_Volume*Dilution_required)-((Entrained_supernatant_volume_in_sludge/1000)*Working_Volume)),60000.000000000015,"Calculations!B33, Inputs and Assumptions!B16, Calculations!B34, Calculations!B40"
+INTERMEDIATE,Calculations,B47,Product_concentration_to_DSP,=(Harvested_supernatant_volume*Supernatant_Product)/Working_Volume,4.2857142857142865,"Calculations!B42, Inputs and Assumptions!B16, Inputs and Assumptions!B7"
+INTERMEDIATE,Calculations,B52,Seed_Train_Time,=Seed_Train_Duration,16,Calculations!B25
+INTERMEDIATE,Calculations,B53,Main_Fermentation_Time,=Fermentation_Time,48,Inputs and Assumptions!B17
+INTERMEDIATE,Calculations,B54,MF_Time,=Post_dilution_broth_volume/Microfiltration_Flux/MF_Membrane_Area,22.222222222222232,"Inputs and Assumptions!B73, Inputs and Assumptions!B72, Calculations!B41"
+INTERMEDIATE,Calculations,B55,UF_Time,=Harvested_supernatant_volume/UF_DF_Flux/UF_Membrane_Area,20.000000000000007,"Inputs and Assumptions!B87, Calculations!B42, Inputs and Assumptions!B89"
+INTERMEDIATE,Calculations,B56,DF_Time,=(Diafiltration_Volumes*Post_UF_Volume)/(UF_DF_Flux*UF_Membrane_Area),5.000000000000001,"Inputs and Assumptions!B87, Inputs and Assumptions!B89, Calculations!B112, Inputs and Assumptions!B90"
+INTERMEDIATE,Calculations,B57,Chromatography_Time,=10,10,
+INTERMEDIATE,Calculations,B58,Pre_Drying_TFF_Time,=(Working_Volume/UF_Concentration_Factor)/Pre_Drying_Concentration_Factor/Pre_Drying_TFF_Flux/Pre_Drying_TFF_Membrane_Area,0.5714285714285714,"Inputs and Assumptions!B117, Inputs and Assumptions!B16, Inputs and Assumptions!B118, Inputs and Assumptions!B88, Inputs and Assumptions!B119"
+INTERMEDIATE,Calculations,B59,Spray_Drying_Time,=Pre_Drying_Volume*(1-Final_Solids_Content)*Solution_Density/Spray_Dryer_Capacity,3.672000000000001,"Inputs and Assumptions!B130, Inputs and Assumptions!B129, Calculations!B119, Inputs and Assumptions!B127"
+INTERMEDIATE,Calculations,B60,Turnaround_CIP_Time,=Turnaround_Time,24,Inputs and Assumptions!B18
+INTERMEDIATE,Calculations,B70,Initial_Glucose,=Working_Volume * Initial_Glucose_Concentration/1000,1400,"Inputs and Assumptions!B50, Inputs and Assumptions!B16"
+INTERMEDIATE,Calculations,B71,Fed_Batch_Glucose,=((DCW/1000)*Working_Volume)/Biomass_Yield_on_Glucose-Initial_Glucose,7350,"Calculations!B29, Inputs and Assumptions!B59, Calculations!B70, Inputs and Assumptions!B16"
+INTERMEDIATE,Calculations,B72,Initial_Glycerol,=Working_Volume * Initial_Glycerol_Concentration/1000,1400,"Inputs and Assumptions!B48, Inputs and Assumptions!B16"
+INTERMEDIATE,Calculations,B73,Fed_Batch_Glycerol,=((DCW/1000)*Working_Volume)/Biomass_Yield_on_Glycerol-Initial_Glycerol,5841.379310344828,"Calculations!B29, Calculations!B72, Inputs and Assumptions!B16, Inputs and Assumptions!B60"
+INTERMEDIATE,Calculations,B76,Initial_Molasses,=Working_Volume * Initial_Molasses_Concentration/1000,2800,"Inputs and Assumptions!B16, Inputs and Assumptions!B54"
+INTERMEDIATE,Calculations,B77,Fed_Batch_Molasses,=((DCW/1000)*Working_Volume)/Biomass_Yield_on_Molasses-Initial_Molasses,14000,"Calculations!B29, Calculations!B76, Inputs and Assumptions!B62, Inputs and Assumptions!B16"
+INTERMEDIATE,Calculations,B78,Feed_Solution_Volume,=(Fed_Batch_Glucose/(Feed_Glucose_Concentration/1000)),14700,"Calculations!B71, Inputs and Assumptions!B51"
+INTERMEDIATE,Calculations,B82,Total_Glucose_Per_Batch,=Initial_Glucose+Fed_Batch_Glucose,8750,"Calculations!B70, Calculations!B71"
+INTERMEDIATE,Calculations,B83,Total_Glycerol_Per_Batch,=Initial_Glycerol+Fed_Batch_Glycerol,7241.379310344828,"Calculations!B72, Calculations!B73"
+INTERMEDIATE,Calculations,B85,Total_Molasses_Per_Batch,=Initial_Molasses+Fed_Batch_Molasses,16800,"Calculations!B76, Calculations!B77"
+INTERMEDIATE,Calculations,B86,Yeast_Extract_Per_Batch,=(Working_Volume-Feed_Solution_Volume)*(Yeast_Extract_Concentration/1000),553,"Inputs and Assumptions!B57, Calculations!B78, Inputs and Assumptions!B16"
+INTERMEDIATE,Calculations,B87,Peptone_Per_Batch,=(Working_Volume-Feed_Solution_Volume)*(Peptone_Concentration/1000),1106,"Inputs and Assumptions!B58, Calculations!B78, Inputs and Assumptions!B16"
+INTERMEDIATE,Calculations,B88,Antifoam_Volume,=Working_Volume*Antifoam_Dosage/100,70,"Inputs and Assumptions!B142, Inputs and Assumptions!B16"
+INTERMEDIATE,Calculations,B105,Harvest_Volume,=Harvested_supernatant_volume,60000.000000000015,Calculations!B42
+INTERMEDIATE,Calculations,B106,Actual_Supernatant_Concentration,=Product_concentration_to_DSP,4.2857142857142865,Calculations!B47
+INTERMEDIATE,Calculations,B107,Initial_Product_Amount,=(Actual_Supernatant_Concentration*Harvest_Volume)/1000,257.1428571428572,"Calculations!B106, Calculations!B105"
+INTERMEDIATE,Calculations,B108,Product_After_MF,=Initial_Product_Amount*MF_Efficiency,231.4285714285715,"Calculations!B107, Inputs and Assumptions!B71"
+INTERMEDIATE,Calculations,B110,Target_product_loss,=1-MF_Efficiency,0.09999999999999998,Inputs and Assumptions!B71
+INTERMEDIATE,Calculations,B111,Product_After_UF_DF,=Product_After_MF*UF_DF_Efficiency,219.85714285714292,"Calculations!B108, Inputs and Assumptions!B86"
+INTERMEDIATE,Calculations,B112,Post_UF_Volume,=Harvested_supernatant_volume/UF_Concentration_Factor,3000.000000000001,"Inputs and Assumptions!B88, Calculations!B42"
+INTERMEDIATE,Calculations,B113,Product_After_Chromatography,=Product_After_UF_DF*Chromatography_Yield,175.88571428571436,"Calculations!B111, Inputs and Assumptions!B93"
+INTERMEDIATE,Calculations,B119,Pre_Drying_Volume,=Post_UF_Volume/Pre_Drying_Concentration_Factor,600.0000000000002,"Calculations!B112, Inputs and Assumptions!B119"
+INTERMEDIATE,Calculations,B126,Final_Product_After_Spray_Drying;Final_Product_After_Spray_Drying2;X,=(Initial_Product_Amount*DSP_Yield_Analysis!D9),163.74960000000007,"Calculations!B107, DSP_Yield_Analysis!D9, Calculations!D9"
+INTERMEDIATE,Calculations,B130,MF_Buffer_Volume,=Working_Volume*Dilution_required,10000.000000000027,"Inputs and Assumptions!B16, Calculations!B40"
+INTERMEDIATE,Calculations,B131,DF_Buffer_Volume,=Post_UF_Volume*Diafiltration_Volumes,15000.000000000004,"Calculations!B112, Inputs and Assumptions!B90"
+INTERMEDIATE,Calculations,B132,Batch_Load_Chromatography,"=IF(Chromatography_Yield>0,Product_After_Chromatography/Chromatography_Yield,0)",219.85714285714295,"Calculations!B113, Inputs and Assumptions!B93"
+INTERMEDIATE,Calculations,B133,Resin_Volume_Needed,=Product_After_UF_DF*1000/Chromatography_Dynamic_Capacity,3664.2857142857156,"Calculations!B111, Inputs and Assumptions!B92"
+INTERMEDIATE,Calculations,B134,Cycles_Required,"=MAX(1,CEILING(Batch_Load_Chromatography/(DBC_g_per_L*Column_Volume_L*Columns_in_Service*Utilization_pct),1))",1,"Inputs and Assumptions!B98, Inputs and Assumptions!B101, Inputs and Assumptions!B99, Calculations!B132, Inputs and Assumptions!B100"
+INTERMEDIATE,Calculations,B135,Wash1_Volume_L,=Wash1_BV*Column_Volume_L*Columns_in_Service*Cycles_Required,45000,"Inputs and Assumptions!B94, Inputs and Assumptions!B98, Inputs and Assumptions!B99, Was!h1, Calculations!ash1, Calculations!B134"
+INTERMEDIATE,Calculations,B136,Wash2_Volume_L,=Wash2_BV*Column_Volume_L*Columns_in_Service*Cycles_Required,30000,"Inputs and Assumptions!B98, Was!h2, Calculations!ash2, Inputs and Assumptions!B95, Inputs and Assumptions!B99, Calculations!B134"
+INTERMEDIATE,Calculations,B137,Elution_Volume_L,=Elution_BV*Column_Volume_L*Columns_in_Service*Cycles_Required,75000,"Inputs and Assumptions!B98, Inputs and Assumptions!B99, Calculations!B134, Inputs and Assumptions!B96"
+INTERMEDIATE,Calculations,B138,Strip_Volume_L,=Strip_BV*Column_Volume_L*Columns_in_Service*Cycles_Required,30000,"Inputs and Assumptions!B98, Inputs and Assumptions!B99, Inputs and Assumptions!B97, Calculations!B134"
+INTERMEDIATE,Calculations,B144,Pre_Drying_TFF_Buffer_Volume,=Post_UF_Volume*2,6000.000000000002,Calculations!B112
+INTERMEDIATE,Calculations,B159,CIP_Water_Volume,=(Working_Volume/1000)*3,210,Inputs and Assumptions!B16
+INTERMEDIATE,Calculations,B167,Carbon_source_Cost_Total,"=IF(B65=""Glucose"",(Total_Glucose_Per_Batch*Glucose_Cost),(IF(B65=""Glycerol"",(Total_Glycerol_Per_Batch*Glycerol_Cost),(IF(B65=""Molasses"",(Total_Molasses_Per_Batch*Molasses_Cost),""Choose carbon source"")))))",6562.5,"Inputs and Assumptions!B134, Calculations!B83, Calculations!B65, Inputs and Assumptions!B135, Calculations!B82, Inputs and Assumptions!B137, Calculations!B85"
+INTERMEDIATE,Calculations,B168,Yeast_Extract_Cost_Total,=Yeast_Extract_Per_Batch*Yeast_Extract_Cost,6636,"Calculations!B86, Inputs and Assumptions!B138"
+INTERMEDIATE,Calculations,B169,Peptone_Cost_Total,=Peptone_Per_Batch*Peptone_Cost,16590,"Calculations!B87, Inputs and Assumptions!B139"
+INTERMEDIATE,Calculations,B170,Minor_Nutrients_Cost_Total,=Minor_Nutrients_Cost,500,Inputs and Assumptions!B140
+INTERMEDIATE,Calculations,B171,Antifoam_Cost_Total,=Antifoam_Volume*Antifoam_Cost,700,"Inputs and Assumptions!B141, Calculations!B88"
+INTERMEDIATE,Calculations,B172,MF_Membrane_Cost_Total,=10*MF_Membrane_Cost/MF_Membrane_Lifetime,200,"Inputs and Assumptions!B145, Inputs and Assumptions!B146"
+INTERMEDIATE,Calculations,B173,Buffer_cost_per_L_MF,=(Phosphate_M*Phosphate_MW_g_per_mol*Phosphate_Cost)/1000,0.0017999999999999997,"Inputs and Assumptions!B152, Inputs and Assumptions!B151, Inputs and Assumptions!B153"
+INTERMEDIATE,Calculations,B174,MF_Buffer_Cost,=MF_Buffer_Volume*Buffer_cost_per_L_MF,18.000000000000046,"Calculations!B130, Calculations!B173"
+INTERMEDIATE,Calculations,B175,UF_Membrane_Cost_Total,=8*UF_Membrane_Cost/UF_Membrane_Lifetime,120,"Inputs and Assumptions!B148, Inputs and Assumptions!B147"
+INTERMEDIATE,Calculations,B176,Buffer_cost_per_L_UF,=(Phosphate_M*Phosphate_MW_g_per_mol*Phosphate_Cost)/1000,0.0017999999999999997,"Inputs and Assumptions!B152, Inputs and Assumptions!B151, Inputs and Assumptions!B153"
+INTERMEDIATE,Calculations,B177,UF_Buffer_Cost,=DF_Buffer_Volume*Buffer_cost_per_L_UF,27.000000000000004,"Calculations!B176, Calculations!B131"
+INTERMEDIATE,Calculations,B178,Resin_Cost_Total,=Resin_Volume_Needed*Resin_Cost/Resin_Lifetime,122142.85714285719,"Inputs and Assumptions!B149, Inputs and Assumptions!B150, Calculations!B133"
+INTERMEDIATE,Calculations,B179,Buffer_cost_per_L_Wash1,=(Phosphate_M*Phosphate_MW_g_per_mol*Phosphate_Cost)/1000+(NaCl_M_Wash1*NaCl_MW_g_per_mol*NaCl_Cost)/1000,0.003261,"NaCl_M_Was!h1, Inputs and Assumptions!B152, Inputs and Assumptions!B154, Inputs and Assumptions!B151, Calculations!ash1, Inputs and Assumptions!B155, Inputs and Assumptions!B153, Inputs and Assumptions!B156"
+INTERMEDIATE,Calculations,B180,Buffer_cost_per_L_Wash2,=(Phosphate_M*Phosphate_MW_g_per_mol*Phosphate_Cost)/1000+(NaCl_M_Wash2*NaCl_MW_g_per_mol*NaCl_Cost)/1000,0.003261,"Calculations!ash2, Inputs and Assumptions!B152, Inputs and Assumptions!B154, Inputs and Assumptions!B157, Inputs and Assumptions!B155, Inputs and Assumptions!B153, NaCl_M_Was!h2, Inputs and Assumptions!B151"
+INTERMEDIATE,Calculations,B181,Buffer_cost_per_L_Elution,=(Phosphate_M*Phosphate_MW_g_per_mol*Phosphate_Cost)/1000+(NaCl_M_Elution*NaCl_MW_g_per_mol*NaCl_Cost)/1000,0.003991499999999999,"Inputs and Assumptions!B152, Inputs and Assumptions!B154, Inputs and Assumptions!B155, Inputs and Assumptions!B153, Inputs and Assumptions!B151, Inputs and Assumptions!B158"
+INTERMEDIATE,Calculations,B182,Buffer_cost_per_L_Strip,=(Phosphate_M*Phosphate_MW_g_per_mol*Phosphate_Cost)/1000+(NaCl_M_Strip*NaCl_MW_g_per_mol*NaCl_Cost)/1000,0.007644,"Inputs and Assumptions!B152, Inputs and Assumptions!B154, Inputs and Assumptions!B155, Inputs and Assumptions!B153, Inputs and Assumptions!B159, Inputs and Assumptions!B151"
+INTERMEDIATE,Calculations,B183,Wash1_Cost,=Wash1_Volume_L*Buffer_cost_per_L_Wash1,146.745,"Calculations!B135, Calculations!B179, Was!h1, Calculations!ash1, Buffer_cost_per_L_Was!h1"
+INTERMEDIATE,Calculations,B184,Wash2_Cost,=Wash2_Volume_L*Buffer_cost_per_L_Wash2,97.83,"Was!h2, Calculations!ash2, Calculations!B136, Buffer_cost_per_L_Was!h2, Calculations!B180"
+INTERMEDIATE,Calculations,B185,Elution_Cost,=Elution_Volume_L*Buffer_cost_per_L_Elution,299.36249999999995,"Calculations!B181, Calculations!B137"
+INTERMEDIATE,Calculations,B186,Strip_Cost,=Strip_Volume_L*Buffer_cost_per_L_Strip,229.32,"Calculations!B182, Calculations!B138"
+INTERMEDIATE,Calculations,B190,Pre_Drying_TFF_Membrane_Cost_Total,=Pre_Drying_TFF_Membrane_Area*Pre_Drying_TFF_Membrane_Cost/Pre_Drying_TFF_Membrane_Lifetime,630,"Inputs and Assumptions!B118, Inputs and Assumptions!B168, Inputs and Assumptions!B167"
+INTERMEDIATE,Calculations,B191,Buffer_cost_per_L_TFF,=(Phosphate_M*Phosphate_MW_g_per_mol*Phosphate_Cost)/1000,0.0017999999999999997,"Inputs and Assumptions!B152, Inputs and Assumptions!B151, Inputs and Assumptions!B153"
+INTERMEDIATE,Calculations,B192,Predrying_TFF_Buffer_Cost,=Pre_Drying_TFF_Buffer_Volume*Buffer_cost_per_L_TFF,10.800000000000002,"Calculations!B144, Calculations!B191"
+INTERMEDIATE,Calculations,B193,CIP_Chemicals_Cost_Total,=CIP_Water_Volume*CIP_Chemicals_Cost*0.02,12.6,"Calculations!B159, Inputs and Assumptions!B143"
+INTERMEDIATE,Calculations,B194,Total_Buffer_Cost,=Wash1_Cost+Wash2_Cost+Elution_Cost+Strip_Cost+MF_Buffer_Cost+UF_Buffer_Cost+Predrying_TFF_Buffer_Cost,829.0574999999999,"Calculations!B184, Was!h2, Calculations!ash2, Calculations!B186, Calculations!B183, Was!h1, Calculations!ash1, Calculations!B192, Calculations!B185, Calculations!B177, Calculations!B174"
+INTERMEDIATE,Calculations,B195,Total_Raw_Materials_Cost,=Carbon_source_Cost_Total+Yeast_Extract_Cost_Total+Peptone_Cost_Total+Minor_Nutrients_Cost_Total+Antifoam_Cost_Total+Total_Buffer_Cost+Resin_Cost_Total+MF_Membrane_Cost_Total+UF_Membrane_Cost_Total+Pre_Drying_TFF_Membrane_Cost_Total+CIP_Chemicals_Cost_Total+Membrane_Cleaning_Cost,155123.0146428572,"Calculations!B178, Calculations!B171, Calculations!B167, Calculations!B170, Calculations!B194, Calculations!B190, Calculations!B169, Calculations!B175, Calculations!B168, Calculations!B193, Inputs and Assumptions!B169, Calculations!B172"
+INTERMEDIATE,Calculations,B199,Campaigns_Per_Year,"=CEILING(Batches_Per_Year/Batches_Per_Campaign,1)",5,"Inputs and Assumptions!B11, Inputs and Assumptions!B9"
+INTERMEDIATE,Calculations,B200,Annual_Campaign_Setup_Cost,=Campaigns_Per_Year*Campaign_Setup_Fee,1250000,"Calculations!B199, Inputs and Assumptions!B184"
+INTERMEDIATE,Calculations,B201,Campaign_Setup_Cost_Per_Batch,=Annual_Campaign_Setup_Cost/Batches_Per_Year,41666.666666666664,"Inputs and Assumptions!B11, Calculations!B200"
+INTERMEDIATE,Calculations,B203,Annual_Facility_Reservation_Cost,=Campaigns_Per_Year*Campaign_Reservation_Months*Facility_Reservation_Fee,500000,"Calculations!B199, Inputs and Assumptions!B187, Inputs and Assumptions!B188"
+INTERMEDIATE,Calculations,B204,Reservation_Cost_Per_Batch,=Annual_Facility_Reservation_Cost/Batches_Per_Year,16666.666666666668,"Inputs and Assumptions!B11, Calculations!B203"
+INTERMEDIATE,Calculations,B205,Contract_Year_Multiplier,=(1+Annual_Price_Escalation+Annual_Price_Escalation^2)/3,0.3436333333333333,Inputs and Assumptions!B191
+INTERMEDIATE,Calculations,B206,Long_Term_Contract_Factor,"=1-Long_Term_Contract_Discount*MIN(Contract_Length/3,1)",0.9,"Inputs and Assumptions!B190, Inputs and Assumptions!B189"
+INTERMEDIATE,Calculations,B207,Validation_Batch_Cost_Annual,=Validation_Batches_Required*Validation_Batch_Surcharge*Total_Standard_Batch_Cost/Contract_Length,30480.435319607077,"Calculations!B238, Inputs and Assumptions!B190, Inputs and Assumptions!B192, Inputs and Assumptions!B193"
+INTERMEDIATE,Calculations,B208,Validation_Cost_Per_Batch,=Validation_Batch_Cost_Annual/Batches_Per_Year,1016.0145106535692,"Inputs and Assumptions!B11, Calculations!B207"
+INTERMEDIATE,Calculations,B218,Fermenter_Suite_Base_Fee,=(Seed_Train_Time+Main_Fermentation_Time+Turnaround_CIP_Time)/24*Fermenter_Daily_Rate,275000,"Calculations!B53, Calculations!B60, Calculations!B52, Inputs and Assumptions!B194"
+INTERMEDIATE,Calculations,B219,Fermenter_Campaign_Factor,=1-Fermenter_Campaign_Discount*(1-1/Batches_Per_Campaign),0.875,"Inputs and Assumptions!B195, Inputs and Assumptions!B9"
+INTERMEDIATE,Calculations,B220,Fermenter_Suite_Fee,=Fermenter_Suite_Base_Fee*Fermenter_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,74418.09374999999,"Calculations!B218, Calculations!B206, Calculations!B219, Calculations!B205"
+INTERMEDIATE,Calculations,B221,DSP_Suite_Base_Fee,"=MAX(MAX(MF_Time,UF_Time+DF_Time),Chromatography_Time+Pre_Drying_TFF_Time)/24*DSP_Daily_Rate",78125.00000000003,"Calculations!B56, Calculations!B54, Calculations!B57, Inputs and Assumptions!B196, Calculations!B55, Calculations!B58"
+INTERMEDIATE,Calculations,B222,DSP_Campaign_Factor,=1-DSP_Campaign_Discount*(1-1/Batches_Per_Campaign),0.9166666666666666,"Inputs and Assumptions!B197, Inputs and Assumptions!B9"
+INTERMEDIATE,Calculations,B223,DSP_Suite_Fee,=DSP_Suite_Base_Fee*DSP_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,22148.242187500004,"Calculations!B206, Calculations!B222, Calculations!B221, Calculations!B205"
+INTERMEDIATE,Calculations,B224,Spray_Dryer_Base_Fee,=Spray_Drying_Time*Spray_Dryer_Hourly_Rate,3672.000000000001,"Inputs and Assumptions!B198, Calculations!B59"
+INTERMEDIATE,Calculations,B225,Spray_Dryer_Campaign_Factor,=1-Spray_Dryer_Campaign_Discount*(1-1/Batches_Per_Campaign),0.9583333333333334,"Inputs and Assumptions!B199, Inputs and Assumptions!B9"
+INTERMEDIATE,Calculations,B226,Spray_Dryer_Fee,=Spray_Dryer_Base_Fee*Spray_Dryer_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,1088.32113,"Calculations!B224, Calculations!B206, Calculations!B225, Calculations!B205"
+INTERMEDIATE,Calculations,B227,Labor_Base_Cost,=Labor_Cost_Per_Batch,20000,Inputs and Assumptions!B200
+INTERMEDIATE,Calculations,B228,Labor_Campaign_Factor,=1-Labor_Campaign_Discount*(1-1/Batches_Per_Campaign),0.8333333333333333,"Inputs and Assumptions!B201, Inputs and Assumptions!B9"
+INTERMEDIATE,Calculations,B229,Labor_Cost_Total,=Labor_Base_Cost*Labor_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,5154.499999999999,"Calculations!B227, Calculations!B228, Calculations!B206, Calculations!B205"
+INTERMEDIATE,Calculations,B230,QC_Testing_Base_Cost,=QC_Testing_Cost_Per_Batch,15000,Inputs and Assumptions!B170
+INTERMEDIATE,Calculations,B231,QA_QC_Campaign_Factor,=1-QA_Campaign_Discount*(1-1/Batches_Per_Campaign),0.875,"Inputs and Assumptions!B206, Inputs and Assumptions!B9"
+INTERMEDIATE,Calculations,B232,QC_Testing_Cost_Total,=QC_Testing_Base_Cost*QA_QC_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,4059.1687499999994,"Calculations!B231, Calculations!B206, Calculations!B230, Calculations!B205"
+INTERMEDIATE,Calculations,B233,Documentation_Fee_Total,=Documentation_Base_Fee*QA_QC_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,1353.0562499999999,"Calculations!B231, Calculations!B206, Inputs and Assumptions!B204, Calculations!B205"
+INTERMEDIATE,Calculations,B234,QA_Review_Fee_Total,=QA_Review_Base_Fee*QA_QC_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,2706.1124999999997,"Calculations!B231, Calculations!B206, Inputs and Assumptions!B205, Calculations!B205"
+INTERMEDIATE,Calculations,B235,Consumables_Base_Markup,=Total_Raw_Materials_Cost*CMO_Overhead_Markup,38780.7536607143,"Inputs and Assumptions!B202, Calculations!B195"
+INTERMEDIATE,Calculations,B236,Consumables_Campaign_Factor,=1-CMO_Consumables_Campaign_Discount*(1-1/Batches_Per_Campaign),0.9166666666666666,"Inputs and Assumptions!B203, Inputs and Assumptions!B9"
+INTERMEDIATE,Calculations,B237,CMO_Markup_On_Consumables,=Consumables_Base_Markup*Consumables_Campaign_Factor*Long_Term_Contract_Factor*Contract_Year_Multiplier,10994.24671092835,"Calculations!B235, Calculations!B206, Calculations!B236, Calculations!B205"
+INTERMEDIATE,Calculations,B238,Total_Standard_Batch_Cost,=Fermenter_Suite_Fee+DSP_Suite_Fee+Spray_Dryer_Fee+Labor_Cost_Total+QC_Testing_Cost_Total+Documentation_Fee_Total+QA_Review_Fee_Total+CMO_Markup_On_Consumables,121921.74127842832,"Calculations!B223, Calculations!B226, Calculations!B232, Calculations!B234, Calculations!B229, Calculations!B233, Calculations!B237, Calculations!B220"
+INTERMEDIATE,Calculations,B242,Total_Campaign_Related_Costs,=Campaign_Setup_Cost_Per_Batch+Reservation_Cost_Per_Batch+Validation_Cost_Per_Batch,59349.3478439869,"Calculations!B201, Calculations!B208, Calculations!B204"
+INTERMEDIATE,Calculations,B244,,"=B243/(30/ROUNDUP(Total_Batch_Time_Days,1))",#REF!,"Calculations!B243, Calculations!"
+INTERMEDIATE,Calculations,B245,,=250000+(172000*15)*1.12,3139600.0000000005,
+INTERMEDIATE,Calculations,B246,,"=(B245/(15*2.4)/150)*Fermenter_size*(ROUNDUP(Total_Batch_Time_Days,1))",#REF!,"Inputs and Assumptions!B15, Calculations!B245, Calculations!"
+INTERMEDIATE,Calculations,B248,Total_CMO_Fees;Total_CMO_Fees_Final,"=IF(B212=B214,Total_Standard_Batch_Cost+Total_Campaign_Related_Costs,IF(B212=B213,B244,IF(B212=B215,B246,""Select Fee Structure"")))",181271.08912241523,"Calculations!B212, Calculations!B246, Calculations!B214, Calculations!B242, Calculations!B213, Calculations!B238, Calculations!B215, Calculations!B244"
+INTERMEDIATE,DSP_Yield_Analysis,C7,,=Chromatography_Yield,0.8,Inputs and Assumptions!B93
+INTERMEDIATE,DSP_Yield_Analysis,C8,,=Pre_Drying_TFF_Efficiency,0.95,Inputs and Assumptions!B116
+INTERMEDIATE,DSP_Yield_Analysis,C9,,=Spray_Dryer_Efficiency,0.98,Inputs and Assumptions!B126
+INTERMEDIATE,DSP_Yield_Analysis,D6,,=D5*C6,0.855,"DSP_Yield_Analysis!C6, DSP_Yield_Analysis!D5"
+INTERMEDIATE,DSP_Yield_Analysis,D7,,=D6*C7,0.684,"DSP_Yield_Analysis!C7, DSP_Yield_Analysis!D6"
+INTERMEDIATE,DSP_Yield_Analysis,D8,,=D7*C8,0.6498,"DSP_Yield_Analysis!C8, DSP_Yield_Analysis!D7"
+INTERMEDIATE,DSP_Yield_Analysis,D9,DSP_Theoretical_Yield,=D8*C9,0.636804,"DSP_Yield_Analysis!C9, DSP_Yield_Analysis!D8"
+INTERMEDIATE,Final Costs,B8,Total_Cost_Per_Batch,=Total_CMO_Fees+Total_Raw_Materials_Cost,336394.1037652724,"Calculations!B195, Calculations!B248"
+INTERMEDIATE,Inputs and Assumptions,B11,Batches_Per_Year,=Annual_Campaigns*Batches_Per_Campaign,30,"Inputs and Assumptions!B10, Inputs and Assumptions!B9"
+INTERMEDIATE,Inputs and Assumptions,B16,Working_Volume,=B15*1000*0.7,70000,Inputs and Assumptions!B15
+INTERMEDIATE,Inputs and Assumptions,B71,MF_Efficiency,=0.9,0.9,
+INPUT,Buffer_cost_per_L_Was,h1,,,,
+INPUT,Buffer_cost_per_L_Was,h2,,,,
+INPUT,Calculations,B65,Carbon_source,,Glucose,
+INPUT,Calculations,B212,Fee_Structure,,MID,
+INPUT,Calculations,B213,,,LOW,
+INPUT,Calculations,B214,,,MID,
+INPUT,Calculations,B215,,,HIGH,
+INPUT,Calculations,B243,,,800000,
+INPUT,Calculations,D9,,,Actual batches needed (rounded up),
+INPUT,Calculations,S1,,,,
+INPUT,Calculations,S2,,,,
+INPUT,Calculations,S3,,,,
+INPUT,Calculations,ash1,,,,
+INPUT,Calculations,ash2,,,,
+INPUT,Calculations,,Buffer_Component_Cost_Basic;Buffer_Component_Cost_Premium;Buffer_Components_Cost_Total;Buffer_volumes;CIP_Cost_USD;CIP_Volume_L;Concentration_Factor;OD_to_Biomass_Factor;Resin_Cost_Per_Batch;Seed_Train_V_to_USP02;Seed_Volume_Feasible_S3;Total_Batch_Time_Days,,,
+INPUT,DSP_Yield_Analysis,C6,,,0.9,
+INPUT,DSP_Yield_Analysis,D5,,,0.95,
+INPUT,Inputs and Assumptions,B7,Supernatant_Product,,5,
+INPUT,Inputs and Assumptions,B9,Batches_Per_Campaign,,6,
+INPUT,Inputs and Assumptions,B10,Annual_Campaigns,,5,
+INPUT,Inputs and Assumptions,B15,Fermenter_size,,100,
+INPUT,Inputs and Assumptions,B17,Fermentation_Time,,48,
+INPUT,Inputs and Assumptions,B18,Turnaround_Time,,24,
+INPUT,Inputs and Assumptions,B28,SO_time,,4,
+INPUT,Inputs and Assumptions,B31,S1_time,,4,
+INPUT,Inputs and Assumptions,B34,S2_time,,4,
+INPUT,Inputs and Assumptions,B37,S3_time,,4,
+INPUT,Inputs and Assumptions,B42,OD_600,,150,
+INPUT,Inputs and Assumptions,B43,OD_Biomass_Factor,,0.4,
+INPUT,Inputs and Assumptions,B44,Cell_Density,,105,
+INPUT,Inputs and Assumptions,B45,Cell_Solids,,0.3,
+INPUT,Inputs and Assumptions,B47,Sludge_Solids_Content,,0.2,
+INPUT,Inputs and Assumptions,B48,Initial_Glycerol_Concentration,,20,
+INPUT,Inputs and Assumptions,B50,Initial_Glucose_Concentration,,20,
+INPUT,Inputs and Assumptions,B51,Feed_Glucose_Concentration,,500,
+INPUT,Inputs and Assumptions,B54,Initial_Molasses_Concentration,,40,
+INPUT,Inputs and Assumptions,B57,Yeast_Extract_Concentration,,10,
+INPUT,Inputs and Assumptions,B58,Peptone_Concentration,,20,
+INPUT,Inputs and Assumptions,B59,Biomass_Yield_on_Glucose,,0.48,
+INPUT,Inputs and Assumptions,B60,Biomass_Yield_on_Glycerol,,0.58,
+INPUT,Inputs and Assumptions,B62,Biomass_Yield_on_Molasses,,0.25,
+INPUT,Inputs and Assumptions,B72,MF_Membrane_Area,,80,
+INPUT,Inputs and Assumptions,B73,Microfiltration_Flux,,45,
+INPUT,Inputs and Assumptions,B86,UF_DF_Efficiency,,0.95,
+INPUT,Inputs and Assumptions,B87,UF_DF_Flux,,20,
+INPUT,Inputs and Assumptions,B88,UF_Concentration_Factor,,20,
+INPUT,Inputs and Assumptions,B89,UF_Membrane_Area,,150,
+INPUT,Inputs and Assumptions,B90,Diafiltration_Volumes,,5,
+INPUT,Inputs and Assumptions,B92,Chromatography_Dynamic_Capacity,,60,
+INPUT,Inputs and Assumptions,B93,Chromatography_Yield,,0.8,
+INPUT,Inputs and Assumptions,B94,Wash1_BV,,3,
+INPUT,Inputs and Assumptions,B95,Wash2_BV,,2,
+INPUT,Inputs and Assumptions,B96,Elution_BV,,5,
+INPUT,Inputs and Assumptions,B97,Strip_BV,,2,
+INPUT,Inputs and Assumptions,B98,Column_Volume_L,,5000,
+INPUT,Inputs and Assumptions,B99,Columns_in_Service,,3,
+INPUT,Inputs and Assumptions,B100,DBC_g_per_L,,80,
+INPUT,Inputs and Assumptions,B101,Utilization_pct,,0.85,
+INPUT,Inputs and Assumptions,B116,Pre_Drying_TFF_Efficiency,,0.95,
+INPUT,Inputs and Assumptions,B117,Pre_Drying_TFF_Flux,,35,
+INPUT,Inputs and Assumptions,B118,Pre_Drying_TFF_Membrane_Area,,35,
+INPUT,Inputs and Assumptions,B119,Pre_Drying_Concentration_Factor,,5,
+INPUT,Inputs and Assumptions,B126,Spray_Dryer_Efficiency,,0.98,
+INPUT,Inputs and Assumptions,B127,Spray_Dryer_Capacity,,150,
+INPUT,Inputs and Assumptions,B129,Solution_Density,,1.08,
+INPUT,Inputs and Assumptions,B130,Final_Solids_Content,,0.15,
+INPUT,Inputs and Assumptions,B134,Glucose_Cost,,0.75,
+INPUT,Inputs and Assumptions,B135,Glycerol_Cost,,1.2,
+INPUT,Inputs and Assumptions,B137,Molasses_Cost,,0.25,
+INPUT,Inputs and Assumptions,B138,Yeast_Extract_Cost,,12,
+INPUT,Inputs and Assumptions,B139,Peptone_Cost,,15,
+INPUT,Inputs and Assumptions,B140,Minor_Nutrients_Cost,,500,
+INPUT,Inputs and Assumptions,B141,Antifoam_Cost,,10,
+INPUT,Inputs and Assumptions,B142,Antifoam_Dosage,,0.1,
+INPUT,Inputs and Assumptions,B143,CIP_Chemicals_Cost,,3,
+INPUT,Inputs and Assumptions,B145,MF_Membrane_Cost,,1000,
+INPUT,Inputs and Assumptions,B146,MF_Membrane_Lifetime,,50,
+INPUT,Inputs and Assumptions,B147,UF_Membrane_Cost,,1500,
+INPUT,Inputs and Assumptions,B148,UF_Membrane_Lifetime,,100,
+INPUT,Inputs and Assumptions,B149,Resin_Cost,,1000,
+INPUT,Inputs and Assumptions,B150,Resin_Lifetime,,30,
+INPUT,Inputs and Assumptions,B151,Phosphate_Cost,,1.5,
+INPUT,Inputs and Assumptions,B152,Phosphate_MW_g_per_mol,,120,
+INPUT,Inputs and Assumptions,B153,Phosphate_M,,0.01,
+INPUT,Inputs and Assumptions,B154,NaCl_Cost,,0.1,
+INPUT,Inputs and Assumptions,B155,NaCl_MW_g_per_mol,,58.44,
+INPUT,Inputs and Assumptions,B156,NaCl_M_Wash1,,0.25,
+INPUT,Inputs and Assumptions,B157,NaCl_M_Wash2,,0.25,
+INPUT,Inputs and Assumptions,B158,NaCl_M_Elution,,0.375,
+INPUT,Inputs and Assumptions,B159,NaCl_M_Strip,,1,
+INPUT,Inputs and Assumptions,B167,Pre_Drying_TFF_Membrane_Cost,,1800,
+INPUT,Inputs and Assumptions,B168,Pre_Drying_TFF_Membrane_Lifetime,,100,
+INPUT,Inputs and Assumptions,B169,Membrane_Cleaning_Cost,,200,
+INPUT,Inputs and Assumptions,B170,QC_Testing_Cost_Per_Batch,,15000,
+INPUT,Inputs and Assumptions,B184,Campaign_Setup_Fee,,250000,
+INPUT,Inputs and Assumptions,B187,Facility_Reservation_Fee,,50000,
+INPUT,Inputs and Assumptions,B188,Campaign_Reservation_Months,,2,
+INPUT,Inputs and Assumptions,B189,Long_Term_Contract_Discount,,0.1,
+INPUT,Inputs and Assumptions,B190,Contract_Length,,3,
+INPUT,Inputs and Assumptions,B191,Annual_Price_Escalation,,0.03,
+INPUT,Inputs and Assumptions,B192,Validation_Batch_Surcharge,,0.25,
+INPUT,Inputs and Assumptions,B193,Validation_Batches_Required,,3,
+INPUT,Inputs and Assumptions,B194,Fermenter_Daily_Rate,,75000,
+INPUT,Inputs and Assumptions,B195,Fermenter_Campaign_Discount,,0.15,
+INPUT,Inputs and Assumptions,B196,DSP_Daily_Rate,,75000,
+INPUT,Inputs and Assumptions,B197,DSP_Campaign_Discount,,0.1,
+INPUT,Inputs and Assumptions,B198,Spray_Dryer_Hourly_Rate,,1000,
+INPUT,Inputs and Assumptions,B199,Spray_Dryer_Campaign_Discount,,0.05,
+INPUT,Inputs and Assumptions,B200,Labor_Cost_Per_Batch,,20000,
+INPUT,Inputs and Assumptions,B201,Labor_Campaign_Discount,,0.2,
+INPUT,Inputs and Assumptions,B202,CMO_Overhead_Markup,,0.25,
+INPUT,Inputs and Assumptions,B203,CMO_Consumables_Campaign_Discount,,0.1,
+INPUT,Inputs and Assumptions,B204,Documentation_Base_Fee,,5000,
+INPUT,Inputs and Assumptions,B205,QA_Review_Base_Fee,,10000,
+INPUT,Inputs and Assumptions,B206,QA_Campaign_Discount,,0.15,
+INPUT,NaCl_M_Was,h1,,,,
+INPUT,NaCl_M_Was,h2,,,,
+INPUT,Was,h1,,,,
+INPUT,Was,h2,,,,

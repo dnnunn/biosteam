@@ -1,0 +1,30 @@
+template: AEX_Membrane_v1
+synonyms:
+- aex membrane
+- membrane aex
+- anion exchange membrane
+parameters:
+- key: membrane_area_m2
+  synonyms:
+  - area
+  - membrane area
+- key: flux_L_m2_h
+  synonyms:
+  - flux
+- key: capacity_g_m2
+  synonyms:
+  - capacity
+- key: yield_fraction
+  synonyms:
+  - yield
+- key: membrane_cost_usd_m2
+  synonyms:
+  - membrane cost
+  - cost per m2
+- key: lifetime_cycles
+  synonyms:
+  - lifetime
+  - cycles
+- key: cip_time_h
+  synonyms:
+  - cip time

@@ -1,0 +1,55 @@
+template: ChitosanCapture_v1
+synonyms:
+- chitosan
+- chitosan capture
+- polymer capture
+parameters:
+- key: polymer_type
+  synonyms:
+  - polymer
+- key: polymer_pct_wv
+  synonyms:
+  - polymer %
+  - polymer concentration
+- key: target_pH
+  synonyms:
+  - pH
+- key: NaCl_mM
+  synonyms:
+  - salt
+  - NaCl
+- key: stoichiometry_mass_ratio
+  synonyms:
+  - stoichiometry
+  - mass ratio
+- key: contact_time_min
+  synonyms:
+  - contact time
+  - mix time
+- key: yield_fraction
+  synonyms:
+  - yield
+  - recovery
+- key: recycle_fraction
+  synonyms:
+  - recycle
+- key: elution_buffer
+  synonyms:
+  - buffer
+  - eluent
+- key: elution_M
+  synonyms:
+  - molarity
+- key: elution_pH
+  synonyms:
+  - elution pH
+- key: wash_cycles
+  synonyms:
+  - washes
+- key: decant_efficiency
+  synonyms:
+  - decant
+- key: dna_reduction_log
+  synonyms:
+  - dna reduction
+  - lod reduction

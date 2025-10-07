@@ -1,0 +1,34 @@
+template: AEX_Column_v1
+synonyms:
+- aex column
+- anion exchange column
+- chromatography
+parameters:
+- key: resin_capacity_g_L
+  synonyms:
+  - capacity
+  - binding capacity
+- key: bed_volume_L
+  synonyms:
+  - bed volume
+  - bv
+- key: flow_BV_h
+  synonyms:
+  - flow rate
+  - residence
+- key: yield_fraction
+  synonyms:
+  - yield
+  - recovery
+- key: resin_cost_usd_per_L
+  synonyms:
+  - resin cost
+  - cost per L resin
+- key: lifetime_cycles
+  synonyms:
+  - lifetime
+  - cycles
+- key: cip_time_h
+  synonyms:
+  - cip time
+  - cleaning time
