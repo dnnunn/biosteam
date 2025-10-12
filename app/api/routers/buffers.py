@@ -170,3 +170,66 @@ def create_buffer(
     if isinstance(cost, (int, float)):
         out["estimated_cost_usd_per_m3"] = float(cost)
     return out
+
+
+@router.get("/{buffer_id}/recommendations")
+def get_buffer_recommendations(buffer_id: str) -> Dict[str, Any]:
+    """Return suggested DSP03 planner targets and flags for a buffer.
+
+    Provides opt-in defaults for ionic-strength target, conductivity target,
+    DF time, headroom, ND/area caps, and a ready-to-use overrides stub.
+    """
+    entry = None
+    for e in _load_buffers():
+        if isinstance(e, dict) and str(e.get("id")) == str(buffer_id):
+            entry = e
+            break
+    if entry is None:
+        raise HTTPException(status_code=404, detail="Buffer not found")
+
+    spec = BufferSpec.from_mapping(entry)
+    I_mM = ionic_strength_mM(spec) if spec else 0.0
+    kappa = estimate_conductivity_mScm(spec) if spec else 0.0
+
+    # Heuristic targets (UI hints):
+    # - Suggest reducing to 5 mM or 1 mM depending on current I
+    # - Conductivity target ~5 mS/cm as a conservative post-DF value
+    target_I = 5.0 if I_mM > 5.0 else max(I_mM * 0.5, 1.0)
+    target_kappa = 5.0 if kappa > 5.0 else max(kappa * 0.5, 1.0)
+
+    rec = {
+        "buffer_id": buffer_id,
+        "estimated_ionic_strength_mM": I_mM,
+        "estimated_conductivity_mScm": kappa,
+        "recommended_target_ionic_strength_mM": target_I,
+        "recommended_target_conductivity_mScm": target_kappa,
+        "recommended_df_time_h": 10.0,
+        "recommended_headroom_fraction": 0.2,
+        "recommended_nd_max": 8.0,
+        "recommended_buffer_multiple_max": 2.5,
+        "recommended_area_max_m2": None,
+        "recommended_flags": {
+            "use_planner": True,
+            "auto_plan": True,
+            "apply_flux_derate": False,
+        },
+        "overrides_stub": {
+            "dsp03": {
+                "buffers": {
+                    "df": {
+                        "use_planner": True,
+                        "auto_plan": True,
+                        "target_ionic_strength_mM": target_I,
+                        "df_time_h_target": 10.0,
+                        "nd_max": 8.0,
+                        "buffer_multiple_max": 2.5,
+                        "area_max_m2": None,
+                        "headroom_fraction": 0.2,
+                        "cost_from_registry": True,
+                        "cost_buffer_id": buffer_id,
+                    }
+                }
+            }
+        },
+    }
+    return rec
