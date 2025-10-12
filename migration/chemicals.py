@@ -111,6 +111,24 @@ LUMP_COMPONENTS = {
         'Cp': 2.10,
         'S0': (0.70, 'J/g/K'),
     },
+    'Product': {
+        'formula': 'C5H9NO4',
+        'phase': 's',
+        'MW': 147.13,
+        'rho': 1350.0,
+        'Hf': (-3.9e3, 'J/g'),
+        'Cp': 1.40,
+        'S0': (0.45, 'J/g/K'),
+    },
+    'Waste': {
+        'formula': 'CH2O',
+        'phase': 'l',
+        'MW': 30.0,
+        'rho': 1_000.0,
+        'Hf': (-2.0e3, 'J/g'),
+        'Cp': 4.18,
+        'S0': (1.00, 'J/g/K'),
+    },
     'Molasses': {
         'formula': 'CH1.8O0.8',
         'phase': 'l',
@@ -154,6 +172,8 @@ DEFAULT_COMPONENTS = [
     'EDTA',
     'Chitosan',
     'Osteopontin',
+    'Product',
+    'Waste',
 ]
 
 

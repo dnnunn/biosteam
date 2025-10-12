@@ -50,11 +50,11 @@ The migration scaffolding (`migration.baseline_system.DEFAULT_MODULE_SEQUENCE`) 
 - **Status:** UnitPlan computes resin cost per batch and aggregates total buffer bed volumes for TEA integration.
 - **Next steps:** connect to a chromatography cycle model and buffer preparation units; add alternative technology options in future phases.
 
-### DSP03 — Pre-Drying TFF/UFF
-- **Excel options:** `DSP03a` (baseline), `DSP03b` (alternate flux/area set).
-- **Key parameters:** efficiency 95%, flux 35 L/m²·h, membrane area 35 m², concentration factor 5.
-- **Status:** UnitPlan targets throughput and efficiency, applying overrides for the alternate scenario.
-- **Next steps:** reuse UF/DF membrane wiring to finalise the pre-drying stage.
+### DSP03 — UF→DF→UF Baseline
+- **Implementation:** Single UF→DF→UF chain (30 kDa PES) with VRR≈3×, ND=5, flux≈85 LMH, TMP≤1.5 bar, and adsorption ≈0.2%/100 m².
+- **Parameters source:** `migration/baseline_defaults.yaml:dsp03.parameters` (override via `dsp03: { parameters: {...} }`).
+- **Status:** Fully wired (`migration/dsp03.py`) with design, recovery, buffer volumes, area sizing, costs, and handoff to DSP04.
+- **Next steps:** add viscosity/TMP estimation to auto-derate area at high solids or antifoam.
 
 ### DSP05 — Spray Drying
 - **Excel options:** `DSP05a` only (overrides supply scenario defaults).
@@ -92,7 +92,7 @@ The migration scaffolding (`migration.baseline_system.DEFAULT_MODULE_SEQUENCE`) 
 
 - **DSP00b:** currently not in the baseline sequence; investigate how it affects PROJ00 defaults.
 - **USP00b / USP00c:** likely alternative fermentation modes (e.g., glycerol feed vs glucose). Need to extract differentiating parameters.
-- **USP02c / DSP03b / PROJ01b-c:** scenario variants for efficiency or utility pricing; ensure the registry gracefully returns placeholders until full implementations exist.
+- **USP02c / PROJ01b-c:** scenario variants for efficiency or utility pricing; ensure the registry gracefully returns placeholders until full implementations exist.
 
 ## Immediate Follow-Up Tasks
 

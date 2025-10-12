@@ -40,18 +40,10 @@ DSP01:
     uf_membrane_cost: 260.0
     uf_membrane_lifetime: 190.0
 
-DSP03:
-  DSP03b:
-    pre_drying_efficiency: 0.91
-    pre_drying_flux_l_m2_h: 38.0
-    pre_drying_membrane_area_m2: 42.0
-    pre_drying_concentration_factor: 4.8
-
 DSP05:
   defaults:
-    spray_dryer_efficiency: 0.97
+    spray_dryer_efficiency: 0.985
     spray_dryer_capacity_kg_per_hr: 140.0
-    target_recovery_rate: 0.78
     solution_density: 1.05
     final_solids_content: 0.16
 

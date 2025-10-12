@@ -21,7 +21,9 @@ from .unit_specs import (
     UltrafiltrationSpecs,
     ChromatographySpecs,
     PreDryingSpecs,
+    SterileFilterSpecs,
     DryerSpecs,
+    DiscStackSpecs,
 )
 
 
@@ -323,6 +325,68 @@ def _build_usp02_plan(config: ModuleConfig) -> UnitPlan:
     return plan
 
 
+def _build_usp03_plan(config: ModuleConfig) -> UnitPlan:
+    """Build plan for USP03 (cell separation & MF polish variants).
+
+    - USP03a/b: Microfiltration-style clarification
+    - USP03c: Disk stack centrifugation
+    """
+    option = (config.key.option or "").lower()
+    if option == "usp03c":
+        # Centrifugation branch: extract directly from ModuleConfig
+        def _p(name: str) -> Any:
+            return _get_parameter(config, name)
+
+        specs = DiscStackSpecs(
+            key=config.key.module,
+            sigma_m2=None,  # Not provided by snapshot
+            product_recovery_fraction=_p("Centrifugation_Efficiency"),
+            solids_carryover_fraction=None,
+            wet_cake_moisture_fraction=None,
+            power_kwh_per_m3=_p("Centrifugation_Energy"),
+            parallel_trains=None,
+        )
+
+        derived: Dict[str, Any] = {}
+        throughput = _p("Centrifugation_Throughput")
+        if throughput is not None:
+            try:
+                derived["throughput_l_per_hr"] = float(throughput)
+            except (TypeError, ValueError):
+                pass
+
+        data = ModuleData(key=config.key, records=config.parameters, values={})
+        applied_fields = _apply_overrides(data, config)
+        plan = UnitPlan(key=config.key, data=data, specs=specs, derived=derived)
+        if specs.product_recovery_fraction is None:
+            plan.add_note("Centrifuge recovery missing; verify USP03c defaults.")
+        if applied_fields:
+            plan.add_note(
+                "Applied default overrides for: " + ", ".join(sorted(applied_fields))
+            )
+        return plan
+
+    # Default: Microfiltration-style polish (USP03a/b)
+    data = build_module_data(config)
+    applied_fields = _apply_overrides(data, config)
+    specs = data.to_spec()
+    assert isinstance(specs, MicrofiltrationSpecs)
+
+    derived: Dict[str, Any] = {}
+    if specs.flux_l_m2_h is not None and specs.membrane_area_m2 is not None:
+        derived["throughput_l_per_hr"] = specs.flux_l_m2_h * specs.membrane_area_m2
+    if specs.membrane_cost is not None and specs.membrane_lifetime is not None and specs.membrane_lifetime > 0:
+        derived["membrane_cost_per_cycle"] = specs.membrane_cost / specs.membrane_lifetime
+    if specs.dilution_volume_l is not None:
+        derived["dilution_volume_m3"] = specs.dilution_volume_l / 1000.0
+
+    plan = UnitPlan(key=config.key, data=data, specs=specs, derived=derived)
+    if specs.efficiency is None:
+        plan.add_note("Microfiltration efficiency missing; verify USP03 defaults.")
+    if applied_fields:
+        plan.add_note("Applied default overrides for: " + ", ".join(sorted(applied_fields)))
+    return plan
+
 def _build_dsp01_plan(config: ModuleConfig) -> UnitPlan:
     data = build_module_data(config)
     applied_fields = _apply_overrides(data, config)
@@ -353,6 +417,24 @@ def _build_dsp02_plan(config: ModuleConfig) -> UnitPlan:
     assert isinstance(specs, ChromatographySpecs)
 
     derived: Dict[str, Any] = {}
+    # Chitosan variant (DSP02e): capture an overall recovery from defaults so
+    # runtime recovery applies even without UI overrides.
+    opt = (config.key.option or "").lower()
+    if opt == "dsp02e":
+        overall = _get_parameter(config, "Overall_Recovery")
+        if overall is None:
+            bind = _get_parameter(config, "Binding_Efficiency")
+            elute = _get_parameter(config, "Elution_Efficiency")
+            try:
+                if bind is not None and elute is not None:
+                    overall = float(bind) * float(elute)
+            except (TypeError, ValueError):
+                overall = None
+        if overall is not None:
+            try:
+                derived["overall_recovery"] = max(min(float(overall), 1.0), 0.0)
+            except (TypeError, ValueError):
+                pass
     resin_cost = specs.resin_cost_per_batch()
     if resin_cost is not None:
         derived["resin_cost_per_batch"] = resin_cost
@@ -393,6 +475,38 @@ def _build_dsp03_plan(config: ModuleConfig) -> UnitPlan:
     return plan
 
 
+def _build_dsp04_plan(config: ModuleConfig) -> UnitPlan:
+    data = build_module_data(config)
+    applied_fields = _apply_overrides(data, config)
+    specs = data.to_spec()
+    assert isinstance(specs, SterileFilterSpecs)
+
+    derived: Dict[str, Any] = {}
+    if specs.flux_lmh is not None:
+        derived["flux_lmh"] = specs.flux_lmh
+    if specs.max_delta_p_bar is not None:
+        derived["max_delta_p_bar"] = specs.max_delta_p_bar
+    if specs.prefilter_enabled is not None:
+        derived["prefilter_enabled"] = bool(specs.prefilter_enabled)
+
+    loss_fraction = specs.adsorption_loss_fraction
+    if loss_fraction is not None:
+        derived["adsorption_loss_fraction"] = max(min(loss_fraction, 1.0), 0.0)
+    if "adsorption_loss_fraction" not in derived:
+        derived["adsorption_loss_fraction"] = 0.0
+
+    if derived.get("adsorption_loss_fraction") is not None:
+        loss = derived["adsorption_loss_fraction"]
+        derived["sterile_filter_yield"] = max(1.0 - loss, 0.0)
+
+    plan = UnitPlan(key=config.key, data=data, specs=specs, derived=derived)
+    if specs.adsorption_loss_fraction is None and "adsorption_loss_fraction" in derived:
+        plan.add_note("Applied global adsorption loss default for sterile filtration.")
+    if applied_fields:
+        plan.add_note("Applied default overrides for: " + ", ".join(sorted(applied_fields)))
+    return plan
+
+
 def _build_dsp05_plan(config: ModuleConfig) -> UnitPlan:
     data = build_module_data(config)
     applied_fields = _apply_overrides(data, config)
@@ -417,10 +531,13 @@ def _build_dsp05_plan(config: ModuleConfig) -> UnitPlan:
 PLAN_BUILDERS: Dict[str, Tuple[Any, Tuple[str, ...]]] = {
     "USP00": (_build_usp00_plan, ("USP00a", "USP00b", "USP00c")),
     "USP01": (_build_usp01_plan, ("USP01a", "USP00c")),
+    # USP02 left available (not used now); USP03 handles cell separation variants.
     "USP02": (_build_usp02_plan, ("USP02a", "USP02c")),
+    "USP03": (_build_usp03_plan, ("USP03a", "USP03b", "USP03c")),
     "DSP01": (_build_dsp01_plan, ("DSP01a", "DSP01b")),
-    "DSP02": (_build_dsp02_plan, ("DSP02a",)),
+    "DSP02": (_build_dsp02_plan, ("DSP02a", "DSP02e")),
     "DSP03": (_build_dsp03_plan, ("DSP03a", "DSP03b")),
+    "DSP04": (_build_dsp04_plan, ("DSP04d",)),
     "DSP05": (_build_dsp05_plan, ("DSP05a",)),
 }
 

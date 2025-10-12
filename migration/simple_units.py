@@ -15,11 +15,16 @@ __all__ = [
     "SeedTrainBioreactor",
     "FermentationBioreactor",
     "MicrofiltrationUnit",
+    "DiskStackUnit",
     "UFDFUnit",
     "ChromatographyUnit",
     "PreDryingUnit",
+    "SterileFilterUnit",
     "SprayDryerUnit",
 ]
+
+
+_STREAM_PLAN_PRODUCT: Dict[str, float] = {}
 
 
 def _component_mass(stream: bst.Stream, component: str) -> float:
@@ -147,6 +152,7 @@ class SeedTrainBioreactor(NRELBatchBioreactor):
     _N_ins = 1
     _N_outs = 2  # vent + broth
     line = "SeedTrain"
+    product_outlet_index = 1
 
     def __init__(self, ID: str, plan: UnitPlan, **kwargs) -> None:
         self.plan = plan
@@ -352,6 +358,7 @@ class FermentationBioreactor(NRELBatchBioreactor):
     _N_ins = 1
     _N_outs = 2
     line = "Fermentation"
+    product_outlet_index = 1
 
     def __init__(self, ID: str, plan: UnitPlan, **kwargs) -> None:
         self.plan = plan
@@ -522,9 +529,11 @@ class FermentationBioreactor(NRELBatchBioreactor):
             broth.imass["Water"] = max(total_mass - (final_product + final_biomass), 0.0)
             derived["debug_stream_product_kg"] = float(final_product)
             derived["debug_broth_opn_after_kg"] = float(broth.imass["Osteopontin"])
+            _STREAM_PLAN_PRODUCT[broth.ID] = float(final_product)
         else:
             derived.pop("debug_stream_product_kg", None)
             derived.pop("debug_broth_opn_after_kg", None)
+            _STREAM_PLAN_PRODUCT.pop(broth.ID, None)
         if avg_feed_vol_m3_per_hr > 0.0:
             self._F_vol_in = avg_feed_vol_m3_per_hr
 
@@ -609,6 +618,10 @@ class MicrofiltrationUnit(PlanBackedUnit):
         density = _infer_density(feed, derived.get('broth_density_kg_per_l'))
 
         input_product = _component_mass(feed, 'Osteopontin')
+        if input_product <= 0.0:
+            fallback_product = _STREAM_PLAN_PRODUCT.get(feed.ID)
+            if fallback_product is not None:
+                input_product = max(float(fallback_product), 0.0)
         derived['input_product_kg'] = input_product
 
         recovery_fraction = None
@@ -691,8 +704,11 @@ class MicrofiltrationUnit(PlanBackedUnit):
 
         if product_mass > 0.0:
             permeate.imass['Osteopontin'] = product_mass
+            _STREAM_PLAN_PRODUCT[permeate.ID] = float(product_mass)
         if residual_glucose > 0.0:
             permeate.imass['Glucose'] = residual_glucose
+        if product_mass <= 0.0:
+            _STREAM_PLAN_PRODUCT.pop(permeate.ID, None)
 
         permeate_total_mass = None
         if output_volume_l is not None:
@@ -708,6 +724,9 @@ class MicrofiltrationUnit(PlanBackedUnit):
         retentate_product = max(input_product - product_mass, 0.0)
         if retentate_product > 0.0:
             retentate.imass['Osteopontin'] = retentate_product
+            _STREAM_PLAN_PRODUCT[retentate.ID] = float(retentate_product)
+        else:
+            _STREAM_PLAN_PRODUCT.pop(retentate.ID, None)
         if yeast_mass > 0.0:
             retentate.imass['Yeast'] = yeast_mass
 
@@ -742,6 +761,108 @@ class MicrofiltrationUnit(PlanBackedUnit):
         else:
             self.operating_cost = 0.0
             self.material_costs = {}
+
+
+class DiskStackUnit(PlanBackedUnit):
+    """Continuous disk stack centrifuge producing clarified supernatant and solids."""
+
+    _N_ins = 1
+    _N_outs = 2
+    line = "DiskStack"
+
+    _units = {
+        "Throughput": "L/hr",
+        "Energy Intensity": "kWh/m3",
+        "Product out": "kg",
+    }
+
+    def _run(self) -> None:
+        feed = self.ins[0]
+        supernatant, solids = self.outs
+        derived = self.plan.derived
+        specs = self.plan.specs
+
+        supernatant.empty()
+        solids.empty()
+
+        density = _infer_density(feed, derived.get('broth_density_kg_per_l'))
+
+        input_product = _component_mass(feed, 'Osteopontin')
+        if input_product <= 0.0:
+            fallback = _STREAM_PLAN_PRODUCT.get(feed.ID)
+            if fallback is not None:
+                input_product = max(float(fallback), 0.0)
+
+        recovery = getattr(specs, 'product_recovery_fraction', None) if specs is not None else None
+        if recovery is None:
+            recovery = derived.get('centrifugation_recovery')
+        try:
+            if recovery is None:
+                recovery = 1.0
+            recovery = max(min(float(recovery), 1.0), 0.0)
+        except (TypeError, ValueError):
+            recovery = 1.0
+
+        product_mass = max(input_product * recovery, 0.0)
+
+        yeast_mass = _component_mass(feed, 'Yeast')
+        carryover = derived.get('solids_carryover_fraction')
+        try:
+            solids_to_supernatant = max(min(float(carryover), 1.0), 0.0) * yeast_mass if carryover is not None else 0.0
+        except (TypeError, ValueError):
+            solids_to_supernatant = 0.0
+
+        # Set known components
+        if product_mass > 0.0:
+            supernatant.imass['Osteopontin'] = product_mass
+            _STREAM_PLAN_PRODUCT[supernatant.ID] = float(product_mass)
+        else:
+            _STREAM_PLAN_PRODUCT.pop(supernatant.ID, None)
+        if solids_to_supernatant > 0.0:
+            supernatant.imass['Yeast'] = solids_to_supernatant
+        solids_yeast = max(yeast_mass - solids_to_supernatant, 0.0)
+        if solids_yeast > 0.0:
+            solids.imass['Yeast'] = solids_yeast
+
+        feed_total = _total_mass(feed)
+        if feed_total <= 0.0:
+            input_volume_l = derived.get('input_volume_l')
+            if input_volume_l is not None and density > 0.0:
+                feed_total = float(input_volume_l) * float(density)
+        if feed_total < product_mass + yeast_mass:
+            feed_total = product_mass + yeast_mass
+
+        # Close mass balance with water split
+        supernatant_known = product_mass + solids_to_supernatant
+        solids_known = solids_yeast
+        default_split = 0.8
+        target_supernatant_total = default_split * feed_total
+        supernatant_water = max(target_supernatant_total - supernatant_known, 0.0)
+        solids_water = max(feed_total - (supernatant_known + supernatant_water + solids_known), 0.0)
+        if supernatant_water > 0.0:
+            supernatant.imass['Water'] = supernatant_water
+        if solids_water > 0.0:
+            solids.imass['Water'] = solids_water
+
+        for stream in (supernatant, solids):
+            stream.T = feed.T
+            stream.P = feed.P
+
+        derived['input_product_kg'] = input_product
+        derived['product_out_kg'] = product_mass
+
+    def _design(self) -> None:
+        derived = self.plan.derived
+        specs = self.plan.specs
+        self.design_results['Throughput'] = derived.get('throughput_l_per_hr', 0.0)
+        energy = getattr(specs, 'power_kwh_per_m3', None) if specs is not None else None
+        if energy is not None:
+            self.design_results['Energy Intensity'] = energy
+        self.design_results['Product out'] = derived.get('product_out_kg', 0.0)
+
+    def _cost(self) -> None:
+        self.operating_cost = 0.0
+        self.material_costs = {}
 
 
 class UFDFUnit(PlanBackedUnit):
@@ -789,6 +910,10 @@ class UFDFUnit(PlanBackedUnit):
         input_product = derived.get('input_product_kg')
         if input_product is None:
             input_product = initial_masses.get('Osteopontin', 0.0)
+        if not input_product:
+            fallback_product = _STREAM_PLAN_PRODUCT.get(feed.ID)
+            if fallback_product is not None:
+                input_product = float(fallback_product)
         input_product = max(float(input_product or 0.0), 0.0)
         derived['input_product_kg'] = input_product
 
@@ -875,6 +1000,10 @@ class UFDFUnit(PlanBackedUnit):
             stream.P = feed_P
 
         product_stream.copy_like(product_snapshot)
+        if product_mass > 0.0:
+            _STREAM_PLAN_PRODUCT[product_stream.ID] = float(product_mass)
+        else:
+            _STREAM_PLAN_PRODUCT.pop(product_stream.ID, None)
         waste_stream.copy_like(waste_snapshot)
 
     def _design(self) -> None:
@@ -926,10 +1055,39 @@ class ChromatographyUnit(PlanBackedUnit):
 
         density = derived.get('broth_density_kg_per_l') or 1.0
 
+        # Determine input product for recovery math.
+        input_product = derived.get('input_product_kg')
+        if input_product is None:
+            input_product = _component_mass(feed, 'Osteopontin')
+        if not input_product:
+            fallback_product = _STREAM_PLAN_PRODUCT.get(feed.ID)
+            if fallback_product is not None:
+                input_product = float(fallback_product)
+        input_product = max(input_product or 0.0, 0.0)
+
+        # If plan explicitly sets output, honor it; otherwise apply recovery fraction.
         product_mass = derived.get('product_out_kg')
         if product_mass is None:
-            product_mass = _component_mass(feed, 'Osteopontin')
-        product_mass = max(product_mass or 0.0, 0.0)
+            recovery_fraction = None
+            if specs is not None:
+                recovery = getattr(specs, 'chromatography_yield', None)
+                if recovery is not None:
+                    try:
+                        recovery_fraction = max(min(float(recovery), 1.0), 0.0)
+                    except (TypeError, ValueError):
+                        recovery_fraction = None
+            if recovery_fraction is None:
+                rec = derived.get('overall_recovery')
+                if rec is not None:
+                    try:
+                        recovery_fraction = max(min(float(rec), 1.0), 0.0)
+                    except (TypeError, ValueError):
+                        recovery_fraction = None
+            if recovery_fraction is None:
+                recovery_fraction = 1.0
+            product_mass = max(input_product * recovery_fraction, 0.0)
+        else:
+            product_mass = max(float(product_mass) or 0.0, 0.0)
 
         output_volume_l = derived.get('output_volume_l') or derived.get('post_elution_conc_volume_l')
         if output_volume_l is not None:
@@ -941,10 +1099,12 @@ class ChromatographyUnit(PlanBackedUnit):
         product_water = max(product_total_mass - product_mass, 0.0)
         if product_water:
             product_stream.imass['Water'] = product_water
+        if product_mass > 0.0:
+            _STREAM_PLAN_PRODUCT[product_stream.ID] = float(product_mass)
+        else:
+            _STREAM_PLAN_PRODUCT.pop(product_stream.ID, None)
 
-        input_product = derived.get('input_product_kg')
-        if input_product is None:
-            input_product = _component_mass(feed, 'Osteopontin')
+        input_product = derived.get('input_product_kg') if derived.get('input_product_kg') is not None else input_product
         waste_product = max((input_product or 0.0) - product_mass, 0.0)
         if waste_product:
             waste_stream.imass['Osteopontin'] = waste_product
@@ -974,6 +1134,25 @@ class ChromatographyUnit(PlanBackedUnit):
         report = getattr(self, "_handoff_report_stream", None)
         if report is not None:
             report.copy_like(product_stream)
+        # Expose product mass for reporting/metadata consumers.
+        derived['product_out_kg'] = product_mass
+
+        # Chitosan-specific: compute polymer consumption/cost if hints are present.
+        ratio = derived.get('polymer_opn_ratio')
+        polymer_cost_per_kg = derived.get('polymer_cost_per_kg')
+        recycle_fraction = derived.get('polymer_recycle_fraction')
+        try:
+            if ratio is not None:
+                polymer_needed = max(float(ratio), 0.0) * input_product
+                if recycle_fraction is not None:
+                    polymer_needed = polymer_needed * max(1.0 - max(min(float(recycle_fraction), 1.0), 0.0), 0.0)
+                derived['polymer_mass_per_batch_kg'] = polymer_needed
+                if polymer_cost_per_kg is not None:
+                    cost = max(float(polymer_cost_per_kg), 0.0) * polymer_needed
+                    derived['polymer_cost_per_batch'] = cost
+        except (TypeError, ValueError):
+            # Ignore malformed numeric hints; leave fields unset.
+            pass
 
     def _design(self) -> None:
         derived = self.plan.derived
@@ -986,19 +1165,26 @@ class ChromatographyUnit(PlanBackedUnit):
             self.design_results['Resin column volume'] = specs.resin_column_volume_l
         if derived.get('buffer_cost_per_batch') is not None:
             self.design_results['Buffer cost per batch'] = derived['buffer_cost_per_batch']
+        if derived.get('overall_recovery') is not None:
+            self.design_results['Overall recovery'] = derived['overall_recovery']
+        if derived.get('polymer_cost_per_batch') is not None:
+            self.design_results['Polymer cost per batch'] = derived['polymer_cost_per_batch']
 
     def _cost(self) -> None:
         self.baseline_purchase_costs.clear()
         self.installed_costs.clear()
         resin_cost = self.plan.derived.get('resin_cost_per_batch') or 0.0
         buffer_cost = self.plan.derived.get('buffer_cost_per_batch') or 0.0
-        total_cost = resin_cost + buffer_cost
+        polymer_cost = self.plan.derived.get('polymer_cost_per_batch') or 0.0
+        total_cost = resin_cost + buffer_cost + polymer_cost
         self.operating_cost = total_cost
         self.material_costs = {}
         if resin_cost:
             self.material_costs['Resin'] = resin_cost
         if buffer_cost:
             self.material_costs['Buffers'] = buffer_cost
+        if polymer_cost:
+            self.material_costs['Polymer'] = polymer_cost
 
 
 class PreDryingUnit(PlanBackedUnit):
@@ -1026,6 +1212,10 @@ class PreDryingUnit(PlanBackedUnit):
         product_mass = derived.get('product_out_kg')
         if product_mass is None:
             product_mass = _component_mass(feed, 'Osteopontin')
+        if not product_mass:
+            fallback_product = _STREAM_PLAN_PRODUCT.get(feed.ID)
+            if fallback_product is not None:
+                product_mass = float(fallback_product)
         product_mass = max(product_mass or 0.0, 0.0)
 
         volume_l = derived.get('output_volume_l')
@@ -1039,6 +1229,10 @@ class PreDryingUnit(PlanBackedUnit):
 
         product_stream.imass['Osteopontin'] = product_mass
         product_stream.imass['Water'] = max(total_mass - product_mass, 0.0)
+        if product_mass > 0.0:
+            _STREAM_PLAN_PRODUCT[product_stream.ID] = float(product_mass)
+        else:
+            _STREAM_PLAN_PRODUCT.pop(product_stream.ID, None)
 
         input_product = derived.get('input_product_kg')
         if input_product is None:
@@ -1095,6 +1289,98 @@ class PreDryingUnit(PlanBackedUnit):
             self.material_costs = {}
 
 
+class SterileFilterUnit(PlanBackedUnit):
+    """Sterile filtration pass-through with optional adsorption losses."""
+
+    _N_ins = 1
+    _N_outs = 1
+    line = "SterileFilter"
+
+    def __init__(self, ID: str, plan: UnitPlan) -> None:
+        super().__init__(ID, plan=plan)
+        self.design_results: dict[str, float] = {}
+        self.cost_results: dict[str, float] = {}
+        self.material_costs: dict[str, float] = {}
+        self.operating_cost: float = 0.0
+
+    def _run(self) -> None:
+        feed = self.ins[0]
+        product = self.outs[0]
+        product.copy_like(feed)
+
+        derived = self.plan.derived
+        loss_fraction_raw = derived.get("adsorption_loss_fraction", 0.0)
+        try:
+            loss_fraction = float(loss_fraction_raw or 0.0)
+        except (TypeError, ValueError):
+            loss_fraction = 0.0
+        loss_fraction = max(min(loss_fraction, 1.0), 0.0)
+
+        product_mass = _component_mass(product, "Osteopontin")
+        retained_mass = product_mass
+        if product_mass > 0.0 and loss_fraction > 0.0:
+            retained_mass = max(product_mass * (1.0 - loss_fraction), 0.0)
+            product.imass["Osteopontin"] = retained_mass
+        loss_mass = max(product_mass - retained_mass, 0.0)
+
+        derived["sterile_filter_retained_product_kg"] = retained_mass
+        derived["sterile_filter_loss_kg"] = loss_mass
+        derived["product_out_kg"] = retained_mass
+
+        derived.setdefault("prefilter_enabled", bool(derived.get("prefilter_enabled", False)))
+        derived["sterile_filter_passed"] = True
+
+    def _design(self) -> None:
+        derived = self.plan.derived
+        self.design_results["Input volume (L)"] = derived.get("input_volume_l", 0.0)
+        self.design_results["Filter area (m2)"] = derived.get("filter_area_m2", 0.0)
+        self.design_results["Flux (LMH)"] = derived.get("flux_lmh", 0.0)
+        self.design_results["Max ΔP (bar)"] = derived.get("max_dp_bar", 0.0)
+        self.design_results["Recovery"] = derived.get("effective_recovery_fraction", 1.0)
+
+    def _cost(self) -> None:
+        derived = self.plan.derived
+        stage_cost = derived.get("stage_cost_per_batch_usd")
+        try:
+            stage_cost = float(stage_cost)
+        except (TypeError, ValueError):
+            stage_cost = 0.0
+        media_cost = derived.get("material_cost_per_batch_usd")
+        prefilter_cost = derived.get("prefilter_cost_per_batch_usd")
+        labor_cost = derived.get("labor_cost_per_batch_usd")
+        try:
+            media_cost = float(media_cost)
+        except (TypeError, ValueError):
+            media_cost = 0.0
+        try:
+            prefilter_cost = float(prefilter_cost)
+        except (TypeError, ValueError):
+            prefilter_cost = 0.0
+        try:
+            labor_cost = float(labor_cost)
+        except (TypeError, ValueError):
+            labor_cost = 0.0
+        other_cost = max(stage_cost - (media_cost + prefilter_cost + labor_cost), 0.0)
+
+        self.material_costs = {}
+        if media_cost:
+            self.material_costs["Sterile filter media"] = media_cost
+        if prefilter_cost:
+            self.material_costs["Prefilter media"] = prefilter_cost
+        if labor_cost:
+            self.material_costs["Labor"] = labor_cost
+        if other_cost:
+            self.material_costs["Other sterile filter spend"] = other_cost
+
+        self.operating_cost = stage_cost
+        self.cost_results = {
+            "Stage cost": stage_cost,
+            "Media": media_cost,
+            "Prefilter": prefilter_cost,
+            "Labor": labor_cost,
+        }
+
+
 class SprayDryerUnit(PlanBackedUnit):
     """Spray dryer with product and exhaust streams."""
 
@@ -1137,6 +1423,10 @@ class SprayDryerUnit(PlanBackedUnit):
         if input_product is None:
             input_product = 0.0
         input_product = max(float(input_product), 0.0)
+        if input_product <= 0.0:
+            fallback_product = _STREAM_PLAN_PRODUCT.get(feed.ID)
+            if fallback_product is not None:
+                input_product = max(float(fallback_product), 0.0)
 
         feed_total = feed_total_measured
         if feed_total <= 0.0:
@@ -1153,18 +1443,15 @@ class SprayDryerUnit(PlanBackedUnit):
         if feed_water <= 0.0:
             feed_water = max(feed_total - input_product, 0.0)
 
+        # Only apply the executable spray dryer efficiency; ignore legacy
+        # target recovery knobs per updated baseline assumptions.
         recovery = 1.0
         eff = derived.get('spray_dryer_efficiency')
-        target_recovery = derived.get('target_recovery_rate')
-        for value in (eff, target_recovery):
-            if value is None:
-                continue
-            try:
-                frac = float(value)
-            except (TypeError, ValueError):
-                continue
-            if frac <= 0.0:
-                continue
+        try:
+            frac = float(eff) if eff is not None else 1.0
+        except (TypeError, ValueError):
+            frac = 1.0
+        if frac > 0.0:
             recovery *= frac
         recovery = max(min(recovery, 1.0), 0.0)
 
@@ -1240,6 +1527,10 @@ class SprayDryerUnit(PlanBackedUnit):
             derived['spray_recovery_fraction'] = 1.0
 
         product_stream.copy_like(product_snapshot)
+        if recovered_product > 0.0:
+            _STREAM_PLAN_PRODUCT[product_stream.ID] = float(recovered_product)
+        else:
+            _STREAM_PLAN_PRODUCT.pop(product_stream.ID, None)
         exhaust_stream.copy_like(exhaust_snapshot)
 
     def _design(self) -> None:

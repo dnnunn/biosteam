@@ -1,4 +1,9 @@
-# 2025-10-07 — Full Stack Implementation Kickoff Plan
+# 2025-10-07 — Session Follow-Up Plan
+
+## Next Session Focus
+- Extend the migration-backed registry to cover DSP04 capture choices (AEX vs. Chitosan), wiring the corresponding plan builders and making the toggle visible to the API/UI.
+- Enrich KPI reporting with plan-level energy and cost contributions (membrane OPEX, spray dryer duty, power draws) so the golden tests exercise more than yield.
+- Start threading CMO/TEA builders into the engine to surface campaign-level economics alongside the mass/energy outputs.
 
 ## Immediate Priorities
 - Bootstrap the `/app` monorepo skeleton described in `FullStackImplementation/bio_steam_app_main_branch_bootstrap_pr_specs_file_stubs.md` (API, CLI, UI, Docker, CI).

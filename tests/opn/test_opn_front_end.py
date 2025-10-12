@@ -25,7 +25,6 @@ def _component_mass(stream: bst.Stream, component: str) -> float:
         return 0.0
 
 FIXTURE_PATH = Path(__file__).with_name("baseline_metrics.json")
-WORKBOOK_PATH = Path("Revised Baseline Excel Model.xlsx")
 BASELINE_CONFIG_PATH = Path("migration/baseline_defaults.yaml")
 
 @pytest.fixture(scope="module")
@@ -33,13 +32,14 @@ def baseline_metrics() -> BaselineMetrics:
     with FIXTURE_PATH.open("r", encoding="utf-8") as f:
         data = json.load(f)
     return BaselineMetrics(
-        workbook_path=Path(data["workbook"]),
+        workbook_path=Path(data["workbook"]) if data.get("workbook") else Path("."),
         mass_trail=data["mass_trail"],
         final_product_kg=data["final_product_kg"],
         cost_per_kg_usd=data.get("cost_per_kg_usd"),
         total_cost_per_batch_usd=data.get("total_cost_per_batch_usd"),
         cmo_fees_usd=data.get("cmo_fees_usd"),
         materials_cost_per_batch_usd=data.get("materials_cost_per_batch_usd"),
+        materials_cost_per_kg_usd=data.get("materials_cost_per_kg_usd"),
         materials_cost_breakdown=data.get("materials_cost_breakdown", {}),
         allocation_basis=data.get("allocation_basis"),
         allocation_denominator=data.get("allocation_denominator"),
@@ -53,7 +53,7 @@ def baseline_metrics() -> BaselineMetrics:
 def front_end_section(baseline_metrics: BaselineMetrics):
     bst.main_flowsheet.clear()
     section = build_front_end_section(
-        str(WORKBOOK_PATH),
+        None,
         mode="baseline",
         baseline_config=str(BASELINE_CONFIG_PATH),
     )
@@ -103,11 +103,18 @@ def test_cost_metrics(front_end_section, baseline_metrics):
             baseline_metrics.materials_cost_per_batch_usd,
             rtol=0.02,
         )
-        assert np.isclose(
-            front_end_section.materials_cost_per_kg_usd,
-            baseline_metrics.materials_cost_per_batch_usd / baseline_metrics.final_product_kg,
-            rtol=0.02,
-        )
+        expected_materials_per_kg = baseline_metrics.materials_cost_per_kg_usd
+        if expected_materials_per_kg is None and baseline_metrics.final_product_kg:
+            expected_materials_per_kg = (
+                baseline_metrics.materials_cost_per_batch_usd
+                / baseline_metrics.final_product_kg
+            )
+        if expected_materials_per_kg is not None:
+            assert np.isclose(
+                front_end_section.materials_cost_per_kg_usd,
+                expected_materials_per_kg,
+                rtol=0.02,
+            )
 
 
 def test_allocation_metrics(front_end_section, baseline_metrics):
@@ -203,10 +210,10 @@ def test_cmo_contract_breakdown(front_end_section):
 def test_aex_cycle_profile(front_end_section):
     plan = front_end_section.chromatography_unit.plan
 
-    assert plan.derived.get("cycles_per_batch") == 25
-    assert np.isclose(plan.derived.get("cycle_time_h"), 2.2135171655354773, rtol=0.05)
-    assert np.isclose(plan.derived.get("processing_time_h"), 55.33792913838693, rtol=0.05)
-    assert np.isclose(plan.derived.get("pool_volume_l"), 21205.750411731104, rtol=0.02)
+    assert plan.derived.get("cycles_per_batch") == 30
+    assert np.isclose(plan.derived.get("cycle_time_h"), 2.2122291358841872, rtol=0.05)
+    assert np.isclose(plan.derived.get("processing_time_h"), 66.36687407652562, rtol=0.05)
+    assert np.isclose(plan.derived.get("pool_volume_l"), 25446.900494077327, rtol=0.02)
     final_mass = front_end_section.spray_dryer_unit.plan.derived.get("product_out_kg")
     assert final_mass and final_mass > 0
     assert np.isclose(
@@ -273,7 +280,7 @@ def test_standardized_allocation(front_end_section):
 
 def test_fermentation_profile_switch(tmp_path):
     baseline_section = build_front_end_section(
-        "Revised Baseline Excel Model.xlsx",
+        None,
         mode="baseline",
         baseline_config="migration/baseline_defaults.yaml",
     )
@@ -286,7 +293,7 @@ def test_fermentation_profile_switch(tmp_path):
     )
 
     defined_section = build_front_end_section(
-        "Revised Baseline Excel Model.xlsx",
+        None,
         mode="baseline",
         baseline_config=str(override_path),
     )

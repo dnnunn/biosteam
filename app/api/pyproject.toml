@@ -2,7 +2,7 @@
 name = "bdsteam-api"
 version = "0.1.0"
 description = "BioSTEAM scenario API"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
   "fastapi>=0.111",
   "uvicorn[standard]>=0.30",
@@ -14,3 +14,19 @@ dependencies = [
 
 [tool.pip]
 # local editable installs suggested in dev docs (see Makefile)
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = [
+  "app",
+  "app.api",
+  "app.api.engine",
+  "app.api.models",
+  "app.api.routers",
+]
+
+[tool.setuptools.package-dir]
+"app" = ".."

@@ -1,10 +1,10 @@
 # 2025-10-02 — Front-End Parameter Snapshot
 
-Consolidated view of the parameters currently feeding the front-end migration. Values come from `migration/module_defaults.yaml` (mirrors the workbook) and `migration/baseline_defaults.yaml` (baseline overrides lifted from the Excel mass trail). Units and notes follow the source files.
+Consolidated view of the parameters currently feeding the front-end migration. Values come from `migration/module_defaults.yaml` and `migration/baseline_defaults.yaml`, both of which now source the *Biosteam BD Module Specs* rather than the legacy Excel workbook. Units and notes follow the source files.
 
 ## Global Production Settings (`GLOBAL00`)
 
-- **GLOBAL00c (workbook defaults, inactive)**
+- **GLOBAL00c (legacy workbook defaults, retained for reference)**
   - Annual campaigns: 5
   - Batches per campaign: 6
   - Annual production target: 10 000 kg purified product
@@ -21,7 +21,7 @@ Consolidated view of the parameters currently feeding the front-end migration. V
 
 ## Seed Train (`USP01` and overrides)
 
-- **Workbook defaults (USP01a, inactive)**
+- **Legacy workbook defaults (USP01a, retained for reference)**
   - Stage inoculation ratios: S0 1 mL, S1 0.03 v/v, S2 0.05 v/v, S3 0.05 v/v, production 0.05 v/v
   - Stage times: S0–S3 each 4 h; working fractions 0.5 / 0.7 / 0.8 / 0.85
   - DO setpoint 30 %, temperature 32 °C
@@ -31,7 +31,7 @@ Consolidated view of the parameters currently feeding the front-end migration. V
 
 ## Production Fermentation (`USP00`, `USP02`, overrides)
 
-- **Workbook defaults**
+- **Legacy workbook defaults**
   - Biomass yield on glucose 0.48 g/g (USP00a)
   - Media recipe: yeast extract 10 g/L, peptone 20 g/L (USP02a)
   - Aeration 1 vvm, agitation 2.5 kW/m³, OTR 100 mmol/L/h
@@ -98,7 +98,7 @@ Consolidated view of the parameters currently feeding the front-end migration. V
 
 ## Predry TFF (`DSP03a`, `predrying` overrides)
 
-- Derived from Excel baseline: throughput 1 225 L/h, product out 195.32 kg, output volume 1 627.7 L, membrane cost per cycle 12.6 $
+- Spec-derived throughput 1 225 L/h, product out 195.32 kg, output volume 1 627.7 L, membrane cost per cycle 12.6 $
 
 ## Spray Dryer (`DSP05a`, `spray_dryer` overrides)
 

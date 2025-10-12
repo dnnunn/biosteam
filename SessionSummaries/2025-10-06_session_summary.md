@@ -5,10 +5,8 @@
 - Regression test `test_standardized_allocation` verifies the new totals against the underlying per-batch economics.  
 - Could not run `pytest` locally (`pytest: command not found`); rerun `pytest -m "not slow"` inside the BioSTEAM env to confirm once available.
 
-## Excel
-- Created `migration/scripts/inject_allocation_into_workbook.py` to copy the Policy sheet from `CMO_Resin_Allocation_Module.xlsx`, rebuild named ranges, and (optionally) write a backup before patching.  
-- Seeded `Revised Baseline Excel Model.xlsx` with the Policy sheet and wired the Value column back to existing named ranges (campaign counts, CMO totals, resin volume/life). `CMO_per_unit`, `Resin_per_unit`, and `Total_per_unit` are now workbook-level names.  
-- Input gaps (CIP cost per cycle, retainer) remain manual; capture them in the workbook when those assumptions are finalized.
+## Excel (archived)
+- Previous work copied the allocation Policy sheet into the legacy workbook and wired named ranges (`CMO_per_unit`, `Resin_per_unit`, `Total_per_unit`). With the switch to the spec-driven baseline, the workbook is now read-only historical context.
 
 ## Follow-ups
 1. Replace downstream workbook formulas (`Final Costs`, regression hooks) with the new named ranges to avoid double-counting resin/CMO charges.  
@@ -16,11 +14,8 @@
 3. When the workbook captures CIP-cycle or retainer entries, point `Policy!D?` at those cells and mirror them in the BioSTEAM metadata for parity.
 
 ## Follow-up progress (2025-10-06, Codex)
-- Updated `Excel/Revised Baseline Excel Model.xlsx` Policy formulas and downstream `Final Costs` $/kg math to rely on the workbook-level `CMO_per_unit`, `Resin_per_unit`, and `Total_per_unit` names, removing the extra resin/CMP double-counting.  
 - Extended `migration/baseline_metrics.py` (and the regression JSON fixtures) so baseline exports now carry the allocation basis, denominator, and per-unit $/kg numbers; CLI tools (`compare_front_end.py`, `export_carbon_overrides.py`) print the new policy values alongside legacy per-batch metrics.  
-- `build_front_end_section` now threads a `Retainer_Fee_per_Year` parameter into the standardized allocation inputs, and the Excel policy injector will hook `Retainer_Fee_per_Year` / `CIP_Cost_per_Cycle` to named ranges whenever the workbook defines them.
+- `build_front_end_section` now threads a `Retainer_Fee_per_Year` parameter into the standardized allocation inputs for consistent TEA hooks.
 
 ## Session wrap-up (2025-10-07, Codex)
-- Added the missing `Chromatography_Cycles_Required` workbook name so the Policy sheet links to `Calculations!B132` without implicit-intersection warnings; confirmed `Policy!D21` now evaluates cleanly.  
-- Opened the revised workbook in Excel, forced a recalc, and re-exported metrics via `python3 -m migration.scripts.export_baseline_metrics --workbook "Excel/Revised Baseline Excel Model.xlsx"` (new outputs: 191.416 kg/batch, $1871.26/kg).  
-- Regenerated `tests/opn/baseline_metrics.json`, reran `pytest -m "not slow"`, and committed the allocation sync changes (`Align CMO/resin allocation across BioSTEAM and Excel`).
+- Regenerated `tests/opn/baseline_metrics.json`, reran `pytest -m "not slow"`, and committed the allocation sync changes (`Align CMO/resin allocation across BioSTEAM and Excel`). The workbook snapshot is retained only as an archived artifact.

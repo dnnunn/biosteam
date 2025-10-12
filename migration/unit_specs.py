@@ -199,11 +199,19 @@ class PreDryingSpecs:
 
 
 @dataclass
+class SterileFilterSpecs:
+    key: str
+    flux_lmh: Number
+    max_delta_p_bar: Number
+    adsorption_loss_fraction: Number
+    prefilter_enabled: Optional[bool]
+
+
+@dataclass
 class DryerSpecs:
     key: str
     spray_dryer_efficiency: Number
     spray_dryer_capacity_kg_per_hr: Number
-    target_recovery_rate: Number
     solution_density: Number
     final_solids_content: Number
 

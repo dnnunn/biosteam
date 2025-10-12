@@ -15,6 +15,7 @@ from .unit_specs import (
     FermentationSpecs,
     MicrofiltrationSpecs,
     PreDryingSpecs,
+    SterileFilterSpecs,
     SeedTrainSpecs,
     UltrafiltrationSpecs,
     UtilityCostSpecs,
@@ -183,10 +184,16 @@ DSP03_FIELDS = {
     "Pre_Drying_Concentration_Factor": "pre_drying_concentration_factor",
 }
 
+DSP04_FIELDS = {
+    "Sterile_Flux_LMH": "sterile_flux_lmh",
+    "Sterile_Max_DP_bar": "sterile_max_dp_bar",
+    "Sterile_Adsorption_Loss_Fraction": "sterile_adsorption_loss_fraction",
+    "Sterile_Prefilter_Enabled": "sterile_prefilter_enabled",
+}
+
 DSP05_FIELDS = {
     "Spray_Dryer_Efficiency": "spray_dryer_efficiency",
     "Spray_Dryer_Capacity": "spray_dryer_capacity_kg_per_hr",
-    "Target_Recovery_Rate": "target_recovery_rate",
     "Solution_Density": "solution_density",
     "Final_Solids_Content": "final_solids_content",
 }
@@ -239,6 +246,7 @@ FIELD_MAP = {
     "DSP01": DSP01_FIELDS,
     "DSP02": DSP02_FIELDS,
     "DSP03": DSP03_FIELDS,
+    "DSP04": DSP04_FIELDS,
     "DSP05": DSP05_FIELDS,
     "PROJ00": PROJ00_FIELDS,
     "PROJ01": PROJ01_FIELDS,
@@ -380,12 +388,21 @@ def _build_dsp03_spec(data: ModuleData) -> PreDryingSpecs:
     )
 
 
+def _build_dsp04_spec(data: ModuleData) -> SterileFilterSpecs:
+    return SterileFilterSpecs(
+        key=data.key.module,
+        flux_lmh=data.get("sterile_flux_lmh"),
+        max_delta_p_bar=data.get("sterile_max_dp_bar"),
+        adsorption_loss_fraction=data.get("sterile_adsorption_loss_fraction"),
+        prefilter_enabled=data.get("sterile_prefilter_enabled"),
+    )
+
+
 def _build_dsp05_spec(data: ModuleData) -> DryerSpecs:
     return DryerSpecs(
         key=data.key.module,
         spray_dryer_efficiency=data.get("spray_dryer_efficiency"),
         spray_dryer_capacity_kg_per_hr=data.get("spray_dryer_capacity_kg_per_hr"),
-        target_recovery_rate=data.get("target_recovery_rate"),
         solution_density=data.get("solution_density"),
         final_solids_content=data.get("final_solids_content"),
     )
@@ -442,10 +459,13 @@ def _build_proj02_spec(data: ModuleData) -> CMOPricingSpecs:
 SPEC_BUILDERS = {
     "USP00": _build_usp00_spec,
     "USP01": _build_usp01_spec,
+    # Align microfiltration specs with USP03 (cell separation/clarification).
     "USP02": _build_usp02_spec,
+    "USP03": _build_usp02_spec,
     "DSP01": _build_dsp01_spec,
     "DSP02": _build_dsp02_spec,
     "DSP03": _build_dsp03_spec,
+    "DSP04": _build_dsp04_spec,
     "DSP05": _build_dsp05_spec,
     "PROJ00": _build_proj00_spec,
     "PROJ01": _build_proj01_spec,

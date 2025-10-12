@@ -20,10 +20,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--workbook",
         type=Path,
-        default=Path("Revised Baseline Excel Model.xlsx"),
+        default=None,
         help=(
-            "Legacy workbook path. Only required for historical parity checks; "
-            "the BioSTEAM baseline no longer consumes it by default."
+            "Legacy workbook path (required only when --mode=excel). "
+            "The spec-driven baseline leaves this unset."
         ),
     )
     parser.add_argument(
@@ -47,7 +47,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--baseline-config",
         type=Path,
-        help="Path to baseline YAML overrides (defaults to migration/baseline_defaults.yaml)",
+        default=Path("migration/baseline_defaults.yaml"),
+        help="Path to baseline YAML overrides (default: migration/baseline_defaults.yaml)",
     )
     parser.add_argument(
         "--baseline-metrics-json",
@@ -178,6 +179,8 @@ def main() -> None:
         metrics_path = args.baseline_metrics_json or Path("tests/opn/baseline_metrics.json")
         metrics = BaselineMetrics.from_json(metrics_path)
     else:
+        if args.workbook is None:
+            raise SystemExit("Workbook path must be provided when --mode=excel is selected.")
         metrics = load_baseline_metrics(
             workbook_path=args.workbook,
             config_path=args.config,

@@ -308,7 +308,7 @@ DSP05:
         notes: Solids content sent to spray dryer
         source_row: 129
         unit: '%'
-        value: 0.15
+        value: 0.12
       Solution_Density:
         notes: Density of concentrated protein solution before spray drying
         source_row: 128
@@ -323,12 +323,7 @@ DSP05:
         notes: Product recovery in spray drying
         source_row: 125
         unit: '%'
-        value: 0.98
-      Target_Recovery_Rate:
-        notes: Target overall recovery rate
-        source_row: 127
-        unit: '%'
-        value: 0.8
+        value: 0.985
 GLOBAL:
   <default>:
     active: false

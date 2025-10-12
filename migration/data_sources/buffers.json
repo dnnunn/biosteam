@@ -1,0 +1,215 @@
+[
+  {
+    "id": "phosphate_pH7_10mM",
+    "name": "Phosphate buffer",
+    "components": [
+      { "name": "Na+", "concentration_mM": 10.0, "charge_z": 1 },
+      { "name": "H2PO4-", "concentration_mM": 5.0, "charge_z": -1 },
+      { "name": "HPO4^2-", "concentration_mM": 5.0, "charge_z": -2 }
+    ],
+    "pH": 7.0,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "NaH2PO4·H2O", "concentration_mM": 5.0 },
+      { "name": "Na2HPO4",      "concentration_mM": 5.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/Phosphate_buffer",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "mes_na_pH6p0_50mM",
+    "name": "MES-Na buffer",
+    "components": [
+      { "name": "Na+",  "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "MES-", "concentration_mM": 50.0, "charge_z": -1 }
+    ],
+    "pH": 6.0,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "MES",  "concentration_mM": 50.0 },
+      { "name": "NaOH", "concentration_mM": 50.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/MES_(buffer)",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "hepes_na_pH7p5_50mM",
+    "name": "HEPES-Na buffer",
+    "components": [
+      { "name": "Na+",    "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "HEPES-", "concentration_mM": 50.0, "charge_z": -1 }
+    ],
+    "pH": 7.5,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "HEPES", "concentration_mM": 50.0 },
+      { "name": "NaOH",  "concentration_mM": 50.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/HEPES",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "mops_na_pH7p0_50mM",
+    "name": "MOPS-Na buffer",
+    "components": [
+      { "name": "Na+",   "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "MOPS-", "concentration_mM": 50.0, "charge_z": -1 }
+    ],
+    "pH": 7.0,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "MOPS", "concentration_mM": 50.0 },
+      { "name": "NaOH", "concentration_mM": 50.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/MOPS",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  }
+  {
+    "id": "tris_hcl_pH7p5_50mM",
+    "name": "Tris-HCl buffer",
+    "components": [
+      { "name": "TrisH+", "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "Cl-", "concentration_mM": 50.0, "charge_z": -1 }
+    ],
+    "pH": 7.5,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "Tris", "concentration_mM": 50.0 },
+      { "name": "HCl",  "concentration_mM": 50.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/Tris",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "acetate_pH5p0_50mM",
+    "name": "Sodium acetate buffer",
+    "components": [
+      { "name": "Na+", "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "Acetate-", "concentration_mM": 50.0, "charge_z": -1 }
+    ],
+    "pH": 5.0,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "NaOAc", "concentration_mM": 50.0 },
+      { "name": "AcOH",  "concentration_mM": 50.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/Acetate_buffer",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "phosphate_pH6p5_50mM",
+    "name": "Phosphate buffer",
+    "components": [
+      { "name": "Na+", "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "H2PO4-", "concentration_mM": 30.0, "charge_z": -1 },
+      { "name": "HPO4^2-", "concentration_mM": 20.0, "charge_z": -2 }
+    ],
+    "pH": 6.5,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "NaH2PO4·H2O", "concentration_mM": 30.0 },
+      { "name": "Na2HPO4",      "concentration_mM": 20.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/Phosphate_buffer",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "phosphate_pH7p5_50mM",
+    "name": "Phosphate buffer",
+    "components": [
+      { "name": "Na+", "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "H2PO4-", "concentration_mM": 20.0, "charge_z": -1 },
+      { "name": "HPO4^2-", "concentration_mM": 30.0, "charge_z": -2 }
+    ],
+    "pH": 7.5,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "NaH2PO4·H2O", "concentration_mM": 20.0 },
+      { "name": "Na2HPO4",      "concentration_mM": 30.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/Phosphate_buffer",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "tris_hcl_pH8p0_50mM",
+    "name": "Tris-HCl buffer",
+    "components": [
+      { "name": "TrisH+", "concentration_mM": 50.0, "charge_z": 1 },
+      { "name": "Cl-",    "concentration_mM": 50.0, "charge_z": -1 }
+    ],
+    "pH": 8.0,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "Tris", "concentration_mM": 50.0 },
+      { "name": "HCl",  "concentration_mM": 50.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/Tris",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  },
+  {
+    "id": "citrate_pH6p0_50mM",
+    "name": "Citrate buffer",
+    "components": [
+      { "name": "Na+",       "concentration_mM": 150.0, "charge_z": 1 },
+      { "name": "Citrate3-", "concentration_mM": 50.0,  "charge_z": -3 }
+    ],
+    "pH": 6.0,
+    "temperature_C": 25.0,
+    "reagents": [
+      { "name": "Na3Citrate·2H2O", "concentration_mM": 50.0 },
+      { "name": "CitricAcid",      "concentration_mM": 0.0 }
+    ],
+    "provenance": {
+      "source_url": "https://en.wikipedia.org/wiki/Citrate_buffer",
+      "publisher": "Wikipedia contributors",
+      "license": "CC BY-SA",
+      "retrieved_at": "",
+      "checksum": ""
+    }
+  }
+]

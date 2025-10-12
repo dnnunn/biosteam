@@ -1,0 +1,15 @@
+[
+  { "name": "NaH2PO4·H2O", "molar_mass_g_per_mol": 137.99, "price_per_kg_usd": 3.0 },
+  { "name": "Na2HPO4",      "molar_mass_g_per_mol": 141.96, "price_per_kg_usd": 3.0 },
+  { "name": "Tris",          "molar_mass_g_per_mol": 121.14, "price_per_kg_usd": 15.0 },
+  { "name": "HCl",           "molar_mass_g_per_mol": 36.46,  "price_per_kg_usd": 0.25 },
+  { "name": "NaOAc",         "molar_mass_g_per_mol": 82.03,  "price_per_kg_usd": 2.5 },
+  { "name": "AcOH",          "molar_mass_g_per_mol": 60.05,  "price_per_kg_usd": 0.6 },
+  { "name": "NaCl",          "molar_mass_g_per_mol": 58.44,  "price_per_kg_usd": 0.2 },
+  { "name": "Na3Citrate·2H2O","molar_mass_g_per_mol": 294.10, "price_per_kg_usd": 5.0 },
+  { "name": "CitricAcid",    "molar_mass_g_per_mol": 192.12, "price_per_kg_usd": 3.0 },
+  { "name": "NaOH",          "molar_mass_g_per_mol": 40.00,  "price_per_kg_usd": 0.5 },
+  { "name": "MES",           "molar_mass_g_per_mol": 195.24, "price_per_kg_usd": 25.0 },
+  { "name": "HEPES",         "molar_mass_g_per_mol": 238.30, "price_per_kg_usd": 35.0 },
+  { "name": "MOPS",          "molar_mass_g_per_mol": 209.26, "price_per_kg_usd": 28.0 }
+]

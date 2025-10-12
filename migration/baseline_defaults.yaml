@@ -5,6 +5,8 @@ seed:
     od600_target: 150
     od_to_dcw_g_per_l_per_od: 0.4
     wet_cell_density_g_per_l: 190.0
+    yeast_extract_per_batch_kg: 553.0
+    peptone_per_batch_kg: 1106.0
   specs:
     yeast_extract_concentration_g_per_l: 8.5
     peptone_concentration_g_per_l: 12.5
@@ -18,7 +20,7 @@ fermentation:
     target_titer_g_per_l: 5.0
     clarified_supernatant_titer_g_per_l: 6.176470588235295
     dcw_concentration_g_per_l: 47.5
-    total_glucose_feed_kg: 8125.0
+    total_glucose_feed_kg: 8750.0
     od600_target: 150.0
     od_to_dcw_g_per_l_per_od: 0.31666666666666665
     maintenance_coefficient_g_glucose_per_gdcw_h: 0.0297
@@ -27,9 +29,9 @@ fermentation:
     product_model: specific_productivity
     nitrogen_requirement_g_per_gdcw: 0.1
     nh4oh_kg_per_kg_n: 1.0
-    total_glycerol_feed_kg: 0.0
-    total_molasses_feed_kg: 0.0
-    antifoam_volume_l: 58.33333333333333
+    total_glycerol_feed_kg: 7241.379310344828
+    total_molasses_feed_kg: 16800.0
+    antifoam_volume_l: 70.0
     antifoam_cost_per_unit: 10.0
     minor_nutrients_cost_total: 0.0
     nh3_consumption_kg: 233.33333333333334
@@ -40,7 +42,7 @@ fermentation:
     crude_glycerol_pretreated_kg: 0.0
     lactose_feed_concentration_g_per_l: 200.0
     broth_density_kg_per_l: 1.05
-    product_out_kg: 300.0
+    product_out_kg: 350.0
   specs:
     turnaround_time_hours: 24.0
     biomass_yield_glucose: 0.48
@@ -95,8 +97,6 @@ cell_removal:
     flux_lmh: 90.0
     membrane_cost_per_m2: 350.0
     membrane_life_batches: 30.0
-microfiltration:
-  derived: {}
 concentration:
   method: uf_df
   feed:
@@ -142,8 +142,6 @@ concentration:
     membrane_cost_per_m2: 260.0
     membrane_life_batches: 30.0
     operation_hours: 16.0
-ufdf:
-  derived: {}
 capture:
   method: aex
   feed:
@@ -176,7 +174,7 @@ capture:
     dna_competition_coeff: 0.0001
     mass_transfer_beta: 0.5
     rt_ref_min: 4.0
-    target_recovery_pct: 90.0
+    target_recovery_pct: 94.0
     target_pool_cond_mM: 450.0
     uv_pooling_rule: conductivity_window
     utilization_fraction: 0.9
@@ -231,52 +229,99 @@ capture:
     polish_conductivity_mM: 400.0
     chitosan_ppm_max: 100.0
 dsp03:
-  method: auto
-  uf:
-    flux_lmh: 90.0
-    tmp_bar_max: 1.5
-    sieving_fraction: 0.01
-  df:
-    flux_lmh: 100.0
-    diafiltration_volumes: 2.0
-    sieving_fraction: 0.005
-  sptff:
-    stages: 3
-    cf_per_stage: 1.7
+  parameters:
+    vr_preuf: 3.0
+    nd: 5.0
     flux_lmh: 85.0
-    tmp_bar_max: 1.2
-    sieving_fraction: 0.008
-  ctff:
-    flux_lmh: 80.0
-    tmp_bar_max: 1.2
-    bleed_rate_m3_per_h: 0.1
+    tmp_bar_cap: 1.5
+    sieving_uf: 0.01
+    sieving_df: 0.007
+    adsorption_loss_per_100_m2: 0.002
+    df_time_h: 10.0
+    area_headroom_fraction: 0.2
+    membrane_cost_per_m2: 260.0
+    membrane_life_batches: 30.0
+    buffer_cost_per_m3: 220.0
+    labor_hours_per_batch: 8.0
+    labor_rate_per_hour: 80.0
+    waste_cost_per_tonne: 220.0
+    antifoam_flux_derate_fraction: 0.25
+    antifoam_adsorption_addition_fraction: 0.003
+    mwco_kda: 30.0
+    cfv_ms: 2.0
+  buffers:
+    df:
+      # Keep planner off by default to preserve regression metrics.
+      use_planner: false
+      auto_plan: false
+      # Example target for ionic strength after DF (mM). When planner is enabled,
+      # ND will be computed from capture pool ionic strength to this target.
+      target_ionic_strength_mM: 5.0
+      # Optional conductivity-based planning (disabled by default). If enabled,
+      # requires initial_conductivity_mScm and target_conductivity_mScm.
+      use_conductivity: false
+      initial_conductivity_mScm: null
+      target_conductivity_mScm: null
+      # Optional auto planner guardrails
+      df_time_h_target: 10.0
+      nd_max: 8.0
+      buffer_multiple_max: 2.5
+      area_max_m2: null
+      headroom_fraction: 0.2
+      # Optional viscosity input for flux derate (measured solution viscosity)
+      viscosity_mPa_s: null
+      viscosity_temp_C: 25.0
+      # Optional: derive buffer cost from curated registry instead of flat rate
+      cost_from_registry: false
+      cost_buffer_id: null
 dsp04:
   stage_order: []
   stages:
     aex_repeat:
       enabled: true
+      mode: flow_through
+      base_recovery_fraction: 0.992
+      ft_capacity_mg_per_ml: 8.0
+      lin_vel_cm_per_h: 300.0
+      max_dp_bar: 2.0
+      dna_log_reduction: 1.5
+      resin_fee_per_l_cycle: 85.0
+      buffer_cost_per_m3: 150.0
+      labor_hours_per_batch: 6.0
     cex_negative:
       enabled: true
+      mode: flow_through
+      base_recovery_fraction: 0.992
+      ft_capacity_mg_per_ml: 8.0
+      lin_vel_cm_per_h: 300.0
+      max_dp_bar: 2.0
+      chitosan_binding_eff_fraction: 0.9
+      buffer_cost_per_m3: 120.0
+      labor_hours_per_batch: 6.0
     hic_flowthrough:
       enabled: false
+      mode: flow_through
+      base_recovery_fraction: 0.985
+      ft_capacity_mg_per_ml: 6.0
+      lin_vel_cm_per_h: 250.0
+      max_dp_bar: 1.5
+      aggregate_removal_fraction: 0.4
+      buffer_cost_per_m3: 160.0
+      labor_hours_per_batch: 6.0
     mixedbed_iex:
       enabled: false
+      base_recovery_fraction: 0.99
+      buffer_cost_per_m3: 140.0
+      labor_hours_per_batch: 6.0
     enzymatic_tidyup:
       enabled: false
   sterile_filter:
     flux_lmh: 250.0
     max_dp_bar: 1.5
     adsorption_loss_fraction: 0.0005
+    capacity_l_per_m2: 1500.0
+    adsorption_loss_fraction_per_m2: 0.0005
+    material_cost_per_m2: 350.0
+    prefilter_material_cost_per_m2: 200.0
+    labor_hours_per_batch: 2.0
     prefilter_enabled: false
-predrying:
-  derived:
-    throughput_l_per_hr: 1225.0
-    membrane_cost_per_cycle: 12.6
-spray_dryer:
-  derived:
-    capacity_kg_per_hr: 1500.0
-    final_solids_percent: 12.0
-    final_solids_content: 0.12
-    solution_density: 1.05
-    spray_dryer_efficiency: 0.98
-    target_recovery_rate: 0.985

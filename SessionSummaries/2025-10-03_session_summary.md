@@ -1,7 +1,7 @@
 # 2025-10-03 — Migration capture & CMO cost alignment
 
 ## Progress
-- Re-derived the campaign-fee logic from `Revised Baseline Excel Model.xlsx` and mapped each driver (fermenter, DSP, spray dryer, labor, QA/QC, consumables) to the time inputs and discount formulas Excel uses.
+- Re-derived the campaign-fee logic, mapping each driver (fermenter, DSP, spray dryer, labor, QA/QC, consumables) to the time inputs and discount formulas captured in the BD module specs (PROJ02). We no longer depend on the legacy Excel workbook for these numbers.
 - Extended the BioSTEAM front-end notes for how we’ll calculate fees in-code: campaign factors, contract multipliers, and campaign-level adders (setup, reservation, validation) will be reproduced from the PROJ02 parameters instead of relying on static per-hour constants.
 - Confirmed key baseline values for reference: seed train 16 h, main fermentation 48 h, turnaround 24 h, membrane/column occupancy durations, resulting Excel tolls (≈ 119 k $ standard batch + 59 k $ campaign adders → 178 k $/batch total).
 - Introduced `migration/cmo_contracts.py` so the BioSTEAM model owns the full contract math; timings/rates/discounts map cleanly to a dataclass that can be swapped for future CMO variants.
@@ -18,8 +18,8 @@
 3. Pipe the per-kg metrics (`materials_cost_per_kg_usd`, `cmo_cost_per_kg_usd`, etc.) into the TEA/COGs layer to unlock margin and retail-price scenarios.
 
 ## References
-- Workbook: `Revised Baseline Excel Model.xlsx` (Calculations → “CMO Fees & Campaigns”).
 - Current defaults: `migration/module_defaults.yaml` (PROJ02 parameters) and `migration/baseline_defaults.yaml` (campaign structure).
+- Process specs: *Biosteam BD Module Specs/* (see `A standardized accounting scheme.md` for the consolidated accounting rules).
 
 
 **AEX vs Chitosan Capture – Cost Snapshot**

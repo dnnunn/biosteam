@@ -418,9 +418,10 @@ def _estimate_spray_hours(predry_plan: Any, spray_plan: Any) -> float:
     density = _coerce_float(spray_plan.derived.get("solution_density"), 1.0)
     feed_mass = feed_volume_l * density
 
-    final_product_mass = _coerce_float(spray_plan.derived.get("product_out_kg"), 0.0)
-    recovery = _coerce_float(spray_plan.derived.get("target_recovery_rate"), 0.0)
-    upstream_solids = final_product_mass / recovery if recovery > 0.0 else final_product_mass
+    feed_product = _coerce_float(predry_plan.derived.get("product_out_kg"), 0.0)
+    spray_efficiency = _coerce_float(spray_plan.derived.get("spray_dryer_efficiency"), 1.0)
+    upstream_solids = feed_product
+    final_product_mass = upstream_solids * spray_efficiency if upstream_solids else 0.0
 
     water_evap = max(feed_mass - upstream_solids, 0.0)
     if water_evap <= 0.0:
@@ -1019,7 +1020,8 @@ def build_front_end_section(
     )
 
     if baseline_overrides:
-        _apply_plan_overrides(micro_plan, baseline_overrides.get("microfiltration"))
+        micro_override_cfg = baseline_overrides.get("microfiltration")
+        _apply_plan_overrides(micro_plan, micro_override_cfg)
         product_after_mf = micro_plan.derived.get("product_out_kg", product_after_mf)
         clarified_volume_l = micro_plan.derived.get("output_volume_l", clarified_volume_l)
         fermentation_product = micro_plan.derived.get("input_product_kg", fermentation_product)
@@ -1207,6 +1209,27 @@ def build_front_end_section(
     if capture_route is not None:
         chrom_actual["capture_route"] = capture_route
 
+    capture_override_cfg = baseline_overrides.get("capture") if baseline_overrides else None
+    capture_override_derived = (
+        capture_override_cfg.get("derived")
+        if isinstance(capture_override_cfg, Mapping)
+        else {}
+    )
+
+    if isinstance(capture_override_derived, Mapping):
+        override_product = capture_override_derived.get("product_out_kg")
+        override_elute = capture_override_derived.get("eluate_volume_l")
+        override_output = capture_override_derived.get("output_volume_l")
+        if override_product is not None:
+            product_after_chrom = float(override_product)
+            chrom_actual["product_out_kg"] = product_after_chrom
+        if override_elute is not None:
+            post_elution_volume_l = float(override_elute)
+            chrom_actual["eluate_volume_l"] = post_elution_volume_l
+        if override_output is not None:
+            post_elution_conc_volume_l = float(override_output)
+            chrom_actual["output_volume_l"] = post_elution_conc_volume_l
+
     for key, value in chrom_actual.items():
         chrom_plan.derived[key] = value
     if capture_handoff is not None:
@@ -1214,7 +1237,7 @@ def build_front_end_section(
             chrom_plan.derived[f"handoff_{key}"] = value
 
     if baseline_overrides:
-        _apply_plan_overrides(chrom_plan, baseline_overrides.get("chromatography"))
+        _apply_plan_overrides(chrom_plan, capture_override_cfg)
         for key, value in chrom_actual.items():
             chrom_plan.derived[key] = value
 
@@ -1285,12 +1308,29 @@ def build_front_end_section(
     if predry_plan.derived.get("broth_density_kg_per_l") is None and chrom_plan.derived.get("density_kg_per_l") is not None:
         predry_actual["broth_density_kg_per_l"] = chrom_plan.derived.get("density_kg_per_l")
 
+    predry_override_cfg = baseline_overrides.get("predrying") if baseline_overrides else None
+    predry_override_derived = (
+        predry_override_cfg.get("derived")
+        if isinstance(predry_override_cfg, Mapping)
+        else {}
+    )
+
+    if isinstance(predry_override_derived, Mapping):
+        override_product = predry_override_derived.get("product_out_kg")
+        override_volume = predry_override_derived.get("output_volume_l")
+        if override_product is not None:
+            predry_output_product_kg = float(override_product)
+            predry_actual["product_out_kg"] = predry_output_product_kg
+        if override_volume is not None:
+            predry_output_volume_l = float(override_volume)
+            predry_actual["output_volume_l"] = predry_output_volume_l
+
     for key, value in predry_actual.items():
         if value is not None:
             predry_plan.derived[key] = value
 
     if baseline_overrides:
-        _apply_plan_overrides(predry_plan, baseline_overrides.get("predrying"))
+        _apply_plan_overrides(predry_plan, predry_override_cfg)
         for key, value in predry_actual.items():
             if value is not None:
                 predry_plan.derived[key] = value
@@ -1339,6 +1379,18 @@ def build_front_end_section(
             "dsp04_stages",
             [unit.plan.derived.get("route") for unit in dsp04_units_tuple if unit.plan is not None],
         )
+
+    spray_specs = spray_plan.specs
+    spray_efficiency = _coerce_float(getattr(spray_specs, "spray_dryer_efficiency", 1.0), 1.0)
+    spray_efficiency = max(min(spray_efficiency, 1.0), 0.0)
+
+    if spray_input_product_kg is not None:
+        final_product_kg = max(spray_input_product_kg * spray_efficiency, 0.0)
+
+    spray_plan.derived.setdefault(
+        "spray_dryer_efficiency",
+        spray_efficiency,
+    )
 
     spray_plan.derived.update(
         {
@@ -1450,6 +1502,30 @@ def build_front_end_section(
     def _set_cost(key: str, value: Optional[float]) -> None:
         _add_breakdown(key, value)
 
+    dsp03_membrane_cost = 0.0
+    dsp03_buffer_cost = 0.0
+    dsp03_labor_cost = 0.0
+    dsp03_waste_cost = 0.0
+    if dsp03_units_tuple:
+        dsp03_unit_plan = getattr(dsp03_units_tuple[0], "plan", None)
+        if dsp03_unit_plan is not None:
+            dsp03_membrane_cost = _coerce_float(
+                dsp03_unit_plan.derived.get("membrane_cost_per_batch_usd"),
+                0.0,
+            )
+            dsp03_buffer_cost = _coerce_float(
+                dsp03_unit_plan.derived.get("buffer_cost_per_batch_usd"),
+                0.0,
+            )
+            dsp03_labor_cost = _coerce_float(
+                dsp03_unit_plan.derived.get("labor_cost_per_batch_usd"),
+                0.0,
+            )
+            dsp03_waste_cost = _coerce_float(
+                dsp03_unit_plan.derived.get("waste_cost_per_batch_usd"),
+                0.0,
+            )
+
     _set_cost("carbon_source", carbon_cost_calc)
     _set_cost("yeast_extract", yeast_cost_calc)
     _set_cost("peptone", peptone_cost_calc)
@@ -1470,6 +1546,10 @@ def build_front_end_section(
         "predry_tff_membranes",
         predry_plan.derived.get("membrane_cost_per_cycle"),
     )
+    _set_cost("dsp03_membranes", dsp03_membrane_cost if dsp03_membrane_cost > 0 else None)
+    _set_cost("dsp03_buffers", dsp03_buffer_cost if dsp03_buffer_cost > 0 else None)
+    _set_cost("dsp03_labor", dsp03_labor_cost if dsp03_labor_cost > 0 else None)
+    _set_cost("dsp03_waste_disposal", dsp03_waste_cost if dsp03_waste_cost > 0 else None)
     capture_polymer = chrom_plan.derived.get("polymer_cost_per_batch")
     capture_reagents = chrom_plan.derived.get("reagent_cost_per_batch")
     capture_utilities = chrom_plan.derived.get("utilities_cost_per_batch")
@@ -1482,14 +1562,43 @@ def build_front_end_section(
         fermentation_plan.derived.get("media_cost_per_batch_usd"),
     )
 
+    dsp04_buffer_cost = 0.0
+    dsp04_resin_cost = 0.0
+    dsp04_labor_cost = 0.0
+    sterile_media_cost = 0.0
+    sterile_prefilter_cost = 0.0
+    sterile_labor_cost = 0.0
+
+    for unit in dsp04_units_tuple:
+        plan = getattr(unit, "plan", None)
+        if plan is None:
+            continue
+        derived = plan.derived
+        route = derived.get("route")
+        if route:
+            dsp04_buffer_cost += _coerce_float(derived.get("buffer_cost_per_batch_usd"), 0.0)
+            dsp04_resin_cost += _coerce_float(derived.get("resin_cost_per_batch_usd"), 0.0)
+            dsp04_labor_cost += _coerce_float(derived.get("labor_cost_per_batch_usd"), 0.0)
+        else:
+            sterile_media_cost += _coerce_float(derived.get("material_cost_per_batch_usd"), 0.0)
+            sterile_prefilter_cost += _coerce_float(derived.get("prefilter_cost_per_batch_usd"), 0.0)
+            sterile_labor_cost += _coerce_float(derived.get("labor_cost_per_batch_usd"), 0.0)
+
+    _set_cost("dsp04_buffers", dsp04_buffer_cost if dsp04_buffer_cost > 0 else None)
+    _set_cost("dsp04_resin", dsp04_resin_cost if dsp04_resin_cost > 0 else None)
+    _set_cost("dsp04_labor", dsp04_labor_cost if dsp04_labor_cost > 0 else None)
+    _set_cost("sterile_filter_media", sterile_media_cost if sterile_media_cost > 0 else None)
+    _set_cost("sterile_prefilter_media", sterile_prefilter_cost if sterile_prefilter_cost > 0 else None)
+    _set_cost("sterile_filter_labor", sterile_labor_cost if sterile_labor_cost > 0 else None)
+
     materials_cost_per_batch = computed_material_cost or None
 
     final_product_mass = spray_plan.derived.get("product_out_kg")
     if final_product_mass is None:
         final_product_mass = final_product_kg
     if final_product_mass in (None, 0):
-        target_recovery = _coerce_float(spray_plan.derived.get("target_recovery_rate"), 1.0)
-        final_product_mass = _coerce_float(product_after_predry, 0.0) * target_recovery
+        spray_efficiency = _coerce_float(spray_plan.derived.get("spray_dryer_efficiency"), 1.0)
+        final_product_mass = _coerce_float(product_after_predry, 0.0) * spray_efficiency
 
     cmo_config_raw = baseline_overrides.get("cmo") if isinstance(baseline_overrides, Mapping) else None
 

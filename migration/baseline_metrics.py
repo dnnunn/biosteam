@@ -30,6 +30,7 @@ class BaselineMetrics:
     total_cost_per_batch_usd: Optional[float] = None
     cmo_fees_usd: Optional[float] = None
     materials_cost_per_batch_usd: Optional[float] = None
+    materials_cost_per_kg_usd: Optional[float] = None
     materials_cost_breakdown: Mapping[str, float] = field(default_factory=dict)
     allocation_basis: Optional[str] = None
     allocation_denominator: Optional[float] = None
@@ -51,6 +52,7 @@ class BaselineMetrics:
             "total_cost_per_batch_usd": self.total_cost_per_batch_usd,
             "cmo_fees_usd": self.cmo_fees_usd,
             "materials_cost_per_batch_usd": self.materials_cost_per_batch_usd,
+            "materials_cost_per_kg_usd": self.materials_cost_per_kg_usd,
             "materials_cost_breakdown": dict(self.materials_cost_breakdown),
             "allocation_basis": self.allocation_basis,
             "allocation_denominator": self.allocation_denominator,
@@ -82,6 +84,7 @@ class BaselineMetrics:
             total_cost_per_batch_usd=_get_float("total_cost_per_batch_usd"),
             cmo_fees_usd=_get_float("cmo_fees_usd"),
             materials_cost_per_batch_usd=_get_float("materials_cost_per_batch_usd"),
+            materials_cost_per_kg_usd=_get_float("materials_cost_per_kg_usd"),
             materials_cost_breakdown={
                 k: float(v) for k, v in data.get("materials_cost_breakdown", {}).items()
             },
@@ -218,6 +221,11 @@ def load_baseline_metrics(
             )
         ),
         materials_cost_breakdown=material_breakdown,
+        materials_cost_per_kg_usd=(
+            (materials_cost_per_batch / final_product)
+            if (materials_cost_per_batch is not None and final_product)
+            else None
+        ),
         allocation_basis=allocation_basis,
         allocation_denominator=allocation_denominator,
         cmo_per_unit_usd=cmo_per_unit,

@@ -13,9 +13,11 @@ from .simple_units import (
     FermentationBioreactor,
     SeedTrainBioreactor,
     MicrofiltrationUnit,
+    DiskStackUnit,
     UFDFUnit,
     ChromatographyUnit,
     PreDryingUnit,
+    SterileFilterUnit,
     SprayDryerUnit,
 )
 
@@ -28,8 +30,10 @@ PLAN_UNIT_CLASSES: Dict[str, Tuple[type, str]] = {
     "USP00": (FermentationBioreactor, "Fermenter"),
     "USP01": (SeedTrainBioreactor, "SeedTrain"),
     "USP02": (MicrofiltrationUnit, "USP02"),
+    # USP03 is the cell separation stage; we select the class per option below.
     "DSP01": (UFDFUnit, "DSP01"),
     "DSP02": (ChromatographyUnit, "DSP02"),
+    "DSP04": (SterileFilterUnit, "DSP04"),
     "DSP03": (PreDryingUnit, "DSP03"),
     "DSP05": (SprayDryerUnit, "DSP05"),
 }
@@ -41,7 +45,22 @@ def _make_unit_id(plan: UnitPlan, prefix: str) -> str:
 
 
 def _build_unit_from_plan(plan: UnitPlan, module: str) -> bst.Unit:
-    cls, prefix = PLAN_UNIT_CLASSES[module]
+    # Base class/prefix by module
+    cls, prefix = PLAN_UNIT_CLASSES.get(module, (None, "Unit"))
+    # Specialize USP03 by option: MF polish (a/b) uses MicrofiltrationUnit;
+    # disk stack (c) uses a dedicated centrifuge unit when available.
+    if module == "USP03":
+        option = (plan.key.option or "").lower()
+        if option in ("usp03a", "usp03b"):
+            cls, prefix = (MicrofiltrationUnit, "USP03")
+        elif option == "usp03c":
+            try:
+                from .simple_units import DiskStackUnit  # local import to avoid cycles
+            except Exception:
+                DiskStackUnit = MicrofiltrationUnit  # fallback
+            cls, prefix = (DiskStackUnit, "DiskStack")
+    if cls is None:
+        raise KeyError(f"No unit class registered for module {module}")
     unit_id = _make_unit_id(plan, prefix)
     unit = cls(unit_id, plan=plan)
     return unit

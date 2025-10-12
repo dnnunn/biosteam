@@ -1,0 +1,15 @@
+dsp04:
+  stage_order: ["hic_flowthrough"]
+  stages:
+    hic_flowthrough:
+      enabled: true
+      base_recovery_fraction: 0.99
+      buffer_cost_per_m3: 120.0
+      labor_hours_per_batch: 4.0
+      # Example salt window for HIC; use advisory notes only.
+      cond_min_mM: 1000.0
+      cond_max_mM: 2500.0
+      notes:
+        - "Advisory-only conductivity window; process logic unchanged."
+        - "Alternate strategies may include pre-column salt injection or route reordering."
+
