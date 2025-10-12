@@ -58,6 +58,23 @@ totals, media type, and yield proxy flags.
 - Baseline: single UF→DF→UF chain (30 kDa PES) with VRR=3×, ND=5, flux≈85 LMH, TMP≤1.5 bar, adsorption 0.2%/100 m². Parameters live under `dsp03.parameters` in `migration/baseline_defaults.yaml` and can be overridden in a config file at `dsp03: { parameters: {...} }`.
 - Older route-style overrides (SPTFF/CTFF/UF-only) are archived; YAMLs were moved to `Archive/overrides/dsp03/` and are not used by the baseline.
 
+### Auto‑Planner (opt‑in)
+- Keys under `dsp03.buffers.df`:
+  - `use_planner: true` enables ND from ionic strength (`target_ionic_strength_mM`) or conductivity (`use_conductivity`, `initial_conductivity_mScm`, `target_conductivity_mScm`).
+  - `auto_plan: true` lets DSP03 update ND, DF time, and area with guardrails: `df_time_h_target`, `nd_max`, `buffer_multiple_max`, `area_max_m2`, `headroom_fraction`.
+  - `viscosity_mPa_s` (+ `viscosity_temp_C`) applies a flux derate based on relative viscosity (keeps behavior deterministic unless you opt in).
+  - Optional `initial_buffer_id` seeds initial ionic strength from the curated registry when the capture handoff lacks it.
+
+### Registry‑Based Buffer Costing (opt‑in)
+- Keys under `dsp03.buffers.df`:
+  - `cost_from_registry: true` and `cost_buffer_id: <buffer_id>` instruct DSP03 to compute `buffer_cost_per_batch_usd` from the curated reagents list and reagent price catalog.
+  - This feeds TEA/materials via `material_cost_breakdown['dsp03_buffers']`. Defaults remain unchanged unless enabled.
+
+### Sizing & Costing CLI Helpers
+- `python -m migration.scripts.compute_df_plan` prints ND, buffer m³, area, DF time, and flux (with optional viscosity derate):
+  - `--feed-volume-m3 70 --vrr 3 --initial-I-mM 375 --target-I-mM 5 --flux-lmh 90 --df-time-h 10 --headroom 0.2`
+- `python -m migration.scripts.compute_buffer_cost --id <buffer_id>` estimates USD/m³ from the curated reagents + catalog.
+
 ## DSP04 Polish & Sterile Filter
 - **Baseline:** no polish stages enabled; always includes `SterileFilter_0p2um`.  
   - Config structure: `dsp04.stage_order` (list of stages), `dsp04.stages.<stage>` toggles, `dsp04.sterile_filter` holds flux/ΔP/adsorption settings.  
