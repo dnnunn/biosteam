@@ -1,17 +1,24 @@
-const API = process.env.NEXT_PUBLIC_API ?? 'http://localhost:8000';
+import { API_BASE } from '@/lib/config';
 
-export async function listScenarios() {
-  const res = await fetch(`${API}/scenarios`);
-  if (!res.ok) throw new Error('failed to load scenarios');
-  return res.json();
-}
+export const api = {
+  async listBuffers() {
+    const res = await fetch(`${API_BASE}/buffers`);
+    if (!res.ok) throw new Error('Failed to fetch buffers');
+    return res.json();
+  },
+  async bufferRecommendations(id: string) {
+    const res = await fetch(`${API_BASE}/buffers/${encodeURIComponent(id)}/recommendations`);
+    if (!res.ok) throw new Error('Failed to fetch recommendations');
+    return res.json();
+  },
+  async runFrontEnd(baseline_overrides: unknown) {
+    const res = await fetch(`${API_BASE}/runs/front_end`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ baseline_overrides, mode: 'baseline' })
+    });
+    if (!res.ok) throw new Error('Run failed');
+    return res.json();
+  }
+};
 
-export async function createRun(payload: unknown) {
-  const res = await fetch(`${API}/runs`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error('failed to create run');
-  return res.json();
-}
