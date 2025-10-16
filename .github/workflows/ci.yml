@@ -4,7 +4,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: "${{ github.workspace }}:${{ github.workspace }}/pkgs/biosteam/src:${{ github.workspace }}/pkgs/thermosteam/src"
+      # Add repo root, BioSTEAM src, and ThermoSTEAM inner package root
+      PYTHONPATH: "${{ github.workspace }}:${{ github.workspace }}/pkgs/biosteam/src:${{ github.workspace }}/pkgs/thermosteam/src/thermosteam"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -13,22 +14,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install "numpy>=1.22,<1.27" "pandas>=2.2" chemicals thermo fluids scipy "numba<0.60" llvmlite matplotlib plotly ipython SALib pydantic
-      - name: Install vendored ThermoSTEAM (editable, no deps)
+      # Rely on PYTHONPATH for vendored ThermoSTEAM; sanity‑check import
+      - name: Sanity check ThermoSTEAM import
         run: |
-          set -e
-          echo "Attempting editable install of vendored ThermoSTEAM"
-          for path in pkgs/thermosteam/src/thermosteam pkgs/thermosteam/src pkgs/thermosteam; do
-            if [ -e "$path" ]; then
-              echo "Trying: $path"
-              if python -m pip install -e "$path" --no-deps; then
-                echo "Installed ThermoSTEAM from $path"
-                break
-              else
-                echo "Install from $path failed; trying next candidate" >&2
-              fi
-            fi
-          done
-          python -c "import importlib; import sys; importlib.import_module('thermosteam'); print('thermosteam import OK')"
+          python -c "import thermosteam, sys; print('thermosteam import OK', thermosteam.__file__)"
       - name: Install API
         run: |
           cd app/api
