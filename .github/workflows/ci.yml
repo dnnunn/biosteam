@@ -21,4 +21,5 @@ jobs:
         run: |
           cd app/api
           python -m pip install pytest
-          pytest -q
+          # Bypass root pytest.ini (which narrows discovery) and target API tests
+          pytest -q tests -c /dev/null
