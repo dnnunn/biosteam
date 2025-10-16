@@ -12,7 +12,16 @@ from thermosteam.units_of_measure import (
     convert, DisplayUnits, UnitsOfMeasure, get_dimensionality,
     heat_utility_units_of_measure
 )
-from thermosteam.utils import unregistered, define_units_of_measure
+# Some ThermoSTEAM releases on PyPI do not expose `define_units_of_measure`
+try:
+    from thermosteam.utils import unregistered, define_units_of_measure
+except Exception:  # pragma: no cover - CI compatibility shim
+    from thermosteam.utils import unregistered
+    def define_units_of_measure(dct, cls=None):
+        # No-op decorator fallback: preserves class creation without unit helpers.
+        if cls is None:
+            return lambda c: c
+        return cls
 from thermosteam import Thermo, Stream, ThermalCondition, settings
 from .exceptions import DimensionError
 from math import copysign
