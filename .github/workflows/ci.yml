@@ -3,6 +3,8 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: "${{ github.workspace }}:${{ github.workspace }}/pkgs/biosteam/src:${{ github.workspace }}/pkgs/thermosteam/src"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
