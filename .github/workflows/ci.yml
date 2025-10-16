@@ -12,7 +12,7 @@ jobs:
       - name: Install Thermo/BioSTEAM runtime deps
         run: |
           python -m pip install --upgrade pip
-          python -m pip install "numpy==1.26.4" "pandas>=2.2" chemicals thermo
+          python -m pip install "numpy==1.26.4" "pandas>=2.2" chemicals thermo fluids scipy numba matplotlib plotly ipython
       - name: Install API
         run: |
           cd app/api
