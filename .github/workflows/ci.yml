@@ -15,8 +15,27 @@ jobs:
           python -m pip install "numpy>=1.22,<1.27" "pandas>=2.2" chemicals thermo fluids scipy "numba<0.60" llvmlite matplotlib plotly ipython SALib pydantic
       - name: Install vendored ThermoSTEAM (editable, no deps)
         run: |
-          # Register local ThermoSTEAM package layout so `import thermosteam` resolves properly
-          python -m pip install -e pkgs/thermosteam/src/thermosteam --no-deps
+          set -e
+          echo "Attempting editable install of vendored ThermoSTEAM"
+          for path in pkgs/thermosteam/src/thermosteam pkgs/thermosteam/src pkgs/thermosteam; do
+            if [ -e "$path" ]; then
+              echo "Trying: $path"
+              if python -m pip install -e "$path" --no-deps; then
+                echo "Installed ThermoSTEAM from $path"
+                break
+              else
+                echo "Install from $path failed; trying next candidate" >&2
+              fi
+            fi
+          done
+          python - <<'PY'
+import importlib
+try:
+    importlib.import_module('thermosteam')
+    print('thermosteam import OK')
+except Exception as e:
+    raise SystemExit(f'ERROR: thermosteam not importable: {e}')
+PY
       - name: Install API
         run: |
           cd app/api
