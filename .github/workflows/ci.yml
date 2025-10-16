@@ -28,14 +28,7 @@ jobs:
               fi
             fi
           done
-          python - <<'PY'
-import importlib
-try:
-    importlib.import_module('thermosteam')
-    print('thermosteam import OK')
-except Exception as e:
-    raise SystemExit(f'ERROR: thermosteam not importable: {e}')
-PY
+          python -c "import importlib; import sys; importlib.import_module('thermosteam'); print('thermosteam import OK')"
       - name: Install API
         run: |
           cd app/api
