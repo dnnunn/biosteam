@@ -184,6 +184,7 @@ export const useGraphStore = create<GraphState>((set, get) => ({
   toOverrides: () => {
     const nodes = get().nodes;
     const overrides: any = {};
+    const edges = get().edges || [];
 
     // Seed and fermentation: take latest matching node(s)
     const seedNode = [...nodes].reverse().find(n => (n.data as any)?.seed);
@@ -419,6 +420,51 @@ export const useGraphStore = create<GraphState>((set, get) => ({
       if (mixingTanks.length) overrides.utilities.mixing_tanks = mixingTanks;
       if (pumps.length) overrides.utilities.pumps = pumps;
     }
+
+    // UI topology hint: derive a simple stage_order from the current graph
+    try {
+      // Build adjacency from edges
+      const nodeIds = new Set(nodes.map(n => n.id));
+      const indeg = new Map<string, number>();
+      const out = new Map<string, string[]>();
+      for (const n of nodes) { indeg.set(n.id, 0); out.set(n.id, []); }
+      for (const e of edges) {
+        if (!nodeIds.has(e.source) || !nodeIds.has(e.target)) continue;
+        indeg.set(e.target, (indeg.get(e.target) || 0) + 1);
+        out.get(e.source)!.push(e.target);
+      }
+      // Kahn topo
+      const q: string[] = nodes.filter(n => (indeg.get(n.id) || 0) === 0).map(n => n.id);
+      const orderedIds: string[] = [];
+      const indegLocal = new Map(indeg);
+      while (q.length) {
+        const id = q.shift()!;
+        if (!orderedIds.includes(id)) orderedIds.push(id);
+        for (const t of out.get(id) || []) {
+          indegLocal.set(t, (indegLocal.get(t) || 0) - 1);
+          if ((indegLocal.get(t) || 0) === 0) q.push(t);
+        }
+      }
+      const stageTokens: string[] = [];
+      const seen = new Set<string>();
+      const pushOnce = (tok: string) => { if (!seen.has(tok)) { seen.add(tok); stageTokens.push(tok); } };
+      for (const id of orderedIds) {
+        const n = nodes.find(x => x.id === id);
+        const d: any = (n && n.data) || {};
+        if (d.cell_removal) { pushOnce('cell_removal'); continue; }
+        if (d.concentration && ((d.concentration as any).route === 'sptff' || (d as any).concentration?.sptff)) { pushOnce('sptff'); continue; }
+        if (d.dsp03_params) { pushOnce('dsp03'); continue; }
+        if (d.aex_membrane) { pushOnce('aex_membrane'); continue; }
+        if (d.sterile) { pushOnce('sterile'); continue; }
+        if (d.spray) { pushOnce('spray'); continue; }
+        // MF Polishing as a clarification sub-stage
+        if ((d.label && String(d.label).toLowerCase().includes('mf polishing')) || (d.iconKey === 'MF Polishing')) { pushOnce('mf_polish'); continue; }
+        // Skip utilities and seed/fermentation here
+      }
+      if (stageTokens.length) {
+        overrides.ui_topology = Object.assign({}, overrides.ui_topology || {}, { stage_order: stageTokens });
+      }
+    } catch {}
 
     return overrides;
   }

@@ -43,10 +43,18 @@ def run_front_end(req: FrontEndRunRequest):
     )
     section.system.simulate()
 
+    # Echo back any UI topology hints for transparency (Phase 1)
+    ui_topology = None
+    try:
+        ui_topology = req.baseline_overrides.get('ui_topology')
+    except Exception:
+        ui_topology = None
+
     return {
         "cost_per_kg_usd": section.cost_per_kg_usd,
         "materials_cost_per_batch_usd": section.materials_cost_per_batch_usd,
         "materials_cost_per_kg_usd": section.materials_cost_per_kg_usd,
         "material_cost_breakdown": section.material_cost_breakdown,
         "dsp03_notes": getattr(section.dsp03_units[0].plan, "notes", []) if section.dsp03_units else [],
+        "ui_topology": ui_topology,
     }
