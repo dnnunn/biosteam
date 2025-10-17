@@ -1,10 +1,14 @@
 import pytest
 
+# Configure a default ThermoSTEAM chemical package for tests
 try:
-    # Configure a default ThermoSTEAM chemical package for tests
     from migration.thermo_setup import set_migration_thermo
     set_migration_thermo()
 except Exception:
-    # Allow tests to proceed; engine/runner also applies a fallback
     pass
 
+# Apply compat shims early (guard None flows reaching ThermoSTEAM internals)
+try:
+    from app.api.engine import compat_shims  # noqa: F401
+except Exception:
+    pass
