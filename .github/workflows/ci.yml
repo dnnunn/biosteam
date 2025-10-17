@@ -30,9 +30,13 @@ jobs:
       - name: Install dependencies (relaxed versions to avoid conflicts)
         run: |
           python -m pip install --upgrade pip
-          # Base dependencies with relaxed constraints
-          python -m pip install "numpy>=1.22,<1.27" "pandas>=2.2" chemicals thermo fluids scipy pyyaml
-          python -m pip install "numba<0.60" llvmlite matplotlib plotly ipython SALib pydantic
+          # ThermoSTEAM dependencies (from vendored setup.py, relaxed versions)
+          python -m pip install "numpy>=1.22,<1.27" "pandas>=2.2" scipy pyyaml
+          python -m pip install pint "thermo>=0.4.2" fluids chemicals
+          python -m pip install "IPython>=7.9.0" "colorpalette>=0.3.3" "matplotlib>=3.0"
+          python -m pip install xlrd openpyxl "flexsolve>=0.5.9" coolprop imageio pydot pyglet
+          # BioSTEAM dependencies
+          python -m pip install "numba<0.60" llvmlite plotly SALib pydantic
       - name: Verify vendored packages are on PYTHONPATH
         run: |
           python -c "import thermosteam; print('✓ thermosteam:', thermosteam.__file__)"
