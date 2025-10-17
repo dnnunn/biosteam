@@ -98,8 +98,16 @@ def _feed_components_for_unit(
 
 def _autowire_streams_if_missing(scenario: Scenario) -> List[Tuple[str, str]]:
     if scenario.streams:
-        return [(s.from_, s.to) for s in scenario.streams]
-    ids = [u.id for u in scenario.units]
+        # Handle both StreamLink objects and dicts
+        result = []
+        for s in scenario.streams:
+            if isinstance(s, dict):
+                result.append((s.get("from") or s.get("from_"), s["to"]))
+            else:
+                result.append((s.from_, s.to))
+        return result
+    # Handle both UnitInstance objects and dicts
+    ids = [u["id"] if isinstance(u, dict) else u.id for u in scenario.units]
     return list(zip(ids[:-1], ids[1:]))
 
 
@@ -131,11 +139,22 @@ def build_system(scenario: Scenario) -> BuildResult:
 
     unit_map: Dict[str, bst.Unit] = {}
     for unit_spec in scenario.units:
-        factory = get_factory(unit_spec.template)
-        unit_map[unit_spec.id] = factory(id=unit_spec.id, **(unit_spec.overrides or {}))
+        # Handle both UnitInstance objects and plain dicts for compatibility
+        if isinstance(unit_spec, dict):
+            template = unit_spec["template"]
+            unit_id = unit_spec["id"]
+            overrides = unit_spec.get("overrides", {})
+        else:
+            template = unit_spec.template
+            unit_id = unit_spec.id
+            overrides = unit_spec.overrides or {}
+        factory = get_factory(template)
+        unit_map[unit_id] = factory(id=unit_id, **overrides)
 
     links = _autowire_streams_if_missing(scenario)
-    order = _topological_order([u.id for u in scenario.units], links)
+    # Extract unit IDs handling both dict and object formats
+    unit_ids = [u["id"] if isinstance(u, dict) else u.id for u in scenario.units]
+    order = _topological_order(unit_ids, links)
 
     streams: Dict[Tuple[str, str], bst.Stream] = {}
     incoming_map: Dict[str, List[str]] = defaultdict(list)
