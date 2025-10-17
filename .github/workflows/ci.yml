@@ -35,7 +35,7 @@ jobs:
           python -m pip install pint "thermo>=0.4.2" fluids chemicals
           python -m pip install "IPython>=7.9.0" "colorpalette>=0.3.3" "matplotlib>=3.0"
           python -m pip install xlrd openpyxl "flexsolve>=0.5.9" coolprop imageio pydot pyglet
-          python -m pip install graphviz
+          python -m pip install graphviz chaospy
           # BioSTEAM dependencies
           python -m pip install "numba<0.60" llvmlite plotly SALib pydantic
       - name: Verify vendored packages are on PYTHONPATH
