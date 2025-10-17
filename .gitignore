@@ -1,6 +1,6 @@
 build
 dist
-biosteam.egg-info
+*.egg-info
 thermosteam/preferences.yaml
 benchmark/images/*
 benchmark/simulations/*
@@ -88,3 +88,17 @@ surfaces
 CoolPropFluids*.json
 .conda-envs/
 *.code-workspace
+
+# Project-specific #
+####################
+backups/
+scenarios/*/results/
+*.app/
+RunUI.app/
+
+# Node/Next.js (UI) #
+######################
+node_modules/
+.next/
+out/
+.turbo/
