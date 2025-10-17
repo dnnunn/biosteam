@@ -9,7 +9,11 @@
 """
 from __future__ import annotations
 from thermosteam import settings
-from thermosteam.utils import define_units_of_measure
+# Import define_units_of_measure from whichever module exposes it in the installed thermosteam.
+try:
+    from thermosteam.units_of_measure import define_units_of_measure
+except Exception:  # pragma: no cover - fallback for older layouts
+    from thermosteam.utils import define_units_of_measure  # type: ignore
 from thermosteam.units_of_measure import (
     DisplayUnits, convert, power_utility_units_of_measure, UnitsOfMeasure
 )
