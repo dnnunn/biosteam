@@ -13,6 +13,15 @@ try:
 except Exception:
     pass
 
+# Ensure a default thermo package is configured if none set
+try:
+    import thermosteam as tmo
+    if getattr(tmo.settings, "thermo", None) is None:
+        from migration.thermo_setup import set_migration_thermo
+        set_migration_thermo()
+except Exception:
+    pass
+
 if TYPE_CHECKING:  # pragma: no cover - imported only when type checking
     from ..models.scenario import Scenario
 else:  # pragma: no cover - allows running without pydantic installed
