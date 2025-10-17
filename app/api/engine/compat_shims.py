@@ -28,6 +28,7 @@ def _patch_thermosteam_init_indexer() -> None:
     param_names = [p.name for p in list(sig.parameters.values())[1:]]  # skip self
 
     def _init_indexer_compat(self, *args, **kwargs):
+        import numpy as np
         bound = sig.bind_partial(self, *args, **kwargs)
         # Try to coerce any parameter named 'flow' to [] if None
         if 'flow' in bound.arguments and bound.arguments['flow'] is None:
@@ -44,7 +45,22 @@ def _patch_thermosteam_init_indexer() -> None:
                         if pos_args[flow_idx] is None:
                             pos_args[flow_idx] = []
                         return orig(self, *pos_args, **kwargs)
-        return orig(*bound.args, **bound.kwargs)
+
+        # Guard against IndexError when accessing flow[0] on empty list (line 907 of _stream.py)
+        try:
+            return orig(*bound.args, **bound.kwargs)
+        except IndexError as e:
+            # If empty flow list causes IndexError, convert to zero array
+            if 'flow' in bound.arguments:
+                flow = bound.arguments['flow']
+                if isinstance(flow, (list, tuple)) and len(flow) == 0:
+                    # Create zero flow array matching chemicals
+                    if hasattr(self, 'chemicals'):
+                        bound.arguments['flow'] = np.zeros(len(self.chemicals))
+                    else:
+                        bound.arguments['flow'] = np.array([])
+                    return orig(*bound.args, **bound.kwargs)
+            raise  # Re-raise if we couldn't fix it
 
     # Mark the wrapper to prevent re‑wrapping
     setattr(_init_indexer_compat, "__compat_patched__", True)
