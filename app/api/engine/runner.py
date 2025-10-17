@@ -7,6 +7,11 @@ import biosteam as bst
 import thermosteam as tmo
 
 from .builder import build_system, BuildResult
+# Apply compatibility shims early so downstream imports use patched behavior
+try:
+    from . import compat_shims  # noqa: F401
+except Exception:
+    pass
 
 if TYPE_CHECKING:  # pragma: no cover - imported only when type checking
     from ..models.scenario import Scenario
