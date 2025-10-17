@@ -66,6 +66,22 @@ jobs:
         run: |
           cd app/api
           python -m pip install -e . --no-deps
+      - name: Debug test setup
+        run: |
+          echo "=== Checking test files exist ==="
+          ls -la app/api/tests/test_*.py
+          echo ""
+          echo "=== Checking for __init__.py files ==="
+          find app -name "__init__.py" | head -20
+          echo ""
+          echo "=== Checking package structure ==="
+          python -c "import sys; sys.path.insert(0, '.'); import app.api.tests.test_smoke; print('✓ Can import test_smoke')" || echo "✗ Cannot import tests"
+          echo ""
+          echo "=== Pytest collection with verbose output ==="
+          pytest --collect-only -v app/api/tests/ 2>&1 || echo "Collection failed: $?"
+          echo ""
+          echo "=== Try running test_smoke directly ==="
+          python -c "import sys; sys.path.insert(0, '.'); from app.api.tests.test_smoke import test_smoke; test_smoke(); print('✓ test_smoke passed')" || echo "✗ Direct execution failed"
       - name: Run tests
         run: |
           # Run from repo root so relative imports work correctly
