@@ -10,7 +10,7 @@
 from __future__ import annotations
 from thermosteam.units_of_measure import (
     convert, DisplayUnits, UnitsOfMeasure, get_dimensionality,
-    heat_utility_units_of_measure
+    heat_utility_units_of_measure, ureg
 )
 # Some ThermoSTEAM releases on PyPI do not expose `define_units_of_measure`
 try:
@@ -35,9 +35,32 @@ __all__ = ('HeatUtility', 'UtilityAgent')
 # ^This table was made using data from Busche, 1995
 # Entry temperature conditions of coolants taken from Table 12.1 in Warren, 2016
 
-mol_basis_units = UnitsOfMeasure('kmol')
-mass_basis_units = UnitsOfMeasure('kg')
-energy_basis_units = UnitsOfMeasure('kJ')
+def _uom(units: str):
+    """Robust UnitsOfMeasure factory compatible with different ThermoSTEAM releases."""
+    try:
+        return UnitsOfMeasure(units)
+    except TypeError:
+        # Some distributions expose alternate APIs (e.g., get()).
+        getter = getattr(UnitsOfMeasure, 'get', None)
+        if callable(getter):
+            try:
+                return getter(units)
+            except Exception:
+                pass
+        # Fallback: build a lightweight wrapper using ureg
+        class _SimpleUOM:
+            __slots__ = ('units', 'units_container', 'dimensionality')
+            def __init__(self, u):
+                self.units = u
+                self.units_container = ureg(u)
+                self.dimensionality = self.units_container.dimensionality
+            def conversion_factor(self, to_units):
+                return ureg.convert(1.0, self.units_container, to_units)
+        return _SimpleUOM(units)
+
+mol_basis_units = _uom('kmol')
+mass_basis_units = _uom('kg')
+energy_basis_units = _uom('kJ')
 
 # %% Utility agents
 
