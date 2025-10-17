@@ -27,17 +27,37 @@ jobs:
           echo ""
           echo "=== Checking biosteam structure ==="
           ls -la pkgs/biosteam/src/ | head -15
-      - name: Install dependencies (relaxed versions to avoid conflicts)
+      - name: Install dependencies (all from setup.py + runtime imports)
         run: |
           python -m pip install --upgrade pip
-          # ThermoSTEAM dependencies (from vendored setup.py, relaxed versions)
-          python -m pip install "numpy>=1.22,<1.27" "pandas>=2.2" scipy pyyaml
-          python -m pip install pint "thermo>=0.4.2" fluids chemicals
-          python -m pip install "IPython>=7.9.0" "colorpalette>=0.3.3" "matplotlib>=3.0"
-          python -m pip install xlrd openpyxl "flexsolve>=0.5.9" coolprop imageio pydot pyglet
-          python -m pip install graphviz chaospy
-          # BioSTEAM dependencies
-          python -m pip install "numba<0.60" llvmlite plotly SALib pydantic
+          # Install all dependencies in one go to let pip resolve versions
+          python -m pip install \
+            "numpy>=1.22,<1.27" \
+            "pandas>=2.2" \
+            scipy \
+            pyyaml \
+            pint \
+            "thermo>=0.4.2" \
+            fluids \
+            chemicals \
+            "IPython>=7.9.0" \
+            "colorpalette>=0.3.3" \
+            "matplotlib>=3.0" \
+            xlrd \
+            openpyxl \
+            "flexsolve>=0.5.9" \
+            coolprop \
+            imageio \
+            pydot \
+            pyglet \
+            graphviz \
+            chaospy \
+            "numba<0.60" \
+            llvmlite \
+            plotly \
+            SALib \
+            pydantic \
+            pytest
       - name: Verify vendored packages are on PYTHONPATH
         run: |
           python -c "import thermosteam; print('✓ thermosteam:', thermosteam.__file__)"
@@ -49,6 +69,5 @@ jobs:
       - name: Run tests
         run: |
           cd app/api
-          python -m pip install pytest
           # Run all API tests with vendored packages
           pytest -v tests/
