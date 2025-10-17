@@ -30,7 +30,9 @@ PLAN_UNIT_CLASSES: Dict[str, Tuple[type, str]] = {
     "USP00": (FermentationBioreactor, "Fermenter"),
     "USP01": (SeedTrainBioreactor, "SeedTrain"),
     "USP02": (MicrofiltrationUnit, "USP02"),
-    # USP03 is the cell separation stage; we select the class per option below.
+    # USP03 is the cell separation stage; we select the class per option in _build_unit_from_plan.
+    # Default to MicrofiltrationUnit; specialized to DiskStackUnit for option USP03c.
+    "USP03": (MicrofiltrationUnit, "USP03"),
     "DSP01": (UFDFUnit, "DSP01"),
     "DSP02": (ChromatographyUnit, "DSP02"),
     "DSP04": (SterileFilterUnit, "DSP04"),
