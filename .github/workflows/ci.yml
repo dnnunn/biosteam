@@ -69,5 +69,18 @@ jobs:
       - name: Run tests
         run: |
           cd app/api
+          # Debug: Check test discovery
+          echo "=== Current directory ==="
+          pwd
+          echo ""
+          echo "=== Test files present ==="
+          ls -la tests/test_*.py
+          echo ""
+          echo "=== Python path ==="
+          python -c "import sys; print('\n'.join(sys.path))"
+          echo ""
+          echo "=== Pytest collection (dry-run) ==="
+          pytest --collect-only tests/ || echo "Collection failed with exit code $?"
+          echo ""
           # Run all API tests with vendored packages
           pytest -v tests/
