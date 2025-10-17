@@ -162,8 +162,11 @@ def _apply_fermentation_overrides(
     if biomass_yield_glucose and biomass_yield_glucose > 0.0:
         glucose_required = delta_biomass / biomass_yield_glucose
         derived["glucose_required_per_batch_kg"] = glucose_required
-        duration = _coerce_float(derived.get("batch_cycle_hours")) or cycle_h
+        # Use provided duration, or fall back to plan defaults, or use 72-hour baseline
+        duration = cycle_h or _coerce_float(derived.get("batch_cycle_hours")) or _coerce_float(derived.get("tau_hours")) or 72.0
         if duration and duration > 0.0:
+            # Ensure batch_cycle_hours is set for downstream calculations
+            derived.setdefault("batch_cycle_hours", duration)
             derived["glucose_feed_rate_kg_per_hr"] = glucose_required / duration
             initial_biomass = derived.get("initial_biomass_kg") or 0.0
             derived["initial_biomass_feed_rate_kg_per_hr"] = initial_biomass / duration if initial_biomass else 0.0
@@ -202,13 +205,16 @@ def _apply_microfiltration_overrides(
     membrane_cost_per_m2 = _coerce_float(values.get("membrane_cost_usd_m2"))
     lifetime_cycles = _coerce_float(values.get("lifetime_cycles"))
 
+    # Default MF efficiency (90% baseline for polishing step)
+    if efficiency is None:
+        efficiency = 0.90
+
     if specs is not None:
         if area is not None:
             setattr(specs, "membrane_area_m2", area)
         if flux is not None:
             setattr(specs, "flux_l_m2_h", flux)
-        if efficiency is not None:
-            setattr(specs, "efficiency", max(min(efficiency, 1.0), 0.0))
+        setattr(specs, "efficiency", max(min(efficiency, 1.0), 0.0))
         if dilution_m3 is not None:
             setattr(specs, "dilution_volume_l", dilution_m3 * 1_000.0)
             derived["dilution_volume_m3"] = dilution_m3
@@ -297,14 +303,17 @@ def _apply_chromatography_overrides(
     resin_cost = _coerce_float(values.get("resin_cost_usd_per_L"))
     lifetime_cycles = _coerce_float(values.get("lifetime_cycles"))
 
+    # Default AEX chromatography yield (85% baseline)
+    if yield_fraction is None:
+        yield_fraction = 0.85
+
     if specs is not None:
         if resin_capacity is not None:
             setattr(specs, "dynamic_binding_capacity_g_per_l", resin_capacity)
             setattr(specs, "dbc_g_per_l", resin_capacity)
         if bed_volume is not None:
             setattr(specs, "resin_column_volume_l", bed_volume)
-        if yield_fraction is not None:
-            setattr(specs, "chromatography_yield", max(min(yield_fraction, 1.0), 0.0))
+        setattr(specs, "chromatography_yield", max(min(yield_fraction, 1.0), 0.0))
         if resin_cost is not None:
             setattr(specs, "resin_cost_per_l", resin_cost)
         if lifetime_cycles is not None:
@@ -334,11 +343,15 @@ def _apply_chitosan_overrides(
     specs = getattr(plan, "specs", None)
 
     overall_yield = _coerce_float(values.get("yield_fraction"))
-    if specs is not None and overall_yield is not None:
+    # Default chitosan capture yield (80% baseline)
+    if overall_yield is None:
+        overall_yield = 0.80
+
+    overall_yield = max(min(overall_yield, 1.0), 0.0)
+    if specs is not None:
         # Reuse chromatography_yield field so the runtime step can apply recovery.
-        setattr(specs, "chromatography_yield", max(min(overall_yield, 1.0), 0.0))
-    if overall_yield is not None:
-        derived["overall_recovery"] = max(min(overall_yield, 1.0), 0.0)
+        setattr(specs, "chromatography_yield", overall_yield)
+    derived["overall_recovery"] = overall_yield
 
     # Record process conditions and economics for downstream reporting.
     polymer_type = values.get("polymer_type")
@@ -425,14 +438,17 @@ def _apply_sterile_filter_overrides(
     loss_fraction = _coerce_float(values.get("adsorption_loss_fraction"))
     prefilter = _coerce_bool(values.get("prefilter_enabled"))
 
+    # Default adsorption loss for sterile filtration (0.05% baseline)
+    if loss_fraction is None:
+        loss_fraction = 0.0005
+    loss_fraction = max(min(loss_fraction, 1.0), 0.0)
+
     if specs is not None:
         if flux is not None:
             setattr(specs, "flux_lmh", flux)
         if max_dp is not None:
             setattr(specs, "max_delta_p_bar", max_dp)
-        if loss_fraction is not None:
-            loss_fraction = max(min(loss_fraction, 1.0), 0.0)
-            setattr(specs, "adsorption_loss_fraction", loss_fraction)
+        setattr(specs, "adsorption_loss_fraction", loss_fraction)
         if prefilter is not None:
             setattr(specs, "prefilter_enabled", prefilter)
 
@@ -440,10 +456,8 @@ def _apply_sterile_filter_overrides(
         derived["flux_lmh"] = flux
     if max_dp is not None:
         derived["max_delta_p_bar"] = max_dp
-    if loss_fraction is not None:
-        loss_fraction = max(min(loss_fraction, 1.0), 0.0)
-        derived["adsorption_loss_fraction"] = loss_fraction
-        derived["sterile_filter_yield"] = max(1.0 - loss_fraction, 0.0)
+    derived["adsorption_loss_fraction"] = loss_fraction
+    derived["sterile_filter_yield"] = max(1.0 - loss_fraction, 0.0)
     if prefilter is not None:
         derived["prefilter_enabled"] = prefilter
 
