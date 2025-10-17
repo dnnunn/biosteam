@@ -78,12 +78,12 @@ jobs:
           python -c "import sys; sys.path.insert(0, '.'); import app.api.tests.test_smoke; print('✓ Can import test_smoke')" || echo "✗ Cannot import tests"
           echo ""
           echo "=== Pytest collection with verbose output ==="
-          pytest --collect-only -v app/api/tests/ 2>&1 || echo "Collection failed: $?"
+          pytest --collect-only -v app/api/tests/ --override-ini="python_files=test_*.py" 2>&1 || echo "Collection failed: $?"
           echo ""
           echo "=== Try running test_smoke directly ==="
           python -c "import sys; sys.path.insert(0, '.'); from app.api.tests.test_smoke import test_smoke; test_smoke(); print('✓ test_smoke passed')" || echo "✗ Direct execution failed"
       - name: Run tests
         run: |
-          # Run from repo root so relative imports work correctly
-          # Tests are part of app.api.tests package structure
-          pytest -v app/api/tests/
+          # Override root pytest.ini which only looks for test_opn_*.py in tests/
+          # We need to run API tests in app/api/tests/ with standard test_*.py naming
+          pytest -v app/api/tests/ --override-ini="python_files=test_*.py" --override-ini="testpaths=app/api/tests"
