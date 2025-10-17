@@ -32,6 +32,18 @@ def _patch_thermosteam_init_indexer() -> None:
     setattr(_init_indexer_compat, "__compat_patched__", True)
     Stream._init_indexer = _init_indexer_compat  # type: ignore[attr-defined]
 
+    # Patch MultiStream as well (some versions check len(flow) first)
+    MS = getattr(tmo, "MultiStream", None)
+    if MS is not None:
+        ms_orig = getattr(MS, "_init_indexer", None)
+        if callable(ms_orig) and not getattr(ms_orig, "__compat_patched__", False):
+            def _ms_init_indexer_compat(self, flow, phases, chemicals, phase_flows):
+                if flow is None:
+                    flow = []
+                return ms_orig(self, flow, phases, chemicals, phase_flows)
+            setattr(_ms_init_indexer_compat, "__compat_patched__", True)
+            MS._init_indexer = _ms_init_indexer_compat  # type: ignore[attr-defined]
+
 
 def apply_all() -> None:
     _patch_thermosteam_init_indexer()
@@ -39,4 +51,3 @@ def apply_all() -> None:
 
 # Apply on import
 apply_all()
-
